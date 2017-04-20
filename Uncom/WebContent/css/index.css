@@ -1,0 +1,139 @@
+.list-container  a:link{text-decoration:none ;cursor: pointer; }
+.list-container  a:visited {text-decoration:none ; cursor: pointer;}
+.list-container  a:hover {text-decoration:none; cursor: pointer;}
+.list-container  a:active {text-decoration:none ;cursor: pointer; }
+.list-container div{ cursor: pointer;
+}
+
+body{
+	
+    font-family: "微软雅黑";
+}
+
+.header{
+  height: 60px;
+  background: #458fce;
+}
+.header-logo{
+	font-size: 24px;
+	 background: #458fce;
+	cursor: pointer;
+	line-height:60px ;
+	text-align:left;
+	height: 100%;
+	align-content: center;
+}
+.header-item{
+	background: #458fce;
+	cursor: pointer;
+	line-height:60px ;
+	height: 100%;
+	text-align: center;
+}
+.header-logo:hover{
+	background: #74b0e2;
+}
+.header-item-login{
+	background: #458fce;
+	line-height:60px ;
+	height: 100%;
+	text-align: center;
+}
+.header-item:hover{
+	background: #74b0e2;
+}
+.banner{
+	float: left;
+	width: 100%;
+	height: 360px;
+	background: #285E8E;
+}
+
+.article .hidden-title-style{
+	height: 20px;
+}
+.list-container{
+	
+}
+.content-box{
+	
+	border-bottom: 1px solid #285E8E;
+	margin-right: 20px;
+	height: 160px;
+	
+}
+.meta .collection-tag{
+	border: 1px solid #31708F;
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-bottom: 1px;
+}
+
+.article .col-xs-8{
+     top: 4px;
+	padding-left: 0px;
+}
+
+.article .col-lg-9{
+	top: 4px;
+	padding-left: 0px;
+}
+.tag-footer .meta{
+	padding-left: 0px;
+}
+.meta .font-color{
+	color: #B4B4B4;
+}
+.content-box .tag-footer{
+	bottom: 0px;
+}
+
+.content-box .article{
+
+	
+}
+
+
+.article .title{
+
+display: inherit;
+font-size: 18px;
+font-weight: 700;
+line-height: 1.5;
+}
+
+.list-container .content-box .warp-img{
+	top: 6px;
+	float: right;
+	margin-right: 10px;
+	width: 120px;
+	height: 100px;
+	background-size: cover;
+	background-image: url(../img/article_img.jpg);
+}
+.list-container .content-box .name{
+	margin-left: 10px;
+	
+}
+.list-container .row{
+	padding-left: 6px;
+}
+.list-container .content-box .author{
+	margin-top:10px ;
+	
+    
+}
+.list-container .content-box .author .avatar{
+	position:absolute;
+	width: 20px;
+	left: 0px;
+	height: 20px;
+	background: #269ABC;
+	border-radius: 50%;
+}
+
+@-webkit-viewport{ width: device-width;}
+@-moz-viewport{ width: device-width;}
+@-ms-viewport{width: device-width;}
+@-0-viewprot{width: device-width;}
+@viewprot{width: device-width;}

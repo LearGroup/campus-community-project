@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping
+  PUBLIC "-//Hibernate?Hibernate Mapping DTD//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="bean.userData" table="t_user">
+   <id name="id" column="id">
+    <generator class="uuid2"></generator>
+   </id>
+    <property name="username" column="username"></property>
+    <property name="password" column="password"></property>
+    <property name="sex" column="sex"></property>
+    <property name="sprovince" column="sprovince"></property>
+    <property name="stown" column="stown"></property>
+    <property name="sarea" column="sarea"></property>
+    <property name="email" column="email"></property>
+    <property name="phone" column="phone"></property>
+    
+    
+    
+  </class>
+
+</hibernate-mapping>
