@@ -13,7 +13,7 @@
 	                           <div class="col-xs-12 col-sm-2  header-item-login"><a style="color: #fff;" href="#" id="login_btn">登陆</a><a style="color: #fff;text-decoration: none;"> | </a><a style="color: #fff;" href="#" id="register_btn">注册</a></div>
 	                </c:when>
 	                <c:otherwise>
-	                            <div class="col-xs-12 col-sm-2  header-item-login"><a style="color: #fff;" href="#" id="user_btn">${sessionScope.username}</a><a style="color: #fff;text-decoration: none;"> | </a><a style="color: #fff;" href="${basePath}/controller/logoutController.jsp" id="exit_btn">登出</a></div>
+	                            <div class="col-xs-12 col-sm-2  header-item-login"><a style="color: #fff;" href="#" id="user_btn">${sessionScope.username}</a><a style="color: #fff;text-decoration: none;"> | </a><a style="color: #fff;" href="" id="exit_btn">登出</a></div>
 	                </c:otherwise>	
 	            </c:choose>
 			</div>

@@ -84,9 +84,5 @@ function login(data){
 		}
 	})
 		},200)
-		
 	}
-	
-	
-	
 }
