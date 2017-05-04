@@ -2,17 +2,487 @@
 	font-size: 14px;
 }
 
+ p{
+	line-height: 1.5;
+	font-size: 16px;
+	
+}
 
+.comment-child-lists .ChildCommentTrail{
+	margin-top:20px ;
+}
+
+.comment-child-list .ChildCommentTrail{
+	margin-top:20px ;
+}
+.view-child-comment-list-tag{
+	 display: block;
+   background-image: url(../img/ViewlistBlue.png);
+   background-size: cover;
+   height: 25px;
+   width: 25px;
+   margin-left: -25px;
+   float: left;
+}
+.view-child-comment-list-tag-sm{
+	margin-right: 3px;
+	margin-top: 0px;
+	background-size: cover;
+	float: left;
+	height: 18px;
+	width: 18px;
+	display: block;
+	background-image: url(../img/ViewlistBlue.png);
+}
+
+
+.comment-child-list{
+	margin-left: 0px;
+	margin-right: 0px;
+	padding: 10px;
+	
+	padding-bottom: 30px;
+}
+
+.comment-child-lists{
+	margin-left: 0px;
+	margin-right: 0px;
+	padding: 10px;
+	
+	padding-bottom: 30px;
+}
+
+.comment-child-list .child-comment{
+	
+}
+
+.comment-child-lists .child-comment .comment-child-footer{
+	border-bottom: 1px solid #222222;
+	margin-left: -10px;
+	margin-right: -10px;
+	padding: 0px;
+	padding-bottom: 10px;
+}
+
+.comment-child-list .child-comment .comment-child-footer{
+	border-bottom: 1px solid #222222;
+	margin-left: -10px;
+	margin-right: -10px;
+	padding: 0px;
+	padding-bottom: 10px;
+}
+
+.comment-child-lists .child-comment .comment-child-footer{
+	border-bottom: 1px solid #222222;
+	margin-left: -10px;
+	margin-right: -10px;
+	padding: 0px;
+	padding-bottom: 10px;
+}
+
+.comment-child-list .child-comment .comment-child-footer{
+	border-bottom: 1px solid #222222;
+	margin-left: -10px;
+	margin-right: -10px;
+	padding: 0px;
+	padding-bottom: 10px;
+}
+
+.comment-child-lists .child-comment .comment-child-footer .show-childs-comment-list-tags{
+	float: right;
+	margin-right: 15px;
+}
+
+.comment-child-list .child-comment .comment-child-footer .show-childs-comment-list-tags{
+	float: right;
+	margin-right: 15px;
+}
+.comment-child-lists .child-comment .comment-child-footer .fabulous-tags{
+	float: left;
+	margin-left: 10px;
+}
+
+.comment-child-list .child-comment .comment-child-footer .fabulous-tags{
+	float: left;
+	margin-left: 10px;
+}
+
+.comment-child-lists .child-comment .comment-child-footer .reply-tags{
+	float:left;
+	margin-left: 10px;
+}
+
+.comment-child-list .child-comment .comment-child-footer .reply-tags{
+	float:left;
+	margin-left: 10px;
+}
+
+.comment-child-lists .child-comment .comment-child-footer .toreply-tags{
+	float: left; 
+	margin-left: 10px;
+	
+}
+.comment-child-list .child-comment .comment-child-footer .toreply-tags{
+	float: left; 
+	margin-left: 10px;
+	
+}
+.comment-child-lists .child-comment .child-comment-head{
+	margin-top: 15px;
+}
+
+.comment-child-list .child-comment .child-comment-head{
+	margin-top: 15px;
+}
+
+
+.comment-child-lists .child-comment .child-comment-head .comment-child-sendtime{
+	float: left;
+	 margin-left: 6px;
+}
+
+.comment-child-list .child-comment .child-comment-head .comment-child-sendtime{
+	float: left;
+	 margin-left: 6px;
+}
+
+.comment-child-username{
+	float:left;
+	margin-left: 5px;
+}
+.comment-list .avatar-sm{
+	  width: 23px;
+	border-radius:50%;
+	float: left;
+	margin-top: 4px;
+	margin-left: -15px;
+	
+}
+.comment-expression-tag{
+	  display: block;
+   background-image: url(../img/SmileBlue.png);
+   background-size: cover;
+   height: 25px;
+   width: 25px;
+   margin-left: -25px;
+   float: left;
+}
+.Childcomment .write-area{
+	height: :;0px;
+	width:100%;
+	border: solid 1px  #285E8E;
+}
+
+.Childcomment .write-area-box{
+	margin-left: -10px;
+	padding: 0px;
+}
+.comment-list .toreply-tag{
+	margin-right: 3px;
+	margin-top: 0px;
+	background-size: cover;
+	float: left;
+	height: 18px;
+	width: 18px;
+	display: block;
+	background-image: url(../img/skipBlue.png);
+	
+}
+
+.comment-list .fabulous-tag{
+	margin-right: 3px;
+	margin-top: 0px;
+	background-size: cover;
+	float: left;
+	height: 18px;
+	width: 18px;
+	display: block;
+	background-image: url(../img/goodBlue.png);
+	
+}
+
+.comment-list .reply-tag{
+	margin-right: 3px;
+	margin-top: 2px;
+	background-size: cover;
+	float: left;
+	height: 18px;
+	width: 18px;
+	display: block;
+	background-image: url(../img/commentsBlue.png);
+	
+}
+
+.comment-list .comment-border{
+	border-top: 1px solid  #458FCE ;
+	padding-top: 10px;
+}
 
 .test-border{
 	border: solid 1px  #66AFE9; 
 }
-.avatar{
-    
+
+
+.comment-list .avatar{
+	  width: 30px;
 	border-radius:50%;
-	width: 27px;
+}
+ .write-comment-area .avatar{
+	
+    width: 30px;
+	border-radius:50%;
+
 }
 
-.write-comment{
-	height: 80px;
+
+.comment-list .comment-prompt{
+	float: left;
+	margin-left: 5px;
+	font-size: 16px;
 }
+.comment-box .comment-prompt{
+	float: left;
+	margin-left: 5px;
+	font-size: 16px;
+}
+.comment-box .comment-expression-tag{
+   display: block;
+   background-image: url(../img/SmileBlue.png);
+   background-size: cover;
+   height: 25px;
+   width: 25px;
+   margin-left: -25px;
+   float: left;
+}
+.comment-box .write-area-box{
+	margin-left: -10px;
+	padding: 0px;
+}
+.comment-box .write-area-box .write-area{
+	height: 80px;
+	width:100%;
+	border: solid 1px  #285E8E;
+	
+}
+
+
+
+
+
+/* target pc */
+@media screen and (min-width: 1200px) { 
+
+
+.comment-list .view-comment-user{
+	margin-left: -35px;
+}
+
+
+.comment-box .sort-addr{
+
+	padding: 0px;
+	padding-right: 10px;
+}
+
+.comment-list .sort-select{
+	margin-right: -5px;
+}
+
+
+.comment-box .sort-select{
+	margin-right: -5px;
+}
+
+
+.comment-box .write-area-box{
+	margin-left: -10px;
+	padding: 0px;
+}
+
+} 
+
+@media screen and (max-width: 1190px) { 
+
+.comment-box .write-area-box{
+	margin-left: -30px;
+	padding: 0px;
+}
+
+} 
+
+
+
+
+@media screen and (max-width: 1100px) { 
+	
+
+
+	
+	
+.comment-box .sort-addr{
+
+	padding: 0px;
+	padding-right: 30px;
+}
+
+
+.comment-list .sort-select{
+	margin-right: 15px;
+}
+	
+.comment-box .sort-select{
+    margin-right: 15px;
+}
+
+.comment-box .write-area-box{
+	margin-left: -20px;
+	padding: 0px;
+}
+
+/* target ipad pro*/
+@media screen and (max-width: 1025px) { 
+
+.comment-list .view-comment-user{
+	margin-left: -50px;
+}	
+
+.comment-box .sort-addr{
+
+	padding: 0px;
+	padding-right: 30px;
+}
+	
+
+
+	
+.comment-box .write-area-box{
+	margin-left: -30px;
+	padding: 0px;
+}
+
+} 
+
+} 
+@media screen and (max-width: 1000px) { 
+
+.comment-box .write-area-box{
+	margin-left: -10px;
+	padding: 0px;
+}
+
+} 
+/* target ipad */
+@media screen and (max-width: 800px) { 
+
+
+.comment-list .view-comment-user{
+	margin-left: -30px;
+}	
+
+.comment-box .sort-addr{
+
+	padding: 0px;
+	padding-right: 15px;
+}
+	
+
+.comment-list .sort-select{
+	margin-right: 0px;
+}
+
+.comment-box .sort-select{
+	margin-right: 0px;
+}
+
+.comment-box .write-area-box{
+	margin-left: -15px;
+	padding: 0px;
+}
+
+} 
+
+/* target iphone6 plus  nexus 6p nexus :;*/
+@media screen and (max-width: 600px) { 
+
+.comment-child-username{
+	float:left;
+	margin-left: -15px;
+}
+
+.comment-list .view-comment-user{
+	margin-left: -5px;
+}	
+.comment-list .sort-select{
+	margin-right: -35px;
+}
+
+.comment-box .sort-select{
+	margin-right: -35px;
+}
+
+
+
+.comment-box .write-area-box{
+	margin-left: -15px;
+	padding: 0px;
+}
+
+} 
+
+
+
+
+
+
+
+/* target iphone6  galaxy s5 */
+@media screen and (max-width: 400px) { 
+	
+	
+
+	
+.comment-list .view-comment-user{
+	margin-left: 0px;
+}	
+
+
+.comment-box .sort-addr{
+
+	padding: 0px;
+	padding-right: 10px;
+}
+
+.comment-box .write-area-box{
+	margin-left: -10px;
+	padding: 0px;
+}
+
+} 
+
+/* target iphone5 */
+@media screen and (max-width: 330px) { 
+
+.comment-buttonset-box  .comment-cancel{
+	margin-right: 8px;
+}
+.comment-buttonset-box .comment-send{
+	margin-right: 8px;
+}
+.comment-list .comment-cancel{
+	
+	margin-right: 10px;
+}
+.comment-child-list .comment-send{
+	margin-right: 10px;
+}
+.comment-box .sort-addr{
+
+	padding: 0px;
+	padding-right: 2px;
+}
+.comment-box .write-area-box{
+	margin-left: -5px;
+	padding: 0px;
+}
+
+} 
