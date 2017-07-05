@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent">
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:srcCompat="@drawable/ic_vector_group_travel"
+            tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="0dp"
+            android:id="@+id/appCompatImageView2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="旅行小组"
+            android:textSize="25dp"
+            tools:layout_editor_absoluteY="2dp"
+            app:layout_constraintLeft_toRightOf="@+id/appCompatImageView2"
+            android:layout_marginLeft="8dp" />
+    </android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#bfbfbf"
+        android:id="@+id/textView2"
+        />
+</LinearLayout>

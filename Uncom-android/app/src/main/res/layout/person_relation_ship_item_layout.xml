@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    >
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <android.support.v7.widget.AppCompatImageView
+            android:focusable="false"
+            android:clickable="true"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:srcCompat="@drawable/ic_vector_mrelk"
+            android:id="@+id/appCompatImageView3"
+            tools:layout_editor_absoluteX="0dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mr.Elk"
+            android:textSize="24dp"
+            tools:layout_editor_absoluteY="3dp"
+            app:layout_constraintLeft_toRightOf="@+id/appCompatImageView3"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp" />
+    </android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#bfbfbf"
+        />
+</LinearLayout>

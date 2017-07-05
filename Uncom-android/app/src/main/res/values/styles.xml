@@ -1,0 +1,56 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+
+    </style>
+
+
+    <style name="Theme.ToolBar.Custom" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:actionOverflowButtonStyle">@style/ActionButtom.Overflow.Custom</item>
+    </style>
+    <style name="ActionButtom.Overflow.Custom" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
+        <item name="android:src">@mipmap/ic_launcher</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ChatEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/colorEditTextNormal</item>
+        <item name="colorControlActivated">@color/colorEditTextActivated</item>
+    </style>
+
+
+    <style name="RedButton" parent="AppTheme">
+        <item name="buttonStyle">@style/Widget.AppCompat.Button</item>
+        <item name="colorButtonNormal">@color/colorEditTextActivated</item>
+        <item name="colorControlActivated">@color/colorEditTextActivated</item>
+    </style>
+
+
+
+    <style name="horizontal_slide" parent="android:style/Theme.Holo.Light.NoActionBar">
+        <item name="android:windowAnimationStyle">@style/AnimFade2</item>
+    </style>
+    <style name="AnimFade2" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/edittext_slide_in_from_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/edittext_slide_out_to_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/edittext_slide_out_to_right</item>
+        <item name="android:activityCloseEnterAnimation">@anim/edittext_slide_in_from_left</item>
+    </style>
+
+</resources>
