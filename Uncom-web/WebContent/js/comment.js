@@ -48,6 +48,24 @@ function childCommentSend(e){
 
 }
 
+
+
+function childCommentSends(a){
+	var paren=$(e).parent().parent().parent().parent().parent().parent();
+	var tar=paren.find("#toReplyButton")
+	$(tar).attr("onclick","replyChildaddc(this);")
+	var par=paren.find(".Childcomment")
+	var target=paren.find(".write-area");
+	var tex=$(target).val()
+	$(par).load("ChildCommentContent.html",function(){	
+	var tp=par.find(".childCommentContents");
+	     tp.html(tex)
+	
+	})
+	
+}
+
+
 function childCommentSendToTrail(e){
 	var paren=$(e).parent().parent().parent().parent().parent().parent().parent();
 	var texttar=$(e).parent().parent().parent().parent()
@@ -107,11 +125,10 @@ function replyChildAdd(e){
 }
 
 function replyChildadd(e){
-	
 	var paren=$(e).parent().parent();
 	var rem=$(paren).parent()
 	rem.find(".ChildCommentTrail").remove()
-	var target=paren.find(".comment-child-list");
+	var target=paren.find(".Childcomment");
 	$(target).append("<div class='ChildCommentTrail' ></div>");
 		var targets=paren.find(".ChildCommentTrail");
 	$(targets).show(1)
@@ -129,7 +146,7 @@ function replyChildadd(e){
 function replyChildAddc(e){
 
 	var paren=$(e).parent().parent().parent().parent().parent();
-	var pt=$(e).parent().parent().parent()
+	var pt=$(e).parent().parent()
    var  commentbox=paren.find(".ChildCommentTrail").remove()
 	$(pt).append("<div class='ChildCommentTrail' ></div>");
 	var targets=paren.find(".ChildCommentTrail");
@@ -166,3 +183,26 @@ function cancelChildComments(a){
 	
 }
 
+
+function commentChildShow(a){
+		console.log("start")
+	var parent=$(a).parent().parent()
+	var tag=parent.find(".comment-child-list")
+	tag.show(200)
+	var tags=parent.find("#replyButton")
+		//$(tag).show(200)
+		console.log("show"+tag.length)
+		tags.attr("onclick","commentChildHide(this)")
+}
+
+function commentChildHide(a){
+		console.log("start")
+	var parent=$(a).parent().parent()
+	var tag=parent.find(".comment-child-list")
+	var tags=parent.find("#replyButton")
+	console.log("hide")	
+	tag.hide(200)
+		//$(tag).hide(200)
+     tags.attr("onclick","commentChildShow(this)")
+	
+}
