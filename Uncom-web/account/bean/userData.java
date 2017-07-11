@@ -19,10 +19,10 @@ public class userData implements Serializable{
 	 */
 	private static final long serialVersionUID = 5335225424330706324L;
 	
-	
 
 	@Column(type="varchar(30)",field="id",primarykey=true,defaultNull=false )
 	private String id;//Ö÷¼ü
+	
 	
 	@Column(field="username",type="varchar(30)",defaultNull=false)
 	private String username;//ÓÃ»§êÇ³Æ

@@ -71,11 +71,11 @@ public class commentData implements Serializable{
 	}
 
 	public Integer getLike() {
-		return like;
+		return likes;
 	}
 
 	public void setLike(Integer like) {
-		this.like = like;
+		this.likes = like;
 	}
 
 	public Integer getNoLike() {
@@ -122,7 +122,7 @@ public class commentData implements Serializable{
 	public String toString() {
 		return "commentData [content=" + content + ", Id=" + Id + ", authorId=" + authorId + ", articleId=" + articleId
 				+ ", createTime=" + createTime + ", updateTime=" + updateTime + ", isDelete=" + isDelete + ", like="
-				+ like + ", noLike=" + noLike + ", getContent()=" + getContent() + ", getId()=" + getId()
+				+ likes + ", noLike=" + noLike + ", getContent()=" + getContent() + ", getId()=" + getId()
 				+ ", getAuthorId()=" + getAuthorId() + ", getArticleId()=" + getArticleId() + ", getCreateTime()="
 				+ getCreateTime() + ", getUpdateTime()=" + getUpdateTime() + ", getIsDelete()=" + getIsDelete()
 				+ ", getLike()=" + getLike() + ", getNoLike()=" + getNoLike() + ", getClass()=" + getClass()

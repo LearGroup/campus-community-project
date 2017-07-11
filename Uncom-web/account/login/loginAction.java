@@ -85,6 +85,7 @@ public class loginAction extends ActionSupport{
 		  String username=request.getParameter("user");
 		  String password=request.getParameter("password");
 		  userData user=getUser(sors, username);
+		  System.out.println(user.toString());
 		    if(user==null){
 		  	  out.print("0");
 		    }
@@ -100,8 +101,8 @@ public class loginAction extends ActionSupport{
 		  			out.print("0");
 		  		}
 		  	}
-		  	else if(sors.equals("username")){
-		  		if(user.getUsername().equals(username)){
+		  	else if(sors.equals("email")){
+		  		if(user.getEmail().equals(username)){
 		  			out.print("1"+user.getUsername());
 		  		     session.setAttribute("user", user);
 		             session.setAttribute("username", user.getUsername());
