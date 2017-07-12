@@ -29,7 +29,7 @@ public class loginAction extends ActionSupport{
 			Session session=sessionFactory.openSession();
 			Transaction transaction=session.beginTransaction();
 			String sql = null;
-			
+			System.out.println("sors:"+sors+"user:"+use);
 			if(sors.equals("phone")){
 				sql="select user from userData user where user.phone=?";
 			
@@ -52,6 +52,7 @@ public class loginAction extends ActionSupport{
 				session.close();
 			}
 			if(User==null){
+				System.out.println("return null");
 				return null;
 			}
 			return User;
@@ -85,7 +86,6 @@ public class loginAction extends ActionSupport{
 		  String username=request.getParameter("user");
 		  String password=request.getParameter("password");
 		  userData user=getUser(sors, username);
-		  System.out.println(user.toString());
 		    if(user==null){
 		  	  out.print("0");
 		    }

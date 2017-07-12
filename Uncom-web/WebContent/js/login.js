@@ -73,10 +73,9 @@ function login(data){
 			$("#exit_btn").html("登出")
 			$("#exit_btn").attr("href",'/Uncom/login_Logout.action')
 			$("#user_btn").html(username)
-			document.getElementById('login_page_row').innerHTML=""
-				/*window.location.href="index.jsp"*/
-				
-				
+			$("#login_page_row").hide(200)
+			$("#login_page_row").empty()
+			$("#")
 			}else if(data==1){
 				window.location.href="index.jsp"
 			}
