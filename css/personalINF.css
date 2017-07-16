@@ -27,6 +27,16 @@
 	display: block;
 	border: 2px #FFFFFF solid;
 	margin-top:18% ;
-	border-radius: 20px;
-	
+	border-radius: 20px;	
+}
+.top{
+	background-color: #65E2FF !important;
+	height: 54px;
+}
+.title{
+	font-family: "微软雅黑" !important;
+	color: #FFFFFF !important;
+}
+.margin{
+	margin-top: 3% !important;
 }
