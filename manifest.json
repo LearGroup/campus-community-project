@@ -264,15 +264,19 @@
 					"img/earth_137px_1174797_easyicon.net.png",
 					"js/mui.min.js",
 					"css/mui.min.css",
-					"css/personalINF.css"
+					"css/personalINF.css",
+					"fonts/mui.ttf",
+					"js/personalINF.js",
+					"img/personlINF.png"
 				],
-				"refer": [],
+				"refer": [
+					"index.html"
+				],
 				"priority": 0
 			}
 		},
 		"idle": {
 			"resources": [
-				"fonts/mui.ttf",
 				"js/mui.js",
 				"css/mui.css"
 			]
