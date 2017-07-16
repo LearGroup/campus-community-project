@@ -1,0 +1,65 @@
+{
+  "index.html": {
+    "resources": [
+      "css/index.css",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/jquery-2.1.0.js",
+      "child.html",
+      "img/night_portrait_512px_1169771_easyicon.net.png",
+      "img/1174796.png",
+      "img/passport_104px_1174798_easyicon.net.png",
+      "img/1174793.png",
+      "img/earth_137px_1174797_easyicon.net.png",
+      "js/index.js"
+    ],
+    "refer": [
+      "child.html",
+      "personalINF.html"
+    ]
+  },
+  "child.html": {
+    "resources": [
+      "img/shuang-013.jpg",
+      "img/storm-011.jpg",
+      "css/child.css",
+      "js/child.js",
+      "img/qingtian.png",
+      "img/duoyun.png",
+      "img/sun_137px_1174803_easyicon.net.png",
+      "img/1174800.png",
+      "img/bag_92px_1174791_easyicon.net.png",
+      "img/ocean_sea_ship_128px_4242_easyicon.net.png",
+      "img/plate_117px_1174802_easyicon.net.png",
+      "img/boat_137px_1174792_easyicon.net.png",
+      "img/wifi_663px_1206463_easyicon.net.png",
+      "img/1174805.png",
+      "img/fire_102.4px_1137563_easyicon.net.png",
+      "img/visa_copyrighted_512px_1169043_easyicon.net.png",
+      "img/film_roll_928px_1199859_easyicon.net.png",
+      "img/train_374px_1186128_easyicon.net.png",
+      "img/plane_137px_1174801_easyicon.net.png",
+      "img/team_545px_1208217_easyicon.net.png",
+      "img/1174804.png",
+      "js/jquery-2.1.0.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "img/check_list_91.818181818182px_1208743_easyicon.net.png",
+      "img/map_133.10487444609px_1208686_easyicon.net.png"
+    ],
+    "refer": []
+  },
+  "personalINF.html": {
+    "resources": [
+      "img/night_portrait_512px_1169771_easyicon.net.png",
+      "img/1174796.png",
+      "img/passport_104px_1174798_easyicon.net.png",
+      "img/1174793.png",
+      "img/earth_137px_1174797_easyicon.net.png",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/personalINF.css"
+    ],
+    "refer": []
+  }
+}

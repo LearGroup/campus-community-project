@@ -1,0 +1,32 @@
+.tarButton{
+	height: 40px;
+	text-align: center;
+	display: block;
+	width: 20%;
+	font-size: 18px;
+	font-family: "微软雅黑";
+	color: #6D6D72;
+	float: left;
+}
+#footer{
+	position: fixed;
+	bottom: 0px;
+	height: 55px;
+	padding-top: 5px;
+	background-color: #DDDDDD;
+	width: 100%;
+	box-shadow: 0px 0.5px 5px#333333;
+}
+#menu-icon{
+	width: 12%;
+	margin-left: 2%;
+	margin-top: 3%;
+	
+}
+#menu-icon span{
+	display: block;
+	border: 2px #FFFFFF solid;
+	margin-top:18% ;
+	border-radius: 20px;
+	
+}
