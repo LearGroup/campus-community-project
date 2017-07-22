@@ -5,97 +5,14 @@
 body{
 	color: #6D6D72;
 }
-#carousel{
-	height: 220px;
-	background-color: #007AFF;
+
+.imgSize{
+	height: 220px !important;
+	width: 100% !important;
 }
-.bgi{
-	background-image: url(img/shuang-013.jpg);
-}
-#functionListBox{
-	height: 200px;
-	margin-top: 5%;
-	width: 100%;
-	padding-left: 5%;
-}
-.functionListItem{
-	border-radius:8px ;
-	
-	font-family: "微软雅黑";
-	margin-right:5% ;
-	height: 45%;
-	margin-top: 3%;
-	width: 20%;
-	float: left;
-	text-align: center;
-}
-.functionListItem img{
-	margin: 5px;
-	border-radius: 8px;
-	margin: 0 auto;
-}
-#childFunctionBox{
-	height: 100px;
-	width: 100%;
-}
-.clildFunctionItem{
-	height: 49%;
-	float: left;
-	padding-left: 5%;
-	padding-top: 4%;
-	width: 33.333%;
-	border: 1px #C7C7CC solid;
-}
-.clildFunctionItem span{
-	display: block;
-	margin-left: 2%;
-	float: right;
-	font-size:12px ;
-	width: 60%;
-	font-family: "微软雅黑";
-}
-.hotList{
-	margin-top: 2%;
-	padding-left: 3%;
-	padding-right: 3%;
-	width: 100%;
-	height: 130px;
-}
-.hotListTitle span{
-	margin-left: 0.5%;
-	font-size:16px ;
-	height: 20%;
-}
-.hotListItem{background-color: #F7F7F7;}
-.hotListItem img{
-	height: 80px;
-	width: 80px;	
-	margin: 1%;
-	border: 0;
-}
-.itemIntroduce{
-	float: right;
-	width: 70%;
-}
-.itemIntroduce p {
-	margin-top: 1%;
-}
-.introduceTitle{
-	display: block;
-	width: 98%;
-	font-size: 18px;
-	word-wrap:  break-word;
-}
-.money{
-	display: block;
-	float: left;
-	color: red;
-}
-.numberOfPeople{
-	display: block;
-	float: right;
-	margin-right: 3%;
-}
-.numberOfPeople span{
-	color: red;
+.icon-color{
+	color: #FFFFFF !important;
+	background-color: #EC971F;
+	background-origin: border-box;
+	border-radius: 8px;"
 }

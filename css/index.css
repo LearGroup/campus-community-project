@@ -24,13 +24,11 @@ a:active {
 body{
 	background-color: #555555;
 }
-#title{
-	text-align: center;
-	padding: 3px;
-	background-color: #65e2ff;
-	font-family: "微软雅黑";
+.title{
+	background-color: #65e2ff !important;
+	font-family: "微软雅黑" !important;
+	padding-top: 2.5%;
 	height: 55px;
-	display: flex;
 }
 .tarButton{
 	height: 40px;
