@@ -10,7 +10,7 @@
 	"icons": {
 		"72": "icon.png"
 	},
-	"launch_path": "index.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+	"launch_path": "login.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
 	"developer": {
 		"name": "",/*开发者名称*/
 		"email": "",/*开发者邮箱地址*/
@@ -101,7 +101,7 @@
         },
         "NativeObj":{
         	"description": "原生对象"
-        }
+        },"OAuth":{}
 	},
 	"plus": {
 		"splashscreen": {
@@ -224,9 +224,55 @@
 					"img/qingtian.png",
 					"img/1174804.png",
 					"img/duoyun.png",
-					"css/child.css"
+					"css/child.css",
+					"img/sun_137px_1174803_easyicon.net.png",
+					"img/bag_92px_1174791_easyicon.net.png",
+					"img/plate_117px_1174802_easyicon.net.png",
+					"img/1174805.png",
+					"img/check_list_91.818181818182px_1208743_easyicon.net.png",
+					"img/plane_137px_1174801_easyicon.net.png",
+					"img/map_133.10487444609px_1208686_easyicon.net.png"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"tab-webview-subpage-setting.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"login.html": {
+				"resources": [
+					"js/app.js",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"js/mui.enterfocus.js",
+					"images/sinaweibo.png",
+					"images/weixin.png",
+					"images/qq.png",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"index.html",
+					"reg.html"
+				],
+				"priority": 0
+			},
+			"reg.html": {
+				"resources": [
+					"js/app.js",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"css/style.css",
+					"fonts/mui.ttf"
+				],
+				"refer": [
+					"login.html"
+				],
 				"priority": 0
 			}
 		},
@@ -236,5 +282,9 @@
 				"css/mui.css"
 			]
 		}
-	}
+	},
+	"unpackage":[
+	  "css/mui.css",
+	  "js/mui.js"
+	]
 }

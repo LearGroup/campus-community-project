@@ -18,7 +18,7 @@
 			
 			.title {
 				margin: 20px 15px 10px;
-				color: #6d6d72;
+				color: #49bdcc;
 				font-size: 15px;
 			}
 		</style>
@@ -75,50 +75,50 @@
 		<ul class="mui-table-view mui-grid-view mui-grid-9">
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a href="#">
-					<span class="mui-icon mui-icon-home icon-color"></span>
-					<div class="mui-media-body">Home</div>
+					<img src="img/sun_137px_1174803_easyicon.net.png" class="icon_img"/>
+					<div class="mui-media-body">周边游</div>
 				</a>
 			</li>
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a href="#">
-					<span class="mui-icon mui-icon-email icon-color" style="background-color: #3bba53;"></span>
-					<div class="mui-media-body">Email</div>
+					<img src="img/bag_92px_1174791_easyicon.net.png" class="icon_img"/>
+					<div class="mui-media-body">穷游</div>
 				</a>
 			</li>
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a href="#">
-					<span class="mui-icon mui-icon-chatbubble icon-color" style="background-color:#23a9fe ;"></span>
-					<div class="mui-media-body">Chat</div>
+					<img src="img/map_133.10487444609px_1208686_easyicon.net.png" class="icon_img"/>
+					<div class="mui-media-body">地图</div>
 				</a>
 			</li>
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a href="#">
-					<span class="mui-icon mui-icon-location icon-color" style="background-color: #22aafb;"></span>
-					<div class="mui-media-body">Location</div>
+					<img src="img/check_list_91.818181818182px_1208743_easyicon.net.png" class="icon_img"/>
+					<div class="mui-media-body">攻略</div>
 				</a>
 			</li>
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a href="#">
-					<span class="mui-icon mui-icon-search icon-color" style="background-color: #02bd99;"></span>
-					<div class="mui-media-body">Search</div>
+					<img src="img/1174805.png" class="icon_img"/>
+					<div class="mui-media-body">景点门票</div>
 				</a>
 			</li>
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a href="#">
-					<span class="mui-icon mui-icon-phone icon-color" style="background-color:#ff6a84 ;"></span>
-					<div class="mui-media-body">Phone</div>
+					<img src="img/plate_117px_1174802_easyicon.net.png" class="icon_img"/>
+					<div class="mui-media-body">酒店客栈</div>
 				</a>
 			</li>
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a href="#">
-					<span class="mui-icon mui-icon-phone icon-color" style="background-color:#6cdeff ;"></span>
-					<div class="mui-media-body">Phone</div>
+					<img src="img/plane_137px_1174801_easyicon.net.png" class="icon_img"/>
+					<div class="mui-media-body">机票</div>
 				</a>
 			</li>
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a href="#">
-					<span class="mui-icon mui-icon-phone icon-color" style="background-color:#67c379 ;"></span>
-					<div class="mui-media-body">Phone</div>
+					<img src="img/1174804.png" class="icon_img"/>
+					<div class="mui-media-body">自驾游</div>
 				</a>
 			</li>
 		</ul>
@@ -158,6 +158,12 @@
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
 		});
+		mui.plusReady(function() {
+			var grelly = mui('.mui-slider');
+			grelly.slider({
+				interval: '2000'
+			})
+		})
 	</script>
 
 </html>

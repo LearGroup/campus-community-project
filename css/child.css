@@ -14,5 +14,10 @@ body{
 	color: #FFFFFF !important;
 	background-color: #EC971F;
 	background-origin: border-box;
-	border-radius: 8px;"
+	border-radius: 8px;
+}
+.icon_img{
+	width: 47px;
+	height: 47px;
+	border-radius:8px ;
 }
