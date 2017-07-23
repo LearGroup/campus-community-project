@@ -75,49 +75,49 @@
 		<ul class="mui-table-view mui-grid-view mui-grid-9">
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a href="#">
-					<img src="img/sun_137px_1174803_easyicon.net.png" class="icon_img"/>
+					<img src="img/sun_137px_1174803_easyicon.net.png" class="icon_img" />
 					<div class="mui-media-body">周边游</div>
 				</a>
 			</li>
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a href="#">
-					<img src="img/bag_92px_1174791_easyicon.net.png" class="icon_img"/>
+					<img src="img/bag_92px_1174791_easyicon.net.png" class="icon_img" />
 					<div class="mui-media-body">穷游</div>
 				</a>
 			</li>
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a href="#">
-					<img src="img/map_133.10487444609px_1208686_easyicon.net.png" class="icon_img"/>
+					<img src="img/map_133.10487444609px_1208686_easyicon.net.png" class="icon_img" />
 					<div class="mui-media-body">地图</div>
 				</a>
 			</li>
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a href="#">
-					<img src="img/check_list_91.818181818182px_1208743_easyicon.net.png" class="icon_img"/>
+					<img src="img/check_list_91.818181818182px_1208743_easyicon.net.png" class="icon_img" />
 					<div class="mui-media-body">攻略</div>
 				</a>
 			</li>
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a href="#">
-					<img src="img/1174805.png" class="icon_img"/>
+					<img src="img/1174805.png" class="icon_img" />
 					<div class="mui-media-body">景点门票</div>
 				</a>
 			</li>
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a href="#">
-					<img src="img/plate_117px_1174802_easyicon.net.png" class="icon_img"/>
+					<img src="img/plate_117px_1174802_easyicon.net.png" class="icon_img" />
 					<div class="mui-media-body">酒店客栈</div>
 				</a>
 			</li>
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a href="#">
-					<img src="img/plane_137px_1174801_easyicon.net.png" class="icon_img"/>
+					<img src="img/plane_137px_1174801_easyicon.net.png" class="icon_img" />
 					<div class="mui-media-body">机票</div>
 				</a>
 			</li>
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a href="#">
-					<img src="img/1174804.png" class="icon_img"/>
+					<img src="img/1174804.png" class="icon_img" />
 					<div class="mui-media-body">自驾游</div>
 				</a>
 			</li>
@@ -156,7 +156,10 @@
 	<script src="js/mui.min.js"></script>
 	<script>
 		mui.init({
-			swipeBack: true //启用右滑关闭功能
+			swipeBack: true ,//启用右滑关闭功能
+			keyEventBind: {
+				backbutton: false
+			}
 		});
 		mui.plusReady(function() {
 			var grelly = mui('.mui-slider');

@@ -54,7 +54,7 @@
 					</a>
 				</li>
 			</ul>
-			<ul class="mui-table-view" style="margin-top: 25px;">
+			<ul id="logOff" class="mui-table-view" style="margin-top: 25px;">
 				<li class="mui-table-view-cell">
 					<a style="text-align: center;color: #FF3B30;">
 						退出登录
@@ -69,11 +69,21 @@
 		mui.init({
 			swipeBack:true //启用右滑关闭功能
 		});
+		mui.preload({
+			url:'login.html',
+			id:'login'
+		})
 		document.getElementById("about").addEventListener('tap',function () {
 			//获得主页面的webview
 			var main = plus.webview.currentWebview().parent();
 			//触发主页面的gohome事件
 			mui.fire(main,'gohome');
 		});
+		document.getElementById("logOff").addEventListener('tap',function(e){
+			mui.openWindow({
+				url:'login.html',
+				id:'login'
+			})
+		})
 	</script>
 </html>

@@ -9,6 +9,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<script type="text/javascript" src="js/mui.min.js" ></script>
 		<link rel="stylesheet" href="css/mui.min.css">
+		
 		<style>
 			html,
 			body {
@@ -22,7 +23,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav title">
-			<h1 id="title" class="mui-title">首页</h1>
+			<h1 id="title" class="mui-title">旅游</h1>
 		</header>
 		<nav class="mui-bar mui-bar-tab">
 			<a id="defaultTab" class="mui-tab-item mui-active" href="tab-webview-subpage-about.html">
@@ -30,22 +31,26 @@
 				<span class="mui-tab-label">首页</span>
 			</a>
 			<a class="mui-tab-item" href="tab-webview-subpage-chat.html">
-				<span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
-				<span class="mui-tab-label">消息</span>
+				<span class="mui-icon mui-icon-flag"></span>
+				<span class="mui-tab-label">景区</span>
 			</a>
 			<a class="mui-tab-item" href="tab-webview-subpage-contact.html">
-				<span class="mui-icon mui-icon-contact"></span>
-				<span class="mui-tab-label">通讯录</span>
+				<span class="mui-icon mui-icon-map"></span>
+				<span class="mui-tab-label">攻略</span>
 			</a>
 			<a class="mui-tab-item" href="tab-webview-subpage-setting.html">
-				<span class="mui-icon mui-icon-gear"></span>
-				<span class="mui-tab-label">设置</span>
+				<span class="mui-icon mui-icon-contact"></span>
+				<span class="mui-tab-label">我的</span>
 			</a>
 		</nav>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8"> 
 			 //mui初始化
-			mui.init();
+			mui.init({
+				keyEventBind:{
+					backbutton:false
+				}
+			});
 			var subpages = ['tab-webview-subpage-about.html', 'tab-webview-subpage-chat.html', 'tab-webview-subpage-contact.html', 'tab-webview-subpage-setting.html'];
 			var subpage_style = {
 				top: '45px',
