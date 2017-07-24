@@ -1,9 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-	<script type="text/javascript" src="js/register.js" ></script>
-		<div class="col-xs-1 col-sm-4 col-md-12"></div>
-		<div class="col-xs-10 col-sm-8 col-sm-offset-2 col-md-offset-4 col-md-4">
-			<div class="register_box row">
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title></title>
+	</head>
+	<body>
+<div class="col-xs-1 col-sm-4 col-md-12"></div>
+<div class="col-xs-10 col-sm-8 col-sm-offset-2 col-md-offset-4 col-md-4">
+<div class="register_box row">
+
 				<div class="row sigin_header">
 					<a style="text-decoration: none;" href="#">注册</a>
 				</div>
@@ -27,9 +32,9 @@
 						   <label class="col-xs-12 col-lg-8 col-lg-offset-2 " id="selecter_addr_label">学校地址:</label>
 							 <div class="col-xs-12 col-lg-8 col-lg-offset-2" id="register_input_province_div"  style="padding-bottom: 0%;" >
 							 	
-							<input onclick="produce_addr()"data-target="#addr_selecters" style="width: 32%;" value="省(自治区)" type="button" formaction="register_checking.jsp" class="btn btn-group-lg" id="register_input_province" name="register_province"  data-toggle='modal'  placeholder="省(自治区)" /> 
-							<input style="width: 32%;" value="市" type="button" formaction="register_checking.jsp" class="btn btn-group-lg" id="register_input_town" name="register_town" placeholder="市" />
-							<input style="width: 32%;" value="地区"  type="button" formaction="register_checking.jsp" class="btn btn-group-lg" id="register_input_area" name="register_area" placeholder="地区" />
+							<input onclick="produce_addr()"data-target="#addr_selecters" style="width: 32%;background:#0095DD ;color: #FFFFFF;" value="省(自治区)" type="button" formaction="register_checking.jsp" class="btn btn-group-lg" id="register_input_province" name="register_province"  data-toggle='modal'  placeholder="省(自治区)" /> 
+							<input style="width: 32%;background:#0095DD ;color: #FFFFFF;" value="市" type="button" formaction="register_checking.jsp" class="btn btn-group-lg" id="register_input_town" name="register_town" placeholder="市" />
+							<input style="width: 32%;background:#0095DD ;color: #FFFFFF;" value="地区"  type="button" formaction="register_checking.jsp" class="btn btn-group-lg" id="register_input_area" name="register_area" placeholder="地区" />
 					</div>
 					
 					<div class="form-group-sm" id="register_input_male_div"  >
@@ -39,12 +44,12 @@
 						
 							<label class="checkbox-inline col-xs-5 col-xs-offset-2 " id="selecter_male_label">
 						   	  <input id="select_boy"  type="radio" value="boy" name="optionsRadiosinline"/>
-						   	  <span  style="left: 7%;height:20px;width:20px;margin-top: -6px;background-image:url(../img/Male_icon.png);" ></span>
+						   	 <img  class="register_male_img"  src="img/Male_icon.png"></img>
 						
 				    	   </label>
 				    	   <label class="checkbox-inline col-xs-4 " id="selecter_male_label">
 						   	  <input  id="select_girl"  type="radio" value="girl" name="optionsRadiosinline"/>
-						   	   <span  class="register_famale_img"  ></span>
+						   	   <img  class="register_famale_img" src="img/Female_icon.png"></img>
 				    	   </label>
 						</div>
 						   
@@ -96,3 +101,7 @@
                   </div>  
           </div>  
   </div>
+	</body>
+</body>
+</html>
+

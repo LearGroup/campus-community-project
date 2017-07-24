@@ -1,9 +1,9 @@
 
 
 var getSetAjax={
-	var username,
-	var articleId,
-	var InitSet=function(){
+	 username:"null",
+	 articleId:"null",
+	 InitSet:function(){
 		
-	},
+	}
 }

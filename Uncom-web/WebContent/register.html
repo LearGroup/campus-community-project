@@ -1,37 +1,10 @@
-<!DOCTYPE html>
-<html>
-	<head>
-			<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-		<link rel="stylesheet" href="css/login.css" />
-		<link rel="stylesheet" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
-		<meta charset="UTF-8">
-		<title></title>
-	</head>
-	<body>
-		<script type="text/javascript" src="js/jquery-3.1.1.min.js" ></script>
-		<script type="text/javascript" src="js/bootstrap.min.js" ></script>
-		<script type="text/javascript" src="js/country.js" ></script>
-		<script type="text/javascript" src="js/register.js" ></script>
-		<div class="row">
-		<script>
-			/*	
-            	$(function(){
-            	$("#register_input_province").click(function(){
-            	$("#addr_selecters").modal("show");
-            	  
-            	}) 	
-            	
-            
-            	
-      })       		*/		    
-	</script>
-	<div class="row">
+	<div >
 		<div class="col-xs-1 col-sm-4 col-md-12"></div>
-		<div class="col-xs-10 col-sm-8 col-sm-offset-2 col-md-offset-4 col-md-4">
-			<div class="register_box row">
+		<div class="col-xs-10 col-sm-8 col-sm-offset-2 col-md-offset-4 col-md-4" >
+			<div class="register_box row" >
 				<div class="row sigin_header">
+				
 					<a style="text-decoration: none;" href="#">注册</a>
 				</div>
 				<div class="row sigin_content" style="padding-top: 5%;">
@@ -54,9 +27,9 @@
 						   <label class="col-xs-12 col-lg-8 col-lg-offset-2 " id="selecter_addr_label">学校地址:</label>
 							 <div class="col-xs-12 col-lg-8 col-lg-offset-2" id="register_input_province_div"  style="padding-bottom: 0%;" >
 							 	
-							<input onclick="produce_addr()"data-target="#addr_selecters" style="width: 32%;" value="省(自治区)" type="button" formaction="register_checking.jsp" class="btn btn-group-lg" id="register_input_province" name="register_province"  data-toggle='modal'  placeholder="省(自治区)" /> 
-							<input style="width: 32%;" value="市" type="button" formaction="register_checking.jsp" class="btn btn-group-lg" id="register_input_town" name="register_town" placeholder="市" />
-							<input style="width: 32%;" value="地区"  type="button" formaction="register_checking.jsp" class="btn btn-group-lg" id="register_input_area" name="register_area" placeholder="地区" />
+							<input onclick="produce_addr()"data-target="#addr_selecters" style="width: 32%;background:#0095DD ;color: #FFFFFF;" value="省(自治区)" type="button" formaction="register_checking.jsp" class="btn btn-group-lg" id="register_input_province" name="register_province"  data-toggle='modal'  placeholder="省(自治区)" /> 
+							<input style="width: 32%;background:#0095DD ;color: #FFFFFF;" value="市" type="button" formaction="register_checking.jsp" class="btn btn-group-lg" id="register_input_town" name="register_town" placeholder="市" />
+							<input style="width: 32%;background:#0095DD ;color: #FFFFFF;" value="地区"  type="button" formaction="register_checking.jsp" class="btn btn-group-lg" id="register_input_area" name="register_area" placeholder="地区" />
 					</div>
 					
 					<div class="form-group-sm" id="register_input_male_div"  >
@@ -66,12 +39,12 @@
 						
 							<label class="checkbox-inline col-xs-5 col-xs-offset-2 " id="selecter_male_label">
 						   	  <input id="select_boy"  type="radio" value="boy" name="optionsRadiosinline"/>
-						   	  <img  style="left: 7%;height:20px;margin-top: -6px;" src="img/Male_icon.png" ></img>
+						   	  <img  class="register_male_img"  src="img/Male_icon.png"></img>
 						
 				    	   </label>
 				    	   <label class="checkbox-inline col-xs-4 " id="selecter_male_label">
 						   	  <input  id="select_girl"  type="radio" value="girl" name="optionsRadiosinline"/>
-						   	   <img  style="left: 7%;height:20px;margin-top: -6px;" src="img/Female_icon.png" ></img>
+						   	   <img  class="register_famale_img" src="img/Female_icon.png"></img>
 				    	   </label>
 						</div>
 						   
@@ -102,7 +75,7 @@
 				</form>
 				<div class="row sigin_footer " style="text-align: center;" >
 					<div class="col-xs-12  col-lg-8 col-lg-offset-2">
-						<p>点击"注册"即表示您同意并愿意遵守本应用<br/><a href="#" >用户协议</a> 和 <a href="#">隐私政策</a>。</p>
+						<p style="color:#333333">点击"注册"即表示您同意并愿意遵守本应用<br/><a href="#" >用户协议</a> 和 <a href="#">隐私政策</a>。</p>
 					
 					</div>
 					
@@ -129,8 +102,3 @@
 		</div>
 </div>
 		</div>	
-	</body>
-</html>
-<SCRIPT Language=VBScript><!--
-
-//--></SCRIPT>

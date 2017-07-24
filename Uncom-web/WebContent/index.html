@@ -1,311 +1,87 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	
+
 	    <meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 		<title>Welcome</title>
 		<link rel="stylesheet" href="css/login.css" />
 		<link rel="stylesheet" href="css/index.css" />
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/customloader.css" />
+		<link rel="stylesheet" href="css/fade-plugin.css" />
 	</head>
-	<body>
+	<body style="background: #eeeeee;">
 		<script type="text/javascript" src="js/jquery-3.1.1.min.js" ></script>
 		<script type="text/javascript" src="js/bootstrap.min.js" ></script>
-		<script type="text/javascript" src="js/index.js" ></script>
+		<script type="text/javascript" src="js/country.js" ></script>
+		<script type="text/javascript" src="js/JqueryRotate.js" ></script>
+		<script type="text/javascript" src="js/articleShow.js" ></script>
+	    <script type="text/javascript" src="js/index.js" ></script>
 		<script type="text/javascript" src="js/login.js" ></script>
 		<script type="text/javascript" src="js/register.js" ></script>
-		<div class="container-fluid">
-			<div class="row header">
-				<div class="col-xs-4 col-sm-2 header-logo"><a style="color: #fff;text-decoration: none;" href="">原创文字</a></div>
-				<div class="col-xs-4 col-sm-1  header-item" id="home-page"><a style="color: #fff;text-decoration: none;" href="">首页</a></div>
-				<div class="col-xs-4 col-sm-2  header-item"><a style="color: #fff;text-decoration: none;" href="">原创故事</a></div>
-				<div class="col-xs-4 col-sm-2  header-item"><a style="color: #fff;text-decoration: none;" href="">热门专题</a></div>
-				<div class="col-xs-4 col-sm-2  header-item"><a style="color: #fff;text-decoration: none;" href="">美文日赏</a></div>
-				<div class="col-xs-4 col-sm-1  header-item"><a style="color: #fff;text-decoration: none;" href="">电台</a></div>
-				<div class="col-xs-12 col-sm-2  header-item-login"><a style="color: #fff;" href="">登陆</a><a style="color: #fff;text-decoration: none;"> | </a><a style="color: #fff;" href="">注册</a></div>
-			</div>
-				
-			<div class="row" id="login_page_row">
-			<!--<div class="col-xs-1 col-sm-4 col-md-12"></div>
-		<div class="col-xs-10 col-sm-8 col-sm-offset-2 col-md-offset-4 col-md-4">
-			<div class="register_box row">
-				<div class="row sigin_header">
-					<a style="text-decoration: none;" href="#">注册</a>
-				</div>
-				<div class="row sigin_content" style="padding-top: 5%;">
-					<form class="form-horizontal">
-					<div class="form-group-sm " id="register_username_div">
-						<div class="col-xs-12 col-lg-8 col-lg-offset-2 " style="padding-bottom: 4%;">
-						<span style="left: 5%;" class="glyphicon glyphicon-user form-control-feedback"></span>
-            			<input class="form-control" style="padding-left:10%" type="text" formaction="login_checking.jsp" name="register_input_username" class="form-control" id="register_input_username" placeholder=" 你的昵称" />
-            		</div>
-					</div>
-					
-					<div class="form-group-sm "id="register_email_div"   >
-						<div class="col-xs-12 col-lg-8 col-lg-offset-2 " style="padding-bottom: 2%;">
-						<span  style="left: 5%;" class="glyphicon glyphicon-envelope form-control-feedback"></span>
-							<input class="form-control" type="text" name="register_email"  formaction="register_checking.jsp" style=" padding-left:10% ;"   id="register_input_email" placeholder=" 邮箱" />
-            		</div>
-					</div>
-					
-					<div class="form-group-sm" id="register_input_province_div"  >
-						   <label class="col-xs-12 col-lg-8 col-lg-offset-2 " id="selecter_addr_label">学校地址:</label>
-							 <div class="col-xs-12 col-lg-8 col-lg-offset-2" id="register_input_province_div"  style="padding-bottom: 0%;" >
-							 	
-							<input onclick="produce_addr()"data-target="#addr_selecters" style="width: 32%;" value="省(自治区)" type="button" formaction="register_checking.jsp" class="btn btn-group-lg" id="register_input_province" name="register_province"  data-toggle='modal'  placeholder="省(自治区)" /> 
-							<input style="width: 32%;" value="市" type="button" formaction="register_checking.jsp" class="btn btn-group-lg" id="register_input_town" name="register_town" placeholder="市" />
-							<input style="width: 32%;" value="地区"  type="button" formaction="register_checking.jsp" class="btn btn-group-lg" id="register_input_area" name="register_area" placeholder="地区" />
-					</div>
-					
-					<div class="form-group-sm" id="register_input_male_div"  >
-						<div class="radio col-xs-12 col-lg-8 col-lg-offset-2 " id="male_radio" style="padding-bottom: 4%;">
-							
-							<label class="checkbox-inline col-xs-5 col-xs-offset-2 " id="selecter_male_label">
-						   	  <input id="select_boy"  type="radio" value="boy" name="optionsRadiosinline"/>
-						   	  <span  style="left: 7%;" class="glyphicon glyphicon-envelope form-control-feedback">男</span>
-						
-				    	   </label>
-				    	   <label class="checkbox-inline col-xs-4 " id="selecter_male_label">
-						   	  <input  id="select_girl"  type="radio" value="girl" name="optionsRadiosinline"/>
-						   	  <span  style="left:7%;" class="glyphicon glyphicon-envelope form-control-feedback">女</span>
-				    	   </label>
-						</div>
-						   
-											
-					
-					<div class="form-group-sm " id="register_password_div">
-						<div class="col-xs-12 col-lg-8 col-lg-offset-2 " style="padding-bottom: 4%;">
-						<span style="left: 5%;" class="glyphicon glyphicon-lock form-control-feedback form-group-lg form-group-sm"></span>
-            			<input id="register_input_password" name="register_password" class="form-control" style="padding-left:10%" type="password" formaction="login_checking.jsp"  placeholder=" 设置密码" />
-            		</div>
-					</div>
-					
-					<div class="form-group-sm" id="register_repassword_div">
-						<div class="col-xs-12  col-lg-8 col-lg-offset-2">
-						<span style="left: 5%;" class="glyphicon glyphicon-lock form-control-feedback form-group-lg form-group-sm"></span>
-            			<input id="register_input_repassword" name="register_repassword" class="form-control " style="padding-left:10%" type="password" formaction="login_checking.jsp"    placeholder=" 确认密码" />
-            		</div>
-					</div>
-					<div class="form-group-sm ">
-						<div class="col-xs-12 col-lg-8 col-lg-offset-2" style="padding-bottom: 4%;">
-						<label class="checkbox-inline col-xs-12">
-						</label>
-						<input type="button" onclick="register_email_check()" formaction="#" class="btn btn-group-lg col-xs-12 col-lg-12" value="注册" style="margin-top: 2%;background-color: #0095DD;font-size: 18px;padding: 4px;color: #fff;"/>
-						
-            		</div>
+	
+		<div class="container-fluid" >
+			<div class="row">
+				<nav class=" navbar navbar-default" role="navigation">
+					<button id="nav-button-toggle" type="button" tyle="float: right;"  class="navbar-toggle" data-toggle="collapse"
+						data-target="#example-navbar-collapse">
+            <span class="sr-only">切换导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand " href="#" style="float: right;margin-left: 0px;margin-right: 10px;padding: 15px 0px;" id="register_btn" href="#">注册</a>
+	    <a class="navbar-brand  " href="#" style="float: right;margin-right: 10px;padding: 15px 0px;" id="login_btn" href="#">登陆</a>
+	   
+    <div class="">
+    	
+    <div class="navbar-header ">
+     
+        <a class="navbar-brand" href="#">Uncom-技术社区</a>
+    </div>
+    
+    	
+    <div class="collapse navbar-collapse "  id="example-navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">软件开发</a></li>
+            <li class=""><a href="#">设计模式</a></li>
+            <li class=""><a href="#">Git</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Java <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">jmeter</a></li>
+                    <li><a href="#">EJB</a></li>
+                    <li><a href="#">Jasper Report</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">分离的链接</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">另一个分离的链接</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+      
+    </div>
+    
+</nav>
 
-				</div>
-				</form>
-				<div class="sigin_footer " style="text-align: center;" >
-					<div class="col-xs-12  col-lg-8 col-lg-offset-2">
-						<p>点击"注册"即表示您同意并愿意遵守本应用<br/><a href="#" >用户协议</a> 和 <a href="#">隐私政策</a>。</p>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-		
-		
-		<div class="modal fade  " id='addr_selecters'>  
-                    <div class="modal-dialog" style="max-width: 950px;">  
-                        <div class="modal-content">  
-                        	<div class="modal-header" id="register_header">
-				            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="RegisterModalLabel">大学所在地区</h4>
-                        	</div>
-                            <div class="modal-body" id="addr_selecters_body">
-                            	<script>
-                            	</script>
-                            </div>  
-                            <div class="modal-footer">    
-                         </div>  
-                  </div>  
-          </div>  
-  </div>
-		</div>-->
-		</div>
-	</div>
 
-			</div>
-			<div class="row" id="content-row" >
-					<div id="carousel-example-generic" class="banner carousel slide" data-ride="carousel" >
-						<ol class="carousel-indicators" >
-							<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-							<li data-target="#carousel-example-generic" data-slide-to="1" ></li>
-							<li data-target="#carousel-example-generic" data-slide-to="2" ></li>	
-							
-						</ol>
-						<div class="carousel-inner" style="text-align: center;" >
-							<div class="item active" >
-								<img style="height: 360px;width:100%;"  alt="First slide" src="img/1a5473e034df1a314653a8d9aa9b7f8d7e8708371023296f85a943647a1bba68.jpg"/>
-							</div>
-							<div class="item">
-								<img style="height: 360px;width:100%;" alt="Seconde slide" src="img/1d663d4aae46fa25590054832a38317cd2f06a69f4a26a5f658f3f22966121fe.jpg" />
-							</div>
-							<div class="item" >
-								<img style="height: 360px;width:100%;"  alt="Third slide" src="img/4-1.jpg" />
-							</div>
-						</div>
-					<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-						<span class="glyphicon glyphicon-chevron-left"></span>
-					</a>
-					<a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-						<span class="glyphicon glyphicon-chevron-right"></span>
-					</a>
-				</div>
-				<script>
-					
-					$('.carousel').carousel({
-						interval:5000
-					})
-				</script>
-			</div>
-			
-			
-			<div class="row list-container">
-				
-				<!--<div class="col-xs-12 col-lg-6 content-box"  >
-					<div class="row" style="height: 100%;">
-						<div class="col-lg-1 hidden-xs" ></div>
-					  <div class="col-xs-8 col-lg-8" >
-						
-						<div class="row author" >
-							<div class="col-xs-12 col-lg-12" >
-								<div class="avatar"></div>
-								<div class="name" >
-										<a class="username">陈广平</a>
-									    <span class="time" data-shared-at="2017-02-11T11:05:57+08:00">6 小时前</span>
-									</div>
-							</div>
-						</div>
-						<div class="row  article">
-							<div class="col-xs-12" style="padding-left: 0px;">
-								<a class="title">读古典诗词到</a>
-							    <p class="abstract hidden-xs">先在这儿给大家拜个晚年，祝大家鸡年大吉！一转眼就到了元宵节，这是个黄道吉日，择日不如撞日，花白和历史专题主编子曰少怀一拍即合，决定一起办征文活动啦！这是【人物】专题和【历史】... </p>
-							</div>
-						</div>
-						<div class="row tag-footer">
-							<div class="meta">
-								<a class="collection-tag"><small style="font-size:12px;">艺术·文化</small></a>
-									<a class="font-color">
-										<span class="ic-list-read glyphicon glyphicon-eye-open"></span>3232
-									</a>
-									<a class="font-color">
-										<span class="ic-list-read glyphicon glyphicon-commentsglyphicon glyphicon-comment"></span>54
-									</a>
-									<a class="font-color">
-										<span class="ic-list-read glyphicon glyphicon-heart"></span>154
-									</a>
-							</div>
-						</div>
-					</div>
-					<div class="warp-img col-xs-3 col-lg-4"></div>
-					</div>-->
-				
-				
-				<div class="col-xs-12 col-lg-6 content-box" onclick="window.open('/Page')">
-					<div class="row" >
-						<div class="col-lg-1 hidden-xs" ></div>
-						<div class="col-xs-12 col-lg-11" >
-							<div class="row author">
-							<div class="col-xs-12 col-lg-12" >
-								<div class="avatar"></div>
-								<div class="name" >
-										<a class="username">陈广平</a>
-									    <span class="time" data-shared-at="2017-02-11T11:05:57+08:00">6 小时前</span>
-									</div>
-							</div>
-						</div>
-						<div class="row article"  >
-							  <div class="col-xs-1 hidden-lg"></div>
-								<div class="col-xs-5 col-lg-9" >
-									<div class="hidden-lg hidden-title-style"></div>
-								<a class="title">读古典诗词</a>
-							    <p class="abstract hidden-xs">先在这儿给大家拜个晚年，祝大家鸡年大吉！一转眼就到了元宵节，这是个黄道吉日，择日不如撞日，花白和历史专题主编子曰少怀一拍即合，决定一起办征文活动啦！这是【人物】专题和【历史】... </p>
-							    </div>
-							<div class="warp-img col-xs-2 col-lg-1" ></div>
-						</div>
-						<div class="row  tag-footer">
-							<div class="meta col-xs-12">
-								<a class="collection-tag"><small style="font-size:12px;">艺术·文化</small></a>
-									<a class="font-color">
-										<span class="ic-list-read glyphicon glyphicon-eye-open"></span>3232
-									</a>
-									<a class="font-color">
-										<span class="ic-list-read glyphicon glyphicon-commentsglyphicon glyphicon-comment"></span>54
-									</a>
-									<a class="font-color">
-										<span class="ic-list-read glyphicon glyphicon-heart"></span>154
-									</a>
-							</div>
-						</div>
-						</div>
-						
-						
-					</div>
-				</div>
-				
-					<div class="col-xs-12 col-lg-6 content-box" >
-					<div class="row" >
-						<div class="col-lg-1 hidden-xs" ></div>
-						<div class="col-xs-12 col-lg-11" >
-							<div class="row author">
-							<div class="col-xs-12 col-lg-12" >
-								<div class="avatar"></div>
-								<div class="name" >
-										<a class="username">陈广平</a>
-									    <span class="time" data-shared-at="2017-02-11T11:05:57+08:00">6 小时前</span>
-									</div>
-							</div>
-						</div>
-						<div class="row article" >
-							  <div class="col-xs-1 hidden-lg"></div>
-								<div class="col-xs-5 col-lg-9" >
-									<div class="hidden-lg hidden-title-style"></div>
-								<a class="title">读古典诗词</a>
-							    <p class="abstract hidden-xs">先在这儿给大家拜个晚年，祝大家鸡年大吉！一转眼就到了元宵节，这是个黄道吉日，择日不如撞日，花白和历史专题主编子曰少怀一拍即合，决定一起办征文活动啦！这是【人物】专题和【历史】... </p>
-							    </div>
-							<div class="warp-img col-xs-2 col-lg-1" ></div>
-						</div>
-						<div class="row  tag-footer">
-							<div class="meta col-xs-12">
-								<a class="collection-tag"><small style="font-size:12px;">艺术·文化</small></a>
-									<a class="font-color">
-										<span class="ic-list-read glyphicon glyphicon-eye-open"></span>3232
-									</a>
-									<a class="font-color">
-										<span class="ic-list-read glyphicon glyphicon-commentsglyphicon glyphicon-comment"></span>54
-									</a>
-									<a class="font-color">
-										<span class="ic-list-read glyphicon glyphicon-heart"></span>154
-									</a>
-							</div>
-						</div>
-						</div>
-						
-						
-					</div>
-				</div>
-				
-					
-				
-			
-				
-				
-				</div>
-				
-				
-				
-				
-			</div>
-			
-			
-			
-			
-					
-		</div>
+                <div class="row" id="login_page_row"></div>
+                <div class="row list-container">
+                
+                	
+                </div>
+			</div >
+       </div >
+       <div class="loader col-xs-push-3  col-xs-7 col-lg-6" ></div>
+       <div id="fade-box" class="navbar-fixed-bottom col-xs-4 col-xs-offset-10 col-md-offset-11 " >
+       	  <div id="fad_icon2 " class="shadow fade-icon2 " style="border-radius: 50% 50% 50% 50%;margin-bottom: 10px;margin-left: -10px;"><span class="glyphicon glyphicon-edit fade-write-icon2"></span></div>
+          <div id="fad_icon3 " class="shadow fade-icon3 " style="border-radius: 50% 50% 50% 50%;margin-bottom: 5px;margin-left: -10px;"><span class="glyphicon glyphicon-pencil fade-write-icon2"></span></div>
+          <div id="fad_icon " class="shadow fade-icon " style="border-radius: 50% 50% 50% 50%;margin-bottom: 30px;margin-left: -20px;"><span class="glyphicon glyphicon-plus fade-write-icon"></span></div>
+       	   
+       </div>
+      <form id='hidden_submit_info'  method="post" enctype="multipart/form-data" action="test.php" > </form>
 	</body>
 </html>
-<SCRIPT Language=VBScript><!--
-
-//--></SCRIPT>
