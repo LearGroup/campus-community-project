@@ -116,6 +116,7 @@ function register_email_check(){
             	
 
 function produce_addr(){
+	console.log("dsy"+dsy)
 	var buttonlength=dsy.Items['0'];
 	var form=document.getElementById('addr_selecters_body');
 	var i=0;

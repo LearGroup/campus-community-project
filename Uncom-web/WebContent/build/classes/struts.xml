@@ -44,36 +44,48 @@
 	<!-- 当Struts配置文件修改后，系统是否自动重新加载该文件 默认为false 开发阶段应打开 -->
 	<constant name="struts.configuration.xml.reload" value="true"></constant>
 	<!-- 开发模式下使用。可以打印出更详细的错误信息-->
-	<constant name="struts.devMode" value="false"></constant>
+	<constant name="struts.devMode" value="true"></constant>
 	<!-- 是否开启动态方法调用 -->
 	<constant name="struts.enable.DynamicMethodInvocation" value="false"/>
 	
 	<!-- 添加包 -->
 
 	 <package name="user" namespace="/" extends="struts-default">
-	 <global-allowed-methods>regex:.*</global-allowed-methods>  
+ 	 <global-allowed-methods>regex:.*</global-allowed-methods>  
 	
 		<action name="login_*" class="login.loginAction" method="{1}">
-		      <result name="login_Page">/common/login_{1}.jsp</result>
-		      <result name="login_Page_error">/common/login_{1}_Error.jsp</result>
 		</action>
 		
 		<action name="register_*" class="register.registerAction" method="{1}">
-		      <result name="register_Page">/common/register_Page.jsp</result>
-		      <result name="register_Page_Success">/common/register_Page_Success.jsp</result>
-		      <result name="register_Page_Error">/common/register_Page_Error.jsp</result>
-		      <interceptor-ref name="modelDriven"></interceptor-ref>
-		      <interceptor-ref name="defaultStack"></interceptor-ref>
 		</action>
 	</package> 
 	
+	
 	<package name="articleTake" namespace="/article" extends="struts-default">
 	
+	
 	 <global-allowed-methods>regex:.*</global-allowed-methods>
-	 <action name="*" class="Load.loadAction" method="Page">
-	            <result name="article_Page">/article/article.jsp</result>
-	 </action>  
+
+	  <action name="article_*" class="Load.loadAction" method="{1}"></action>
+	  <action name="getArticle" class="Load.loadAction" method="getArticle"></action>
+	  <action  name="*" class="Load.loadAction" method="Page">
+	  <result name="success">/article/article.html</result>
+	  </action> 
 	</package>
-	 
+	
+	
+	<package name="articleSave" namespace="/saveArticle" extends="struts-default">
+	     <global-allowed-methods>regex:.*</global-allowed-methods>
+	     <action name="saveArticle" class="save.saveAction" method="saveArticle"></action>
+	     <action name="getcollactionTag" class="save.saveAction" method="getcollactionTag"></action>
+	  
+	</package>
+	
+
+	
+	
+	
+	
+
 		
 </struts>

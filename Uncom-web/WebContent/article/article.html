@@ -1,10 +1,141 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/comment.css" />
+		<link rel="stylesheet" href="../css/article.css" />
 		<meta charset="UTF-8">
+			<script type="text/javascript" src="../js/jquery-3.1.1.min.js" ></script>
+			<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+			<script type="text/javascript" src="../js/comment.js" ></script>
+			<script type="text/javascript" src="../js/article.js" ></script>
+			<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 		<title></title>
 	</head>
 	<body>
+		<div class="container">
+			
+			<div class="row article">
+			<div class="hidden-xs col-lg-2"></div>
+			<div class="col-xs-12 col-lg-8">
+				<div class="row">
+					<div class="col-xs-12">
+						<h1 class="title"></h1>
+					</div>
+				</div>
+			<!--作者信息-->
+			<div class="row">
+				<div class="col-xs-2 col-sm-1 col-lg-1" >
+					<div class="avatar"></div>
+				</div>
+				<div class="col-xs-10 col-lg-10 a-m ">
+				  <div class="row author">
+				    <div class="info col-xs-10 ">
+				     	<small class="tag">作者</small>
+					    <span class="author_name"></span>
+					    <div class="btn btn-xs btn-success">
+					     	<span class="glyphicon glyphicon-plus"></span>
+						    <span style="font-size: 13px;">关注</span>
+					    </div>
+				    </div>
+			       </div>
+		     <div class="row  meta">
+				<div class="col-xs-12">
+				 <small class="publish-time publish-p" style="font-weight: 1150;">2016.11.05 16:49</small>
+				 <small class="wordage hidden-xs publish-p">字数 </small>
+				 <small class="read-count hidden-xs publish-p">阅读</small>
+				 <small class="like-count hidden-xs publish-p">喜欢 </small>
+				 <small class="commments-count hidden-xs publish-p">评论 </small>
+				</div>
+				
+			</div>
+				</div>
+				
+			</div>
+			
+			<!--文章数据信息-->
+			<!--文章内容-->
+			
+			<div class="row article-content">
+				<div class="articleContent col-xs-12">
+				<!--<p>记得当年参加高考的前一晚，我整整一宿都没睡着觉。</p>
+				<p>准确地说，在高考来临的前一周，我没有一天晚上能睡好。</p>
+				<p>但同样记得有另一只国家队，身体素质各方面条件与前者别无二致，但几乎每到奥运会必进决赛圈，队员们把接棒技术以及团队协作的能力发挥到了极限，小伙子们愣是凭借着身体素质以外的面面俱到，跑赢了其他国家天赋爆表的黑人运动员。</p>
+		-->		</div>
+				
+			</div>
+			</div>
+			<div class="hidden-xs col-lg-2"></div>
+			
+			
+			
+		</div>
+		
+		<div class="hidden-xs col-lg-2"></div>
+	<div class="col-xs-12 col-lg-8">
+				
+				
+			
+					<div class="row comment-box" >
+				
+				<div class="row write-comment-area " style="margin-bottom: 5px;">
+					 <div class="col-xs-2 col-sm-1 col-md-1">
+					 	<img class="avatar" src="../img/article_img.jpg" />
+					 </div>
+					 <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11  write-area-box " id="writeAreaBox">
+					 	<textarea class="write-area"></textarea>
+					 </div>
+				</div>
+				
+				
+				
+				<div class="row "style="margin-bottom: 20px;" id="commentHandleBox">
+					<div class="col-xs-2 col-md-1"></div>
+					<div class="col-xs-1 col-md-1 col-sm-pull-1	 col-md-pull-0 col-lg-pull-0 " >
+						<span class="comment-expression-tag"></span>
+						
+					</div>
+					<div class=" col-md-4 col-md-pull-1 col-sm-4 col-sm-pull-2  hidden-xs" id="commentPromptBox">
+						<p class="comment-prompt" >Ctrl+Return 发表</p>
+					</div>
+					
+					<div class="col-xs-8 col-sm-5 col-md-6"  >
+						 <div class="row sort-select" style="float: right;">
+						 	<button class="sort-time comment-cancel"  id="commentCancel">取消</button>
+						   <button class="sort-heat comment-send" onclick="commentSend(this)">发送</button>
+						 </div>
+					</div>
+					
+				</div>
+				
+				
+				<div class="row">
+				
+				<div class="col-xs-6  "style="padding: 0px;">
+					<p style="float: left;font-size: 14px;margin-left: 14px;margin-top: -5px;" class="commet-count" >1条评论</p>
+					    <a style="float: left;margin-left: 10px;">只看作者</a>
+				</div>
+						
+					    <div class="col-xs-6 col-sm-5 col-md-5 col-sm-push-1  col-md-push-1  sort-select sort-addr" style="padding-left: 0px;">
+					    	<a style="float: right;margin-left: 10px;" class="sort-time" >按时间排序</a>
+					        <a style="float: right;" class="sort-heat">按热度排序</a>
+					    </div>
+					    
+				</div>
+				
+				
+			    </div>
+			    
+			    <div class="row comment-list ">
+			    	
+	          
+			    
+			    </div><!--comment-list-->
+			
+			
+		
+		</div>
+		
 	</body>
 </html>
 <SCRIPT Language=VBScript><!--

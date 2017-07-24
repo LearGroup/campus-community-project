@@ -10,18 +10,52 @@ body{
     font-family: "微软雅黑";
 }
 
+.header-style{
+	background: #458fce;
+	color:#67B168 ;
+}
 
+
+
+
+.fade-write-icon{
+	margin-top:8px;
+	margin-left: 11px;
+	font-size: 30px;
+	color: #dddddd;
+}
+.loader{
+	height: 100px;
+}
+
+
+
+.test-border{
+border: solid 1px;
+border-color: #000000;
+}
+
+
+.sigin_footer{
+	margin-bottom: 10px;
+}
 .register_famale_img{
-	background-image: url(../img/Male_icon.png);
 	left: 7%;
 	height:20px;
 	width: 20px;
-	margin-top: -6px;
+	margin-top: -1px;
 }
-
+.register_male_img{
+	left: 7%;
+	height:20px;
+	width: 20px;
+	margin-top: -1px;
+	
+}
 .header{
-  height: 60px;
+  height: 0px;
   background: #458fce;
+
 }
 .header-logo{
 	font-size: 24px;
@@ -63,13 +97,14 @@ body{
 }
 .list-container{
 	
+	padding: 0px 20px;
+	margin:  -15px 0px;
 }
 .content-box{
 	
-	border-bottom: 1px solid #285E8E;
-	margin-right: 20px;
+	background: #ffffee;
 	height: 160px;
-	
+
 }
 .meta .collection-tag{
 	border: 1px solid #31708F;
@@ -92,13 +127,16 @@ body{
 }
 .meta .font-color{
 	color: #B4B4B4;
+	margin-right: 1px;
+	margin-left: 10px;
 }
 .content-box .tag-footer{
 	bottom: 0px;
+	
 }
 
 .content-box .article{
-
+height: 100px;
 	
 }
 
@@ -112,13 +150,11 @@ line-height: 1.5;
 }
 
 .list-container .content-box .warp-img{
-	top: 6px;
+    
 	float: right;
-	margin-right: 10px;
-	width: 120px;
-	height: 100px;
-	background-size: cover;
-	background-image: url(../img/article_img.jpg);
+	height: 160px;
+	background-size:  cover;
+	background-image: url(/img/back-img2.jpg);
 }
 .list-container .content-box .name{
 	margin-left: 10px;
@@ -141,7 +177,15 @@ line-height: 1.5;
 	border-radius: 50%;
 }
 
+    .shadow{  
+      border-radius: 2px;
+       box-shadow: #666 1px 1px 2px;  
+      
+    }  
 
+
+.left-content{
+height: 160px;}
 @-webkit-viewport{ width: device-width;}
 @-moz-viewport{ width: device-width;}
 @-ms-viewport{width: device-width;}

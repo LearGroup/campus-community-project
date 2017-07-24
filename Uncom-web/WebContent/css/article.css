@@ -1,22 +1,23 @@
 *{
-		font-size: 14px;
+		font-size: 13px;
 	font-family: "微软雅黑";
 }
 
 .article .meta small{
-	color: #666666;
-	font-weight: 700;
+	color: #969696;
+	font-weight: 400;
+	font-size: 12px;
 
 }
 
 
 p{
-	color: #2f2f2f;
-	font-size: 20px;
+	color: #333;
+	font-size: 16px;
 	margin: 0 0 10px;
 	font-weight: 550;
 	margin: 0 0 10px;
-	line-height: 1.7;
+	line-height: 2.0;
 }
 .article .avatar{
 	background-size: cover;
