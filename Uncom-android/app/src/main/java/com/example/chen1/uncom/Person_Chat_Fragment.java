@@ -61,14 +61,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-public class Person_Chat_Fragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener ,FragmentBackHandler {
+public class Person_Chat_Fragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener, FragmentBackHandler {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private AppCompatImageView back_icon;
-    private int IniteFragment=0;
+    private int IniteFragment = 0;
     private TextView send_btn;
     private SharedPreferences sp;
     private static final String SHARE_PREFERENCE_NAME = "EmotionKeyboard";
@@ -80,23 +79,24 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     private String mParam2;
     private ViewGroup viewGroup;
     private EditText input_text;
-    private int  KeyBoardHeight;
+    private int KeyBoardHeight;
     private RecyclerView ContentView;
     private int ExpressionTypeCount;
     private InputMethodManager mInputManager;
-    private List<Integer> list=new ArrayList<>();
+    private List<Integer> list = new ArrayList<>();
     private RecyclerView ExpressionMenuType;
     private AppCompatImageView chat_more_icon;
     private AppCompatImageView ExpressionBtn;
-    private int ExpressionBtnStatus=0;
+    private int ExpressionBtnStatus = 0;
     private LinearLayout ExpressionLinearLayout;
+
     public Person_Chat_Fragment() {
         // Required empty public constructor
     }
 
-    private void InitExpression(){
+    private void InitExpression() {
         ExpressionMenuType.removeAllViews();
-        ExpressionTypeCount=2;
+        ExpressionTypeCount = 2;
         list.clear();
         list.add(R.drawable.ic_expression_2_icon);
         list.add(R.drawable.ic_vector_expression_heart_icon);
@@ -105,11 +105,11 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     }
 
 
-    private static Person_Chat_Fragment person_chat_fragment=null;
+    private static Person_Chat_Fragment person_chat_fragment = null;
 
-    public static Person_Chat_Fragment getInstance(){
-        if(person_chat_fragment==null){
-            person_chat_fragment=new Person_Chat_Fragment();
+    public static Person_Chat_Fragment getInstance() {
+        if (person_chat_fragment == null) {
+            person_chat_fragment = new Person_Chat_Fragment();
         }
         return person_chat_fragment;
     }
@@ -123,12 +123,14 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
         fragment.setArguments(args);
         return fragment;
     }
+
     /**
      * 隐藏软件盘
      */
     private void hideSoftInput() {
         mInputManager.hideSoftInputFromWindow(input_text.getWindowToken(), 0);
     }
+
     private void showEmotionLayout() {
         int softInputHeight = KeyBoardHeight;
         ExpressionLinearLayout.getLayoutParams().height = KeyBoardHeight;
@@ -152,6 +154,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
 
     /**
      * 隐藏表情布局
+     *
      * @param showSoftInput 是否显示软件盘
      */
     private void hideEmotionLayout(boolean showSoftInput) {
@@ -165,6 +168,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
 
     /**
      * 底部虚拟按键栏的高度
+     *
      * @return
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -185,6 +189,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
 
     /**
      * 是否显示软件盘
+     *
      * @return
      */
     private boolean isSoftInputShown() {
@@ -197,7 +202,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
          * decorView是window中的最顶层view，可以从window中通过getDecorView获取到decorView。
          * 通过decorView获取到程序显示的区域，包括标题栏，但不包括状态栏。
          */
-       getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
+        getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
         //获取屏幕的高度
         int screenHeight = getActivity().getWindow().getDecorView().getRootView().getHeight();
         //计算软件盘的高度
@@ -224,7 +229,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     /**
      * 锁定内容高度，防止跳闪
      */
-    private void lockContentHeight(){
+    private void lockContentHeight() {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) ContentView.getLayoutParams();
         params.height = ContentView.getHeight();
         params.weight = 0.0F;
@@ -243,13 +248,15 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-    private void quitFullScreen(){
-        mInputManager=  (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        final WindowManager.LayoutParams attrs =getActivity().getWindow().getAttributes();
+
+    private void quitFullScreen() {
+        mInputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        final WindowManager.LayoutParams attrs = getActivity().getWindow().getAttributes();
         attrs.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getActivity().getWindow().setAttributes(attrs);
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -266,38 +273,39 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
                 -1.0f);
         mHiddenAction.setDuration(150);
         quitFullScreen();
-        final View view= inflater.inflate(R.layout.fragment_person__chat_, container, false);
-        ExpressionViewPager=(ViewPager)view.findViewById(R.id.chat_expression_viewpager);
-        ExpressionMenuType= (RecyclerView) view.findViewById(R.id.chat_listmenuitem_view);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(view.getContext());
+        final View view = inflater.inflate(R.layout.fragment_person__chat_, container, false);
+        ExpressionViewPager = (ViewPager) view.findViewById(R.id.chat_expression_viewpager);
+        ExpressionMenuType = (RecyclerView) view.findViewById(R.id.chat_listmenuitem_view);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         ExpressionMenuType.setLayoutManager(linearLayoutManager);
         ExpressionMenuType.setHasFixedSize(true);
-        ContentView=(RecyclerView)view.findViewById(R.id.person_chat_recyclerview);
-        final Toolbar toolbar=(Toolbar)view.findViewById(R.id.person_chat_toolbar);
+        ContentView = (RecyclerView) view.findViewById(R.id.person_chat_recyclerview);
+        final Toolbar toolbar = (Toolbar) view.findViewById(R.id.person_chat_toolbar);
         setHasOptionsMenu(true);
-        send_btn=(TextView) view.findViewById(R.id.person_chat_send_button);
-        chat_more_icon=(AppCompatImageView)view.findViewById(R.id.appCompatImageView6);
-        input_text=(EditText) view.findViewById(R.id.person_chat_editText);
+        send_btn = (TextView) view.findViewById(R.id.person_chat_send_button);
+        chat_more_icon = (AppCompatImageView) view.findViewById(R.id.appCompatImageView6);
+        input_text = (EditText) view.findViewById(R.id.person_chat_editText);
         toolbar.inflateMenu(R.menu.person_chat_menu_layout);
-        ExpressionLinearLayout=(LinearLayout) view.findViewById(R.id.Expression_LinearLayout);
-        ExpressionBtn=(AppCompatImageView)view.findViewById(R.id.appCompatImageView5);
-        back_icon=(AppCompatImageView)view.findViewById(R.id.person_chat_back_icon);
+        ExpressionLinearLayout = (LinearLayout) view.findViewById(R.id.Expression_LinearLayout);
+        ExpressionBtn = (AppCompatImageView) view.findViewById(R.id.appCompatImageView5);
+        back_icon = (AppCompatImageView) view.findViewById(R.id.person_chat_back_icon);
 
         back_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager=RalationShipPageMainFragment.getInstance().getFragmentManager();
-                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                FragmentManager fragmentManager = RalationShipPageMainFragment.getInstance().getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-                fragmentManager.popBackStack();}
+                fragmentManager.popBackStack();
+            }
         });
-        SoftKeyBoardListener.setListener(getActivity(),new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
+        SoftKeyBoardListener.setListener(getActivity(), new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
             @Override
             public void keyBoardShow(int height) {
 
-              KeyBoardHeight=height;
-                if( ExpressionLinearLayout.isShown()){
+                KeyBoardHeight = height;
+                if (ExpressionLinearLayout.isShown()) {
                     lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
                     ExpressionLinearLayout.setVisibility(View.GONE);
                     unlockContentHeightDelayed();
@@ -325,7 +333,8 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
                             unlockContentHeightDelayed();
                         }
                     }, 200L);
-                } return false;
+                }
+                return false;
             }
         });
         input_text.addTextChangedListener(new TextWatcher() {
@@ -337,16 +346,17 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                }
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
-                if(input_text.getText().length()!=0&&send_btn.getVisibility()==View.GONE){
+                if (input_text.getText().length() != 0 && send_btn.getVisibility() == View.GONE) {
                     chat_more_icon.startAnimation(mHiddenAction);
                     chat_more_icon.setVisibility(View.GONE);
                     send_btn.startAnimation(mShowAction);
                     send_btn.setVisibility(View.VISIBLE);
 
-                }else if(input_text.getText().length()==0&&chat_more_icon.getVisibility()==View.GONE){
+                } else if (input_text.getText().length() == 0 && chat_more_icon.getVisibility() == View.GONE) {
                     send_btn.startAnimation(mHiddenAction);
                     send_btn.setVisibility(View.GONE);
                     chat_more_icon.startAnimation(mShowAction);
@@ -357,33 +367,33 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
         ExpressionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                  if(ExpressionLinearLayout.isShown()){
+                if (ExpressionLinearLayout.isShown()) {
                     Log.v("softInput", "true ");
-                      lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
-                      hideEmotionLayout(true);//隐藏表情布局，显示软件盘
-                      unlockContentHeightDelayed();//软件盘显示后，释放内容高度
+                    lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
+                    hideEmotionLayout(true);//隐藏表情布局，显示软件盘
+                    unlockContentHeightDelayed();//软件盘显示后，释放内容高度
 
 
-                }else{
-                      if (isSoftInputShown()) {//同上
-                          lockContentHeight();
-                          showEmotionLayout();
-                          unlockContentHeightDelayed();
-                      } else {
-                          showEmotionLayout();//两者都没显示，直接显示表情布局
-                      }
+                } else {
+                    if (isSoftInputShown()) {//同上
+                        lockContentHeight();
+                        showEmotionLayout();
+                        unlockContentHeightDelayed();
+                    } else {
+                        showEmotionLayout();//两者都没显示，直接显示表情布局
+                    }
 
-                  }
+                }
             }
         });
-        GrallyAdapter grallyAdapter=new GrallyAdapter(view.getContext());
-        ExpressionViewPager.setAdapter(new ChatExpressionTypePageSwitchAdapter(getChildFragmentManager(),list));
+        GrallyAdapter grallyAdapter = new GrallyAdapter(view.getContext());
+        ExpressionViewPager.setAdapter(new ChatExpressionTypePageSwitchAdapter(getChildFragmentManager(), list));
         ExpressionViewPager.setCurrentItem(0);
         ExpressionMenuType.setAdapter(grallyAdapter);
         grallyAdapter.setOnItemClickListener(new GrallyAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-               ExpressionViewPager.setCurrentItem(position);
+                ExpressionViewPager.setCurrentItem(position);
 
             }
 
@@ -406,7 +416,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
 
     @Override
     public boolean onBackPressed() {
-        if(ExpressionLinearLayout.isShown()){
+        if (ExpressionLinearLayout.isShown()) {
             ExpressionLinearLayout.setVisibility(View.GONE);
             return true;
         }
@@ -414,7 +424,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     }
 
 
-    interface  onBackListener{
+    interface onBackListener {
         public void backListener();
     }
 }

@@ -8,17 +8,15 @@
     android:layout_height="match_parent"
     tools:context="com.example.chen1.uncom.MainActivity">
     <android.support.design.widget.AppBarLayout
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.Toolbar
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/toolbar"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             android:theme="@style/AppBarOverlay"/>
-
-
     </android.support.design.widget.AppBarLayout>
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
