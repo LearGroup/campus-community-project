@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#e6e6e6"
@@ -10,20 +11,24 @@
     <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <com.example.chen1.uncom.NoScrollViewPager
             android:background="@color/colorEditTextNormal"
             android:id="@+id/chat_expression_viewpager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/circleIndicator">
         </com.example.chen1.uncom.NoScrollViewPager>
         <me.relex.circleindicator.CircleIndicator
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:id="@+id/circleIndicator"
+            app:ci_width="6dp"
+            app:ci_height="6dp"
+            app:ci_drawable="@drawable/circleindicatorchekced"
+            app:ci_drawable_unselected="@drawable/circleindicatoruncheck"
             android:layout_above="@+id/linearLayout"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:id="@+id/circleIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
         <LinearLayout
             android:layout_alignParentBottom="true"
             android:orientation="vertical"

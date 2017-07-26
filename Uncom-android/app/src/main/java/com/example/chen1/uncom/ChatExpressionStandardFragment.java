@@ -10,7 +10,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+
+import java.util.ArrayList;
+
+import me.relex.circleindicator.CircleIndicator;
 
 
 public class ChatExpressionStandardFragment extends Fragment {
@@ -20,13 +29,13 @@ public class ChatExpressionStandardFragment extends Fragment {
     private ViewPager chat_expression_viewpager;
     private static final String ARG_PARAM2 = "param2";
     private static ChatExpressionStandardFragment chatExpressionStandardFragment=null;
-    private int ExpressionPageCount;
+    private Integer ExpressionPageCount;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private ArrayMap<String,Integer> Emotion_map;
 
-
+    private ArrayList<LinearLayout> viewList;
 
     public ChatExpressionStandardFragment() {
         // Required empty public constructor
@@ -62,6 +71,7 @@ public class ChatExpressionStandardFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        Emotion_map=EmotionUtils.getEmojiMap(1);
+
         if(Emotion_map.size()/20!=0){
             ExpressionPageCount=Emotion_map.size()/20+1;
         }else{
@@ -75,15 +85,41 @@ public class ChatExpressionStandardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        InitPager(getContext());
         View view=inflater.inflate(R.layout.fragment_chat_expression_standard, container, false);
         chat_expression_viewpager=(ViewPager)view.findViewById(R.id.expression_standard_viewpager);
-        /*for (int i = 0; i <ExpressionPageCount ; i++) {
-            GridView gridView=(GridView)View.inflate(this.getContext(),R.layout.chat_expression_view_standard_layout,null);
-            gridView.setAdapter(new ExpessionStandardAdapter(Emotion_map,ExpressionPageCount,i,20));
-        }*/
+
+        chat_expression_viewpager.setAdapter(new ExpressionStandardPagedapter(viewList,ExpressionPageCount));
+        CircleIndicator cir= (CircleIndicator) getActivity().findViewById(R.id.circleIndicator);
+        cir.setViewPager(chat_expression_viewpager);
+
         return view;
     }
+    private void InitPager(Context context) {
+        GridView gridView;
+        WindowManager wm = (WindowManager)context
+                .getSystemService(Context.WINDOW_SERVICE);
+        int screenWidth = wm.getDefaultDisplay().getWidth();
 
-
+        viewList = new ArrayList<LinearLayout>();
+        for (int i = 0; i < ExpressionPageCount; i++) {
+            LayoutInflater layoutInflater=LayoutInflater.from(getContext());
+            LinearLayout linearLayout=(LinearLayout)layoutInflater.inflate(R.layout.chat_expression_view_standard_layout,null);
+            gridView = (GridView) linearLayout.findViewById(R.id.chat_expression_standard_girdview);
+            gridView.setNumColumns(7);
+            int itemWidth=dip2px(context,12);
+            Log.v("dp:px", String.valueOf(itemWidth));
+            int spacing = (screenWidth-itemWidth*7)/14;
+            gridView.setHorizontalSpacing(itemWidth);
+            gridView.setPadding(itemWidth,spacing,itemWidth,spacing);
+            gridView.setVerticalSpacing(spacing);
+            gridView.setAdapter(new ExpessionStandardAdapter(Emotion_map, ExpressionPageCount, i,context,screenWidth));
+            viewList.add(linearLayout);
+        }
+    }
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
 
 }
