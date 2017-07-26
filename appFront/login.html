@@ -239,6 +239,12 @@
 							account: accountBox.value,
 							password: passwordBox.value
 						};
+						
+						
+					mui.post("http://47.95.0.73:8080/Uncom/login_Login.action",{use:"phone",user:"15247126123",password:"123456"},function(data){
+						 console.log(data)
+					})
+					
 						app.login(loginInfo, function(err) {
 							if (err) {
 								plus.nativeUI.toast(err);
