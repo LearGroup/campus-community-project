@@ -14,7 +14,11 @@
 				margin: 0px;
 				padding: 0px;
 			}
-			.mui-content{height: 100%;}
+			
+			.mui-content {
+				height: 100%;
+			}
+			
 			.area {
 				margin: 20px auto 0px auto;
 			}
@@ -103,7 +107,7 @@
 			<form id='login-form' class="mui-input-group">
 				<div class="mui-input-row">
 					<label>账号</label>
-					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
+					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入邮箱">
 				</div>
 				<div class="mui-input-row">
 					<label>密码</label>
@@ -122,7 +126,9 @@
 			</form>
 			<div class="mui-content-padded">
 				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
-				<div class="link-area"><a id='reg'>注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
+				<div class="link-area">
+					<a id='reg'>注册账号</a> <span class="spliter">|</span>
+					<a id='forgetPassword'>忘记密码</a>
 				</div>
 			</div>
 			<div class="mui-content-padded oauth-area">
@@ -160,7 +166,7 @@
 						}, 0);
 					};
 					//检查 "登录状态/锁屏状态" 开始
-					if (settings.autoLogin && state.token && settings.gestures) {
+					if(settings.autoLogin && state.token && settings.gestures) {
 						$.openWindow({
 							url: 'unlock.html',
 							id: 'unlock',
@@ -171,7 +177,7 @@
 								autoShow: false
 							}
 						});
-					} else if (settings.autoLogin && state.token) {
+					} else if(settings.autoLogin && state.token) {
 						toMain();
 					} else {
 						app.setState(null);
@@ -180,10 +186,10 @@
 						var auths = {};
 						var oauthArea = doc.querySelector('.oauth-area');
 						plus.oauth.getServices(function(services) {
-							for (var i in services) {
+							for(var i in services) {
 								var service = services[i];
 								auths[service.id] = service;
-								if (~authBtns.indexOf(service.id)) {
+								if(~authBtns.indexOf(service.id)) {
 									var isInstalled = app.isInstalled(service.id);
 									var btn = document.createElement('div');
 									//如果微信未安装，则为不启用状态
@@ -194,7 +200,7 @@
 								}
 							}
 							$(oauthArea).on('tap', '.oauth-btn', function() {
-								if (this.classList.contains('disabled')) {
+								if(this.classList.contains('disabled')) {
 									plus.nativeUI.toast('您尚未安装微信客户端');
 									return;
 								}
@@ -239,19 +245,26 @@
 							account: accountBox.value,
 							password: passwordBox.value
 						};
-						
-						
-					mui.post("http://47.95.0.73:8080/Uncom/login_Login.action",{use:"phone",user:"15247126123",password:"123456"},function(data){
-						 console.log(data)
-					})
-					
-						app.login(loginInfo, function(err) {
-							if (err) {
-								plus.nativeUI.toast(err);
-								return;
+
+						mui.post("http://47.95.0.73:8080/Uncom/login_Login.action", {
+							use: "email",
+							user: loginInfo.account,
+							password: loginInfo.password
+						}, function(data) {
+							console.log(data)
+							data = parseInt(data);
+							if(data == 1){
+								toMain();
 							}
-							toMain();
-						});
+						})
+
+//						app.login(loginInfo, function(err) {
+//							if(err) {
+//								plus.nativeUI.toast(err);
+//								return;
+//							}
+//							toMain();
+//						});
 					});
 					$.enterfocus('#login-form input', function() {
 						$.trigger(loginButton, 'tap');
@@ -304,7 +317,7 @@
 					var backButtonPress = 0;
 					$.back = function(event) {
 						backButtonPress++;
-						if (backButtonPress > 1) {
+						if(backButtonPress > 1) {
 							plus.runtime.quit();
 						} else {
 							plus.nativeUI.toast('再按一次退出应用');
