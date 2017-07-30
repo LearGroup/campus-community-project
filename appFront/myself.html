@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/mui.picker.min.css" />
+		<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+		<style>
+			body {
+				background-color: #FFFFFF;
+			}
+			
+			.carouselItem {
+				display: none;
+				height: 90%;
+				padding-top: 10%;
+				background-color: #FFFFFF !important;
+				text-align: center;
+			}
+			
+			.active {
+				display: block;
+			}
+			
+			#carousel {
+				position: relative;
+			}
+			
+			.carousel_control {
+				background-color: rgba(0, 0, 0, 0.75);
+				font-size: 1em;
+				color: #FFFFFF;
+				font-family: "微软雅黑";
+				line-height: 100%;
+				text-align: center;
+			}
+			
+			.left {
+				left: 0px;
+				margin: 0 auto;
+			}
+			
+			.right {
+				right: 0px;
+			}
+			
+			.itemBox {
+				height: 100%;
+			}
+			
+			.stepTip {
+				width: 124px;
+				border-radius: 50%;
+				height: 124px;
+				line-height: 122px;
+				background-color: #10AEFF;
+				box-shadow: 0px 0px 30px #31B0D5;
+				display: block;
+				margin: 0 auto;
+				margin-bottom: 30px;
+			}
+			
+			.infoInput {
+				width: 80%;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				height: 40px;
+				border-radius: 8px;
+				border: 0px;
+				border: 1px #E6E6E6 solid;
+				padding-left: 10px;
+			}
+			
+			.point {
+				background-color: #87CEFF;
+				margin-top: 3px;
+				border: 0px;
+				color: #222222;
+				border-radius: 5px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="carousel">
+			<div class="itemBox">
+				<div id="_item1" class="carouselItem active">
+					<h1 class="stepTip">Step&nbsp;1</h1>
+					<h1 style="padding-left:5% ;padding-right: 5%;">选择出行天数和出行日期</h1>
+					<input class="infoInput" id="showUserPicker" class="mui-btn mui-btn-block" />
+					<input class="infoInput" id="pickDateBtn" /><br />
+					<button class="carousel_control right">下一步</button>
+
+				</div>
+				<div id="_item2" class="carouselItem">
+					<h1 class="stepTip">Step&nbsp;2</h1>
+					<h1 style="padding-left:5% ;padding-right: 5%;">选择出行人数</h1>
+					<input class="infoInput" id="peopleInput" />
+					<button class="carousel_control left">上一步</button>
+					<button class="carousel_control right">下一步</button>
+
+				</div>
+				<div id="_item3" class="carouselItem">
+
+					<h1 class="stepTip">Step&nbsp;3</h1>
+					<h1 style="padding-left:5% ;padding-right: 5%;">选择目的地</h1>
+					<input class="infoInput" id="place"/>
+					<button class="carousel_control left">上一步</button>
+					<button class="carousel_control right">下一步</button>
+
+				</div>
+				<!--<div id="_item4" class="carouselItem">
+					<h1 class="stepTip">Step&nbsp;4</h1>
+					<h1 style="padding-left:5% ;padding-right: 5%;">期待亮点</h1>
+					<p>
+						<button class="point">沙漠</button>
+						<button class="point">沙漠</button>
+						<button class="point">沙漠</button>
+						<button class="point">沙漠</button>
+						<button class="point">沙漠</button>
+					</p>
+					<button class="carousel_control left">上一步</button>
+					<button class="carousel_control right">下一步</button>
+
+				</div>-->
+				<div id="_item5" class="carouselItem">
+					<h1 class="stepTip">Step&nbsp;4</h1>
+					<h1 style="padding-left:5% ;padding-right: 5%;">出行预算(元)</h1>
+					<input class="infoInput" id="money"/>
+					<button class="carousel_control left">上一步</button>
+					<button class="carousel_control" id="submit">submit</button>
+
+				</div>
+			</div>
+
+		</div>
+
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script type="text/javascript" src="js/Carousel.js"></script>
+	<script type="text/javascript" src="js/mui.picker.min.js"></script>
+	<script type="text/javascript" src="js/personalTailor.js"></script>
+
+</html>
