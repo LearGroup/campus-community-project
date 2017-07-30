@@ -2,6 +2,28 @@
 	font-size: 14px;
 }
 
+
+
+.show_msg{
+				width:100%;
+				height:35px;
+				text-align:center;
+				position:fixed;
+				left: 0;
+				z-index:20000;
+			}
+				.show_span{
+					display: inline-block;
+					height: 35px;
+					padding: 0 15px;
+					line-height: 35px;
+					background:#ddffcc;
+					border-radius: 50px;
+					color:  black;
+					font-size: 1em;
+				}
+
+
  .article-p{
  	font-weight: 400;
 	line-height: 1.5;
@@ -11,17 +33,20 @@
 
 
 
+
+
 .user-p{
 	font-weight: 550;
 	font-size: 16px;
 	margin-top: -5px;
 }
 
-.comment-p{
-	color: #333;;
+.comment-p{ word-wrap:break-word; word-break:normal;
+	color: #333;
+	padding-right: 15px;
 	font-weight: 400;
 	line-height: 1.7;
-	margin-left: 33px;
+	
 	font-size: 14px;
 }
 .comment-child-lists .ChildCommentTrail{
@@ -41,39 +66,40 @@
    float: left;
 }
 .view-child-comment-list-tag-sm{
-	margin-right: 3px;
+	
+	font-size: 16px;
 	margin-top: 0px;
 	background-size: cover;
 	float: left;
-	height: 18px;
-	width: 18px;
-	display: block;
-	background-image: url(../img/ViewlistBlue.png);
+
 }
 
 
 .comment-child-list{
+	
 	margin-left: 0px;
 	margin-right: 0px;
 	padding: 10px;
+	padding-bottom: 0px;
+	margin-left: 18px;
+	border-left: 1px solid #000000;
 	
-	padding-bottom: 30px;
 }
 
 .comment-child-lists{
 	margin-left: 0px;
 	margin-right: 0px;
 	padding: 10px;
-	
 	padding-bottom: 30px;
 }
 
 .comment-child-list .child-comment{
+
 	
 }
 
 .comment-child-lists .child-comment .comment-child-footer{
-	border-bottom: 1px solid #222222;
+	border-bottom: 1px solid #E8E8E8;
 	margin-left: -10px;
 	margin-right: -10px;
 	padding: 0px;
@@ -81,7 +107,7 @@
 }
 
 .comment-child-list .child-comment .comment-child-footer{
-	border-bottom: 1px solid #222222;
+	border-bottom: 1px solid #E8E8E8;
 	margin-left: -10px;
 	margin-right: -10px;
 	padding: 0px;
@@ -89,7 +115,7 @@
 }
 
 .comment-child-lists .child-comment .comment-child-footer{
-	border-bottom: 1px solid #222222;
+	border-bottom: 1px solid #E8E8E8;
 	margin-left: -10px;
 	margin-right: -10px;
 	padding: 0px;
@@ -97,7 +123,7 @@
 }
 
 .comment-child-list .child-comment .comment-child-footer{
-	border-bottom: 1px solid #222222;
+	border-bottom: 1px solid #E8E8E8;
 	margin-left: -10px;
 	margin-right: -10px;
 	padding: 0px;
@@ -175,13 +201,16 @@
 	
 }
 .comment-expression-tag{
-	  display: block;
-   background-image: url(../img/SmileBlue.png);
+   display: block;
+    color: #1D9C73;
+  font-size: 28px;
    background-size: cover;
    height: 25px;
    width: 25px;
+ 
    margin-left: -25px;
    float: left;
+
 }
 .Childcomment .write-area{
 	height: :;0px;
@@ -194,48 +223,42 @@
 	padding: 0px;
 }
 .comment-list .toreply-tag{
+	margin-top:2px;
 	margin-right: 3px;
-	margin-top: 0px;
 	background-size: cover;
+	font-size: 16px;
 	float: left;
-	height: 18px;
-	width: 18px;
-	display: block;
-	background-image: url(../img/skipBlue.png);
+	
 	
 }
 
 .comment-list .fabulous-tag{
-	margin-right: 3px;
+	
 	margin-top: 0px;
+	margin-right: 3px;
 	background-size: cover;
 	float: left;
-	height: 18px;
-	width: 18px;
-	display: block;
-	background-image: url(../img/goodBlue.png);
+	font-size: 16px;
 	
 }
 
 .comment-list .reply-tag{
-	margin-right: 3px;
-	margin-top: 2px;
+	font-size: 16px;
 	background-size: cover;
 	float: left;
-	height: 18px;
-	width: 18px;
-	display: block;
-	background-image: url(../img/commentsBlue.png);
+	margin-right: 3px;
+
+	
 	
 }
 
 .comment-list .comment-border{
-	border-top: 1px solid  #458FCE ;
+	border-top: 1px solid  #E8E8E8 ;
 	padding-top: 10px;
 }
 
 .test-border{
-	border: solid 1px  #66AFE9; 
+	border: solid 1px  #E8E8E8; 
 }
 
 
@@ -262,11 +285,13 @@
 	font-size: 16px;
 }
 .comment-box .comment-expression-tag{
-   display: block;
-   background-image: url(../img/SmileBlue.png);
+	display: block;
+     color: #1D9C73;
+  font-size: 28px;
    background-size: cover;
    height: 25px;
    width: 25px;
+ 
    margin-left: -25px;
    float: left;
 }

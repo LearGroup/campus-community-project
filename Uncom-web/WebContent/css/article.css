@@ -9,7 +9,13 @@
 	font-size: 12px;
 
 }
-
+ .test-border{
+ 	border: solid 1px   #088EF0;
+ }
+ 
+ a{
+ 	color: #737373;
+ }
 
 p{
 	color: #333;
@@ -33,14 +39,26 @@ p{
 	margin-right: 3px;
 	font-weight: 900;
 }
-.article .tag{
+.article .forktag{
+	height: 20px;
 	margin-right: 3px;
-	border:  1px solid #EA6F78;
-	color: #EA6F78;
+	background:  #1D9B72;
+	border:  1px solid #1D9B72;
+	color: #FFFFFF;
 	border-radius: 10%;
 	padding-left: 2px;
 	padding-right:2px ;
 }
+.article .authortag{
+	height: 20px;
+	margin-right: 3px;
+	border:  1px solid #1D9B72;
+	color:  #1D9B72;
+	border-radius: 10%;
+	padding-left: 2px;
+	padding-right:2px ;
+}
+
 
 .article .a-m{
 	margin-bottom: 30px;

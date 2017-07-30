@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping
+  PUBLIC "-//Hibernate?Hibernate Mapping DTD//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+  <hibernate-mapping>
+  <class name="bean.commentData" table="article_comment">
+      <id name="id" column="id">
+       <generator class="uuid2"></generator>
+      </id>
+      
+      <property name="content" column="content"></property>
+      <property name="authorId" column="author_id"></property>
+      <property name="articleId" column="article_id"></property>
+      <property name="createTime" column="create_time"></property>
+      <property name="updateTime" column="update_time"></property>
+      <property name="isDelete" column="is_delete"></property>
+      <property name="likes" column="likes"></property>
+      <property name="noLike" column="no_like"></property>
+      <property name="commentLevel" column="comment_level"></property>
+      <property name="commentParentId" column="comment_parent_id"></property>
+      <property name="commentChildCount" column="comment_child_count"></property>
+      
+    
+  </class>
+  </hibernate-mapping>

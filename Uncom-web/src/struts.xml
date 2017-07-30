@@ -54,6 +54,7 @@
  	 <global-allowed-methods>regex:.*</global-allowed-methods>  
 	
 		<action name="login_*" class="login.loginAction" method="{1}">
+		    
 		</action>
 		
 		<action name="register_*" class="register.registerAction" method="{1}">
@@ -68,6 +69,7 @@
 
 	  <action name="article_*" class="Load.loadAction" method="{1}"></action>
 	  <action name="getArticle" class="Load.loadAction" method="getArticle"></action>
+	  <action name="getArticleCommentSetForOneLevel" class="Load.loadAction" method="getArticleCommentSetForOneLevel"></action>
 	  <action  name="*" class="Load.loadAction" method="Page">
 	  <result name="success">/article/article.html</result>
 	  </action> 
@@ -78,7 +80,7 @@
 	     <global-allowed-methods>regex:.*</global-allowed-methods>
 	     <action name="saveArticle" class="save.saveAction" method="saveArticle"></action>
 	     <action name="getcollactionTag" class="save.saveAction" method="getcollactionTag"></action>
-	  
+	     <action name="pushComment" class="save.saveAction" method="pushComment"></action>
 	</package>
 	
 

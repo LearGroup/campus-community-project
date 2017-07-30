@@ -50,5 +50,6 @@ jdbc:mysql://localhost:3306/jsp_app
 	   <mapping resource="bean/articleData.hbm.xml"/>
 	   <mapping resource="bean/userData.hbm.xml"/>
 	   <mapping resource="bean/collectionTag.xml"/>
+	   <mapping resource="bean/commentData.hbm.xml"/>
 	</session-factory>
 </hibernate-configuration>

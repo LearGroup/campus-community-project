@@ -117,6 +117,7 @@ public class loginAction extends ActionSupport {
 	}
 
 	public String Login() throws Exception {
+
 		System.out.println("Get into Login");
 		request = ServletActionContext.getRequest();
 		PrintWriter out = getPrintWriter();
@@ -151,7 +152,8 @@ public class loginAction extends ActionSupport {
 		}
 		CloseWirter(out);
 
-		return null;
+		
+		return "Login";
 	}
 
 	public String Logout() throws Exception {

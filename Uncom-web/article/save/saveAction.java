@@ -20,6 +20,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 import bean.articleData;
+import bean.commentData;
 import bean.userData;
 import dao.hibernateStartPrepare;
 import net.sf.json.JSONArray;
@@ -34,6 +35,13 @@ public class saveAction extends ActionSupport {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private HttpSession session = null;
+	private String articleId;
+	private String authorId;
+	private Integer commentLevel;
+	private String comment;
+	private String commentParentId = null;
+	private commentData cd;
+	private Integer commentCount = 0;
 
 	public String checkStatus() throws Exception {
 
@@ -67,6 +75,58 @@ public class saveAction extends ActionSupport {
 			out.close();
 		}
 
+	}
+
+	public String pushComment() throws IOException {
+		cd = new commentData();
+		SessionFactory sessionFactory = hibernateStartPrepare.getSessionFactory();
+		Session sessions = sessionFactory.openSession();
+		Transaction transaction = sessions.beginTransaction();
+
+		PrintWriter out = getPrintWriter();
+		request = ServletActionContext.getRequest();
+		articleId = (String) request.getSession().getAttribute("articleId");
+		response = ServletActionContext.getResponse();
+		session = ServletActionContext.getRequest().getSession();
+		ud = (userData) session.getAttribute("user");
+		authorId = ud.getId();
+		commentLevel = Integer.parseInt(request.getParameter("commentLevel"));
+		comment = request.getParameter("comment");
+		commentCount = 0;
+		String sql_2 = "select ad from articleData ad where ad.id='" + articleId + "'";
+		Query query = sessions.createQuery(sql_2);
+		ad = (articleData) query.uniqueResult();
+		commentCount = ad.getCommentCount();
+		commentCount += 1;
+		ad.setCommentCount(commentCount);
+		Date date = new Date();
+		String id = UUID.randomUUID().toString();
+		cd.setId(id);
+		cd.setArticleId(articleId);
+		cd.setAuthorId(authorId);
+		cd.setCommentLevel(commentLevel);
+		cd.setContent(comment);
+		cd.setCreateTime(date);
+		cd.setIsDelete(0);
+		cd.setLikes(0);
+		cd.setNoLike(0);
+		cd.setCommentParentId(commentParentId);
+		cd.setUpdateTime(date);
+		cd.setCommentChildCount(0);
+		try {
+			sessions.save(ad);
+			sessions.save(cd);
+			transaction.commit();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+			out.print("0");
+			transaction.rollback();
+		} finally {
+			sessions.close();
+		}
+		out.print(articleId);
+		return null;
 	}
 
 	public String getcollactionTag() throws Exception {
@@ -111,16 +171,22 @@ public class saveAction extends ActionSupport {
 			String createTime = sdf.format(date);
 			int isDelete = 0;
 			String article_abstract;
-			article_content=article_content.replace("<br>", "");
+			article_content = article_content.replace("<br>", "");
+
 			if (article_content.length() < 100) {
-				article_abstract = article_content; 
-				article_abstract=article_abstract.replace("<p>", "").replace("</p>", "").replace("<br>", "");
-				
+				article_abstract = article_content;
+				article_abstract = article_abstract.replace("<p>", "").replace("</p>", "").replace("<br>", "");
+
 			} else {
 				article_abstract = article_content.substring(0, 100) + "...";
-				article_abstract=article_abstract.replace("<p>", "").replace("</p>", "").replace("<br>", "");
-	
+				article_abstract = article_abstract.replace("<p>", "").replace("</p>", "").replace("<br>", "");
+
 			}
+			if (collectionTagId.equals(4)) {
+				article_abstract=article_content.replace("<p>", "").replace("</p>", "");
+				article_content="";
+			}
+			
 			String article_name = request.getParameter("articleName");
 			;
 			String author_id = ud.getId();
