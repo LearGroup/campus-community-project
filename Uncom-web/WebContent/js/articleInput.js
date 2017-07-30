@@ -6,7 +6,6 @@ var tag
 var articlecontent
 var title
 $(function() {
-	
 	$(".send-btn").popover({
 		trigger: 'click',
 		title: "",

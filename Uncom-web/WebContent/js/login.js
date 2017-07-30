@@ -38,13 +38,13 @@ function login(data) {
 	} else {
 		$("#login_input_password_div").attr("class", "form-group-sm has-success")
 		clearTimeout(time);
-		time = setTimeout(function() {
+		time = setTimeout(function(){
 			$.post("/Uncom/login_Login.action", {
 				use: sor,
 				user: $("#login_input_username").val(),
 				password: $("#login_input_password").val()
-			}, function(date) {
-				if(date == 0) {
+			}, function(date){
+				if(date == "0" ){
 
 					$("#login_input_username_div").attr("class", "form-group-sm has-error ")
 					$("#login_input_password_div").attr("class", "form-group-sm has-error")
@@ -64,6 +64,7 @@ function login(data) {
 
 					}
 					if(data == 0) {
+						console.log("exit")
 						$("#login_input_username_div").attr("class", "form-group-sm ")
 						$("#login_input_password_div").attr("class", "form-group-sm ")
 						$("#login_btn").unbind("click")

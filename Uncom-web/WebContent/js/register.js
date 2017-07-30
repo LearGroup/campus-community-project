@@ -86,7 +86,7 @@ function register_email_check(){
         }
 
         if(checked_sum==true&&checked_sum_2==true&&checked_sum_3==true&&checked_sum_4==true&&checked_sum_5==true){
-        	$.post("/Uncom/register_Register.action",{username:input_username,password:input_password,email:input_email,sex:male,sprovince:sprovince,stown:stown,sarea:sarea},function(date){
+        	$.post("/Uncom/register_Register.action",{username:input_username,password:input_password,email:input_email,sex:male,sprovince:sprovince,stown:stown,sarea:sarea},function(dates){
         		
         		/*
         		 * 定义返回值数值: 
@@ -94,17 +94,20 @@ function register_email_check(){
         		 * 2 邮箱重复
         		 * 
         		 */
+        		console.log(dates)
         		  
-        		if(date==1){
-        			
-        		}
-        		else if(date==2){
-        			
-        		}
-        		else{
-        			document.getElementById("login_page_row").innerHTML=date
+        		if(dates=="1"){
+        			console.log("success")
+        			showMsg('注册成功', 'top');
+        			document.getElementById("login_page_row").innerHTML=""
         			closeHtml()
         			console.debug("closehtm begin")
+        		}
+        		else if(dates=="0"){console.log("error-0")
+        			showMsg('注册失败', 'top');
+        		}else{
+        			console.log("error-2")
+        			showMsg('注册失败', 'top');
         		}
         	})
         }
@@ -231,3 +234,29 @@ function Checking(){
 
 
 
+function showMsg(text, position) {
+	var show = $('.show_msg').length
+	if(show > 0) {
+
+	} else {
+		var div = $('<div></div>');
+		div.addClass('show_msg');
+		var span = $('<span></span>');
+		span.addClass('show_span');
+		span.appendTo(div);
+		span.text(text);
+		$('body').append(div);
+	}
+	$(".show_span").text(text);
+	if(position == 'bottom') {
+		$(".show_msg").css('bottom', '5%');
+	} else if(position == 'center') {
+		$(".show_msg").css('top', '');
+		$(".show_msg").css('bottom', '50%');
+	} else {
+		$(".show_msg").css('bottom', '75%');
+	}
+	$('.show_msg').hide();
+	$('.show_msg').fadeIn(1000);
+	$('.show_msg').fadeOut(1000);
+}
