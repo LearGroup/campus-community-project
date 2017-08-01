@@ -1,8 +1,19 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: #009A61;
 }
 
 a {
   color: #00B7FF;
+}
+
+
+.title-head-style{
+	
+}
+
+.title-head-style h1,p{
+	color: #FFFFFF;
+
 }

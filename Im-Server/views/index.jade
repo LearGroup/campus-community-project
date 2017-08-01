@@ -1,5 +1,9 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+ div.container-fluid
+   div.row.title-head-style
+     div.col-xs-12.text-center(style="border:solid 1px #FFFFFF")
+       div
+         h1=title	
+         p Welcome  to #{title}
