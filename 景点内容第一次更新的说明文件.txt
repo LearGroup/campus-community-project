@@ -1,9 +1,0 @@
-by:王亚宁
-2017/8/4
-说明：添加了一系列dis开头的html/css/js文件用于我对景点内容页面的开发（可能有没有用到的）
-使用说明：
-1、在需要使用景点内容的页面中添加<script type="text/javascript" src="js/inDistination.js" ></script>
-2、在该页面的链接处添加 id="distination"
-既可。
-
-
