@@ -1,0 +1,91 @@
+
+<!doctype html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/disDemo.css" />
+		<link rel="stylesheet" href="css/mui.min.css" />
+		<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/disDemo.js"></script>
+		<title></title>
+	</head>
+
+	<body>
+		
+		<div id="slider" class="mui-slider">
+			<div class="mui-slider-group mui-slider-loop">
+				<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#">
+						<img class="imgSize" src="img/nh5.jpg" >
+					</a>
+				</div>
+				<!-- 第一张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img class="imgSize" src="img/nh1.jpeg">
+					</a>
+				</div>
+				<!-- 第二张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img class="imgSize" src="img/nh2.jpeg">
+					</a>
+				</div>
+				<!-- 第三张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img class="imgSize" src="img/nh3.jpeg">
+					</a>
+				</div>
+				<!-- 第四张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img class="imgSize" src="img/nh4.jpeg">
+					</a>
+				</div>
+				<div class="mui-slider-item">
+					<a href="#">
+						<img class="imgSize" src="img/nh5.jpg">
+					</a>
+				</div>
+				<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#">
+						<img class="imgSize" src="img/nh1.jpeg">
+					</a>
+				</div>
+			</div>
+			
+			<div>
+				<button type="button" data-loading-text="提交中" class="mui-btn mui-btn-warning" >确认</button>
+			</div>
+			
+			<p style="margin: 30px 15px 20px;">这是transparent bar（透明导航栏）演示页面， 默认情况下标题栏透明，
+				当用户向下滚动时，标题栏逐渐由透明转变为不透明；当用户再次向上滚动时，标题栏又从不透明变为透明状态。
+			</p>
+			<p style="margin: 5px 15px 15px 15px;">
+				这是一种解决滚动条通顶问题的变通解决方案，该方案相比双webview的方案，性能更高，动效更酷，但也有其适用场景：
+			</p>
+			<ul class="hm-description">
+				<li>顶部最好有图片或轮播组件</li>
+				<li>导航栏字体颜色和图片颜色协调</li>
+			</ul>
+			<h5 class="mui-content-padded">图片类型</h5>
+			<form class="mui-input-group" style="margin-bottom: 300px;">
+				<div class="mui-input-row mui-radio">
+					<label>静态图片</label>
+					<input name="style" type="radio" checked value="static">
+				</div>
+				<div class="mui-input-row mui-radio">
+					<label>轮播图</label>
+					<input name="style" type="radio" value="slider">
+				</div>
+			</form>
+			
+	</body>
+
+</html>

@@ -38,9 +38,16 @@
 			"img/1174805.png",
 			"img/check_list_91.818181818182px_1208743_easyicon.net.png",
 			"img/plane_137px_1174801_easyicon.net.png",
-			"img/map_133.10487444609px_1208686_easyicon.net.png"
+			"img/map_133.10487444609px_1208686_easyicon.net.png",
+			"js/inDistination.js",
+			"nav_transparent.html"
 		],
-		"refer": []
+		"refer": [
+			"destinationIndex.html",
+			"distinationIndex.html",
+			"nav_transparent.html",
+			"distination.html"
+		]
 	},
 	"tab-webview-subpage-setting.html": {
 		"resources": [
@@ -65,7 +72,8 @@
 		],
 		"refer": [
 			"index.html",
-			"reg.html"
+			"reg.html",
+			"forget_password.html"
 		]
 	},
 	"reg.html": {
@@ -106,5 +114,112 @@
 			"css/mui.min.css"
 		],
 		"refer": []
+	},
+	"forget_password.html": {
+		"resources": [
+			"css/style.css"
+		]
+	},
+	"destinationIndex.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"child.html",
+			"img/1174796.png",
+			"img/passport_104px_1174798_easyicon.net.png",
+			"js/mui.min.js",
+			"img/1174793.png",
+			"css/mui.min.css",
+			"img/earth_137px_1174797_easyicon.net.png",
+			"img/personlINF.png",
+			"img/yd1.PNG",
+			"css/destination.css",
+			"img/yd2.png"
+		],
+		"refer": [
+			"child.html",
+			"disDemo.html"
+		]
+	},
+	"child.html": {
+		"resources": [
+			"img/ocean_sea_ship_128px_4242_easyicon.net.png",
+			"img/visa_copyrighted_512px_1169043_easyicon.net.png",
+			"img/film_roll_928px_1199859_easyicon.net.png",
+			"js/child.js",
+			"img/train_374px_1186128_easyicon.net.png",
+			"img/team_545px_1208217_easyicon.net.png",
+			"img/wifi_663px_1206463_easyicon.net.png"
+		]
+	},
+	"disDemo.html": {
+		"resources": [
+			"img/nh2.jpeg",
+			"img/nh1.jpeg",
+			"img/nh4.jpeg",
+			"js/disDemo.js",
+			"img/nh3.jpeg",
+			"css/disDemo.css",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/jquery-2.1.0.js",
+			"img/nh5.jpg",
+			"img/yd2.png",
+			"img/yd1.PNG",
+			"images/qq.png"
+		]
+	},
+	"distinationIndex.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"disDemo.html",
+			"css/destination.css",
+			"js/mui.min.js",
+			"img/1174793.png",
+			"css/mui.min.css",
+			"img/yd1.PNG",
+			"distination.html"
+		],
+		"refer": [
+			"disDemo.html",
+			"distination.html"
+		]
+	},
+	"nav_transparent.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"disDemo.html",
+			"img/nh1.jpeg",
+			"img/nh2.jpeg",
+			"img/nh4.jpeg",
+			"img/nh3.jpeg",
+			"img/nh (2).jpg",
+			"img/nh6 (1).jpg",
+			"img/nh6 (3).jpg"
+		],
+		"refer": [
+			"disDemo.html"
+		]
+	},
+	"distination.html": {
+		"resources": [
+			"img/nh2.jpeg",
+			"img/nh4.jpeg",
+			"img/nh6 (1).jpg",
+			"img/nh (2).jpg",
+			"img/nh3.jpeg",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"distinationIndex.html",
+			"img/nh6 (3).jpg",
+			"images/qq.png",
+			"img/duoyun.png",
+			"images/user-photo.png"
+		],
+		"refer": [
+			"distinationIndex.html"
+		]
 	}
 }

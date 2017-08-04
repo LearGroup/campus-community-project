@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<!--
+	作者：1249164452@qq.com
+	时间：2017-08-04
+	描述：用于展示景点详情的页面
+-->
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-bar .mui-pull-left .mui-icon {
+				padding-right: 5px;
+				font-size: 28px;
+			}
+			
+			.mui-bar .mui-btn {
+				font-weight: normal;
+				font-size: 17px;
+			}
+			
+			.mui-bar .mui-btn-link {
+				top: 1px;
+			}
+			
+			.mui-content img{
+				width: 100%;
+			}
+			.hm-description{
+				margin: 15px;
+			}
+			
+			.hm-description>li {
+				font-size: 14px;
+				color: #8f8f94;
+			}
+			.title {
+				background-color: #49bdcc !important;
+			}
+			.imgSize{
+					height: 200px !important;
+					width: 100% !important;
+			}
+			#title{
+					font-family: "微软雅黑" !important;
+					color: #555555 !important;
+			}
+			.mui-bar-transparent{
+
+			}
+			.kuang{
+				background-color: #F9F9F9;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<header id="header" class="mui-bar mui-bar-transparent " data-top='0'>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" ></a>
+			<h1 id="title" class="mui-title" >景点详情</h1>
+		</header>
+
+		<div class="mui-content">
+			<!--静态图片-->
+			<img id="img1" src="img/nh (2).jpg" height="195px" width="100%" href="#"> 
+			<!--轮播图片-->
+			<div id="slider" class="mui-slider mui-hidden" >
+			  <div class="mui-slider-group">
+			    <!-- 第一张 -->
+			     <div class="mui-slider-item">
+			      <a href="#">
+			        <img src="img/nh6 (1).jpg" class=imgSize>
+			      </a>
+			    </div>
+			    <!-- 第二张 -->
+			    <div class="mui-slider-item">
+			      <a href="#">
+			        <img src="img/nh2.jpeg" class=imgSize>
+			      </a>
+			    </div>
+			    <!-- 第三张 -->
+			    <div class="mui-slider-item">
+			      <a href="#">
+			        <img src="img/nh3.jpeg" class=imgSize>
+			      </a>
+			    </div>
+			    <!-- 第四张 -->
+			    <div class="mui-slider-item">
+			      <a href="#">
+			        <img src="img/nh4.jpeg" class=imgSize>
+			      </a>
+			    </div>
+			  </div>
+			  
+			  
+			  <div class="mui-slider-indicator">
+			    <div class="mui-indicator mui-active"></div>
+			    <div class="mui-indicator"></div>
+			  </div>
+			</div>
+			<ul class="mui-table-view"> 
+       			<li class="mui-table-view-cell mui-collapse">
+           			<a class="mui-navigate-right" href="#">图片显示</a>
+            			<div class="mui-collapse-content">
+                			<form class="mui-input-group" >
+								<div class="mui-input-row mui-radio mui-left">
+									<label>南湖湿地公园</label>
+									<input name="style" type="radio" checked value="static">
+								</div>
+								<div class="mui-input-row mui-radio mui-left">
+									<label>园内风光</label>
+									<input name="style" type="radio" value="slider">
+								</div>
+							</form>
+            			</div>
+            			
+        		</li>
+    		</ul>
+			
+			
+			<div class="mui-content kuang">
+    			<div class="mui-row">
+        			<div class="mui-col-sm-8">
+            			<li class="mui-table-view-cell">
+                			<a class="mui-navigate-right">
+                    			地点简介    
+                			</a>
+            			</li>
+        			</div>
+        			<p style="margin: 30px 15px 20px;">南湖湿地公园规划面积1165公顷(17475亩)，按功能分为三大区：草原风光区558公顷；湿地景观区425公顷；滨河项目区182公顷。其中一期工程占地606公顷。 <br>
+　　					草原风光区的景观规划以蒙古族的发展史为主线，通过对蒙古族生活方式的变化及经济发展的展现，让人领略到内蒙古草原文化、风俗民情的独特魅力。从蒙古族依水而居的民俗游览区到游牧生活的牧野风光区，对蒙古族餐饮、娱乐、历史文化作了完美的诠释，使人们足不出室便能体验到草原文化。
+					</p>
+					
+					<ul class="mui-table-view"> 
+       					 <li class="mui-table-view-cell mui-collapse">
+           					<a class="mui-navigate-right" href="#">
+           						<span class="mui-icon mui-icon-flag"></span>
+           						门票
+           					</a>
+            					<div class="mui-collapse-content">
+                					成人 0 元&nbsp;&nbsp;&nbsp;&nbsp;儿童 0 元
+            					</div>
+            					<div class="mui-collapse-content">
+                					<button type="button" class="mui-btn mui-btn-warning">立即订票</button>
+            					</div>
+        				</li>
+    				</ul>
+					
+        		<div class="mui-col-sm-6">
+            			<li class="mui-table-view-cell">
+                			<a class="mui-navigate-right">
+                    			到达方式
+                			</a>
+            			</li>
+        			</div>
+        			<p style="margin: 30px 15px 20px;"> <br>乘车路线：呼和浩特市内可以乘坐1、6、27、55、62公交车到南湖湿地公园下车
+        				
+        			</p>
+        			<ul class="mui-table-view"> 
+       					 <li class="mui-table-view-cell mui-collapse">
+           					<a class="mui-navigate-right" href="#">
+           						<span class="mui-icon mui-icon-map"></span>
+           						地图
+           					</a>
+            					<div class="mui-collapse-content">
+                					<a id=baidumap>
+                						<p id=title>百度地图</p>
+                					</a>
+            					</div>
+            					<!--div class="mui-collapse-content">
+                					<a href="">
+                						<p id=title>园内地图</p>
+                					</a>
+            					</div-->
+        				</li>
+    				</ul>
+    			</div>
+			</div>
+			
+			<!--
+			<ul class="hm-description">
+				<li>顶部最好有图片或轮播组件</li>
+				<li>导航栏字体颜色和图片颜色协调</li>
+			</ul>-->
+		
+			<div style="background-color:#FFFFFF;">
+				<p style="margin: 5px 10px 10px; font-family: '微软雅黑'; font-size: large;color:#EC971F;">
+					<span class="mui-icon mui-icon mui-icon-paperclip"></span>
+					入园须知
+				</p>
+				<p style="margin: 10px 10px 10px; font-family: '微软雅黑'; font-size:14px;color: #EC971F;">
+					无需购买门票，进入后购买单独项目票（如：船票）
+				</p>
+			</div>
+			<div style="background-color:#FFFFFF;">
+				<ul class="mui-table-view"> 
+       					 <li class="mui-table-view-cell mui-collapse">
+           					<a class="mui-navigate-right" href="#">
+           						<span class="mui-icon mui-icon-chat"></span>
+           						游客评论
+           					</a>
+            					<div class="mui-collapse-content">
+            						<ul class="mui-table-view">
+    									<li class="mui-table-view-cell">
+    										<!--卡片-->
+											<div class="mui-card">
+											<!--页眉，放置标题-->
+												<div class="mui-card-header">
+													<img src="images/user-photo.png" />
+														<div class="mui-media-body">
+															小M
+															<p>发表于 2017-07-2 15:30</p>
+														</div>
+												</div>
+												<!--内容区-->
+												<div  class="mui-card-content">
+													<img src="img/nh6 (3).jpg" height="250px" width="100%">
+												</div>
+												<!--页脚，放置补充信息或支持的操作-->
+												<div class="mui-card-footer">页脚</div>
+											</div>
+    									</li>
+    									<li class="mui-table-view-cell">
+    										<!--卡片-->
+											<div class="mui-card">
+											<!--页眉，放置标题-->
+												<div class="mui-card-header">
+													<img src="images/qq.png" />
+														<div class="mui-media-body">
+															小Q
+															<p>发表于 2017-06-30 15:30</p>
+														</div>
+												</div>
+												<!--内容区-->
+												<div  class="mui-card-content">
+													<img src="img/nh6 (3).jpg" height="250px" width="100%">
+												</div>
+												<!--页脚，放置补充信息或支持的操作-->
+												<div class="mui-card-footer">页脚</div>
+											</div>
+    									</li>
+    									<li class="mui-table-view-cell">Item 3</li>
+									</ul>
+                					
+									
+								<!--划分游客评论区域-->	
+            					</div>
+            					
+        				</li>
+    				</ul>
+				
+
+				
+			
+			
+			
+			
+		</div>
+		
+			
+		
+		
+		
+		
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				
+				/*preliadLimit:5,
+      		subpages:[{
+      			url:'disDemo.html',//disDemo.html 是用来展示景点详情内容的测试页面
+      			id:'disDemo',
+      			styles:{
+      				top:'45px',
+      				bottom:'0px'
+      			}
+      		}],*/
+				swipeBack: true //启用右滑关闭功能
+			});
+			var slider = document.getElementById("slider");
+			
+			mui.ready(function(){
+				document.querySelector('#baidumap').addEventListener('click',function(){
+					mui.openWindowWithTitle({
+						url:'distinationIndex.html',
+						id:'distinationIndex.html'
+					})
+				})
+	
+			})
+			
+			mui('.mui-input-group').on('change', 'input', function() {
+				if (this.checked) {
+					switch (this.value) {
+						case 'static':
+							document.getElementById("img1").className = "";
+							document.getElementById("slider").classList.add("mui-hidden");
+							break;
+						case 'slider':
+							document.getElementById("img1").className = "mui-hidden";
+							if(slider.classList.contains("mui-hidden")){
+								document.getElementById("slider").classList.remove("mui-hidden");
+							}
+							break;
+					}
+				}
+			});
+		</script>
+
+	</body>
+
+</html>

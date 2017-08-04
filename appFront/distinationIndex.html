@@ -1,0 +1,54 @@
+
+<!doctype html>
+<!--
+	作者：1249164452@qq.com
+	时间：2017-08-03
+	描述：用来显示地图详情的框架页面
+-->
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/destination.css" />
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" charset="utf-8">
+      	mui.init({
+      		
+      		preliadLimit:5,
+      		subpages:[{
+      			url:'http://map.baidu.com/mobile/webapp/search/search/qt=s&wd=%E5%8D%97%E6%B9%96%E6%B9%BF%E5%9C%B0%E5%85%AC%E5%9B%AD&c=297&searchFlag=bigBox&version=5&exptype=dep&src_from=webapp_all_bigbox&wd2=%E5%91%BC%E5%92%8C%E6%B5%A9%E7%89%B9%E5%B8%82%E7%8E%89%E6%B3%89%E5%8C%BA&sug_forward=b3aa435d7861b80b15764315&src=1/vt=',
+      			id:'baidumap1',
+      			styles:{
+      				top:'45px',
+      				bottom:'0px'
+      			}
+      		}]
+      	});
+    </script>
+    <style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.title {
+				background-color: #49bdcc !important;
+			}
+		</style>
+		
+	</head>
+
+	<body>
+		
+		<header class="mui-bar mui-bar-nav mui-bar-transparent" data-top='0' data-offset='150' data-duration='16' data-scrollby=".mui-scroll-wrapper">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title">百度地图</h1>
+		</header>
+		
+		
+
+
+</html>

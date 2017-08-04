@@ -1,0 +1,10 @@
+/**用于规定景点详情测试模板的css文件
+ * by王亚宁
+ * */
+.imgSize{
+	height: 180px !important;
+	width: 100% !important;
+}
+body{
+	background-color: #F0AD4E;
+}

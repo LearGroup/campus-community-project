@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script src="js/mui.min.js"></script>
 
 		<link rel="stylesheet" href="css/mui.min.css">
 		<link rel="stylesheet" href="css/child.css" />
@@ -31,7 +32,7 @@
 				<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
 				<div class="mui-slider-item mui-slider-item-duplicate">
 					<a href="#">
-						<img class="imgSize" src="img/duoyun.png">
+						<img class="imgSize" src="img/duoyun.png" >
 					</a>
 				</div>
 				<!-- 第一张 -->
@@ -74,14 +75,14 @@
 		</div>
 		<ul class="mui-table-view mui-grid-view mui-grid-9">
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-				<a href="#">
+				<a href="#" >
 					<img src="img/sun_137px_1174803_easyicon.net.png" class="icon_img" />
 					<div class="mui-media-body">周边游</div>
 				</a>
 			</li>
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-				<a href="#">
-					<img src="img/bag_92px_1174791_easyicon.net.png" class="icon_img" />
+				<a id=1>
+					<img src="img/bag_92px_1174791_easyicon.net.png" class="icon_img" / >
 					<div class="mui-media-body">穷游</div>
 				</a>
 			</li>
@@ -124,11 +125,11 @@
 		</ul>
 		<ul class="mui-table-view">
 			<li class="mui-table-view-cell mui-media">
-				<a href="javascript:;">
+				<a href="javascript:;" >
 					<img class="mui-media-object mui-pull-right" src="img/1174804.png">
 					<div class="mui-media-body">
 						幸福
-						<p class="mui-ellipsis">能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+						<p class="mui-ellipsis" >能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
 					</div>
 				</a>
 			</li>
@@ -156,6 +157,7 @@
 	<script src="js/mui.min.js"></script>
 	<script>
 		mui.init({
+
 			swipeBack: true ,//启用右滑关闭功能
 			keyEventBind: {
 				backbutton: false
@@ -166,6 +168,7 @@
 			grelly.slider({
 				interval: '2000'
 			})
+			
 		})
 	</script>
 
