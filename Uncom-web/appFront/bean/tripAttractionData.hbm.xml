@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping
+  PUBLIC "-//Hibernate?Hibernate Mapping DTD//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="bean.tripAttractionData" table="trip_attraction">
+		<id name="id" column="id">
+			<generator class="uuid2"></generator>
+		</id>
+
+		<property name="tripAttractionName" column="trip_attraction_name"></property>
+		<property name="longitude" type="java.lang.Float">
+			<column name="longitude" sql-type="decimal(13,6)"></column>
+		</property>
+		<property name="latitude" type="java.lang.Float">
+			<column name="latitude" sql-type="decimal(13,16)"></column>
+		</property>
+		<property name="position" column="position"></property>
+		<property name="sectionTime" column="section_time"></property>
+		<property name="peopleNumber" column="people_number"></property>
+		<property name="thePriceOfTicket" column="the_price_of_ticket"></property>
+		<property name="minimumConsumption" column="minimum_consumption"></property>
+
+	</class>
+</hibernate-mapping>

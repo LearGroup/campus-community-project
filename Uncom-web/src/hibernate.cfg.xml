@@ -51,5 +51,9 @@ jdbc:mysql://localhost:3306/jsp_app
 	   <mapping resource="bean/userData.hbm.xml"/>
 	   <mapping resource="bean/collectionTag.xml"/>
 	   <mapping resource="bean/commentData.hbm.xml"/>
+	   <mapping resource="bean/tripAttractionData.hbm.xml"/>
+	   <mapping resource="bean/tripImgData.hbm.xml"/>
+	   <mapping resource="bean/strategyData.hbm.xml"/> 
+	   
 	</session-factory>
 </hibernate-configuration>

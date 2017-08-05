@@ -44,7 +44,7 @@
 	<!-- 当Struts配置文件修改后，系统是否自动重新加载该文件 默认为false 开发阶段应打开 -->
 	<constant name="struts.configuration.xml.reload" value="true"></constant>
 	<!-- 开发模式下使用。可以打印出更详细的错误信息-->
-	<constant name="struts.devMode" value="true"></constant>
+	<constant name="struts.devMode" value="false"></constant>
 	<!-- 是否开启动态方法调用 -->
 	<constant name="struts.enable.DynamicMethodInvocation" value="false"/>
 	
@@ -52,7 +52,6 @@
 
 	 <package name="user" namespace="/" extends="struts-default">
  	 <global-allowed-methods>regex:.*</global-allowed-methods>  
-	
 		<action name="login_*" class="login.loginAction" method="{1}">
 		    
 		</action>
@@ -84,7 +83,16 @@
 	</package>
 	
 
-	
+
+
+    <package name="appFrontLoad" namespace="/appFront" extends="struts-default">
+          <global-allowed-methods>regex:.*</global-allowed-methods>
+          <action name="getTripList" class="tripLoad.loadAction" method="getTripList"></action>
+          <action name="getCustomResultTripList" class="tripLoad.loadAction" method="getCustomResultTripList"></action>
+          <action name="getImgList" class="tripLoad.loadAction" method="getImgList"></action>
+          <action name="getStrategy" class="tripLoad.loadAction" method="getStrategy"></action>
+        
+    </package>
 	
 	
 	

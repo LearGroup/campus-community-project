@@ -4,40 +4,25 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<script type="text/javascript" src="js/jquery-3.1.1.min.js" ></script>
-		<script>
-			function closeHtml()
-			{
-				setTimeout(window.close(),3000);
-			}
-			$('a').click(function(){
-				window.close();
-			})
-		</script>
-		<style type="text/css">
-			#registerSuccess{
-				height: 60%;
-				width:25% ;
-				margin-top:20% ;
-				margin-left: 22%;
-			}
-			#registerSuccess img{
-				height: 100%;
-				float: left;
-				width: 100%;
-			}
-			#registerSuccess a h{
-				float: left;
-			}
-		</style>
+	
 	</head>
 	<body>
-		<div id="registerSuccess">
-			<img src="../img/439ba6ae4149df378a9d5ba2a0a4bb1e.jpg" />
-			<h3>恭喜!注册成功!三秒后关闭窗口</h3>
-			<a href="#">如未成功关闭请点击这里</a>
-		</div>
+		<script>
+			
+			
+			 $.post("/Uncom/appFront/getTripList.action",{},function(data){
+			 	console.log("获取所有旅游地点列表： getTripListResponse:"+data)
+			 })
+			 $.post("/Uncom/appFront/getCustomResultTripList.action",{money:100},function(data){
+			 	console.log("获取指定条件下的旅游地点列表:(定制旅程的结果页需要的值)getCustomResultTripList:"+data)
+			 })
+			 $.post("/Uncom/appFront/getImgList.action",{id:"1"},function(data){
+			 	console.log("获取指定旅游地点的所有图片:getImgList:"+data)
+			 })
+			 $.post("/Uncom/appFront/getStrategy.action",{id:"1"},function(data){
+			 	console.log("获取指定旅游地点的攻略文章: getStrategy:"+data)
+			 })
+			 
+		</script>
 	</body>
 </html>
-<SCRIPT Language=VBScript><!--
-
-//--></SCRIPT>

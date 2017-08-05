@@ -46,7 +46,7 @@ public class loginAction extends ActionSupport {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		String sql = null;
-		System.out.println("sors:" + sors + "user:" + use);
+		/*System.out.println("sors:" + sors + "user:" + use);*/
 		if (sors.equals("phone")) {
 			sql = "select user from userData user where user.phone=?";
 
@@ -55,10 +55,10 @@ public class loginAction extends ActionSupport {
 		} else if (sors.equals("username")) {
 			sql = "select user from userData user where user.username=?";
 		}
-		System.out.println(use);
+		/*System.out.println(use);*/
 		Query query = session.createQuery(sql).setParameter(0, use);
 		User = (userData) query.uniqueResult();
-		System.out.println(sql);
+		/*System.out.println(sql);*/
 		try {
 			transaction.commit();
 		} catch (Exception e) {
@@ -132,7 +132,7 @@ public class loginAction extends ActionSupport {
 			if (sors.equals("phone")) {
 				if (user.getPhone().equals(username)) {
 					out.print("1" + user.getUsername());
-					System.out.println("set session: " + user.getUsername());
+					/*System.out.println("set session: " + user.getUsername());*/
 					session.setAttribute("user", user);
 					session.setAttribute("username", user.getUsername());
 				} else {
@@ -153,7 +153,7 @@ public class loginAction extends ActionSupport {
 		CloseWirter(out);
 
 		
-		return "Login";
+		return null;
 	}
 
 	public String Logout() throws Exception {
@@ -172,5 +172,12 @@ public class loginAction extends ActionSupport {
 		}
 		response.sendRedirect(basePath + "/index.html");
 		return null;
+	}
+	
+	
+	public void prepare() throws Exception
+	{
+	  // Clear last error messages
+	  clearErrorsAndMessages();
 	}
 }
