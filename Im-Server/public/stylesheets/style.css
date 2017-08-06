@@ -36,15 +36,20 @@ a {
 }
 
 .list-content{
-	height: 370px;
-	border: solid 1px #3385FF; 
-	margin-top: 20px;
+	
+	
 
 }
-
+.list-view{
+	height: 370px;
+	overflow-x: hidden;
+    overflow-y: scroll;	
+    margin-top: 20px;
+}
 .content-box{
-	height: 100px;
-	background: #F6F6F6;
+	margin: 0px;
+	min-height: 100px;
+	
 }
 .timer{
 	text-align: center;
@@ -54,11 +59,30 @@ a {
 }
 
 .message-box{
-	padding: 10px;
+	
+	padding: 0px;
 	text-align: right;
 }
 .message-content{
+
+	min-height: 100px;
+	padding-top: 15px;
 	font-size: 20px;
 	color: #3333;
 
+}
+
+
+.user-area{
+	text-align: center;
+  
+	min-height: 70px;
+	
+}
+
+.user-name{
+	
+	margin-top: 15px;
+	font-size: 18px;
+	color: #272822;
 }
