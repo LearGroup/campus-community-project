@@ -1,5 +1,6 @@
 body {
-  padding: 50px;
+  padding: 0px;
+  padding-top: 60px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background: #009A61;
 }
@@ -15,5 +16,49 @@ a {
 
 .title-head-style h1,p{
 	color: #FFFFFF;
+
+}
+.send-input{
+
+}
+
+
+.send-box{
+	
+}
+
+.send-btn{
+	
+	text-align: center;
+	size:60px;
+	font-size: 60px;
+	height: 40px;
+}
+
+.list-content{
+	height: 370px;
+	border: solid 1px #3385FF; 
+	margin-top: 20px;
+
+}
+
+.content-box{
+	height: 100px;
+	background: #F6F6F6;
+}
+.timer{
+	text-align: center;
+}
+.message-time{
+	color: #3333;
+}
+
+.message-box{
+	padding: 10px;
+	text-align: right;
+}
+.message-content{
+	font-size: 20px;
+	color: #3333;
 
 }
