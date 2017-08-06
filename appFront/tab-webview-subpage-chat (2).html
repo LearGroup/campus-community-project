@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.title {
+				padding: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+				background-color: #fff;
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+
+	</head>
+
+	<body>
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="title">
+					景区
+				</div>
+				<ul class="mui-table-view mui-table-view-chevron">
+					<div style="height: 0px; margin: 0px;padding: 0px;"></div>
+				</ul>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui.init({
+				swipeBack: false,
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			//数据接收
+			mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {},
+				function(data) {
+					var table = document.body.querySelector('.mui-table-view');
+					var viewName = eval(data)
+					for(var i = 0; i < 15; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell';
+						li.innerHTML = '<a class="mui-navigate-right">' + viewName[i][0].tripAttractionName + '</a>';
+						table.insertBefore(li, table.firstChild);
+					}
+					console.log(viewName[i][0].tripAttractionName)
+				}
+			)
+
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				
+				setTimeout(function() {
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {}, function(data) {
+						for(var i = cells.length, len = i + 3; i < len; i++) {
+							var viewName = eval(data)
+							var li = document.createElement('li');
+							li.className = 'mui-table-view-cell';
+							li.innerHTML = '<a class="mui-navigate-right">' + viewName[i][0].tripAttractionName + '</a>';
+							//下拉刷新，新纪录插到最前面；
+							table.insertBefore(li, table.firstChild);
+							if(len == 20) {
+								return;
+							}
+						}
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+					})
+					//refresh completed
+				}, 1000);
+			}
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {}, function(data) {
+						var viewName = eval(data)
+						for(var i = cells.length, len = i + 5; i < len; i++) {
+							var li = document.createElement('li');
+							li.className = 'mui-table-view-cell';
+							li.innerHTML = '<a class="mui-navigate-right">' +viewName[i][0].tripAttractionName + '</a>';
+							table.appendChild(li);
+						}
+						if(len == 20) {
+							return;
+						}
+					})
+
+				}, 1000);
+			}
+		</script>
+	</body>
+
+</html>

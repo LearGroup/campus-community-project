@@ -354,9 +354,12 @@
 				"resources": [
 					"js/mui.min.js",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/jquery-2.1.0.js"
 				],
-				"refer": [],
+				"refer": [
+					"distination.html"
+				],
 				"priority": 0
 			},
 			"forget_password.html": {
