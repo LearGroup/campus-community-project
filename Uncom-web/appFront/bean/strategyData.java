@@ -6,6 +6,7 @@ public class strategyData {
 	private String theStrategy;
 	private String transport;
 	private String tripAttractionId;
+	private String introduction;
 	public String getId() {
 		return id;
 	}
@@ -30,6 +31,15 @@ public class strategyData {
 	public void setTripAttractionId(String tripAttractionId) {
 		this.tripAttractionId = tripAttractionId;
 	}
+	public String getIntroduction() {
+		return introduction;
+	}
+	public void setIntroduction(String introduction) {
+		this.introduction = introduction;
+	}
+	
+	
+	
 	
 	
 }

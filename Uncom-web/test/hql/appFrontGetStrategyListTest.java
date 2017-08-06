@@ -20,7 +20,6 @@ public class appFrontGetStrategyListTest {
 		Query query = session.createQuery(hql);
 		JSONArray json = JSONArray.fromObject(query.list());
 		session.close();
-		System.out.println(json);
-		
+		System.out.println(json);		
 	}
 }

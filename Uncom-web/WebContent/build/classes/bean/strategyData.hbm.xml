@@ -12,6 +12,6 @@
 		
 		<property name="transport" column="transport"></property>
 		<property name="tripAttractionId" column="trip_attraction_id"></property>
-		
+		<property name="introduction" column="introduction"></property>
 	</class>
 </hibernate-mapping>
