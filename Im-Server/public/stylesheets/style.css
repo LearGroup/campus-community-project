@@ -1,88 +1,155 @@
 body {
-  padding: 0px;
-  padding-top: 60px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background: #009A61;
+	padding: 0px;
+	padding-top: 60px;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background: #009A61;
 }
 
 a {
-  color: #00B7FF;
+	color: #00B7FF;
 }
 
+.title-head-style {}
 
-.title-head-style{
-	
-}
-
-.title-head-style h1,p{
+.title-head-style h1,
+p {
 	color: #FFFFFF;
-
-}
-.send-input{
-
 }
 
-
-.send-box{
-	
+.send-input {
+	overflow-y: hidden;
 }
 
-.send-btn{
-	
+.send-box {}
+
+.send-btn {
 	text-align: center;
-	size:60px;
+	size: 60px;
 	font-size: 60px;
 	height: 40px;
 }
 
-.list-content{
-	
-	
+.list-content {}
+
+.list-view {
+	height: 340px;
+	overflow-x: hidden;
+	overflow-y: scroll;
 
 }
-.list-view{
-	height: 370px;
-	overflow-x: hidden;
-    overflow-y: scroll;	
-    margin-top: 20px;
-}
-.content-box{
+
+.content-box {
 	margin: 0px;
 	min-height: 100px;
-	
-}
-.timer{
-	text-align: center;
-}
-.message-time{
-	color: #3333;
 }
 
-.message-box{
+.timer {
+	text-align: center;
 	
+}
+
+.message-time {
+	color: #333333;
+}
+
+.message-box {
 	padding: 0px;
 	text-align: right;
 }
-.message-content{
 
+.message-content {
 	min-height: 100px;
 	padding-top: 15px;
 	font-size: 20px;
-	color: #3333;
-
+	color: #333333;
 }
 
-
-.user-area{
+.user-area {
 	text-align: center;
-  
 	min-height: 70px;
-	
 }
 
-.user-name{
-	
+.user-name {
 	margin-top: 15px;
 	font-size: 18px;
 	color: #272822;
+}
+
+.refresh {
+	height: 20px;
+	background: #96B97D;
+}
+
+.frend-list-box {
+	margin-top: -60px;
+}
+
+.frend-list {
+	max-height: 200px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.frend-item {
+	border-bottom:1px solid #cccccc;
+	padding-left: 0px;
+	padding-top: 5px;
+	height: 50px;
+	border-radius: 3px;
+	background: #F5F5F6;
+}
+
+.frend-avater {
+	margin-left: -10px;
+	background: #FFFFFF;
+	height: 40px;
+	width: 40px;
+	border: solid 2px #00B7FF;
+	border-radius: 50%;
+}
+
+.frend-head {
+	margin-top: 3px;
+	margin-left: 3px;
+	height: 30px;
+	width: 30px;
+}
+
+.gender {
+	color: #00B7FF;
+	position: absolute;
+	z-index: 1000;
+	margin-left: -48px;
+	margin-top: 26px;
+}
+
+.frend-list-box .user {
+	margin-left: -45px;
+	padding: 0px;
+	
+}
+
+.frend-list-box .user .username {
+	margin-top: 5px;
+	color: #333333;
+	font-size: 20px;
+}
+
+.test-border{
+	border:  1px solid #272822;
+}
+
+.history-message {
+	padding: 0px;
+		
+}
+.history-message .message{
+	white-space:nowrap; 
+	overflow:hidden; 
+	text-overflow:ellipsis; 
+	margin-top: 5px;
+
+	font-size: 14px;
+	color: #333333;
+	
 }

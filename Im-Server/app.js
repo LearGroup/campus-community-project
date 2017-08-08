@@ -9,12 +9,23 @@ var express = require('express')
   , http = require('http')
   , io = require('socket.io')(http)
   , ejs = require('ejs')
+  , mysql =require('mysql')
+  , bodyParser = require('body-parser')
   , path = require('path');
 
+// 创建 application/x-www-form-urlencoded 编码解析
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
-//在线用户
-var onlineUserList={};
+var connection = mysql.createConnection({
+  host:'localhost',
+  user:'root',
+  password:'123456789',
+  database:'currency_db'
+});
+
+
+
 //当前在线人数
 var onlineCount=0;
 
@@ -23,14 +34,11 @@ io.on('connection',function(socket){
 
 	//监听新用户加入
 	socket.on("login",function(obj){
-		socket.name=obj.userId
+		socket.name=obj.userName
+		socket.id=obj.userId
+		onlineCount=io.sockets.sockets
+    
 
-		//检查在线列表，如果不在就加入
-		if(!onlineUserList.hasOwnProperty(obj.userId)){
-			onlineUserList[obj.userId]=obj.userName
-			//在线人数+1
-			onlineCount++;
-		}
 	})
 })
 
@@ -54,6 +62,13 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 app.get('/', routes.index);
+app.post('/getFrendList',urlencodedParser,function(req,res){
+  var id=req.body.id
+   connection.query('select us.username, us.header_pic, us.sex,rs.minor_user from relation_ship rs,user us where rs.main_user='+'"'+id+'"'+' and rs.level =4 and rs.minor_user=us.id',function(err,results,xfields){
+     res.send(results)
+   })
+  
+})
 app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function(){
