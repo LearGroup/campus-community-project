@@ -9,12 +9,20 @@ var express = require('express')
   , http = require('http')
   , io = require('socket.io')(http)
   , ejs = require('ejs')
+  , session = require('express-session')
   , mysql =require('mysql')
+  , cookieParser= require('cookie-parser')
   , bodyParser = require('body-parser')
+  , redisStore = require('connect-redis')(session)
   , path = require('path');
+
 
 // 创建 application/x-www-form-urlencoded 编码解析
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+var identityKey = 'skey';
+
+
 
 
 var connection = mysql.createConnection({
@@ -37,25 +45,39 @@ io.on('connection',function(socket){
 		socket.name=obj.userName
 		socket.id=obj.userId
 		onlineCount=io.sockets.sockets
-    
-
+   
 	})
 })
 
 
 var app = express();
-
 // all environments
 app.engine('html',ejs.__express)
 app.set('port',8081);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
+app.use(cookieParser())
+app.use(session({
+    name: identityKey,
+    secret: 'chyingp',  // 用来对session id相关的cookie进行签名
+    store: new redisStore({
+      host:'localhost',
+      port:6379,
+      db:"0"
+    }),  // 本地存储session（文本文件，也可以选择其他store，比如redis的）
+    saveUninitialized: true,  // 是否自动保存未初始化的会话，建议false
+    resave: true,  // 是否每次都重新保存会话，建议false
+    cookie: {
+        maxAge: 100000 * 1000  // 有效期，单位是毫秒
+    }
+}));
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 // development only
 if ('development' == app.get('env')) {
@@ -69,8 +91,48 @@ app.post('/getFrendList',urlencodedParser,function(req,res){
    })
   
 })
+
+app.post("/checkStatus",urlencodedParser,function(req,res){
+
+
+  console.log(req.session.user)
+  if(req.session.user){
+    res.send( req.session)
+  }else{
+    res.send("null")
+  }
+  
+})
+
+app.post("/login",urlencodedParser,function(req,res){
+  var use=req.body.use
+  var username=req.body.username
+  var password=req.body.password
+   var sql='us where us.phone="'+username+'" and us.password="'+password+'"'
+  console.log(username+password+use)
+  var rest;
+
+  if(use=='phone'){
+    connection.query('select us.username,us.id,us.header_pic from user us where us.phone="'+username+'" and us.password="'+password+'"',function(err,results,xfields){
+     if(results.length!=0){
+      req.session.user=results
+     }
+     res.send(results)
+     console.log(results.length)
+     
+    })
+  }else{
+	  connection.query('select us.username,us.id,us.header_pic from user us where us.email="'+username+'" and us.password="'+password+'"',function(err,results,xfields){
+		 if(results.length!=0){
+      req.session.user=results
+     }
+     res.send(results)
+		})
+  }
+})
 app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+

@@ -1,9 +1,9 @@
 $(function() {
-
+	
+	init()
 	$(".send-btn").bind("click", function() {
 		send();
-		addResponse()
-
+		
 	})
 
 	$('.refresh').bind('click', function() {
@@ -22,7 +22,7 @@ $(function() {
 						target.find(".username").html(data.username)
 						target.bind("click", function() {
 							$('.list-content').data("target-id", data.minor_user)
-							
+
 						})
 					})
 
@@ -34,10 +34,30 @@ $(function() {
 	})
 })
 
+
+function init(){
+	$.post("/checkStatus",function(data){
+	    if(data=='null'){
+	    	$("#myModalLabel").text("请登陆")
+				$(".modal-body").load("/html/login_copy.html")
+				$('#myModal').modal('show')
+	    }
+	})
+}
+var startTime = null
+var currentTime = null;
+
 function send() {
-	/*var cureentTimeStamp = Date.parse(new Date()) / 1000;
-	var timediffs = timediff(article[0].time / 1000, cureentTimeStamp)
-	var pTime = printTime(timediffs)*/
+	var pTime
+	currentTime = Date.parse(new Date()) / 1000;
+	if(startTime == null) {
+		startTime = Date.parse(new Date()) / 1000;
+		pTime = getTime(startTime)
+	} else {
+		var timediffs = timediff(startTime, currentTime)
+		pTime = printTime(timediffs, currentTime)
+		console.log(pTime)
+	}
 	var str = $(".send-input").val()
 	var tag = $(".list-content")
 	tag.append("<div class='row content-box'></div>")
@@ -45,7 +65,8 @@ function send() {
 	target.load("/html/message-item.html", function() {
 		target.find(".message-content").text(str)
 		target.find(".message-content").css("margin-left", "40px")
-		$(".list-view").animate({
+		target.find(".message-time").text(pTime)
+		$(".lis t-view").animate({
 			'scrollTop': $(".list-content").height() + 'px'
 		}, 500)
 	})
@@ -69,21 +90,7 @@ function addResponse() {
 }
 
 function getTime(time) {
-	var str = {
-		"articleCreateTime": {
-			"date": 13,
-			"day": 4,
-			"hours": 20,
-			"minutes": 25,
-			"month": 6,
-			"nanos": 0,
-			"seconds": 11,
-			"time": 1499948711000,
-			"timezoneOffset": -480,
-			"year": 117
-		}
-	}
-	var unixTimeStamp = str.articleCreateTime.time / 1000
+	var unixTimeStamp = time
 	//功能：把unix时间戳转成Y-m-d H:i:s格式的日期
 	var now = new Date(unixTimeStamp * 1000);
 	var year = now.getFullYear();
@@ -97,7 +104,7 @@ function getTime(time) {
 	minute = minute < 10 ? "0" + minute : minute;
 	var second = now.getSeconds();
 	second = second < 10 ? "0" + second : second;
-	return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+	return hour + ":" + minute + ":" + second;
 
 }
 
@@ -120,10 +127,48 @@ function timediff(begin_time, end_time) {
 	runTime = runTime % 60
 	var second = runTime
 	return [year, month, day, hour, minute, second]
+}
 
-	/*var tag=end_time-begin_time
-    var days=tag*60*60*1000
-    alert(tag/ 86400 /30)*/
-	/*  res =[days,hours,mins,secs]*/
+function printTime(timeList, cureentTime) {
+
+	var unixTimeStamp = cureentTime
+	var now = new Date(unixTimeStamp * 1000);
+	var year = now.getFullYear();
+	var month = now.getMonth() + 1;
+	month = month < 10 ? "0" + month : month;
+	var day = now.getDate();
+	day = day < 10 ? "0" + day : day;
+	var hour = now.getHours();
+	hour = hour < 10 ? "0" + hour : hour;
+	var minute = now.getMinutes();
+	minute = minute < 10 ? "0" + minute : minute;
+	var second = now.getSeconds();
+	second = second < 10 ? "0" + second : second;
+
+	if(timeList[0] != 0) {
+		return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+	} else {
+		if(timeList[1] != 0) {
+			return month + "-" + day + " " + hour + ":" + minute + ":" + second;
+		} else {
+			if(timeList[2] != 0) {
+				return day + " " + hour + ":" + minute + ":" + second;
+			} else {
+				if(timeList[3] != 0) {
+					return hour + ":" + minute + ":" + second;
+				} else {
+					if(timeList[4] == 3) {
+						return hour + ":" + minute + ":" + second;
+					} else {
+						if(timeList[5] != 0) {
+							return " "
+						} else {
+							return " "
+						}
+					}
+				}
+			}
+		}
+	}
 
 }

@@ -11,10 +11,38 @@
 		<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/js/client.js"></script>
+		<script type="text/javascript" src="/js/socket.io.js"></script>
+		<script type="text/javascript" src="/js/login.js"></script>
+		
 	</head>
 
 	<body style="background:#009A61">
 		<div class="container-fluid">
+			
+				<div class="row" id="login_page_row">
+			
+				<div class="modal fade" id="myModal" style="z-index: 10001;">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header" >
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title" id="myModalLabel">设置文章类型</h4>
+							</div>
+							<div class="row modal-body">
+								 
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="close-model-btn btn btn-default" data-dismiss="modal">关闭</button>
+								<button type="button" class="send-change btn btn-primary" style="background: #009A61;">提交更改</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal -->
+				</div>
+</div>
+
+
 			<div class="row title-head-style">
 
 			</div>
