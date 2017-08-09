@@ -17,9 +17,12 @@
 	"tab-webview-subpage-contact.html": {
 		"resources": [
 			"js/mui.min.js",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/jquery-2.1.0.js"
 		],
-		"refer": []
+		"refer": [
+			"distination.html"
+		]
 	},
 	"tab-webview-subpage-about.html": {
 		"resources": [
@@ -40,7 +43,8 @@
 			"img/plane_137px_1174801_easyicon.net.png",
 			"img/map_133.10487444609px_1208686_easyicon.net.png",
 			"js/inDistination.js",
-			"nav_transparent.html"
+			"nav_transparent.html",
+			"js/jquery-2.1.0.js"
 		],
 		"refer": [
 			"destinationIndex.html",

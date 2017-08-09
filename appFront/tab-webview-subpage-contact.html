@@ -10,15 +10,18 @@
 
 		<link rel="stylesheet" href="css/mui.min.css">
 		<style>
-			html,body {
+			html,
+			body {
 				background-color: #efeff4;
 			}
-			.title{
+			
+			.title {
 				margin: 20px 15px 10px;
 				color: #6d6d72;
 				font-size: 15px;
 			}
-			 .oa-contact-cell.mui-table .mui-table-cell {
+			
+			.oa-contact-cell.mui-table .mui-table-cell {
 				padding: 11px 0;
 				vertical-align: middle;
 			}
@@ -27,20 +30,25 @@
 				position: relative;
 				margin: -11px 0;
 			}
-	
+			
 			.oa-contact-avatar {
 				width: 75px;
 			}
+			
 			.oa-contact-avatar img {
 				border-radius: 50%;
 			}
+			
 			.oa-contact-content {
 				width: 100%;
 			}
+			
 			.oa-contact-name {
 				margin-right: 20px;
 			}
-			.oa-contact-name, oa-contact-position {
+			
+			.oa-contact-name,
+			oa-contact-position {
 				float: left;
 			}
 		</style>
@@ -48,108 +56,47 @@
 
 	<body>
 		<div class="mui-content">
-			<div class="title">
-				这是webview模式选项卡中的第3个子页面，该页面展示一个通讯录示例
-			</div>
 
 			<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-				<li class="mui-table-view-cell">
-					<div class="mui-slider-cell">
-						<div class="oa-contact-cell mui-table">
-							<div class="oa-contact-avatar mui-table-cell">
-								<img src="http://placehold.it/60x60" />
-							</div>
-							<div class="oa-contact-content mui-table-cell">
-								<div class="mui-clearfix">
-									<h4 class="oa-contact-name">叶文洁</h4>
-									<span class="oa-contact-position mui-h6">董事长</span>
-								</div>
-								<p class="oa-contact-email mui-h6">
-									yewenjie@sina.com
-								</p>
-							</div>
-						</div>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="mui-slider-cell">
-						<div class="oa-contact-cell mui-table">
-							<div class="oa-contact-avatar mui-table-cell">
-								<img src="http://placehold.it/60x60" />
-							</div>
-							<div class="oa-contact-content mui-table-cell">
-								<div class="mui-clearfix">
-									<h4 class="oa-contact-name">艾AA</h4>
-									<span class="oa-contact-position mui-h6">总经理</span>
-								</div>
-								<p class="oa-contact-email mui-h6">
-									aaa@163.com
-								</p>
-							</div>
-						</div>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="mui-slider-cell">
-						<div class="oa-contact-cell mui-table">
-							<div class="oa-contact-avatar mui-table-cell">
-								<img src="http://placehold.it/60x60" />
-							</div>
-							<div class="oa-contact-content mui-table-cell">
-								<div class="mui-clearfix">
-									<h4 class="oa-contact-name">罗辑</h4>
-									<span class="oa-contact-position mui-h6">员工</span>
-								</div>
-								<p class="oa-contact-email mui-h6">
-									luoji@126.com
-								</p>
-							</div>
-						</div>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="mui-slider-cell">
-						<div class="oa-contact-cell mui-table">
-							<div class="oa-contact-avatar mui-table-cell">
-								<img src="http://placehold.it/60x60" />
-							</div>
-							<div class="oa-contact-content mui-table-cell">
-								<div class="mui-clearfix">
-									<h4 class="oa-contact-name">云天明</h4>
-									<span class="oa-contact-position mui-h6">员工</span>
-								</div>
-								<p class="oa-contact-email mui-h6">
-									ytm@163.com
-								</p>
-							</div>
-						</div>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="mui-slider-cell">
-						<div class="oa-contact-cell mui-table">
-							<div class="oa-contact-avatar mui-table-cell">
-								<img src="http://placehold.it/60x60" />
-							</div>
-							<div class="oa-contact-content mui-table-cell">
-								<div class="mui-clearfix">
-									<h4 class="oa-contact-name">史强</h4>
-									<span class="oa-contact-position mui-h6">员工</span>
-								</div>
-								<p class="oa-contact-email mui-h6">
-									shiqiang@gmail.com
-								</p>
-							</div>
-						</div>
-					</div>
-				</li>
+				<div></div>
 			</ul>
 		</div>
 	</body>
 	<script src="js/mui.min.js"></script>
+	<script type="text/javascript" src="js/jquery-2.1.0.js" ></script>
 	<script>
 		mui.init({
-			swipeBack:true //启用右滑关闭功能
+							swipeBack: false,
+
+				keyEventBind: {
+					backbutton: false
+				}
 		});
+		mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {},
+			function(data) {
+				var table = document.body.querySelector('.mui-table-view');
+				var viewName = eval(data)
+				for(var i = 0; i < 10; i++) {
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell';
+
+					li.innerHTML = '<a class="mui-navigate-right" name="' + viewName[i][0].id + '"><div class="mui-slider-cell"><div class="oa-contact-cell mui-table"><div class="oa-contact-avatar mui-table-cell"><img width="60px" height="60px" src="' + viewName[i][1] + '" /></div><div class="oa-contact-content mui-table-cell"><div class="mui-clearfix"><h4 class="oa-contact-name">' + viewName[i][0].tripAttractionName + '</h4><span class="oa-contact-position mui-h6">' + viewName[i][0].position + '</span></div></div></div></div></a>';
+						
+					table.insertBefore(li, table.firstChild);
+				}
+				$('.mui-table-view-cell').on('tap', function(e) {
+					var id = $(this).children().attr('name')
+					mui.openWindowWithTitle({
+						url: 'distination.html',
+						id: 'distination',
+						extras: {
+							dataId: id,
+						}
+					})
+				})
+
+			}
+		)
 	</script>
+
 </html>

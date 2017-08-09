@@ -41,7 +41,7 @@
 				}, autoCarouselTime)
 			}
 
-			$('.right').click(function() {
+			$('.right').click(function(e) {
 				if(i + 1 < $(carouselId).children().length) {
 					if(i == 0) {
 						$(carouselId).find('div').eq(0).css('display', 'none');
@@ -59,7 +59,7 @@
 				}
 
 			})
-			$('.left').click(function() {
+			$('.left').click(function(e) {
 				if(i > 0) {
 					$(carouselId).find('div').eq(i).css('display', 'none')
 					$(carouselId).find('div').eq(i - 1).fadeIn(tabCarouselItemTime);

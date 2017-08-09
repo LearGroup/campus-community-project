@@ -16,17 +16,23 @@ $('.point').click(function() {
 	}
 
 })
-$('#money').blur(function(){
-	postData.money = $('#money').attr('value');
-})
+
 //普通示例
-var postData ={
-	date:null,
-	dayOfNumbre:null,
-	people:null,
-	place:null,
-	money:null
+var postData = {
+	date: null,
+	dayOfNumbre: null,
+	people: null,
+	place: null,
+	money: 50
 };
+
+function submit() {
+	mui.post("http://47.95.0.73:8080/Uncom/getCustomResultTripList.action", {
+		money:55
+	}, function(data) {
+		console.log(data[0]);
+	})
+}
 mui.ready(function() {
 	var dayPicker = new mui.PopPicker();
 	var peoplePicker = new mui.PopPicker();
@@ -138,7 +144,7 @@ mui.plusReady(function() {
 		maxDate.setFullYear(year, month, 31);
 		plus.nativeUI.pickDate(function(e) {
 			var d = e.date;
-			postData.date=d.getFullYear()+'-'+(d.getMonth() + 1)+'-'+d.getDate();
+			postData.date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
 			info.value = '您选择的日期是:' + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
 		}, function(e) {
 			info.value = "您没有选择日期";
@@ -149,14 +155,5 @@ mui.plusReady(function() {
 			maxDate: maxDate
 		});
 	})
-	mui.post("http://47.95.0.73:8080/Uncom/login_Login.action",{
-		date:postData.date,
-		day:postData.dayOfNumbre,
-		peopel:postData.people,
-		place:postData.place,
-		money:postData.money
-	},function(data){
-		console.log(data);
-	})
-})
 
+})

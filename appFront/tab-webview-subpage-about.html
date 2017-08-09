@@ -10,7 +10,7 @@
 		<script src="js/mui.min.js"></script>
 		<link rel="stylesheet" href="css/mui.min.css">
 		<link rel="stylesheet" href="css/child.css" />
-		<script type="text/javascript" src="js/inDistination.js" ></script>
+		<script type="text/javascript" src="js/inDistination.js"></script>
 		<style>
 			html,
 			body {
@@ -32,7 +32,7 @@
 				<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
 				<div class="mui-slider-item mui-slider-item-duplicate">
 					<a href="#">
-						<img class="imgSize" src="img/duoyun.png" >
+						<img class="imgSize" src="img/duoyun.png">
 					</a>
 				</div>
 				<!-- 第一张 -->
@@ -82,7 +82,7 @@
 			</li>
 			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 				<a id=1>
-					<img src="img/bag_92px_1174791_easyicon.net.png" class="icon_img" / >
+					<img src="img/bag_92px_1174791_easyicon.net.png" class="icon_img" />
 					<div class="mui-media-body">穷游</div>
 				</a>
 			</li>
@@ -123,42 +123,17 @@
 				</a>
 			</li>
 		</ul>
-		<ul class="mui-table-view">
-			<li class="mui-table-view-cell mui-media">
-				<a href="javascript:;" >
-					<img class="mui-media-object mui-pull-right" src="img/1174804.png">
-					<div class="mui-media-body">
-						幸福
-						<p class="mui-ellipsis" >能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
-					</div>
-				</a>
-			</li>
-			<li class="mui-table-view-cell mui-media">
-				<a href="javascript:;">
-					<img class="mui-media-object mui-pull-right" src="img/1174804.png">
-					<div class="mui-media-body">
-						木屋
-						<p class="mui-ellipsis">想要这样一间小木屋，夏天挫冰吃瓜，冬天围炉取暖.</p>
-					</div>
-				</a>
-			</li>
-			<li class="mui-table-view-cell mui-media">
-				<a href="javascript:;">
-					<img class="mui-media-object mui-pull-right" src="img/1174804.png">
-					<div class="mui-media-body">
-						CBD
-						<p class="mui-ellipsis">烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
-					</div>
-				</a>
-			</li>
+		<ul class="mui-table-view bottomView">
+			<div></div>
 		</ul>
 
 	</body>
 	<script src="js/mui.min.js"></script>
+	<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
 	<script>
 		mui.init({
 
-			swipeBack: true ,//启用右滑关闭功能
+			swipeBack: true, //启用右滑关闭功能
 			keyEventBind: {
 				backbutton: false
 			}
@@ -168,7 +143,36 @@
 			grelly.slider({
 				interval: '2000'
 			})
-			
+			mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {},
+				function(data) {
+					var table = document.body.querySelector('.bottomView');
+					var viewName = eval(data)
+					for(var i = 0; i < 5; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell mui-media';
+						li.innerHTML = '<a class="mui-navigate-right" ></a>';
+						li.innerHTML = '<a href="javascript:;" name="' + viewName[i][0].id + '"> <img class = "mui-media-object mui-pull-right"src = "' + viewName[i][1] + '" ><div class = "mui-media-body" >'+viewName[i][0].tripAttractionName+'<p class = "mui-ellipsis" > ' + viewName[i][0].position + ' </p> </div> </a>'
+						console.log(li+'  '+table.firstChild)
+						table.insertBefore(li, table.firstChild);
+					}
+					$('.mui-table-view-cell').on('tap', function(e) {
+						var id = $(this).children().attr('name')
+						if(id == undefined){
+							console.log('0')
+							return;
+						}
+						mui.openWindowWithTitle({
+							url: 'distination.html',
+							id: 'distination',
+							extras: {
+								dataId: id,
+							}
+						})
+					})
+
+				}
+			)
+
 		})
 	</script>
 

@@ -41,6 +41,11 @@
 		<script>
 			mui.init({
 				swipeBack: false,
+
+				keyEventBind: {
+					backbutton: false
+				},
+
 				pullRefresh: {
 					container: '#pullrefresh',
 					down: {
@@ -148,16 +153,6 @@
 					})
 				}, 1000);
 			}
-			//			mui.ready(function() {
-			//				mui('.mui-table-view-cell').on('tap', function(e) {
-			//					mui.openWindowWithTitle({
-			//						url: 'distination.html',
-			//						id: 'distination'
-			//					})
-			//
-			//				})
-			//
-			//			})
 		</script>
 	</body>
 
