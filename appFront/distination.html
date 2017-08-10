@@ -333,6 +333,7 @@
 						id: id
 					}, function(data) {
 						var da = eval(data)
+						console.log(da)
 						document.getElementById('img1').src = da[0].url;
 					});
 					mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {

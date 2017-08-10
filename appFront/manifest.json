@@ -4,8 +4,8 @@
 		"iPhone",
 		"iPad"
 	],
-	"id": "H548EB837",/*应用的标识，创建应用时自动生成，勿手动修改*/
-	"name": "hea",/*应用名称，程序桌面图标名称*/
+	"id": "H5622FDD4",/*应用的标识，创建应用时自动生成，勿手动修改*/
+	"name": "tourism",/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "1.0.0",/*应用版本名称*/
 		"code": "83"
@@ -117,11 +117,13 @@
 			"plugins": {
 				"oauth": {
 					"qq": {
-						"appid": "H548EB837"
+						"appid": "H5622FDD4",
+						"description": "QQ登录"
 					},
 					"weixin": {
-						"appid": "H548EB837",
-						"appsecret": "20152020604_dsh"
+						"appid": "H5622FDD4",
+						"appsecret": "20152020604_dsh",
+						"description": "微信登录"
 					}
 				}
 			},
@@ -351,7 +353,9 @@
 					"css/mui.picker.min.css",
 					"js/personalTailor.js"
 				],
-				"refer": [],
+				"refer": [
+					"tailor.html"
+				],
 				"priority": 0
 			},
 			"tab-webview-subpage-chat.html": {
@@ -473,6 +477,17 @@
 					"images/user-photo.png"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"tailor.html": {
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"js/jquery-2.1.0.js"
+				],
+				"refer": [
+					"distination.html"
+				],
 				"priority": 0
 			}
 		},

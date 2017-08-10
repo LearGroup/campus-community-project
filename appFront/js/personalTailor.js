@@ -23,15 +23,20 @@ var postData = {
 	dayOfNumbre: null,
 	people: null,
 	place: null,
-	money: 50
+	money: 80
 };
 
 function submit() {
-	mui.post("http://47.95.0.73:8080/Uncom/getCustomResultTripList.action", {
-		money:55
-	}, function(data) {
-		console.log(data[0]);
+	postData.money = parseInt(document.getElementById('money').value);
+	mui.openWindow({
+		url: 'tailor.html',
+		id: 'tailor',
+		extras: {
+			dataArray: postData.money
+		}
 	})
+
+
 }
 mui.ready(function() {
 	var dayPicker = new mui.PopPicker();

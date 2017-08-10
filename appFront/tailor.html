@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-2.1.0.js" ></script>
+		<style>
+			* {
+				padding: 0px;
+				margin: 0px;
+			}
+			
+			.tailorItem {
+				width: 100%;
+				height: 310px;
+			}
+			
+			.tailorItem img {
+				width: 99.5%;
+				height: 280px;
+				padding: 1%;
+				margin-bottom: 1%;
+			}
+			
+			.tailorItem p {
+				font-size: 1.2em;
+				padding-left: 1%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="tailorBox">
+			<div></div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				var num = self.dataArray;
+				console.log(num)
+				var table = document.body.querySelector('#tailorBox');
+				mui.post("http://47.95.0.73:8080/Uncom/appFront/getCustomResultTripList.action", {
+					money: num
+				}, function(data) {
+					var da = eval(data)
+					console.log(da)
+					for(var i = 0; i < da.length; i++) {
+						var div = document.createElement('div');
+						div.className = 'tailorItem';
+						div.innerHTML = '<img src="' + da[i][1] + '" /><a name = "' + da[i][0].id + '"></a><p>' + da[i][0].tripAttractionName + '</p>'
+						table.insertBefore(div, table.firstChild);
+						$('.tailorItem').on('tap', function(e) {
+							var id = $(this).find('a').attr('name')
+							console.log(id)
+							mui.openWindowWithTitle({
+								url: 'distination.html',
+								id: 'distination',
+								extras: {
+									dataId: id,
+								}
+							})
+						})
+					}
+
+				})
+
+			})
+		</script>
+	</body>
+
+</html>
