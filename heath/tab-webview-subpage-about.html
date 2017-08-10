@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<title>Hello MUI</title>
@@ -8,28 +9,200 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/icons-extra.css" />
 		<style>
-			html,body {
-				background-color: #efeff4;
+			* {
+				margin: 0px;
+				padding: 0px;
 			}
-			.title{
+			
+			html,
+			body {
+				background-color: #FFF;
+			}
+			
+			.title {
 				margin: 20px 15px 10px;
 				color: #6d6d72;
 				font-size: 15px;
 			}
+			
+			.continor {
+				height: 100%;
+			}
+			/*身体指数展示*/
+			
+			.bodyCellItem {
+				font-family: "微软雅黑";
+				list-style: none;
+				height: 50px;
+				display: flex;
+				padding: 1%;
+			}
+			
+			.bodyCellItem span {
+				font-size: 0.8em;
+				line-height: 50px;
+				
+				width: 20%;
+			}
+			
+			.bodyCellItem div {
+				width: 76%;
+				height: 20px;
+				margin-top: 15px;
+				border-radius: 50px;
+				border: 1px #EEEEEE solid;
+			}
+			/*身体指数评价*/
+			
+			.bodyIndex {
+				background-color: #2AC845;
+				height: 180px;
+				text-align: center;
+			}
+			
+			.bodyIndex h1 {
+				font-size: 5em;
+				padding: 10px;
+				color: #FFFFFF;
+				margin: 0 auto;
+			}
+			
+			.bodyIndex h1 span {
+				font-size: 0.4em;
+			}
+			
+			.bodyIndex p {
+				font-size: 1.7em;
+				font-family: "微软雅黑";
+				color: #FFFFFF;
+				width: 40%;
+				margin: 4% auto;
+				border: 2px #FFFFFF solid;
+				border-radius: 50px;
+				padding: 10px;
+				box-shadow: 0px 0px 8px #FFFFFF;
+			}
+			/*指数展示*/
+			
+			.bodyData {
+				height: 18px !important;
+				border-radius: 50px;
+				margin: 0px !important;
+				border: 0px !important;
+				text-align: right;
+				padding-right: 5px;
+				color: #FFFFFF;
+			}
+			
+			#aData {
+				width: 50%;
+				background-color: #8A6DE9;
+			}
+			
+			#wData {
+				width: 60%;
+				background-color: orange;
+			}
+			
+			#hData {
+				width: 86%;
+				background-color: #DD524D;
+			}
+			
+			#dData {
+				width: 80%;
+				background-color: #007AFF;
+			}
+			
+			#bData {
+				width: 50%;
+				background-color: #FFFF00;
+			}
+			#backTop{
+				position: fixed;
+				bottom: 10px;
+				right: 10px;
+				width: 37px;
+				height: 37px;
+				padding: 5px;
+			}
 		</style>
 	</head>
+
 	<body>
-		<div class="mui-content">
-			<div>
-				身体数据界面（杜士华）	
+		<div class="continor">
+			<div class="bodyIndex">
+				<h1>88</h1>
+				<p>良好</p>
 			</div>
+			<div class="bodyCellBox">
+				<ul class="bodyCell">
+					<li class="bodyCellItem">
+						<span>身高:</span>
+						<div>
+							<div class="bodyData" id="hData">86</div>
+						</div>
+					</li>
+					<li class="bodyCellItem">
+						<span>体重:</span>
+						<div>
+							<div class="bodyData" id="wData">60</div>
+						</div>
+					</li>
+					<li class="bodyCellItem">
+						<span>活动量:</span>
+						<div>
+							<div class="bodyData" id="aData">50</div>
+						</div>
+					</li>
+
+					<li class="bodyCellItem">
+						<span>饮水量:</span>
+						<div>
+							<div class="bodyData" id="dData">80</div>
+						</div>
+					</li>
+					<li class="bodyCellItem">
+						<span>肺活量:</span>
+						<div>
+							<div class="bodyData" id="bData">50</div>
+						</div>
+					</li>
+
+				<a href="#" id="backTop" class="mui-icon-extra mui-icon-extra-top"></a>
+			</div>
+
 		</div>
 	</body>
+	<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
 	<script src="js/mui.min.js"></script>
 	<script>
 		mui.init({
-			swipeBack:true //启用右滑关闭功能
+			swipeBack: true //启用右滑关闭功能
 		});
+		mui.plusReady(function() {
+			var height = plus.display.resolutionHeight;
+			var width = plus.display.resolutionWidth;
+			document.querySelector('.continor').style.height = height - 96 + 'px';
+			document.querySelector('.bodyCellBox').style.height = height - 96 - 180+'px'
+			var len = document.querySelectorAll('.bodyData').length;
+			var num = 0;
+			for(var i = 0; i < len; i++) {
+				num += parseInt(document.querySelectorAll('.bodyData')[i].innerHTML);
+			}
+			document.querySelector('h1').innerHTML = num / len;
+			if(document.querySelector('h1').innerHTML > 60 && document.querySelector('h1').innerHTML < 75) {
+				document.querySelector('p').innerHTML = '及格'
+			} else if(document.querySelector('h1').innerHTML >= 75 && document.querySelector('h1').innerHTML < 85) {
+				document.querySelector('p').innerHTML = '良好'
+			} else if(document.querySelector('h1').innerHTML > 85) {
+				document.querySelector('p').innerHTML = '优秀'
+			} else {
+				document.querySelector('p').innerHTML = '不及格'
+			}
+		})
 	</script>
+
 </html>

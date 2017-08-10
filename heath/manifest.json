@@ -221,6 +221,15 @@
 				],
 				"refer": [],
 				"priority": 0
+			},
+			"tab-webview-subpage-about.html": {
+				"resources": [
+					"js/jquery-2.1.0.js",
+					"css/mui.min.css",
+					"css/icons-extra.css"
+				],
+				"refer": [],
+				"priority": 0
 			}
 		},
 		"idle": {
