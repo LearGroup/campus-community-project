@@ -58,19 +58,9 @@ function login(data) {
 					var username =date[0].username
 					if(data == 0) {
 						console.log("exit")
-						$("#login_input_username_div").attr("class", "form-group-sm ")
-						$("#login_input_password_div").attr("class", "form-group-sm ")
-						$("#login_btn").unbind("click")
-						$("#register_btn").unbind("click")
-						$("#login_btn").attr("id", "user_btn")
-						$("#register_btn").attr("id", "exit_btn")
-						$("#exit_btn").html("登出")
-						$("#exit_btn").attr("href", '/Uncom/login_Logout.action')
-						$("#user_btn").html(username)
-						$("#user_btn").attr("href", "user/PersonCenter.html")
-						$("#user_btn").attr("target", "_self")
 						$("#login_page_row").hide(200)
 						$("#login_page_row").empty()
+						$('#login_page_row').data("userName",date[0].username)
 						$("#login_page_row").data("userId",date[0].id)
 						$('#myModal').modal('hide')
 

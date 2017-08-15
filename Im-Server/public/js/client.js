@@ -1,5 +1,5 @@
+
 $(function() {
-	
 	init()
 	$(".send-btn").bind("click", function() {
 		send();
@@ -23,6 +23,7 @@ $(function() {
 						target.bind("click", function() {
 							$('.list-content').data("target-id", data.minor_user)
 
+
 						})
 					})
 
@@ -32,15 +33,30 @@ $(function() {
 
 		})
 	})
-})
-
+}) 
+var socket
 
 function init(){
+
 	$.post("/checkStatus",function(data){
 	    if(data=='null'){
 	    	$("#myModalLabel").text("请登陆")
 				$(".modal-body").load("/html/login_copy.html")
 				$('#myModal').modal('show')
+	    }else{
+	    		$('.list-content').data("userName", data[0].username)
+	    	    console.log('start')
+	    	    socket=io()
+	    	    socket.on("message",function(res){
+	    		console.log('res:'+res)
+	    		if(res!=undefined){
+	    			addResponse(res)
+		        }
+		    })
+	    	socket.emit('login',{userName:data[0].username,userId:data[0].id})
+	    	socket.on('hello',function(data){
+	    	console.log(data)	
+	    	})
 	    }
 	})
 }
@@ -58,28 +74,39 @@ function send() {
 		pTime = printTime(timediffs, currentTime)
 		console.log(pTime)
 	}
+	var targetId= $(".list-content").data("target-id")
 	var str = $(".send-input").val()
 	var tag = $(".list-content")
 	tag.append("<div class='row content-box'></div>")
 	var target = $(".list-content").find(".content-box:last")
-	target.load("/html/message-item.html", function() {
-		target.find(".message-content").text(str)
-		target.find(".message-content").css("margin-left", "40px")
-		target.find(".message-time").text(pTime)
-		$(".lis t-view").animate({
-			'scrollTop': $(".list-content").height() + 'px'
-		}, 500)
+	var myName=$(".list-content").data("userName")
+	socket.emit('message',{time:currentTime,targetId:targetId,content:str,myName:myName})
+	console.log({time:currentTime,targetId:targetId,content:str,myName:myName})
+	socket.on("messageResponse",function(res){
+		console.log('res:'+res)
+		if(res!=undefined){
+			target.load("/html/message-item.html", function() {
+	    	target.find(".message-content").text(str)
+	    	target.find(".user-name").text(myName)
+		    target.find(".message-content").css("margin-left", "40px")
+		    target.find(".message-time").text(pTime)
+		    $(".lis t-view").animate({
+			    'scrollTop': $(".list-content").height() + 'px'
+			}, 500)
+		})
+		}
 	})
 
 }
 
-function addResponse() {
-	var str = $(".send-input").val()
+function addResponse(res) {
 	var tag = $(".list-content")
 	tag.append("<div class='row content-box'></div>")
 	var target = $(".list-content").find(".content-box:last")
 	target.load("/html/message-response.html", function() {
-		target.find(".message-content").text(str)
+		target.find(".message-content").text(res.content)
+		target.find(".user-name").text(res.myName)
+		target.find(".message-time").text(res.time)
 		target.find(".message-box").css("text-align", 'left')
 		target.find(".message-content").css("margin-left", "-40px")
 		$(".list-view").animate({
