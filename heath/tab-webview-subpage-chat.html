@@ -10,10 +10,15 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<style>
 			html,
-			body {
-				background-color: #efeff4;
+			body {}
+			* {
+				background-color: #FFFFFF !important;
+				font-family: "微软雅黑" !important;
+				color: #569235 !important;
 			}
-			
+			li{
+				border-color:#adff42 !important;
+			}
 			.title {
 				padding: 20px 15px 10px;
 				color: #6d6d72;
@@ -22,15 +27,11 @@
 			}
 		</style>
 	</head>
-
 	<body>
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<div class="title">
-					
-				</div>
-				<ul class="mui-table-view mui-table-view-chevron">
-					<div></div>
+				<ul class="mui-table-view mui-grid-view mui-grid-9">
+
 				</ul>
 			</div>
 		</div>
@@ -49,23 +50,34 @@
 					}
 				}
 			});
-//			document.getElementById("about").addEventListener('tap', function() {
-//				//获得主页面的webview
-//				var main = plus.webview.currentWebview().parent();
-//				//触发主页面的gohome事件
-//				mui.fire(main, 'gohome');
-//			});
+			//			document.getElementById("about").addEventListener('tap', function() {
+			//				//获得主页面的webview
+			//				var main = plus.webview.currentWebview().parent();
+			//				//触发主页面的gohome事件
+			//				mui.fire(main, 'gohome');
+			//			});
 			/**
 			 * 下拉刷新具体业务实现
 			 */
+			function load() {
+				var table = document.body.querySelector('.mui-table-view');
+				var cells = document.body.querySelectorAll('.mui-table-view-cell');
+				for(var i = 0; i < 15; i++) {
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3';
+					li.innerHTML = '<a><img src="img/sun.png" width="50px" height="50px" /><div class="mui-media-body">Phone</div></a>';
+					table.appendChild(li);
+				}
+			}
+
 			function pulldownRefresh() {
 				setTimeout(function() {
 					var table = document.body.querySelector('.mui-table-view');
 					var cells = document.body.querySelectorAll('.mui-table-view-cell');
 					for(var i = cells.length, len = i + 3; i < len; i++) {
 						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
-						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+						li.className = 'mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3';
+						li.innerHTML = '<a><img src="img/sun.png" width="50px" height="50px" /><div class="mui-media-body">Phone</div></a>';
 						//下拉刷新，新纪录插到最前面；
 						table.insertBefore(li, table.firstChild);
 					}
@@ -83,12 +95,24 @@
 					var cells = document.body.querySelectorAll('.mui-table-view-cell');
 					for(var i = cells.length, len = i + 20; i < len; i++) {
 						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
-						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+						li.className = 'mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3';
+						li.innerHTML = '<a><img src="img/sun.png" width="50px" height="50px" /><div class="mui-media-body">Phone</div></a>';
 						table.appendChild(li);
 					}
 				}, 1000);
 			}
+			load()
+			mui.ready(function() {
+				mui('.mui-table-view').on('tap', 'li', function() {
+					mui.openWindow({
+						url: 'sports.html',
+						id: 'sports',
+						extras: {
+							sportsId: null
+						}
+					})
+				})
+			})
 		</script>
 	</body>
 

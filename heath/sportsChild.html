@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/icons-extra.css" />
+	</head>
+	<style>
+		* {
+			background-color: #FFFFFF;
+			margin: 0px;
+			padding: 0px;
+		}
+		
+		body {
+			overflow: auto;
+		}
+		
+		.continor {
+			height: 100%;
+		}
+		
+		#sportDataBox {
+			height: 20%;
+		}
+		
+		.listItem {
+			width: 50%;
+			border: 1px #EFEFF4;
+			float: left;
+			display: block;
+			height: 50%;
+			font-size: 1.2em !important;
+			text-align: center;
+			padding: 2%;
+			border-top: 0.5px dashed #EFEFF4;
+			border-left: 0.5px dashed #EFEFF4;
+		}
+		.listItem div{
+			width: 2.4em;
+			float: left;
+			border-right: 1px dashed #EFEFF4;
+			padding-right: 15px;
+		}
+		.listItem h2{
+			float: left;
+			margin-left: 20%;
+		}
+		.mui-icon {
+			font-size: 1.2em !important;
+		}
+		
+		.listItem:last-child {
+			width: 100%;
+			float: left;
+			border-bottom: 0.5px dashed #EFEFF4;
+		}
+		#describeBox{
+			padding-left:5px ;
+			padding-top:10px; 
+		}
+	</style>
+	<body>
+		<div class="continor">
+			<img src="img/run.jpg" height="40%" width="100%" />
+			<div id="sportDataBox">
+				<div class="listItem">
+					<div><span class="mui-icon-extra mui-icon-extra-outline"></span><br/><span>time</span></div>
+					<h2>50m</h2>
+				</div>
+				<div class="listItem">
+					<div><span class="mui-icon mui-icon-star"></span><br/><span>level</span></div>
+					<h2>40</h2>
+				</div>
+				<div class="listItem">
+					<div>
+						<span class="mui-icon-extra mui-icon-extra-gold"></span><br/>
+						<span>score</span>
+					</div>
+					<h2 style="margin-left: 10%;">20分</h2>
+				</div>
+
+			</div>
+			<div id="describeBox">
+				<h5>The Sprot describe:</h5>
+				<p>运动介绍</p>
+			</div>
+		</div>
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script type="text/javascript">
+		mui.init()
+		mui.plusReady(function() {
+			var height = plus.display.resolutionHeight;
+			var width = plus.display.resolutionWidth;
+			document.querySelector('body').style.height = height - 45 + 'px';
+		})
+	</script>
+
+</html>

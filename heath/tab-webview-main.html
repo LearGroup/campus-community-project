@@ -12,22 +12,29 @@
 		<style>
 			html,
 			body {
-				background-color: #efeff4;
+				background-color: #2AC845;
 			}
 			
 			nav a {
 				font-size: 12px;
+				
 			}
 			
 			nav .mui-icon-extra {
 				font-size: 18px;
 				display: block;
 			}
+			iframe{
+				padding: 0px !important;
+			}
+			header h1{
+				color: #fff !important;
+			}
 		</style>
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
+		<header class="mui-bar mui-bar-nav" style="background-color: #2AC845; border: 0px; box-shadow:  0px 0px 0px #2AC845;">
 			<h1 id="title" class="mui-title">健康指标</h1>
 		</header>
 		<nav class="mui-bar mui-bar-tab">
@@ -51,8 +58,8 @@
 			mui.init();
 			var subpages = ['tab-webview-subpage-chat.html', 'tab-webview-subpage-about.html', 'tab-webview-subpage-contact.html'];
 			var subpage_style = {
-				top: '45px',
-				bottom: '51px'
+				top: '44px',
+				bottom: '50px'
 			};
 
 			var aniShow = {};

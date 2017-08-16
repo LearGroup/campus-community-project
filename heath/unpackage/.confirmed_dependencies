@@ -24,15 +24,35 @@
 	},
 	"tab-webview-subpage-chat.html": {
 		"resources": [
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"img/sun.png"
 		],
-		"refer": []
+		"refer": [
+			"sports.html"
+		]
 	},
 	"tab-webview-subpage-about.html": {
 		"resources": [
 			"js/jquery-2.1.0.js",
 			"css/mui.min.css",
-			"css/icons-extra.css"
+			"css/icons-extra.css",
+			"fonts/mui.ttf"
+		]
+	},
+	"sports.html": {
+		"resources": [
+			"css/mui.min.css",
+			"fonts/mui.ttf",
+			"sportsChild.html"
+		],
+		"refer": [
+			"sportsChild.html"
+		]
+	},
+	"sportsChild.html": {
+		"resources": [
+			"img/run.jpg",
+			"css/mui.min.css"
 		]
 	}
 }

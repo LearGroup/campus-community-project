@@ -43,7 +43,6 @@
 			.bodyCellItem span {
 				font-size: 0.8em;
 				line-height: 50px;
-				
 				width: 20%;
 			}
 			
@@ -120,7 +119,8 @@
 				width: 50%;
 				background-color: #FFFF00;
 			}
-			#backTop{
+			
+			#backTop {
 				position: fixed;
 				bottom: 10px;
 				right: 10px;
@@ -128,6 +128,48 @@
 				height: 37px;
 				padding: 5px;
 			}
+			
+			#maskBox {
+				display: none;
+				position: fixed;
+				top: 0px;
+				z-index: 998;
+				background-color: rgba(0, 0, 0, 0.7) !important;
+				width: 100%;
+				height: 100%;
+				opacity: 0.2;
+			}
+			
+			.mui-input-row {
+				margin: 5%;
+				border-radius: 50px;
+				background-color: #FFFFFF;
+				width: 90%;
+			}
+			
+			.mui-input-row:last-child {
+				background-color: #FFFFFF;
+			}
+			
+			.mui-btn-outlined {
+				color: #FFFFFF;
+				margin: 5%;
+				width: 90%;
+				font-size:1em ;
+			}
+			#bodyIndexWrite{
+				border-bottom: 1px solid #efeff4;
+			}
+			#bodyIndexWrite *{
+				text-align: center;
+			}
+			#maskButton{
+				width: 60%;
+				font-size:1em ;
+				font-family: "微软雅黑";
+				margin: 2%;
+				margin-left: 20%;
+			}  
 		</style>
 	</head>
 
@@ -137,16 +179,20 @@
 				<h1>88</h1>
 				<p>良好</p>
 			</div>
+			<div id="bodyIndexWrite">
+				<button id="maskButton" class="mui-btn mui-btn-success mui-btn-outlined">身体信息更新</button>
+				<p>每日有新的身体信息</p>
+			</div>
 			<div class="bodyCellBox">
 				<ul class="bodyCell">
 					<li class="bodyCellItem">
-						<span>身高:</span>
+						<span>身&ensp;高:</span>
 						<div>
 							<div class="bodyData" id="hData">86</div>
 						</div>
 					</li>
 					<li class="bodyCellItem">
-						<span>体重:</span>
+						<span>体&ensp;重:</span>
 						<div>
 							<div class="bodyData" id="wData">60</div>
 						</div>
@@ -170,10 +216,37 @@
 							<div class="bodyData" id="bData">50</div>
 						</div>
 					</li>
-
+				</ul>
 				<a href="#" id="backTop" class="mui-icon-extra mui-icon-extra-top"></a>
 			</div>
-
+		</div>
+		<div id="maskBox" class=".mui-backdrop">
+			<!--<form class="mui-input-group">-->
+			<div class="mui-input-row">
+				<label>身&nbsp;高</label>
+				<input type="text" class="mui-input-clear" placeholder="请输入内容">
+			</div>
+			<div class="mui-input-row">
+				<label>体&nbsp;重</label>
+				<input type="text" class="mui-input-clear" placeholder="请输入内容">
+			</div>
+			<div class="mui-input-row">
+				<label>肺活量</label>
+				<input type="text" class="mui-input-clear" placeholder="请输入内容">
+			</div>
+			<div class="mui-input-row">
+				<label>饮水量</label>
+				<input type="text" class="mui-input-clear" placeholder="请输入内容">
+			</div>
+			<div class="mui-input-row">
+				<label>活动量</label>
+				<input type="text" class="mui-input-clear" placeholder="请输入内容">
+			</div>
+			</form>
+			<div id="maskCloesBox">
+				<button id="submit" class="mui-btn mui-btn-outlined">submit</button><br />
+				<button class="mui-btn mui-btn-outlined">cansel</button>
+			</div>
 		</div>
 	</body>
 	<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
@@ -186,7 +259,7 @@
 			var height = plus.display.resolutionHeight;
 			var width = plus.display.resolutionWidth;
 			document.querySelector('.continor').style.height = height - 96 + 'px';
-			document.querySelector('.bodyCellBox').style.height = height - 96 - 180+'px'
+			document.querySelector('.bodyCellBox').style.height = height - 96 - 180 + 'px'
 			var len = document.querySelectorAll('.bodyData').length;
 			var num = 0;
 			for(var i = 0; i < len; i++) {
@@ -202,6 +275,22 @@
 			} else {
 				document.querySelector('p').innerHTML = '不及格'
 			}
+
+		})
+		document.getElementById('maskButton').addEventListener('click', function(e) {
+			document.getElementById('maskBox').style.display = 'block'
+			var elem = 0.25
+			setInterval(function() {
+				if(elem >= 1) {
+					clearInterval
+				} else {
+					elem += 0.01
+				}
+				document.getElementById('maskBox').style.opacity = elem;
+			}, 1)
+		})
+		mui('#maskBox').on('tap','button',function(){
+			document.getElementById('maskBox').style.display = 'none'
 		})
 	</script>
 
