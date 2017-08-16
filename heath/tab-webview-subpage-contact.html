@@ -43,85 +43,72 @@
 			.oa-contact-name, oa-contact-position {
 				float: left;
 			}
+			.continor{
+				height: 165px;
+				background-color: #007AFF;
+				
+			}
+			.div1 p{
+				font-family: "微软雅黑";
+				font-size:2em;
+				color: #FAFAFA;
+				padding: 10px;
+				
+			}
 		</style>
 	</head>
 
 	<body>
-		<div class="mui-content">
-			<ul class="mui-table-cell">
-				<li class="mui-table-view-cell">
-					<div class="mui-slider-cell">
-						<div class="oa-contact-cell mui-table">
-							<div class="oa-contact-avatar mui-table-cell">
-								<img src="http://placehold.it/60x60" />
-							</div>
-							<div class="oa-contact-content mui-table-cell">
-								<div class="mui-clearfix">
-									<h4 class="oa-contact-name">艾AA</h4>
-									<span class="oa-contact-position mui-h6">总经理</span>
-								</div>
-								<p class="oa-contact-email mui-h6">
-									aaa@163.com
-								</p>
-							</div>
-						</div>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="mui-slider-cell">
-						<div class="oa-contact-cell mui-table">
-							<div class="oa-contact-avatar mui-table-cell">
-								<img src="http://placehold.it/60x60" />
-							</div>
-							<div class="oa-contact-content mui-table-cell">
-								<div class="mui-clearfix">
-									<h4 class="oa-contact-name">罗辑</h4>
-									<span class="oa-contact-position mui-h6">员工</span>
-								</div>
-								<p class="oa-contact-email mui-h6">
-									luoji@126.com
-								</p>
-							</div>
-						</div>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="mui-slider-cell">
-						<div class="oa-contact-cell mui-table">
-							<div class="oa-contact-avatar mui-table-cell">
-								<img src="http://placehold.it/60x60" />
-							</div>
-							<div class="oa-contact-content mui-table-cell">
-								<div class="mui-clearfix">
-									<h4 class="oa-contact-name">云天明</h4>
-									<span class="oa-contact-position mui-h6">员工</span>
-								</div>
-								<p class="oa-contact-email mui-h6">
-									ytm@163.com
-								</p>
-							</div>
-						</div>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="mui-slider-cell">
-						<div class="oa-contact-cell mui-table">
-							<div class="oa-contact-avatar mui-table-cell">
-								<img src="http://placehold.it/60x60" />
-							</div>
-							<div class="oa-contact-content mui-table-cell">
-								<div class="mui-clearfix">
-									<h4 class="oa-contact-name">史强</h4>
-									<span class="oa-contact-position mui-h6">员工</span>
-								</div>
-								<p class="oa-contact-email mui-h6">
-									shiqiang@gmail.com
-								</p>
-							</div>
-						</div>
-					</div>
-				</li>
+		<div class="continor">
+			
+			<div class="div1">
+				<button type="button" class="mui-btn mui-btn-blue mui-btn-block" >
+					<p>开启你的健康<br>之路</p>
+				</button>
+			</div>	
+		</div>
+		<div>
+			<a href=# id="healthplan">
+				<div>
+					<h3 style="padding: 10px;color: #555555;">用餐计划:</h3>
+				</div>
+			</a>
+			<ul class="mui-table-view mui-grid-view mui-grid-9">
+			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+			    <a href="#" id="breakfast">
+			        <span class="mui-icon "><img src="img/1.PNG" height="70px"></span>
+			        <div class="mui-media-body">早餐</div>
+			    </a>
+			</li>
+			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+			    <a href="#" id="lunch">
+			        <span class="mui-icon "><img src="img/2.PNG" height="70px"></span>
+			        <div class="mui-media-body">午餐</div>
+			    </a>
+			</li>
+			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+			    <a href="#" id="dinner">
+			        <span class="mui-icon  "><img src="img/3.PNG" height="70px"></span>
+			        <div class="mui-media-body">晚餐</div>
+			    </a>
+			</li>
 			</ul>
+			<h4 style="color: #555555;">摄入热量：(单位:kj)</h4>
+			<div class="mui-input-row mui-input-range">
+			    <label>早餐</label>
+			    <input type="range" min="0" max="1000" value="600">
+			</div>    
+			<div class="mui-input-row mui-input-range">
+			    <label>午餐</label>
+			    <input type="range" min="0" max="1000" value="700">
+			</div> 
+			<div class="mui-input-row mui-input-range">
+			    <label>晚餐</label>
+			    <input type="range" min="0" max="1000" value="450">
+			</div> 
+			<div style="width: 90%;margin: 0 auto;">
+				<button type="button" class="mui-btn mui-btn-green mui-btn-block" id="confirmBtn">选择该计划</button>
+			</div>
 		</div>
 	</body>
 	<script src="js/mui.min.js"></script>
@@ -129,11 +116,70 @@
 		mui.init({
 			swipeBack:true //启用右滑关闭功能
 		});
+		document.getElementById("confirmBtn").addEventListener('tap', function() {
+                var btnArray = ['否', '是'];
+                mui.confirm('确认选择？', '选择用餐计划', btnArray, function(e) {
+                    if (e.index == 1) {
+                        //info.innerText = '你刚确认MUI是个好框架';
+                    } else {
+                        //info.innerText = 'MUI没有得到你的认可，继续加油'
+                    }
+                })
+            });
+		//监听input事件，获取range的value值，也可以直接element.value获取该range的值
+	    //var rangeList = document.querySelectorAll('input[type="range"]');
+	    //for(var i=0,len=rangeList.length;i<len;i++){
+	    //    rangeList[i].addEventListener('input',function(){
+	    //        if(this.id.indexOf('field')>=0){
+	    //            document.getElementById(this.id+'-input').value = this.value;
+	    //        }else{
+	    //            document.getElementById(this.id+'-val').innerHTML = this.value;
+	    //        }
+	    //        
+		//
+	    //    });
+	    //}
+	
+	    //document.getElementById('field-range-input').addEventListener('input',function(){
+	    //    document.getElementById('field-range').value = this.value;
+	    //});
+	    
+	    
 //		document.getElementById("about").addEventListener('tap',function () {
 //			//获得主页面的webview
 //			var main = plus.webview.currentWebview().parent();
 //			//触发主页面的gohome事件
 //			mui.fire(main,'gohome');
 //		});
+		mui.ready(function() {
+					document.querySelector('#breakfast').addEventListener('click', function() {
+						mui.openWindowWithTitle({
+							url: 'breakfast.html',
+							id: 'breakfast.html'
+						},
+						{
+    						title:{//标题配置
+        						text:"商品详情",//标题文字
+   						 },
+   						 back:{//左上角返回箭头
+      						  image:{
+           						 base64Data:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAb1BMVEUAAAAAev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8AAACubimgAAAAI3RSTlMAGfUTGfQTGPMSGPIYGhgaGBsXGxcbFxwXHBccFhwWHRYdHWufDPQAAAABYktHRACIBR1IAAAAB3RJTUUH4QETEBwooeTlkQAAAJVJREFUSMft1EkSgkAQRNFGUXFWHBDBibr/HTUwD5B/48Ig1y+io7u6MqUhf5hsNEY+j5hMgZ/FJ8Xc9ovos3T96utjbfqN/Nb0O/m96Uv5g+mP8ifTn+Ur01/ka9Nf5RvTt/I309/lH6Z/yr9Mn+Q71/MT8B34K/E58Enzv8R/K98HvnF8p3lr8F7izce7lbf3kJ/lDQp9HdBhgg3PAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE3LTAxLTE5VDE2OjI4OjQwKzA4OjAwpTDFwQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNy0wMS0xOVQxNjoyODo0MCswODowMNRtfX0AAAAASUVORK5CYII='
+       						 }
+    						}
+						})
+					})
+
+				})
+		
+		mui.ready(function() {
+					document.querySelector('#healthplan').addEventListener('click', function() {
+						mui.openWindowWithTitle({
+							url: 'healthplan.html',
+							id: 'healthplan.html'
+						
+						})
+					})
+
+				})
 	</script>
 </html>
