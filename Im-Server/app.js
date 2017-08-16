@@ -48,6 +48,7 @@ app.use(session({
     store: new redisStore({
       host:'localhost',
       port:6379,
+      pass:18247352203,
       db:"0"
     }),  // 本地存储session（文本文件，也可以选择其他store，比如redis的）
     saveUninitialized: true,  // 是否自动保存未初始化的会话，建议false
@@ -115,7 +116,7 @@ app.post('/getFrendList',urlencodedParser,function(req,res){
   connection.query('select us.username, us.header_pic, us.sex,rs.minor_user from relation_ship rs,user us where rs.main_user='+'"'+id+'"'+' and rs.level =4 and rs.minor_user=us.id',function(err,results,xfields){
     res.send(results)
   })
-  
+
 })
 
 app.post("/checkStatus",urlencodedParser,function(req,res){
@@ -124,7 +125,7 @@ app.post("/checkStatus",urlencodedParser,function(req,res){
   }else{
     res.send("null")
   }
-  
+
 })
 
 app.post("/login",urlencodedParser,function(req,res){
@@ -139,7 +140,7 @@ app.post("/login",urlencodedParser,function(req,res){
       req.session.user=results
      }
      res.send(results)
-     
+
     })
   }else{
 	  connection.query('select us.username,us.id,us.header_pic from user us where us.email="'+username+'" and us.password="'+password+'"',function(err,results,xfields){
@@ -155,4 +156,3 @@ app.get('/users', user.list);
 server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
-
