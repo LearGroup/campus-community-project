@@ -18,9 +18,16 @@
 	},
 	"tab-webview-subpage-contact.html": {
 		"resources": [
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"img/2.PNG",
+			"img/3.PNG",
+			"fonts/mui.ttf",
+			"img/1.PNG"
 		],
-		"refer": []
+		"refer": [
+			"breakfast.html",
+			"healthplan.html"
+		]
 	},
 	"tab-webview-subpage-chat.html": {
 		"resources": [
@@ -52,6 +59,21 @@
 	"sportsChild.html": {
 		"resources": [
 			"img/run.jpg",
+			"css/mui.min.css"
+		]
+	},
+	"breakfast.html": {
+		"resources": [
+			"css/app.css",
+			"css/mui.min.css",
+			"js/mui.lazyload.js",
+			"js/mui.lazyload.img.js",
+			"js/mui.min.js"
+		]
+	},
+	"healthplan.html": {
+		"resources": [
+			"js/mui.min.js",
 			"css/mui.min.css"
 		]
 	}

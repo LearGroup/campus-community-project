@@ -22,7 +22,6 @@
 				padding: 11px 0;
 				vertical-align: middle;
 			}
-			
 			.oa-contact-cell {
 				position: relative;
 				margin: -11px 0;
@@ -45,7 +44,7 @@
 			}
 			.continor{
 				height: 165px;
-				background-color: #007AFF;
+				background-color: #2AC845;
 				
 			}
 			.div1 p{
@@ -53,7 +52,10 @@
 				font-size:2em;
 				color: #FAFAFA;
 				padding: 10px;
-				
+			}
+			input[type=range]{
+				background-color:#2AC845;
+				color: #2AC845;
 			}
 		</style>
 	</head>
@@ -62,7 +64,7 @@
 		<div class="continor">
 			
 			<div class="div1">
-				<button type="button" class="mui-btn mui-btn-blue mui-btn-block" >
+				<button type="button" class="mui-btn mui-btn-blue mui-btn-block" style="background-color: #2AC845; border: 0px;">
 					<p>开启你的健康<br>之路</p>
 				</button>
 			</div>	
@@ -155,11 +157,11 @@
 					document.querySelector('#breakfast').addEventListener('click', function() {
 						mui.openWindowWithTitle({
 							url: 'breakfast.html',
-							id: 'breakfast.html'
+							id: 'breakfast'
 						},
 						{
     						title:{//标题配置
-        						text:"商品详情",//标题文字
+        						text:"推荐食物列表",//标题文字
    						 },
    						 back:{//左上角返回箭头
       						  image:{
@@ -172,10 +174,10 @@
 				})
 		
 		mui.ready(function() {
-					document.querySelector('#healthplan').addEventListener('click', function() {
+					document.querySelector('#healthplan').addEventListener('tap', function() {
 						mui.openWindowWithTitle({
 							url: 'healthplan.html',
-							id: 'healthplan.html'
+							id: 'healthplan'
 						
 						})
 					})
