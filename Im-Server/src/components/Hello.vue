@@ -1,5 +1,5 @@
 <template>
-<div class="hello col-xs-12 panel panel-heading ">
+<div class="hello col-xs-push-1 col-xs-12 panel panel-heading ">
 
   <div class="col-xs-12 col-lg-12">
     <h1 class="col-xs-12 col-lg-12">{{ msg }}</h1>

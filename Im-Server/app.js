@@ -5,7 +5,11 @@
  var express = require('express'),
    routes = require('./server/routes'),
    opn = require('opn'),
-   userCache = require('./server/public/js/userCache')
+   errorHandler =require('errorhandler'),
+   multer = require('multer'),
+   serveFavicon = require('serve-favicon'),
+   morgan = require('morgan'),
+ userCache = require('./server/public/js/userCache'),
  webpack = require('webpack'),
    proxyMiddleware = require('http-proxy-middleware'),
    user = require('./server/routes/user'),
@@ -17,11 +21,13 @@
    mysql = require('mysql'),
    redis = require('redis')
  cookieParser = require('cookie-parser'),
+   methodOverride = require('method-override'),
    _ = require('underscore'),
    bodyParser = require('body-parser'),
    redisStore = require('connect-redis')(session),
+   bodyParser = require('body-parser'),
    path = require('path');
-
+ var router = express.Router()
  var redisClient = redis.createClient(6379, 'localhost', {
    auth_pass: 18247352203
  })
@@ -66,9 +72,9 @@
    database: 'currency_db'
  });
  var app = express()
+
  var server = http.createServer(app)
  io = socket.listen(server)
-
 
  app.set('port', 8081);
  app.use(cookieParser())
@@ -87,13 +93,16 @@
    saveUninitialized: false, // 是否自动保存未初始化的会话，建议false
    resave: false, // 是否每次都重新保存会话，建议false
  }));
- app.use(express.favicon());
- app.use(express.logger('dev'));
- app.use(express.bodyParser());
- app.use(express.methodOverride());
- app.use(app.router);
+ // parse application/x-www-form-urlencoded
+ app.use(bodyParser.urlencoded({ extended: false }))
+ // parse application/json
+ app.use(bodyParser.json())
+ app.use(morgan('combined'))
+ app.use(methodOverride('X-HTTP-Method-Override'));
+ app.use(router);
  app.use(express.static(path.join(__dirname, 'public')));
-
+ //设置网站图标路径
+ app.use(serveFavicon(path.join(__dirname, 'static', 'favicon.ico')))
 
  // all environments
  var compiler = webpack(webpackConfig)
@@ -178,10 +187,10 @@
 
  // development only
  if ('development' == app.get('env')) {
-   app.use(express.errorHandler());
+   app.use(errorHandler);
  }
 
- app.all('*', function(req, res, next) {
+ router.all('*', function(req, res, next) {
    res.header('Access-Control-Allow-Origin', "http://localhost:8081");
    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
@@ -191,7 +200,7 @@
    next();
  });
 
- app.post('/getFrendList', urlencodedParser, function(req, res) {
+ router.post('/getFrendList', urlencodedParser, function(req, res,next) {
    console.log('getFrendList');
    if (req.session.user) {
      let id = req.session.user.id
@@ -203,7 +212,7 @@
  })
 
 
- app.post("/checkStatus", urlencodedParser, function(req, res) {
+ router.post("/checkStatus", urlencodedParser, function(req, res) {
    console.log('checkStatus');
    console.log(req.session);
    if (req.session.user) {
@@ -214,7 +223,7 @@
 
  })
 
- app.post("/login", urlencodedParser, function(req, response) {
+ router.post("/login", urlencodedParser, function(req, response) {
    var use = req.body.use
    var username = req.body.username
    var password = req.body.password
@@ -244,8 +253,8 @@
            //activeMessage:当前活动信息
            //relationShipOne:第一等级关系：好友关系（相对于我）
            //relationShipTwo:第二等级关系：群组关系（相对于我）
-           redisClient.hmset('userCache:' + results[0].id, userCache.userCacheModule,function(err,res){
-                 response.send(results[0])
+           redisClient.hmset('userCache:' + results[0].id, userCache.userCacheModule, function(err, res) {
+             response.send(results[0])
            })
          }
        })
