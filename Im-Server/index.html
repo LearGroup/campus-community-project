@@ -9,8 +9,40 @@
     <!-- built files will be auto injected -->
   </body>
   <style>
+
   body{
     background: #009966;
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC",
+    "Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
   }
+
+
+  #app{
+
+  }
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s ease;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}
+.main-view{
+  margin-right: 0px;
+  margin-top: -10px;
+  position: absolute;
+   transition: all .4s cubic-bezier(.55,0,.1,1);
+}
+
+.slide-left-enter, .slide-right-leave-active {
+  opacity: 0;
+  -webkit-transform: translateX(50px);
+  transform: translateX(50px);
+}
+.slide-left-leave-active, .slide-right-enter {
+  opacity: 0;
+
+  -webkit-transform: translateX(-50px);
+  transform: translateX(-50px);
+}
   </style>
 </html>

@@ -1,21 +1,29 @@
 <template>
 <div id="app" class="container-fluid root">
   <div class="col-xs-12 col-lg-3 col-lg-push-4 content">
-    <router-view></router-view>
+
+      <router-view></router-view>
+
   </div>
 </div>
 </template>
 
 <script>
 export default {
+  data(){
+    return {
+
+    }
+  },
   name: 'app',
   mounted: function() {
-  if (document.body.clientWidth > 768){
+    if (document.body.clientWidth > 768) {
       $('.content').height(0)
-  }else{
-    $('.content').height(window.innerHeight)
+    } else {
+      $('.content').height(window.innerHeight)
+    }
   }
-  }
+
 }
 </script>
 
@@ -40,6 +48,8 @@ export default {
   color: #2c3e50;
   text-align: center;
 }
+
+
 
 
 
@@ -103,6 +113,8 @@ export default {
 .col-xs-9 {
   padding: 0;
 }
+
+
 
 
 

@@ -9,9 +9,9 @@
            <span slot="label"><i class="el-icon-more"></i></span>
         </el-tab-pane>
       </el-tabs>
-      <div class="col-xs-12">
-             <router-view></router-view>
-      </div>
+        <transition :name="transitionName">
+          <router-view  class="main-view"></router-view>
+        </transition>
 
   </div>
 
@@ -32,8 +32,18 @@ export default {
   data() {
     return {
       activeName: 'second',
-      show: true
+      show: true,
+      transitionName: 'slide-left'
     };
+  },
+  watch:{
+    '$route'(to,from){
+      let lis={Information:1,Contacts:2,My:3,Settings:4}
+      const toDepth = lis[to.name]
+      const fromDepth = lis[from.name]
+      this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+      console.log(toDepth,fromDepth);
+    }
   },
   mounted: function() {
     this.$router.push({
@@ -43,11 +53,17 @@ export default {
   },
   methods: {
     handleClick(tab, event) {
-      console.log(event.target.innerText);
+
       if (event.target.innerText != "") {
         this.$router.push({
           path: '/Main/' + List[event.target.innerText]
         })
+      }else{
+
+        this.$router.push({
+            path: '/Main/' + 'Settings'
+        })
+
       }
     }
   }
@@ -55,10 +71,6 @@ export default {
 </script>
 
 <style lang="css">
-body{
-  font-family: "Helvetica Neue",Helvetica,"PingFang SC",
-  "Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-}
 .el-tabs__item{
 
   padding-left: 43px;

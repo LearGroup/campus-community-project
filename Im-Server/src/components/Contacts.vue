@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="row box-card">
+  <div class="col-xs-12 box-card">
     <div v-for="item in items" @dblclick.self="openChatPage(item)"
     @click.self="selectStyle(item)" @keyup.enter="openChatPage(item)"
     v-bind:data-id="item.minor_user" :class="item.class">
@@ -17,7 +17,8 @@ export default {
   name: 'contacts',
   data() {
     return {
-      items: [{}]
+      items: [{}],
+      message :[{}]
     }
   },
   mounted: function() {
@@ -30,9 +31,9 @@ export default {
 
         this.$nextTick(function() {
           this.items.forEach(function(item) {
-            item.class = "col-xs-12 contact-item"
+            item.class = "row contact-item"
           })
-          items.class = "col-xs-12 contact-item activate"
+          items.class = "row contact-item activate"
         })
       }else {
         contacts.pushToMessagePage(this,items)
@@ -54,7 +55,6 @@ export default {
 <style lang="css">
 .contact-item{
   border-radius: 4px 4px 4px 4px;
-  margin-right: 15px;
   height: 50px;
 }
 .contact-item:hover{
