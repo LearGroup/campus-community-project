@@ -243,7 +243,9 @@
      if (err) {
        console.log(err);
      }
-     if (results) {
+     console.log('results');
+     console.log(results);
+     if (results[0]) {
        req.session.user = results[0]
        redisClient.get('userCache:' + results[0].id, function(err, res) {
          //若缓存不存在，创建一个缓存

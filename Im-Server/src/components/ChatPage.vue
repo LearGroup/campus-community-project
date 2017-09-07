@@ -8,13 +8,17 @@
 </mt-header>
 <div class="row">
   <div class="col-xs-12 message-box">
-    <div  v-for="item in message" class="row" v-bind:class="item.objectType">
-      <div class="avatar-box">
-         <img :src="item.header_pic" alt="">
+    <div id="convo"  v-for="item in message" class="row chat-thread chat-item" v-bind:class="item.objectType">
+      <div class="avatar-chatePage">
+         <img class="avatar" :src="item.header_pic" alt="">
       </div>
-      <div class="chat-content" v-html="item.chat">
+      <div class="shape-tag">
 
       </div>
+      <div class="chat-content">
+            <p>awdawdawdawdaw</p>
+
+        </div>
     </div>
   </div>
 
@@ -22,7 +26,7 @@
 <div class="row footer-box">
   <div class="col-xs-8 input-box">
     <el-input
-    type="textarea" :autosize="{ minRows: 1, maxRows: 2}" placeholder="请输入内容"  v-model="textarea2">
+    type="textarea" :autosize="{ minRows: 1, maxRows: 2}" placeholder="请输入内容"  v-model="textarea">
   </el-input>
   </div>
   <div class="col-xs-2">
@@ -39,11 +43,13 @@
 
 <script>
 import pageJs from '../../static/js/chatPage'
+import '../../static/css/chatUI.css'
 export default {
   name: 'chatpage',
   data() {
 
     return {
+        textarea: '',
       items: {},
       message: [{
         objectType: 'opposite',
@@ -69,15 +75,48 @@ export default {
 </script>
 
 <style lang="css">
+.avatar-chatePage{
+  float: left;
+  margin-left: 10px;
+  margin-top: 4px;
+  padding-top: 2px;
+  height: 35px;
+  width: 35px;
+  border: solid .5px  #BBBBBB;
+  border-radius: 50%;
+}
 
-.opposite{
+.chat-thread  .chat-content p{
+  margin-bottom: 0px;
+}
+.chat-thread  .chat-content{
+  margin-top:  5px;
+  padding-top: 6px;
+  padding-bottom:6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  min-height: 35px;
+  float: left;
+  border-radius: 5px;
   background-color: #dddddd;
 }
-.chat-content{
-  margin-left: 10px;
-  margin-top: 5.5px;
-  font-size: 12.5px;
+
+.shape-tag{
+  margin-left:0px;
+  margin-top: 14px;
   float: left;
+  border-left: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right:8px solid #dddddd;
+}
+
+
+.opposite{
+
+}
+.chat-item{
+  margin-top: 10px;
+  font-size: 12.5px;
 }
 .express-icon{
   font-size: 30px;

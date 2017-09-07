@@ -13,7 +13,7 @@
       <input type="text" name="login_password" id="login_input_password" class="form-control" placeholder="密码">
     </div>
 
-    <button v-on:click="login(0)" type="button" class="col-xs-12 btn btn-default btn-group-vertical login-btn" name="button" style="color:#42b983;">登陆</button>
+    <button v-on:click="login(0)" type="button" class="col-xs-12 btn btn-default btn-group-vertical login-btn" name="button" style="color:#42b983;"><i v-bind:class="{'fa fa-spinner fa-pulse':logins}"></i>登陆</button>
     <div class="col-xs-12 text-center">
       <a href="#">忘记密码</a>
       <a href="#">|</a>
@@ -33,6 +33,7 @@ export default {
   data() {
     return {
       msg: 'Im-Servers',
+      logins:false
     }
   },
   created: function() {

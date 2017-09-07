@@ -4,7 +4,7 @@
     @click.self="selectStyle(item)" @keyup.enter="openChatPage(item)"
     v-bind:data-id="item.minor_user" :class="item.class">
          <div class="avatar-box">
-            <img :src="item.header_pic" alt="">
+            <img class="avatar" :src="item.header_pic" alt="">
          </div>
          <p class="username">{{item.username}}</p>
     </div>
@@ -66,6 +66,9 @@ export default {
 .box-card{
 
 }
+.avatar{
+
+}
 .avatar-box{
   float: left;
   margin-left: 10px;
@@ -73,7 +76,7 @@ export default {
   padding-top: 2px;
   height: 40px;
   width: 40px;
-  border: solid 1.5px  #BBBBBB;
+  border: solid .5px  #BBBBBB;
   border-radius: 50%;
 }
 

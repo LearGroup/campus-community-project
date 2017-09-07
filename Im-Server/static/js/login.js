@@ -43,10 +43,9 @@ function login(thi, data) {
   } else {
     $("#login_input_password_div").attr("class", "input-group login_input_password_div has-success")
     clearTimeout(time);
+    thi.logins=true;
     console.log('login start');
     time = setTimeout(function() {
-
-
       $.ajax({
         type: 'post',
         async: true,
@@ -64,6 +63,7 @@ function login(thi, data) {
         success: function(date) {
           console.log(date)
           if (date == null || date.length == 0) {
+            thi.logins=false;
             $("#login_input_username_div").attr("class", "input-group login_input_username_div has-error ")
             $("#login_input_password_div").attr("class", "input-group login_input_password_div has-error")
             $("#login_input_password").val("")
