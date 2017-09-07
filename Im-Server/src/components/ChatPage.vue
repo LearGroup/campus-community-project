@@ -8,7 +8,14 @@
 </mt-header>
 <div class="row">
   <div class="col-xs-12 message-box">
+    <div  v-for="item in message" class="row" v-bind:class="item.objectType">
+      <div class="avatar-box">
+         <img :src="item.header_pic" alt="">
+      </div>
+      <div class="chat-content" v-html="item.chat">
 
+      </div>
+    </div>
   </div>
 
 </div>
@@ -35,15 +42,24 @@ import pageJs from '../../static/js/chatPage'
 export default {
   name: 'chatpage',
   data() {
+
     return {
-      items: [{}]
+      items: {},
+      message: [{
+        objectType: 'opposite',
+        chat: '<p>Hello World!</p>'
+      }, {
+        objectType: 'opposite',
+        chat: '<p>Hello Friend!</p>'
+      }]
+
     }
   },
   mounted: function() {
-    if (document.body.clientWidth > 768){
+    if (document.body.clientWidth > 768) {
       $('.message-box').height(window.innerHeight - 240)
-    }else{
-      $('.message-box').height(window.innerHeight-110)
+    } else {
+      $('.message-box').height(window.innerHeight - 110)
     }
     pageJs.getMessageData(this)
     console.log('active Message');
@@ -53,6 +69,16 @@ export default {
 </script>
 
 <style lang="css">
+
+.opposite{
+  background-color: #dddddd;
+}
+.chat-content{
+  margin-left: 10px;
+  margin-top: 5.5px;
+  font-size: 12.5px;
+  float: left;
+}
 .express-icon{
   font-size: 30px;
   color:#666666;

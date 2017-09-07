@@ -18,7 +18,6 @@ export default {
   data() {
     return {
       items: [{}],
-      message :[{}]
     }
   },
   mounted: function() {
