@@ -9,15 +9,17 @@
 <div class="row">
   <div class="col-xs-12 message-box">
     <div id="convo"  v-for="item in message" class="row chat-thread chat-item" v-bind:class="item.objectType">
-      <div class="avatar-chatePage">
-         <img class="avatar" :src="item.header_pic" alt="">
+    <div class="message-time-box">
+      <p class="message-time">昨天 下午5:31</p>
+    </div>
+     <div class="avatar-chatePage">
+         <img class="avatar" :src="items.header_pic" alt="">
       </div>
       <div class="shape-tag">
 
       </div>
       <div class="chat-content">
             <p>awdawdawdawdaw</p>
-
         </div>
     </div>
   </div>
@@ -30,10 +32,10 @@
   </el-input>
   </div>
   <div class="col-xs-2">
-     <i class="fa fa-smile-o express-icon"></i>
+     <i class=" fa fa-smile-o express-icon"></i>
   </div>
   <div class="col-xs-2">
-<el-button  type="primary">发送</el-button>
+<el-button  type="primary" v-on:click="sendMessage">发送</el-button>
   </div>
 
 </div>
@@ -49,11 +51,11 @@ export default {
   data() {
 
     return {
-        textarea: '',
-      items: {},
+      textarea: '',
+      items: {username:'陈广平',header_pic:''},
       message: [{
         objectType: 'opposite',
-        chat: '<p>Hello World!</p>'
+        chat: '<p>Hello World!</p>',
       }, {
         objectType: 'opposite',
         chat: '<p>Hello Friend!</p>'
@@ -63,18 +65,37 @@ export default {
   },
   mounted: function() {
     if (document.body.clientWidth > 768) {
+
       $('.message-box').height(window.innerHeight - 240)
     } else {
       $('.message-box').height(window.innerHeight - 110)
+      
     }
     pageJs.getMessageData(this)
     console.log('active Message');
     console.log(this.items);
+  },
+  methods: {
+    sendMessage: function(event) {
+      pageJs.sendMessage(event)
+    }
   }
+
 }
 </script>
 
 <style lang="css">
+
+.chatBox .el-button{
+   line-height: 0.5;
+   margin-left: -15px;
+}
+.chatBox .el-button .el-button--primary{
+  line-height: .8;
+}
+.message-time-box .message-time{
+  font-size: 10px;
+}
 .avatar-chatePage{
   float: left;
   margin-left: 10px;
@@ -102,7 +123,7 @@ export default {
 }
 
 .shape-tag{
-  margin-left:0px;
+  margin-left:-4px;
   margin-top: 14px;
   float: left;
   border-left: 8px solid transparent;
@@ -119,6 +140,7 @@ export default {
   font-size: 12.5px;
 }
 .express-icon{
+  margin-left: -15px;
   font-size: 30px;
   color:#666666;
 }

@@ -11,7 +11,8 @@ export default new Vuex.Store({
     headImageUrl: null,
     cureentMessageList: null,
     cureentMessage: null,
-    socket: null
+    socket: null,
+    deviceHeight:null
 
   },
   getters: {
@@ -40,6 +41,11 @@ export default new Vuex.Store({
     updateCureentMessage(state, item) {
       state.cureentMessage = item
       state.cureentMessage['activeTime'] = new Date()
+      sessionStorage.currentMessage =JSON.stringify(state.cureentMessage);
+    },
+    updateDeviceHeight(state,height){
+      state.deviceHeight = item
+      sessionStorage.deviceHeight =height;
     }
 
   },

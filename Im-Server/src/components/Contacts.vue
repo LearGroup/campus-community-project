@@ -21,6 +21,7 @@ export default {
     }
   },
   mounted: function() {
+  
     contacts.Init()
     contacts.getFrendList(this)
   },

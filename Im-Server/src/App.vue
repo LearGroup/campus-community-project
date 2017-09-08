@@ -17,11 +17,14 @@ export default {
   },
   name: 'app',
   mounted: function() {
-    if (document.body.clientWidth > 768) {
-      $('.content').height(0)
-    } else {
-      $('.content').height(window.innerHeight)
-    }
+      if (document.body.clientWidth <768) {
+        $('.content').height(window.innerHeight)
+      }else{
+        $('.content').height(window.innerHeight-150)
+      }
+
+
+    this.$store.commit('updateDeviceHeight',window.innerHeight)
   }
 
 }
@@ -33,7 +36,7 @@ export default {
 }
 
 .content {
-  height: 0px;
+
   background: #eeeeee;
   padding: 0px;
   margin: 0px;

@@ -106,7 +106,8 @@ function login(thi, data) {
   }
 }
 
-function checkStatus(targetUrl) {
+function checkStatus(targetUrl,callback) {
+  arguments[1]? arguments[0]:null
   console.log('checkStatus');
   console.log(this.$store.state);
   console.log(this.$store.state.userState);
@@ -140,6 +141,9 @@ function checkStatus(targetUrl) {
           })
           console.log('userState:');
           console.log(thi.$store.getters.getState);
+          if(callback){
+                callback()  
+          }
           thi.$router.push({
             path: targetUrl
           })
