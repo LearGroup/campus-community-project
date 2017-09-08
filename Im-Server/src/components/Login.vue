@@ -33,10 +33,17 @@ export default {
   data() {
     return {
       msg: 'Im-Servers',
-      logins:false
+      logins: false
     }
   },
   created: function() {
+
+    if (document.body.clientWidth < 768) {
+      $('.content').height(window.innerHeight)
+    } else {
+
+      $('.content').height(0)
+    }
     this.checkStatus('Main/Contacts')
   },
   methods: {
@@ -47,7 +54,8 @@ export default {
 }
 </script>
 <style media="screen">
-.login{}
+.login {}
+
 .login-box {
   background: #eeeeee;
   padding-left: 15px;

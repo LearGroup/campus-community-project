@@ -21,26 +21,26 @@ export default {
     }
   },
   mounted: function() {
-  
-    contacts.Init()
+
+    contacts.Init(this)
     contacts.getFrendList(this)
   },
   methods: {
+
     selectStyle: function(items) {
       if (document.body.clientWidth > 768) {
-
         this.$nextTick(function() {
           this.items.forEach(function(item) {
             item.class = "row contact-item"
           })
           items.class = "row contact-item activate"
         })
-      }else {
-        contacts.pushToMessagePage(this,items)
+      } else {
+        contacts.pushToMessagePage(this, items)
       }
     },
     openChatPage: function(items) {
-      contacts.pushToMessagePage(this,items)
+      contacts.pushToMessagePage(this, items)
     },
 
   },

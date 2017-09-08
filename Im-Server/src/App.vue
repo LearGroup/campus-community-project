@@ -1,6 +1,6 @@
 <template>
 <div id="app" class="container-fluid root">
-  <div class="col-xs-12 col-lg-3 col-lg-push-4 content">
+  <div class="col-xs-12 col-lg-3 col-lg-push-4 content"  v-bind:style="{height:height}">
 
       <router-view></router-view>
 
@@ -12,7 +12,7 @@
 export default {
   data(){
     return {
-
+      height:'0px'
     }
   },
   name: 'app',
@@ -20,9 +20,8 @@ export default {
       if (document.body.clientWidth <768) {
         $('.content').height(window.innerHeight)
       }else{
-        $('.content').height(window.innerHeight-150)
+        $('.content').height(0)
       }
-
 
     this.$store.commit('updateDeviceHeight',window.innerHeight)
   }
@@ -36,7 +35,7 @@ export default {
 }
 
 .content {
-
+  border-radius: 4px;
   background: #eeeeee;
   padding: 0px;
   margin: 0px;

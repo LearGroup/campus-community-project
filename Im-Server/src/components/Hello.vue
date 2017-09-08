@@ -1,12 +1,13 @@
 <template>
-<div class="hello col-xs-push-1 col-xs-12 panel panel-heading ">
+<div class="hello col-lg-push-1 col-xs-12 panel panel-heading ">
 
   <div class="col-xs-12 col-lg-12">
     <h1 class="col-xs-12 col-lg-12">{{ msg }}</h1>
     <h2 class="col-xs-12 col-lg-12">及时通讯系统</h2>
-    <ul>
-      <li<router-link :to="{ name: 'Login',path: '/Login', params: {} }">去登陆</router-link>
-        </li>
+    <ul class="col-xs-12 col-lg-12">
+      <li
+        <router-link :to="{ name: 'Login',path: '/Login', params: {} }">去登陆</router-link>
+      </li>
     </ul>
   </div>
 </div>
@@ -21,7 +22,7 @@ export default {
     }
   },
   created: function() {
-    this.checkStatus("/Main/Contacts")
+
   }
 }
 </script>

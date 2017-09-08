@@ -1,7 +1,8 @@
 <template lang="html">
 <div class="chatBox">
+
   <mt-header :title="items.username">
-  <router-link to="/" slot="left">
+  <router-link to="/Main/Contacts" slot="left">
     <mt-button icon="back">返回</mt-button>
   </router-link>
   <mt-button icon="more" slot="right"></mt-button>
@@ -12,15 +13,24 @@
     <div class="message-time-box">
       <p class="message-time">昨天 下午5:31</p>
     </div>
-     <div class="avatar-chatePage">
+     <div v-if="item.objectType==='opposite'" class="avatar-chatePage-left">
          <img class="avatar" :src="items.header_pic" alt="">
       </div>
-      <div class="shape-tag">
+      <div v-else class="avatar-chatePage-right">
+          <img class="avatar" :src="items.header_pic" alt="">
+      </div>
+      <div  v-if="item.objectType==='opposite'"  class="shape-tag-left">
 
       </div>
-      <div class="chat-content">
+      <div   v-else  class="shape-tag-right">
+
+      </div>
+      <div  v-if="item.objectType==='opposite'" class="chat-content-left">
             <p>awdawdawdawdaw</p>
         </div>
+        <div   v-else   class="chat-content-right">
+              <p>awdawdawdawdaw</p>
+          </div>
     </div>
   </div>
 
@@ -52,24 +62,26 @@ export default {
 
     return {
       textarea: '',
-      items: {username:'陈广平',header_pic:''},
+      items: {},
       message: [{
         objectType: 'opposite',
         chat: '<p>Hello World!</p>',
       }, {
-        objectType: 'opposite',
+        objectType: 'own',
         chat: '<p>Hello Friend!</p>'
-      }]
+      }],
+      own:{}
 
     }
   },
   mounted: function() {
     if (document.body.clientWidth > 768) {
-
+      this.$parent.height = window.innerHeight - 150+'px'
       $('.message-box').height(window.innerHeight - 240)
     } else {
-      $('.message-box').height(window.innerHeight - 110)
-      
+      this.$parent.height = window.innerHeight+'px'
+      $('.message-box').height(window.innerHeight- 90)
+
     }
     pageJs.getMessageData(this)
     console.log('active Message');
@@ -96,7 +108,7 @@ export default {
 .message-time-box .message-time{
   font-size: 10px;
 }
-.avatar-chatePage{
+.avatar-chatePage-left{
   float: left;
   margin-left: 10px;
   margin-top: 4px;
@@ -106,11 +118,24 @@ export default {
   border: solid .5px  #BBBBBB;
   border-radius: 50%;
 }
+.avatar-chatePage-right{
+  float: right;
+  margin-right: 10px;
+  margin-top: 4px;
+  padding-top: 2px;
+  height: 35px;
+  width: 35px;
+  border: solid .5px  #BBBBBB;
+  border-radius: 50%;
+}
 
-.chat-thread  .chat-content p{
+.chat-thread  .chat-content-left p{
   margin-bottom: 0px;
 }
-.chat-thread  .chat-content{
+.chat-thread  .chat-content-right p{
+  margin-bottom: 0px;
+}
+.chat-thread  .chat-content-left{
   margin-top:  5px;
   padding-top: 6px;
   padding-bottom:6px;
@@ -121,14 +146,34 @@ export default {
   border-radius: 5px;
   background-color: #dddddd;
 }
+.chat-thread  .chat-content-right{
+  margin-top:  5px;
+  padding-top: 6px;
+  padding-bottom:6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  min-height: 35px;
+  float: right;
+  border-radius: 5px;
+  background-color: #42B983;
+}
 
-.shape-tag{
+.shape-tag-left{
   margin-left:-4px;
   margin-top: 14px;
   float: left;
   border-left: 8px solid transparent;
   border-bottom: 8px solid transparent;
   border-right:8px solid #dddddd;
+}
+
+.shape-tag-right{
+  margin-right:-4px;
+  margin-top: 14px;
+  float: right;
+  border-right:8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 8px solid #42B983 ;
 }
 
 

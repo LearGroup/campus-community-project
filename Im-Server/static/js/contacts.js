@@ -5,11 +5,14 @@ export default {
 }
 
 
-function Init() {
-  if (document.body.clientWidth > 768){
-      $('.content').height(window.innerHeight-150)
-  }else{
-      $('.content').height(window.innerHeight)
+function Init(thi) {
+  console.log('init');
+
+  console.log(thi.$parent.$parent.height);
+  if (document.body.clientWidth > 768) {
+      thi.$parent.$parent.height = window.innerHeight - 150+'px'
+  } else {
+  hi.$parent.$parent.height = window.innerHeight +'px'
   }
   $(".contact-item").on("click", function(even) {
     //  $(".contact-item").removeClass('actived')
@@ -27,11 +30,8 @@ function pushToMessagePage(thi, item) {
 }
 
 function getFrendList(thi) {
-
   console.log('getFrendList');
-  console.log(thi.items);
-  console.log(thi.$store.getters.getFrendList);
-  if (thi.$store.getters.getFrendList == null || thi.$store.getters.getFrendList.length == 0) {
+  if (!thi.$store.getters.getFrendList || thi.$store.getters.getFrendList.length == 0) {
 
     thi.checkStatus('/Main/Contacts')
 

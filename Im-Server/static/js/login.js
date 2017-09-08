@@ -142,7 +142,7 @@ function checkStatus(targetUrl,callback) {
           console.log('userState:');
           console.log(thi.$store.getters.getState);
           if(callback){
-                callback()  
+                callback()
           }
           thi.$router.push({
             path: targetUrl
