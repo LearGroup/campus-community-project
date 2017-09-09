@@ -7,8 +7,8 @@
   </router-link>
   <mt-button icon="more" slot="right"></mt-button>
 </mt-header>
-<div class="row">
-  <div class="col-xs-12 message-box">
+<div class="row message-box">
+  <div class="col-xs-12 ">
     <div id="convo"  v-for="item in message" class="row chat-thread chat-item" v-bind:class="item.objectType">
     <div class="message-time-box">
       <p class="message-time">昨天 下午5:31</p>
@@ -17,7 +17,7 @@
          <img class="avatar" :src="items.header_pic" alt="">
       </div>
       <div v-else class="avatar-chatePage-right">
-          <img class="avatar" :src="items.header_pic" alt="">
+          <img class="avatar" :src="own.header_pic" alt="">
       </div>
       <div  v-if="item.objectType==='opposite'"  class="shape-tag-left">
 
@@ -41,10 +41,10 @@
     type="textarea" :autosize="{ minRows: 1, maxRows: 2}" placeholder="请输入内容"  v-model="textarea">
   </el-input>
   </div>
-  <div class="col-xs-2">
+  <div class="col-xs-2 express">
      <i class=" fa fa-smile-o express-icon"></i>
   </div>
-  <div class="col-xs-2">
+  <div class="col-xs-2 send">
 <el-button  type="primary" v-on:click="sendMessage">发送</el-button>
   </div>
 
@@ -69,8 +69,8 @@ export default {
       }, {
         objectType: 'own',
         chat: '<p>Hello Friend!</p>'
-      }],
-      own:{}
+      }]  ,
+      own:{username:'',id:'',header_pic:''}
 
     }
   },
@@ -80,16 +80,14 @@ export default {
       $('.message-box').height(window.innerHeight - 240)
     } else {
       this.$parent.height = window.innerHeight+'px'
-      $('.message-box').height(window.innerHeight- 90)
+      $('.message-box').height(window.innerHeight- 100)
 
     }
     pageJs.getMessageData(this)
-    console.log('active Message');
-    console.log(this.items);
   },
   methods: {
     sendMessage: function(event) {
-      pageJs.sendMessage(event)
+      pageJs.sendMessage(this,event)
     }
   }
 
@@ -98,6 +96,18 @@ export default {
 
 <style lang="css">
 
+.send{
+  background-color: #eeeeee;
+}
+.express{
+  background-color: #eeeeee;
+}
+.message-box .avatar{
+  height: 100%;
+  width: 100%;
+  margin-top: -3px;
+  border-radius: 50%;
+}
 .chatBox .el-button{
    line-height: 0.5;
    margin-left: -15px;
@@ -190,10 +200,15 @@ export default {
   color:#666666;
 }
 .input-box{
+
+  background-color:#eeeeee;
+  padding-top: 4px;
   padding-right: 5px;
+  padding-bottom: 4px;
 }
 .footer-box{
-  padding-top:6px;
+  height: 80px;
+  background-color: #eeeeee;
   border-top: 1px solid #DDDDDD;
 }
 
@@ -209,7 +224,7 @@ export default {
   color: #333333;
 }
 .chatBox{
-  margin-top: 4px;
+  margin-top: 12px;
 }
 .mintui-back{
 

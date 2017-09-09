@@ -31,19 +31,19 @@ export default new Vuex.Store({
       return state.frendList
     },
     getUserId: state => {
-      if (!state.userId) {
+      if (!state.userId && sessionStorage.userId) {
         state.userId = sessionStorage.userId
       }
       return state.userId
     },
     getHeadImageUrl: state => {
-      if (!state.headImageUrl) {
+      if (!state.headImageUrl && sessionStorage.headImageUrl) {
         state.headImageUrl = sessionStorage.headImageUrl
       }
       return state.headImageUrl
     },
     getUserName: state => {
-      if (!state.userName) {
+      if (!state.userName && sessionStorage.userName) {
         state.userName = sessionStorage.userName
       }
       return state.userName

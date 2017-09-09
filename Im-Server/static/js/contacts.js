@@ -7,13 +7,12 @@ export default {
 
 function Init(thi) {
   console.log('init');
-
-  console.log(thi.$parent.$parent.height);
   if (document.body.clientWidth > 768) {
-      thi.$parent.$parent.height = window.innerHeight - 150+'px'
+    thi.$parent.$parent.height = (window.innerHeight - 150) + 'px'
   } else {
-  hi.$parent.$parent.height = window.innerHeight +'px'
+    thi.$parent.$parent.height = window.innerHeight + 'px'
   }
+
   $(".contact-item").on("click", function(even) {
     //  $(".contact-item").removeClass('actived')
     $(even).attr('class', 'contact-item actived')
