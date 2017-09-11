@@ -18,10 +18,6 @@ export default new Vuex.Store({
   getters: {
     getSocket: state => state.socket,
     getState: state => {
-
-      if (!state.userState && sessionStorage.headImageUrl) {
-        state.userState = sessionStorage.headImageUrl
-      }
       return state.userState
     },
     getFrendList: state => {
@@ -51,13 +47,14 @@ export default new Vuex.Store({
     getCurrentMessageList: state => {
 
       if (!state.cureentMessageList) {
-        state.cureentMessageList = JSON.parse(sessionStorage.cureentMessageList)
+
+        state.cureentMessageList = JSON.parse(sessionStorage.getItem('cureentMessageList'))
       }
       return state.cureentMessageList
     },
     getCureentMessage: state => {
-      if (!state.cureentMessage) {
-        state.cureentMessage = JSON.parse(sessionStorage.cureentMessage)
+      if (!state.cureentMessage && sessionStorage.cureentMessage) {
+        state.cureentMessage =  JSON.parse(sessionStorage.getItem('cureentMessage'))
       }
       return state.cureentMessage
     }
@@ -79,12 +76,13 @@ export default new Vuex.Store({
     updateUserFrendList(state, List) {
       console.log(List);
       state.frendList = List
-      sessionStorage.frendList == JSON.stringify(state.frendList);
+      sessionStorage.setItem('cureentMessage',JSON.stringify(state.frendList))
     },
     updateCureentMessage(state, item) {
+      item['activeTime'] = new Date()
+      var str = JSON.stringify(item)
+      sessionStorage.setItem('cureentMessage',str)
       state.cureentMessage = item
-      state.cureentMessage['activeTime'] = new Date()
-      sessionStorage.currentMessage = JSON.stringify(state.cureentMessage);
     },
     updateDeviceHeight(state, height) {
       state.deviceHeight = height

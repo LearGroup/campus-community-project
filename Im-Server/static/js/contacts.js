@@ -7,17 +7,14 @@ export default {
 
 function Init(thi) {
   console.log('init');
+  let heigh
   if (document.body.clientWidth > 768) {
-    thi.$parent.$parent.height = (window.innerHeight - 150) + 'px'
+    heigh = (window.innerHeight - 150) + 'px'
   } else {
-    thi.$parent.$parent.height = window.innerHeight + 'px'
+    heigh = window.innerHeight + 'px'
   }
-
-  $(".contact-item").on("click", function(even) {
-    //  $(".contact-item").removeClass('actived')
-    $(even).attr('class', 'contact-item actived')
-    //.attr('class','contact-item actived')
-  })
+  thi.$parent.$parent.$data.item.height = heigh
+  console.log(thi.$parent.$parent.$data.item.height);
 }
 
 function pushToMessagePage(thi, item) {
@@ -29,9 +26,8 @@ function pushToMessagePage(thi, item) {
 }
 
 function getFrendList(thi) {
-  console.log('getFrendList');
+  console.log('getFrendList')
   if (!thi.$store.getters.getFrendList || thi.$store.getters.getFrendList.length == 0) {
-
     thi.checkStatus('/Main/Contacts')
 
     $.ajax({

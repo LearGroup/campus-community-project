@@ -5,12 +5,12 @@
  var express = require('express'),
    routes = require('./server/routes'),
    opn = require('opn'),
-   errorHandler =require('errorhandler'),
+   errorHandler = require('errorhandler'),
    multer = require('multer'),
    serveFavicon = require('serve-favicon'),
    morgan = require('morgan'),
- userCache = require('./server/public/js/userCache'),
- webpack = require('webpack'),
+   userCache = require('./server/public/js/userCache'),
+   webpack = require('webpack'),
    proxyMiddleware = require('http-proxy-middleware'),
    user = require('./server/routes/user'),
    http = require('http'),
@@ -86,15 +86,14 @@
      port: 6379,
      pass: 18247352203,
      db: "0"
-   }), // 本地存储session（文本文件，也可以选择其他store，比如redis的）
-   cookie: {
-     'maxAge': 1000 * 60 * 60 * 6 //默认session过期时间：6小时
-   },
+   }), // 本地存储session（文本文件，也可以选择其他store，比如redis的）,
    saveUninitialized: false, // 是否自动保存未初始化的会话，建议false
    resave: false, // 是否每次都重新保存会话，建议false
  }));
  // parse application/x-www-form-urlencoded
- app.use(bodyParser.urlencoded({ extended: false }))
+ app.use(bodyParser.urlencoded({
+   extended: false
+ }))
  // parse application/json
  app.use(bodyParser.json())
  app.use(morgan('combined'))
@@ -200,7 +199,7 @@
    next();
  });
 
- router.post('/getFrendList', urlencodedParser, function(req, res,next) {
+ router.post('/getFrendList', urlencodedParser, function(req, res, next) {
    console.log('getFrendList');
    if (req.session.user) {
      let id = req.session.user.id

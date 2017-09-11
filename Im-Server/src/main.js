@@ -16,6 +16,7 @@ import io from '../static/js/chatClient'
 import 'element-ui/lib/theme-default/index.css'
 import '../static/css/index.css'
 import MintUI from 'mint-ui'
+import '../static/js/customOrder'
 import 'mint-ui/lib/style.css'
 Vue.use(MintUI)
 Vue.use(login)

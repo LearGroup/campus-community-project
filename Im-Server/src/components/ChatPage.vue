@@ -7,7 +7,7 @@
   </router-link>
   <mt-button icon="more" slot="right"></mt-button>
 </mt-header>
-<div class="row message-box">
+<div class="row message-box" v-bind:style="viewconfig.messageBoxStyle">
   <div class="col-xs-12 ">
     <div id="convo"  v-for="item in message" class="row chat-thread chat-item" v-bind:class="item.objectType">
     <div class="message-time-box">
@@ -25,11 +25,11 @@
       <div   v-else  class="shape-tag-right">
 
       </div>
-      <div  v-if="item.objectType==='opposite'" class="chat-content-left">
-            <p>awdawdawdawdaw</p>
+      <div v-html="item.chat"  v-if="item.objectType==='opposite'" class="chat-content-left">
+
         </div>
-        <div   v-else   class="chat-content-right">
-              <p>awdawdawdawdaw</p>
+        <div v-html="item.chat"   v-else   class="chat-content-right">
+            
           </div>
     </div>
   </div>
@@ -38,7 +38,7 @@
 <div class="row footer-box">
   <div class="col-xs-8 input-box">
     <el-input
-    type="textarea" :autosize="{ minRows: 1, maxRows: 2}" placeholder="请输入内容"  v-model="textarea">
+        type="textarea"   :autofocus="autofocus"   :autosize="{ minRows: 1, maxRows: 2}"   v-model="sendMessages">
   </el-input>
   </div>
   <div class="col-xs-2 express">
@@ -61,33 +61,48 @@ export default {
   data() {
 
     return {
-      textarea: '',
+      autofocus:true,
+      placeholder:'请输入内容',
+      viewconfig: {
+        messageBoxStyle: {
+          'max-height': '0px',
+          'min-height': '0px',
+          overflow: 'auto',
+          'overflow-x': 'hidden'
+
+        }
+      },
+      sendMessages: '',
       items: {},
       message: [{
         objectType: 'opposite',
         chat: '<p>Hello World!</p>',
-      }, {
-        objectType: 'own',
-        chat: '<p>Hello Friend!</p>'
-      }]  ,
-      own:{username:'',id:'',header_pic:''}
+      }],
+      own: {
+        username: '',
+        id: '',
+        header_pic: ''
+      }
 
     }
   },
-  mounted: function() {
+  beforeMount: function() {
+    let heigh,higt
     if (document.body.clientWidth > 768) {
-      this.$parent.height = window.innerHeight - 150+'px'
-      $('.message-box').height(window.innerHeight - 240)
+      heigh = window.innerHeight - 150 + 'px'
+      higt= window.innerHeight  - 240 + 'px'
     } else {
-      this.$parent.height = window.innerHeight+'px'
-      $('.message-box').height(window.innerHeight- 100)
-
+      heigh = window.innerHeight + 'px'
+      higt= window.innerHeight - 100+'px'
     }
+    this.$parent.$data.item.height = heigh
+    this.viewconfig.messageBoxStyle['max-height'] = higt
+    this.viewconfig.messageBoxStyle['min-height'] = higt
     pageJs.getMessageData(this)
   },
   methods: {
     sendMessage: function(event) {
-      pageJs.sendMessage(this,event)
+      pageJs.sendMessage(this, event)
     }
   }
 
@@ -97,9 +112,11 @@ export default {
 <style lang="css">
 
 .send{
+  padding-top: 8px;
   background-color: #eeeeee;
 }
 .express{
+  padding-top: 8px;
   background-color: #eeeeee;
 }
 .message-box .avatar{
@@ -202,12 +219,12 @@ export default {
 .input-box{
 
   background-color:#eeeeee;
-  padding-top: 4px;
+  padding-top: 8px;
   padding-right: 5px;
   padding-bottom: 4px;
 }
 .footer-box{
-  height: 80px;
+  height: 45px;
   background-color: #eeeeee;
   border-top: 1px solid #DDDDDD;
 }

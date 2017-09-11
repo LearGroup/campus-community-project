@@ -74,7 +74,7 @@ function login(thi, data) {
             var username = date.username
             if (data == 0) {
               console.log("exit")
-              thi.$store.commit('updateUserState', {
+                thi.$store.commit('updateUserState', {
                 userState: 1,
                 userName: date.username,
                 userId: date.id,

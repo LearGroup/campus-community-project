@@ -1,48 +1,68 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" name="viewport"  content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" >
-    <title>im-server</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
-  <style>
 
-  body{
+<head>
+  <meta http-equiv="Expires" CONTENT="0">
+  <meta http-equiv="Cache-Control" CONTENT="no-cache">
+  <meta http-equiv="Pragma" CONTENT="no-cache">
+  <meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>im-server</title>
+</head>
+
+<body>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+<style>
+  body {
+
+    scrollbar-3dlight-color: #D4D0C8;
+    scrollbar-highlight-color: #fff;
+    scrollbar-face-color: #E4E4E4;
+    scrollbar-arrow-color: #666;
+    scrollbar-shadow-color: #808080;
+    scrollbar-darkshadow-color: #D7DCE0;
+    scrollbar-base-color: #D7DCE0;
+    scrollbar-track-color: #;
     background: #009966;
-    font-family: "Helvetica Neue",Helvetica,"PingFang SC",
-    "Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   }
 
 
-  #app{
+  #app {}
 
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity .5s ease;
   }
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s ease;
-}
-.fade-enter, .fade-leave-active {
-  opacity: 0
-}
-.main-view{
-  margin-right: 0px;
-  margin-top: -10px;
-  position: absolute;
-   transition: all .4s cubic-bezier(.55,0,.1,1);
-}
 
-.slide-left-enter, .slide-right-leave-active {
-  opacity: 0;
-  -webkit-transform: translateX(50px);
-  transform: translateX(50px);
-}
-.slide-left-leave-active, .slide-right-enter {
-  opacity: 0;
+  .fade-enter,
+  .fade-leave-active {
+    opacity: 0
+  }
 
-  -webkit-transform: translateX(-50px);
-  transform: translateX(-50px);
-}
-  </style>
+  .main-view {
+    margin-right: 0px;
+    margin-top: -10px;
+    position: absolute;
+    transition: all .4s cubic-bezier(.55, 0, .1, 1);
+  }
+
+  .slide-left-enter,
+  .slide-right-leave-active {
+    opacity: 0;
+    -webkit-transform: translateX(50px);
+    transform: translateX(50px);
+  }
+
+  .slide-left-leave-active,
+  .slide-right-enter {
+    opacity: 0;
+
+    -webkit-transform: translateX(-50px);
+    transform: translateX(-50px);
+  }
+</style>
+
 </html>

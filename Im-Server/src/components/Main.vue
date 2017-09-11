@@ -46,10 +46,18 @@ export default {
     }
   },
   mounted: function() {
+    let heigh
+    if (document.body.clientWidth > 768) {
+      heigh = (window.innerHeight - 150) + 'px'
+    } else {
+      heigh = window.innerHeight + 'px'
+    }
+    this.$parent.$data.item.height = heigh
     this.$router.push({
       path: '/Main/Contacts'
     })
-    console.log('mounted');
+    console.log('main mounted');
+    console.log(this.$parent.item.height);
   },
   methods: {
     handleClick(tab, event) {

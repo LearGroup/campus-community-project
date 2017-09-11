@@ -37,13 +37,14 @@ export default {
     }
   },
   created: function() {
-
-    if (document.body.clientWidth < 768) {
-      $('.content').height(window.innerHeight)
+    let heigh
+    if (document.body.clientWidth > 768) {
+      heigh =0 + 'px'
     } else {
-
-      $('.content').height(0)
+      heigh = window.innerHeight + 'px'
     }
+    this.$parent.$data.item.height = heigh
+
     this.checkStatus('Main/Contacts')
   },
   methods: {

@@ -1,8 +1,8 @@
 <template>
 <div id="app" class="container-fluid root">
-  <div class="col-xs-12 col-lg-3 col-lg-push-4 content" v-bind:style="{height:height}">
+    <div class="col-xs-12 col-lg-3 col-lg-push-4 content" v-bind:style="{height:item.height}">
 
-    <router-view></router-view>
+    <router-view ></router-view>
 
   </div>
 </div>
@@ -12,7 +12,7 @@
 export default {
   data() {
     return {
-      height: '1px'
+      item:{'height':'0px'}
     }
   },
   name: 'app',
@@ -20,10 +20,14 @@ export default {
     if (document.body.clientWidth < 768) {
       this.height = window.innerHeight + 'px'
     } else {
-      this.height = 0+ 'px'
+      this.height = 1+ 'px'
     }
-
-    this.$store.commit('updateDeviceHeight', window.innerHeight)
+  },
+  methods:{
+    getHeight(heigh){
+      console.log('sedn');
+      this.height=heigh
+    }
   }
 
 }
