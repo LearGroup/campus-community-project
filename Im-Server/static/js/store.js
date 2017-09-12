@@ -9,7 +9,7 @@ export default new Vuex.Store({
     userId: null,
     frendList: null,
     headImageUrl: null,
-    cureentMessageList: null,
+    cureentMessageList: [],
     cureentMessage: null,
     socket: null,
     deviceHeight: null

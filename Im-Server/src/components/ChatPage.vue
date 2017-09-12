@@ -11,7 +11,7 @@
   <div class="col-xs-12 ">
     <div id="convo"  v-for="item in message" class="row chat-thread chat-item" v-bind:class="item.objectType">
     <div class="message-time-box">
-      <p class="message-time">昨天 下午5:31</p>
+      <p class="message-time">{{item.time}}</p>
     </div>
      <div v-if="item.objectType==='opposite'" class="avatar-chatePage-left">
          <img class="avatar" :src="items.header_pic" alt="">
@@ -28,8 +28,8 @@
       <div v-html="item.chat"  v-if="item.objectType==='opposite'" class="chat-content-left">
 
         </div>
-        <div v-html="item.chat"   v-else   class="chat-content-right">
-            
+          <div v-html="item.chat"  style="white-space: pre-line"  v-else   class="chat-content-right">
+
           </div>
     </div>
   </div>
@@ -56,13 +56,18 @@
 <script>
 import pageJs from '../../static/js/chatPage'
 import '../../static/css/chatUI.css'
+let example = {
+  time: '昨天 下午4:40',
+  objectType: 'opposite',
+  chat: '<p>Hello World!</p>',
+}
 export default {
   name: 'chatpage',
   data() {
 
     return {
-      autofocus:true,
-      placeholder:'请输入内容',
+      autofocus: true,
+      placeholder: '请输入内容',
       viewconfig: {
         messageBoxStyle: {
           'max-height': '0px',
@@ -74,10 +79,7 @@ export default {
       },
       sendMessages: '',
       items: {},
-      message: [{
-        objectType: 'opposite',
-        chat: '<p>Hello World!</p>',
-      }],
+      message: [],
       own: {
         username: '',
         id: '',
@@ -87,13 +89,13 @@ export default {
     }
   },
   beforeMount: function() {
-    let heigh,higt
+    let heigh, higt
     if (document.body.clientWidth > 768) {
       heigh = window.innerHeight - 150 + 'px'
-      higt= window.innerHeight  - 240 + 'px'
+      higt = window.innerHeight - 240 + 'px'
     } else {
       heigh = window.innerHeight + 'px'
-      higt= window.innerHeight - 100+'px'
+      higt = window.innerHeight - 100 + 'px'
     }
     this.$parent.$data.item.height = heigh
     this.viewconfig.messageBoxStyle['max-height'] = higt
@@ -110,175 +112,7 @@ export default {
 </script>
 
 <style lang="css">
-
-.send{
-  padding-top: 8px;
-  background-color: #eeeeee;
-}
-.express{
-  padding-top: 8px;
-  background-color: #eeeeee;
-}
-.message-box .avatar{
-  height: 100%;
-  width: 100%;
-  margin-top: -3px;
-  border-radius: 50%;
-}
-.chatBox .el-button{
-   line-height: 0.5;
-   margin-left: -15px;
-}
-.chatBox .el-button .el-button--primary{
-  line-height: .8;
-}
-.message-time-box .message-time{
-  font-size: 10px;
-}
-.avatar-chatePage-left{
-  float: left;
-  margin-left: 10px;
-  margin-top: 4px;
-  padding-top: 2px;
-  height: 35px;
-  width: 35px;
-  border: solid .5px  #BBBBBB;
-  border-radius: 50%;
-}
-.avatar-chatePage-right{
-  float: right;
-  margin-right: 10px;
-  margin-top: 4px;
-  padding-top: 2px;
-  height: 35px;
-  width: 35px;
-  border: solid .5px  #BBBBBB;
-  border-radius: 50%;
-}
-
-.chat-thread  .chat-content-left p{
-  margin-bottom: 0px;
-}
-.chat-thread  .chat-content-right p{
-  margin-bottom: 0px;
-}
-.chat-thread  .chat-content-left{
-  margin-top:  5px;
-  padding-top: 6px;
-  padding-bottom:6px;
-  padding-left: 10px;
-  padding-right: 10px;
-  min-height: 35px;
-  float: left;
-  border-radius: 5px;
-  background-color: #dddddd;
-}
-.chat-thread  .chat-content-right{
-  margin-top:  5px;
-  padding-top: 6px;
-  padding-bottom:6px;
-  padding-left: 10px;
-  padding-right: 10px;
-  min-height: 35px;
-  float: right;
-  border-radius: 5px;
-  background-color: #42B983;
-}
-
-.shape-tag-left{
-  margin-left:-4px;
-  margin-top: 14px;
-  float: left;
-  border-left: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-right:8px solid #dddddd;
-}
-
-.shape-tag-right{
-  margin-right:-4px;
-  margin-top: 14px;
-  float: right;
-  border-right:8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-left: 8px solid #42B983 ;
-}
-
-
-.opposite{
-
-}
-.chat-item{
-  margin-top: 10px;
-  font-size: 12.5px;
-}
-.express-icon{
-  margin-left: -15px;
-  font-size: 30px;
-  color:#666666;
-}
-.input-box{
-
-  background-color:#eeeeee;
-  padding-top: 8px;
-  padding-right: 5px;
-  padding-bottom: 4px;
-}
-.footer-box{
-  height: 45px;
-  background-color: #eeeeee;
-  border-top: 1px solid #DDDDDD;
-}
-
 .mint-header{
   background-color:#eeeeee;
-}
-.mintui{
-  color: #333333;
-}
-.mint-button-text{
-  font-size: 14px;
-  font-weight: 400;
-  color: #333333;
-}
-.chatBox{
-  margin-top: 12px;
-}
-.mintui-back{
-
-  caret-color: #333333;
-  color: #333333;
-}
-.el-button--succes{
-  white-space: inherit;
-}
-.mint-header-title{
-  color: #333333;
-  margin-top: 3px;
-}
-.mint-header-button.is-right{
-  margin-top: -4px;
-}
-.el-textarea__inner{
-  outline:none;resize:none;
-  border-bottom: 1px solid rgb(191, 217, 208) ;
-  border-top:0px;
-  border-left:0px;
-  border-right :0px;
-  border-top-color: #eeeeee;
-  border-left-color: #eeeeee;
-  border-right-color: #eeeeee;
-}
-.el-textarea__inner:hover{
-
-  border-bottom-color: rgb(131, 165, 154);
-  border-top-color: #eeeeee;
-  border-left-color: #eeeeee;
-  border-right-color: #eeeeee;
-  border-left:0px;
-  border-right :0px;
-}
-.message-box{
-  border-top: solid 1px #DDDDDD;
-
 }
 </style>

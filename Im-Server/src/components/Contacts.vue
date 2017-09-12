@@ -31,10 +31,7 @@ export default {
   methods: {
     selectStyle: function(items) {
       console.log('clicked');
-      console.log(this.$parent.$parent.$data.item.height);
-        console.log(this.$parent.$parent.$data.item);
-          console.log(this.$parent.$parent.$data);
-          console.log(this.$parent.$parent);
+    
       if (document.body.clientWidth > 768) {
         this.$nextTick(function() {
           this.items.forEach(function(item) {
