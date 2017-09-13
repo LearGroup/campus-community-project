@@ -1,6 +1,6 @@
 <template>
-<div id="app" class="container-fluid root">
-    <div class="col-xs-12 col-lg-3 col-lg-push-4 content" v-bind:style="{height:item.height}">
+<div id="app" class="container-fluid root" >
+  <div class="col-xs-12 col-lg-3 col-lg-push-4 content"  v-bind:style="{height:item.height}">
 
     <router-view ></router-view>
 
@@ -12,7 +12,9 @@
 export default {
   data() {
     return {
-      item:{'height':'0px'}
+      item: {
+        'height': '0px'
+      }
     }
   },
   name: 'app',
@@ -20,13 +22,22 @@ export default {
     if (document.body.clientWidth < 768) {
       this.height = window.innerHeight + 'px'
     } else {
-      this.height = 1+ 'px'
+      this.height = 1 + 'px'
     }
   },
-  methods:{
-    getHeight(heigh){
+  methods: {
+    getHeight(heigh) {
       console.log('sedn');
-      this.height=heigh
+      this.height = heigh
+    },
+    pressMove: function(num, evt) {
+      console.log(evt.deltaX);
+      console.log(evt.deltaY);
+      console.log('onPressMove with params:' + num);
+    },
+    swipe: function(evt) {
+      console.log("swipe" + evt.direction);
+      console.log('onSwipe');
     }
   }
 
@@ -54,6 +65,7 @@ export default {
   color: #2c3e50;
   text-align: center;
 }
+
 
 
 
@@ -121,6 +133,7 @@ export default {
 .col-xs-9 {
   padding: 0;
 }
+
 
 
 

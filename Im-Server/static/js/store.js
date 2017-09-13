@@ -9,8 +9,8 @@ export default new Vuex.Store({
     userId: null,
     frendList: null,
     headImageUrl: null,
-    cureentMessageList: [],
-    cureentMessage: null,
+    currentMessageList: [],
+    currentMessage: null,
     socket: null,
     deviceHeight: null
 
@@ -46,17 +46,16 @@ export default new Vuex.Store({
     },
     getCurrentMessageList: state => {
 
-      if (!state.cureentMessageList) {
-
-        state.cureentMessageList = JSON.parse(sessionStorage.getItem('cureentMessageList'))
+      if (!state.currentMessageList) {
+        state.currentMessageList = JSON.parse(sessionStorage.getItem('currentMessageList'))
       }
-      return state.cureentMessageList
+      return state.currentMessageList
     },
-    getCureentMessage: state => {
-      if (!state.cureentMessage && sessionStorage.cureentMessage) {
-        state.cureentMessage =  JSON.parse(sessionStorage.getItem('cureentMessage'))
+    getCurrentMessage: state => {
+      if (!state.currentMessage && sessionStorage.currentMessage) {
+        state.currentMessage = JSON.parse(sessionStorage.getItem('currentMessage'))
       }
-      return state.cureentMessage
+      return state.currentMessage
     }
   },
   mutations: {
@@ -76,17 +75,51 @@ export default new Vuex.Store({
     updateUserFrendList(state, List) {
       console.log(List);
       state.frendList = List
-      sessionStorage.setItem('cureentMessage',JSON.stringify(state.frendList))
+      sessionStorage.setItem('userFrendList', JSON.stringify(state.frendList))
     },
-    updateCureentMessage(state, item) {
+    updateCurrentMessage(state, item) {
       item['activeTime'] = new Date()
       var str = JSON.stringify(item)
-      sessionStorage.setItem('cureentMessage',str)
-      state.cureentMessage = item
+      sessionStorage.setItem('currentMessage', str)
+      state.currentMessage = item
     },
     updateDeviceHeight(state, height) {
       state.deviceHeight = height
       sessionStorage.deviceHeight = height;
+    },
+    updateCurrentMessageList(state, item) {
+      console.log('updateCurrentMessageList');
+
+      if (state.currentMessageList.length == 0) {
+        console.log('c1');
+        state.currentMessageList = JSON.parse(sessionStorage.getItem('currentMessageList'))
+        console.log('c2');
+        console.log(state.currentMessageList);
+        if (!state.currentMessageList) {
+          console.log('c3');
+          state.cureentMessageList=[]
+          state.cureentMessageList.push(item)
+          sessionStorage.setItem('cureentMessageList', JSON.stringify(state.cureentMessageList))
+          return
+        }
+      }
+      for (var i = 0; i < state.currentMessageList.length; i++) {
+        if (state.currentMessageList[i].minor_user == item.minor_user) {
+          state.currentMessageList[i] = item
+          sessionStorage.setItem('cureentMessageList', JSON.stringify(state.cureentMessageList))
+        }
+      }
+    },
+    updateCurrentMessageChat(state,data){
+      console.log('updateCurrentMessageChat');
+      if(!state.currentMessage){
+        state.currentMessage = JSON.parse(sessionStorage.getItem('currentMessage'))
+      }
+      if(!state.currentMessage.message){
+        state.currentMessage.message=[]
+      }
+      state.currentMessage.message.push(data)
+      sessionStorage.setItem('currentMessage', JSON.stringify(state.currentMessage))
     }
 
   },

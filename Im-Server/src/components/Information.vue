@@ -13,10 +13,10 @@
 
 <script>
 export default {
-  name:'information',
-  data(){
+  name: 'information',
+  data() {
     return {
-
+      items: [{}],
     }
   }
 }

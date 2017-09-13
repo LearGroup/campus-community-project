@@ -18,8 +18,8 @@ function Init(thi) {
 }
 
 function pushToMessagePage(thi, item) {
-  console.log('updateCureentMessage:' + item);
-  thi.$store.commit('updateCureentMessage', item)
+  console.log('updateCurrentMessage:' + item);
+  thi.$store.commit('updateCurrentMessage', item)
   thi.$router.push({
     path: '/ChatPage'
   })

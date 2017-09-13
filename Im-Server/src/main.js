@@ -13,6 +13,8 @@ import login from '../static/js/login'
 import store from '../static/js/store'
 import ElementUI  from 'element-ui'
 import io from '../static/js/chatClient'
+import AlloyFinger  from 'alloyfinger'
+import AlloyFingerVue from 'alloyfinger/vue/alloy_finger.vue' ;
 import 'element-ui/lib/theme-default/index.css'
 import '../static/css/index.css'
 import MintUI from 'mint-ui'
@@ -22,6 +24,7 @@ Vue.use(MintUI)
 Vue.use(login)
 Vue.use(ElementUI)
 Vue.use(io)
+Vue.use(AlloyFingerVue, { AlloyFinger:  AlloyFinger });
 Vue.config.productionTip = false
 
 
