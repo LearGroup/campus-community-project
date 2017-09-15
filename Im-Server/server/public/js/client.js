@@ -3,7 +3,7 @@ $(function() {
 	init()
 	$(".send-btn").bind("click", function() {
 		send();
-		
+
 	})
 
 	$('.refresh').bind('click', function() {
@@ -33,7 +33,7 @@ $(function() {
 
 		})
 	})
-}) 
+})
 var socket
 
 function init(){
@@ -55,7 +55,7 @@ function init(){
 		    })
 	    	socket.emit('login',{userName:data[0].username,userId:data[0].id})
 	    	socket.on('hello',function(data){
-	    	console.log(data)	
+	    	console.log(data)
 	    	})
 	    }
 	})
@@ -85,7 +85,7 @@ function send() {
 	socket.on("messageResponse",function(res){
 		console.log('res:'+res)
 		if(res!=undefined){
-			target.load("/html/message-item.html", function() {
+			  target.load("/html/message-item.html", function() {
 	    	target.find(".message-content").text(str)
 	    	target.find(".user-name").text(myName)
 		    target.find(".message-content").css("margin-left", "40px")

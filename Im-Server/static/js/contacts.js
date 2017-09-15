@@ -45,6 +45,7 @@ function getFrendList(thi) {
       success: function(data) {
         for (var i = 0; i < data.length; i++) {
           data[i]['class'] = 'row contact-item'
+          data[i]['message']=[]
           data[i]['header_pic'] = data[i]['header_pic'] + '?x-oss-process=image/resize,m_lfit,h_35,w_35'
         }
         console.log('frendList');

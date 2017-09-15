@@ -43,7 +43,7 @@ function login(thi, data) {
   } else {
     $("#login_input_password_div").attr("class", "input-group login_input_password_div has-success")
     clearTimeout(time);
-    thi.logins=true;
+    thi.logins = true;
     console.log('login start');
     time = setTimeout(function() {
       $.ajax({
@@ -63,7 +63,7 @@ function login(thi, data) {
         success: function(date) {
           console.log(date)
           if (date == null || date.length == 0) {
-            thi.logins=false;
+            thi.logins = false;
             $("#login_input_username_div").attr("class", "input-group login_input_username_div has-error ")
             $("#login_input_password_div").attr("class", "input-group login_input_password_div has-error")
             $("#login_input_password").val("")
@@ -74,24 +74,14 @@ function login(thi, data) {
             var username = date.username
             if (data == 0) {
               console.log("exit")
-                thi.$store.commit('updateUserState', {
+              thi.$store.commit('updateUserState', {
                 userState: 1,
                 userName: date.username,
                 userId: date.id,
                 headImageUrl: date.header_pic
               })
-              let socket = thi.io()
-              thi.$store.commit('updateSocket', socket)
-              socket.on("message", function(res) {
-                console.log('res:' + res)
-                if (res != undefined) {
-                  console.log('obj');
-                }
-              })
-              socket.emit('login', {
-                userName: date.username,
-                userId: date.id
-              })
+              thi.$store.commit('updateSocket', thi.io)
+              let socket=thi.$store.getters.getSocket
               socket.on('hello', function(data) {
                 console.log(data)
               })
@@ -106,8 +96,8 @@ function login(thi, data) {
   }
 }
 
-function checkStatus(targetUrl,callback) {
-  arguments[1]? arguments[0]:null
+function checkStatus(targetUrl, callback) {
+  arguments[1] ? arguments[0] : null
   console.log('checkStatus');
   console.log(this.$store.state);
   console.log(this.$store.state.userState);
@@ -141,8 +131,8 @@ function checkStatus(targetUrl,callback) {
           })
           console.log('userState:');
           console.log(thi.$store.getters.getState);
-          if(callback){
-                callback()
+          if (callback) {
+            callback()
           }
           thi.$router.push({
             path: targetUrl

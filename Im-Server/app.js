@@ -146,35 +146,36 @@
    console.log('一个用户上线了')
    //监听新用户加入
    socket.on("login", function(obj) {
-     if (socketList[obj.userId]) {
-
-     } else {
-       console.log("add user")
-       socket.userName = obj.userName
-       socket.userId = obj.userId
-       socket.join('mainRoom')
-       socketList[obj.userId] = socket.id
-       socket.emit("hello", "欢迎登陆~")
-     }
+     console.log('socket login' + obj.userName);
+     console.log("add user")
+     socket.join('mainRoom')
+     socketList[obj.userId] = socket.id
+     socket.emit("loginResponse", "欢迎登陆~")
      console.log(socketList)
      /* console.log(io.sockets.sockets[socketList[obj.userId]])*/
      socket.emit("hello", "欢迎回来~")
    })
 
+
+
    socket.on("message", function(data) {
+     console.log('socketList');
+     console.log(socketList);
      var targetId = data.targetId
      var time = data.time
      var content = data.content
      var myName = data.myName
      console.log(targetId + content + time)
-     if (socketList[targetId]) {
-       var targetSocket = socketList[targetId]
-       io.sockets.sockets[socketList[targetId]].emit('message', {
+     console.log(socketList[targetId]);
+     if (io.sockets.connected[socketList[targetId]]) {
+       console.log('向' + socketList[targetId] + '发送信息');
+       io.sockets.connected[socketList[targetId]].emit('message', {
          time: time,
          content: content,
          myName: myName
-       })
-       socket.emit("messageResponse", "success~")
+       });
+     } else {
+       console.log('用户不在线');
      }
 
    })
@@ -237,7 +238,7 @@
      sql = 'select us.username,us.id,us.header_pic from user us where us.email="' + username + '" and us.password="' + password + '"'
    }
    //访问用户数据库信息
-   connection.query('select us.username,us.id,us.header_pic from user us where us.phone="' + username + '" and us.password="' + password + '"', function(err, results, xfields) {
+   connection.query(sql, function(err, results, xfields) {
      //  req.sessionID=results[0].id
      if (err) {
        console.log(err);
