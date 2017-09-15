@@ -20,18 +20,18 @@ export default {
       items: [{}],
     }
   },
-  beforeMount:function(){
+  beforeMount: function() {
 
   },
   mounted: function() {
     contacts.Init(this)
     contacts.getFrendList(this)
-    console.log('contacts:'+this.$parent.$parent.$data.item.height);
+    console.log('contacts:' + this.$parent.$parent.$data.item.height);
   },
   methods: {
     selectStyle: function(items) {
       console.log('clicked');
-    
+
       if (document.body.clientWidth > 768) {
         this.$nextTick(function() {
           this.items.forEach(function(item) {

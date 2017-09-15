@@ -1,13 +1,18 @@
 <template lang="html">
-  <div class="">
-    这是我的页面
+  <div class="col-xs-12 my-box">
+    <div class="row header-box">
+      <div class="col-xs-12 head-back-img">
+
+      </div>
+      <img src="../../static/img/back-img.png" alt="" class="user-img">
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name:'my',
-  data(){
+  name: 'my',
+  data() {
     return {
 
     }
@@ -15,5 +20,7 @@ export default {
 }
 </script>
 
+
 <style lang="css">
+
 </style>

@@ -5,9 +5,13 @@ export default {
 
 
 function getMessageData(thi) {
-
   console.log('getMessageData');
+  thi.$store.commit('updateCurrentMessageChatList',thi.$store.getters.getCurrentMessage)
   thi.items = thi.$store.getters.getCurrentMessage
+  if(thi.items.message){
+      thi.message=thi.items.message
+      console.log(thi.$store.getters.getCurrentMessage);
+  }
   thi.own.username = thi.$store.getters.getUserName
   thi.own.id = thi.$store.getters.getUserId
   thi.own.header_pic = thi.$store.getters.getHeadImageUrl
@@ -28,18 +32,23 @@ function sendMessage(thi, event) {
     }
     thi.message.push(data)
     thi.$store.commit('updateCurrentMessageChat',data)
-    pushToCurrentMessageList(thi, data)
+    pushToCurrentMessageList(thi,data)
   }
 }
 
 
 function pushToCurrentMessageList(thi, data) {
   console.log('c1');
+  console.log(data);
+  let obj={}
   let message_list = thi.$store.getters.getCurrentMessageList;
   console.log('c2');
   let current_obj = thi.$store.getters.getCurrentMessage;
-  thi.$store.commit('updateCurrentMessageList',current_obj)
+  obj.data=data
+  obj.currentMessage=current_obj
+  thi.$store.commit('updateCurrentMessageList',obj)
   console.log(message_list);
   console.log(data);
   console.log(current_obj);
+  console.log('pushToCurrentMessageList end');
 }

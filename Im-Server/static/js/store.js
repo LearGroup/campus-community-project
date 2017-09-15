@@ -87,39 +87,76 @@ export default new Vuex.Store({
       state.deviceHeight = height
       sessionStorage.deviceHeight = height;
     },
-    updateCurrentMessageList(state, item) {
-      console.log('updateCurrentMessageList');
 
-      if (state.currentMessageList.length == 0) {
-        console.log('c1');
-        state.currentMessageList = JSON.parse(sessionStorage.getItem('currentMessageList'))
-        console.log('c2');
+    updateCurrentMessageList(state,obj) {
+      console.log('updateCurrentMessageList');
+      console.log(obj.data);
+      console.log(state.currentMessageList);
+      if (!state.currentMessageList || state.currentMessageList.length == 0) {
+        console.log('cs1');
+        let temp = JSON.parse(sessionStorage.getItem('currentMessageList'))
+        state.currentMessageList = temp
+        console.log('cs2');
         console.log(state.currentMessageList);
         if (!state.currentMessageList) {
-          console.log('c3');
-          state.cureentMessageList=[]
-          state.cureentMessageList.push(item)
-          sessionStorage.setItem('cureentMessageList', JSON.stringify(state.cureentMessageList))
+          console.log('cs3');
+          state.currentMessageList = []
+          state.currentMessageList.push(obj.currentMessage)
+          let tem = JSON.stringify(state.currentMessageList)
+          sessionStorage.setItem('currentMessageList', tem)
           return
         }
       }
       for (var i = 0; i < state.currentMessageList.length; i++) {
-        if (state.currentMessageList[i].minor_user == item.minor_user) {
-          state.currentMessageList[i] = item
-          sessionStorage.setItem('cureentMessageList', JSON.stringify(state.cureentMessageList))
+        console.log('fors');
+        console.log(state.currentMessageList[i].minor_user);
+        console.log(obj.currentMessage.minor_user);
+        console.log(state.currentMessageList[i].minor_user == obj.currentMessage.minor_user);
+        console.log(obj.data);
+        console.log(obj.data!=null);
+        if (state.currentMessageList[i].minor_user == obj.currentMessage.minor_user && obj.data!=null) {
+          state.currentMessageList[i].message.push(obj.data)
+          let temps = JSON.stringify(state.currentMessageList)
+          sessionStorage.setItem('currentMessageList', temps)
+          console.log('cs for');
+          return 0;
         }
       }
+      console.log('cs4');
+      state.currentMessageList.push(item)
+      sessionStorage.setItem('currentMessageList',JSON.stringify(state.currentMessageList))
+
     },
-    updateCurrentMessageChat(state,data){
+    updateCurrentMessageChat(state, data) {
       console.log('updateCurrentMessageChat');
-      if(!state.currentMessage){
+      if (!state.currentMessage) {
+          console.log('updateCurrentMessageChat 1');
         state.currentMessage = JSON.parse(sessionStorage.getItem('currentMessage'))
       }
-      if(!state.currentMessage.message){
-        state.currentMessage.message=[]
+      if (!state.currentMessage.message) {
+          console.log('updateCurrentMessageChat 2');
+        state.currentMessage.message = []
       }
-      state.currentMessage.message.push(data)
-      sessionStorage.setItem('currentMessage', JSON.stringify(state.currentMessage))
+      if (data != null) {
+          console.log('updateCurrentMessageChat 3');
+        state.currentMessage.message.push(data)
+        sessionStorage.setItem('currentMessage', JSON.stringify(state.currentMessage))
+
+      }
+    },
+    //获取当前currentMessage历史聊天记录
+    updateCurrentMessageChatList(state, currentMessage) {
+      console.log('updateCurrentMessageChatList');
+      state.currentMessageList = JSON.parse(sessionStorage.getItem('currentMessageList'))
+      console.log(state.currentMessageList);
+      if (state.currentMessageList != null && state.currentMessageList.length != 0) {
+        for (var i = 0; i < state.currentMessageList.length; i++) {
+          if (state.currentMessageList[i].minor_user == currentMessage.minor_user) {
+            state.currentMessage = state.currentMessageList[i]
+            sessionStorage.setItem('currentMessage', JSON.stringify(state.currentMessage))
+          }
+        }
+      }
     }
 
   },
