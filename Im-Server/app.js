@@ -165,6 +165,7 @@
      var time = data.time
      var content = data.content
      var myName = data.myName
+     var ownId=data.ownId
      console.log(targetId + content + time)
      console.log(socketList[targetId]);
      if (io.sockets.connected[socketList[targetId]]) {
@@ -172,7 +173,8 @@
        io.sockets.connected[socketList[targetId]].emit('message', {
          time: time,
          content: content,
-         myName: myName
+         myName: myName,
+         ownId:ownId
        });
      } else {
        console.log('用户不在线');

@@ -154,6 +154,7 @@ export default new Vuex.Store({
       }
       //若currentMessageList 并且对应的currentMessage不存在，在currentMessageList中创建一个对应的currentMessage
       console.log('cs4');
+      console.log(obj.currentMessage);
       obj.currentMessage.message.push(obj.data)
       state.currentMessageList.push(obj.currentMessage)
       sessionStorage.setItem('currentMessageList', JSON.stringify(state.currentMessageList))

@@ -27,12 +27,25 @@ function getMessageData(thi) {
   socket.on('message', function(res) {
     console.log('message');
     console.log(res);
+
     if (res != undefined) {
-      pushToCurrentMessageList(thi, {
-        time: res.time,
-        objectType: 'opposite',
-        chat: res.content
-      })
+
+      let list = thi.$store.getters.getFrendList
+      console.log('list');
+      console.log(list);
+      console.log(res.ownId);
+      for (var type=0 ;type<list.length ;type++) {
+        console.log(list[type].minor_user);
+        if (list[type].minor_user == res.ownId) {
+          console.log('message variable');
+          console.log(list[type]);
+          pushToCurrentMessageList(thi, {
+            time: res.time,
+            objectType: 'opposite',
+            chat: res.content
+          }, list[type])
+        }
+      }
     }
   })
 }
@@ -52,6 +65,10 @@ function sendMessage(thi, event) {
     let current_obj = thi.$store.getters.getCurrentMessage;
     let myName = thi.$store.getters.getUserName;
     let socket = thi.$store.getters.getSocket
+    let ownId = thi.$store.getters.getUserId
+    let header_pic = thi.$store.getters.getHeadImageUrl
+    console.log('send ownId');
+    console.log(ownId);
     console.log('socekt');
     console.log(socket);
     if (!socket) {
@@ -64,7 +81,7 @@ function sendMessage(thi, event) {
       time: data.time,
       targetId: current_obj.minor_user,
       content: data.chat,
-      myName: myName
+      ownId: ownId,
     })
     pushToCurrentMessageList(thi, data)
 
@@ -72,9 +89,9 @@ function sendMessage(thi, event) {
 }
 
 
-function pushToCurrentMessageList(thi, data) {
+function pushToCurrentMessageList(thi, data, message) {
   console.log('c1');
-  let current_obj = thi.$store.getters.getCurrentMessage;
+  let current_obj = arguments[2] ? arguments[2] : thi.$store.getters.getCurrentMessage;
   let myName = thi.$store.getters.getUserName;
 
   console.log(data);

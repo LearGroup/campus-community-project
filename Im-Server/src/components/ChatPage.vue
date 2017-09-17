@@ -8,7 +8,7 @@
   <mt-button icon="more" slot="right"></mt-button>
 </mt-header>
 <div class="row message-box" v-bind:style="viewconfig.messageBoxStyle">
-  <div class="col-xs-12 ">
+  <div class="col-xs-12 real-height-box">
     <div id="convo"  v-for="item in message" class="row chat-thread chat-item" v-bind:class="item.objectType">
     <div class="message-time-box">
       <p class="message-time">{{item.time}}</p>
@@ -106,7 +106,17 @@ export default {
     sendMessage: function(event) {
       pageJs.sendMessage(this, event)
     }
+  },
+  watch: {
+    message: function() {
+      console.log('watch start');
+      $(".message-box").animate({
+        'scrollTop':$('.real-height-box').height()+'px'
+    }, 500)
+  //    $('.message-box').scrollTop = $('.message-box').scrollHeight;
+    }
   }
+
 
 }
 </script>

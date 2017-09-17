@@ -90,7 +90,7 @@ function send() {
 	    	target.find(".user-name").text(myName)
 		    target.find(".message-content").css("margin-left", "40px")
 		    target.find(".message-time").text(pTime)
-		    $(".lis t-view").animate({
+		    $(".list-view").animate({
 			    'scrollTop': $(".list-content").height() + 'px'
 			}, 500)
 		})
