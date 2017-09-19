@@ -10,6 +10,8 @@
     tools:context="com.example.chen1.uncom.person_detailed_information_fragment">
     <!-- TODO: Update blank fragment layout -->
     <android.support.design.widget.AppBarLayout
+        app:elevation="0dp"
+        android:layout_marginTop="-10dp"
         android:layout_width="match_parent"
         android:fitsSystemWindows="true"
         android:layout_height="wrap_content"
@@ -87,7 +89,7 @@
                     app:layout_constraintHorizontal_bias="0.502" />
             </android.support.constraint.ConstraintLayout>
             <android.support.v7.widget.Toolbar
-
+                android:layout_marginBottom="-5dp"
                 android:id="@+id/person_detailed_information_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

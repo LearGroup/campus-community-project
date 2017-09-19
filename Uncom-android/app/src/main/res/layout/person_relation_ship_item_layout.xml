@@ -6,8 +6,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
     >
     <android.support.constraint.ConstraintLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -31,8 +34,9 @@
             android:layout_marginStart="8dp" />
     </android.support.constraint.ConstraintLayout>
     <TextView
+
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="#bfbfbf"
+        android:background="#dddddd"
         />
 </LinearLayout>
