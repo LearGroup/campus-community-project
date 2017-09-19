@@ -62,6 +62,7 @@ function getFrendList(thi) {
           thi.$store.commit('updateSocket', thi.io)
           socket = thi.$store.getters.getSocket
         }
+        thi.pullCurrentMessageList(thi)
         socket.removeAllListeners('message');
         socket.on('message', function(res) {
           console.log('message');

@@ -165,7 +165,7 @@
      var time = data.time
      var content = data.content
      var myName = data.myName
-     var ownId=data.ownId
+     var ownId = data.ownId
      console.log(targetId + content + time)
      console.log(socketList[targetId]);
      if (io.sockets.connected[socketList[targetId]]) {
@@ -174,14 +174,14 @@
          time: time,
          content: content,
          myName: myName,
-         ownId:ownId
+         ownId: ownId
        });
      } else {
        console.log('用户不在线');
        redisClient.select('0', function(err) {
          if (!err) {
            console.log('userCache:' + data.targetId);
-           redisClient.rpush('historyMessage:'+data.targetId,JSON.stringify(data),function(err,res){
+           redisClient.rpush('historyMessage:' + data.targetId, JSON.stringify(data), function(err, res) {
              console.log(err);
              console.log(res);
            })
@@ -230,6 +230,23 @@
      res.send(req.session.user)
    } else {
      res.send("null")
+   }
+
+ })
+
+
+ router.post('/pullCurrentMessageList', urlencodedParser, function(req, response) {
+   console.log('pullCurrentMessageList');
+   console.log(req.session);
+   if (req.session.user) {
+     redisClient.lrange('historyMessage:' + req.session.user.id, 0, -1, function(err, res) {
+
+       if (res) {
+         response.send(res)
+       } else {
+         response.send(null)
+       }
+     })
    }
 
  })

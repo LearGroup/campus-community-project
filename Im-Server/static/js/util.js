@@ -2,6 +2,7 @@ export default {
   install(Vue) {
     Vue.prototype.pushToCurrentMessageList = pushToCurrentMessageList
     Vue.prototype.checkStatus = checkStatus
+    Vue.prototype.pullCurrentMessageList=pullCurrentMessageList
   }
 }
 
@@ -18,6 +19,9 @@ function checkStatus(targetUrl, callback) {
     $.ajax({
       type: 'post',
       async: true,
+      data: {
+        first:'1'
+      },
       dataType: 'json',
       url: "/checkStatus",
       xhrFields: {
@@ -59,10 +63,12 @@ function checkStatus(targetUrl, callback) {
 }
 
 function pullCurrentMessageList(thi) {
+  console.log('pullCurrentMessageList');
   $.ajax({
-    type: 'get',
+    type: 'post',
     async: true,
-    url: "/checkStatus",
+    url: "/pullCurrentMessageList",
+    dataType: 'json',
     xhrFields: {
       withCredentials: true
     },
@@ -72,6 +78,7 @@ function pullCurrentMessageList(thi) {
       if (data) {
         let list = thi.$store.getters.getFrendList
         for (var i = 0; i < data.length; i++) {
+          data[i]=JSON.parse(data[i])
           for (var type = 0; type < list.length; type++) {
             console.log(list[type].minor_user);
             if (list[type].minor_user == data[i].ownId) {

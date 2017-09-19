@@ -84,6 +84,7 @@ function login(thi, data) {
               socket.on('hello', function(data) {
                 console.log(data)
               })
+              
               thi.$router.push({
                 path: 'Main/Contacts'
               })
