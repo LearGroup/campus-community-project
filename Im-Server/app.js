@@ -178,6 +178,15 @@
        });
      } else {
        console.log('用户不在线');
+       redisClient.select('0', function(err) {
+         if (!err) {
+           console.log('userCache:' + data.targetId);
+           redisClient.rpush('historyMessage:'+data.targetId,JSON.stringify(data),function(err,res){
+             console.log(err);
+             console.log(res);
+           })
+         }
+       })
      }
 
    })
@@ -249,19 +258,7 @@
      console.log(results);
      if (results[0]) {
        req.session.user = results[0]
-       redisClient.get('userCache:' + results[0].id, function(err, res) {
-         //若缓存不存在，创建一个缓存
-         if (!res) {
-           console.log('userCache not exit');
-           //historyMessage:离线信息
-           //activeMessage:当前活动信息
-           //relationShipOne:第一等级关系：好友关系（相对于我）
-           //relationShipTwo:第二等级关系：群组关系（相对于我）
-           redisClient.hmset('userCache:' + results[0].id, userCache.userCacheModule, function(err, res) {
-             response.send(results[0])
-           })
-         }
-       })
+       response.send(results[0])
      } else {
        response.send('null')
      }

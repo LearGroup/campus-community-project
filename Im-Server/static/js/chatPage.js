@@ -1,6 +1,7 @@
+
 export default {
   getMessageData: getMessageData,
-  sendMessage: sendMessage
+  sendMessage: sendMessage,
 }
 
 
@@ -16,38 +17,7 @@ function getMessageData(thi) {
   thi.own.id = thi.$store.getters.getUserId
   thi.own.header_pic = thi.$store.getters.getHeadImageUrl
   thi.own.header_pic = thi.own.header_pic + '?x-oss-process=image/resize,m_lfit,h_35,w_35'
-  let socket = thi.$store.getters.getSocket
-  console.log('socekt');
-  console.log(socket);
-  if (!socket) {
-    thi.$store.commit('updateSocket', thi.io)
-    socket = thi.$store.getters.getSocket
-  }
-  socket.removeAllListeners('message');
-  socket.on('message', function(res) {
-    console.log('message');
-    console.log(res);
 
-    if (res != undefined) {
-
-      let list = thi.$store.getters.getFrendList
-      console.log('list');
-      console.log(list);
-      console.log(res.ownId);
-      for (var type=0 ;type<list.length ;type++) {
-        console.log(list[type].minor_user);
-        if (list[type].minor_user == res.ownId) {
-          console.log('message variable');
-          console.log(list[type]);
-          pushToCurrentMessageList(thi, {
-            time: res.time,
-            objectType: 'opposite',
-            chat: res.content
-          }, list[type])
-        }
-      }
-    }
-  })
 }
 
 
@@ -83,25 +53,7 @@ function sendMessage(thi, event) {
       content: data.chat,
       ownId: ownId,
     })
-    pushToCurrentMessageList(thi, data)
+    thi.pushToCurrentMessageList(thi, data)
 
   }
-}
-
-
-function pushToCurrentMessageList(thi, data, message) {
-  console.log('c1');
-  let current_obj = arguments[2] ? arguments[2] : thi.$store.getters.getCurrentMessage;
-  let myName = thi.$store.getters.getUserName;
-
-  console.log(data);
-  let obj = {}
-  console.log('c2');
-  obj.data = data
-  obj.currentMessage = current_obj
-  console.log(thi.$store.getters.getCurrentMessageList);
-  thi.$store.commit('updateCurrentMessageList', obj)
-  console.log(data);
-  console.log(current_obj);
-  console.log('pushToCurrentMessageList end');
 }

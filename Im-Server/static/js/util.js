@@ -1,54 +1,109 @@
-redisClient.get('sess:j0XwDtg5nNhFIgDcjC8B7ViYTsd-wh4j', function(err, res) {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log(res);
+export default {
+  install(Vue) {
+    Vue.prototype.pushToCurrentMessageList = pushToCurrentMessageList
+    Vue.prototype.checkStatus = checkStatus
   }
-})
-    redisClient.rename('sess:' + req.sessionID, 'sess:test')
+}
 
 
+function checkStatus(targetUrl, callback) {
+  arguments[1] ? arguments[0] : null
+  console.log('checkStatus');
+  console.log(this.$store.state);
+  console.log(this.$store.state.userState);
+  if (this.$store.state.userState == 0) {
+    console.log('checkStatus ajax');
+    let thi = this
 
-    if (results) {
-      console.log('sess:' + results[0].id);
-      //获取对应用户的缓存资源
-      redisClient.get('sess:' + results[0].id, function(err, res) {
-        if (err) {
+    $.ajax({
+      type: 'post',
+      async: true,
+      dataType: 'json',
+      url: "/checkStatus",
+      xhrFields: {
+        withCredentials: true
+      },
+      crossDomain: true,
+      success: function(data) {
+        console.log('data' + data);
+        if (data == null) {
+          console.log('checkStatus push ');
+          thi.$router.push({
+            path: '/Login'
+          })
         } else {
-          //若不存在缓存资源则创建一份缓存资源
-          if (res == null) {
-            req.sessionID=results[0].id
-            req.session.user = results
-            console.log('login reqSessionID');
-            console.log(req.sessionID);
-            response.send(results)
-            console.log('1');
-            redisClient.hmset('res:' + results[0].id, results[0],function(err, res) {
-
-            })
-          } else {
-            redisClient.del('sess:' + req.sessionID, function(err, res) {
-              redisClient.get('sess:' + results[0].id, function(err, res) {
-                if (res) {
-                  req.session = res.session = res
-                  console.log('objs2');
-                  console.log(req.session);
-
-                }
-              })
-            })
+          console.log('store save' + targetUrl);
+          thi.$store.commit('updateUserState', {
+            userState: 1,
+            userName: data.username,
+            userId: data.id,
+            headImageUrl: data.header_pic
+          })
+          console.log('userState:');
+          console.log(thi.$store.getters.getState);
+          if (callback) {
+            callback()
           }
-
+          thi.$router.push({
+            path: targetUrl
+          })
         }
-      })
-    }
-
-
-
-    redisClient.hgetall('userCache:' + results[0].id, function(err, res) {
-      console.log('get res');
-      console.log(res);
-      console.log(err);
-      req.session.userCache = res
-      response.send(results[0])
+      }
     })
+
+  } else {
+    this.$router.push({
+      path: targetUrl
+    })
+  }
+}
+
+function pullCurrentMessageList(thi) {
+  $.ajax({
+    type: 'get',
+    async: true,
+    url: "/checkStatus",
+    xhrFields: {
+      withCredentials: true
+    },
+    crossDomain: true,
+    success: function(data) {
+      console.log('data' + data);
+      if (data) {
+        let list = thi.$store.getters.getFrendList
+        for (var i = 0; i < data.length; i++) {
+          for (var type = 0; type < list.length; type++) {
+            console.log(list[type].minor_user);
+            if (list[type].minor_user == data[i].ownId) {
+              console.log('message variable');
+              console.log(list[type]);
+              thi.pushToCurrentMessageList(thi, {
+                time: data[i].time,
+                objectType: 'opposite',
+                chat: data[i].content
+              }, list[type])
+            }
+          }
+        }
+      }
+    }
+  })
+}
+
+
+function pushToCurrentMessageList(thi, data, message) {
+  console.log('c1');
+  let current_obj = arguments[2] ? arguments[2] : thi.$store.getters.getCurrentMessage;
+  let myName = thi.$store.getters.getUserName;
+
+  console.log(data);
+  let obj = {}
+  console.log('c2');
+  obj.data = data
+  obj.currentMessage = current_obj
+  console.log(thi.$store.getters.getCurrentMessageList);
+  thi.$store.commit('updateCurrentMessageList', obj)
+  console.log(data);
+  console.log(current_obj);
+  console.log('pushToCurrentMessageList end');
+}

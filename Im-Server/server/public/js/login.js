@@ -63,6 +63,7 @@ function login(data) {
 						$('#login_page_row').data("userName",date[0].username)
 						$("#login_page_row").data("userId",date[0].id)
 						$('#myModal').modal('hide')
+					thi.pullCurrentMessageList(thi)
 
 						return 1
 					} else if(data == 1) {

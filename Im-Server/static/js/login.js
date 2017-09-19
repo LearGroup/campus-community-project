@@ -1,7 +1,6 @@
 export default {
   install(Vue) {
     Vue.prototype.Login = login
-    Vue.prototype.checkStatus = checkStatus
   }
 }
 var time = null;
@@ -93,57 +92,5 @@ function login(thi, data) {
         }
       })
     }, 200)
-  }
-}
-
-function checkStatus(targetUrl, callback) {
-  arguments[1] ? arguments[0] : null
-  console.log('checkStatus');
-  console.log(this.$store.state);
-  console.log(this.$store.state.userState);
-  if (this.$store.state.userState == 0) {
-    console.log('checkStatus ajax');
-    let thi = this
-
-    $.ajax({
-      type: 'post',
-      async: true,
-      dataType: 'json',
-      url: "/checkStatus",
-      xhrFields: {
-        withCredentials: true
-      },
-      crossDomain: true,
-      success: function(data) {
-        console.log('data' + data);
-        if (data == null) {
-          console.log('checkStatus push ');
-          thi.$router.push({
-            path: '/Login'
-          })
-        } else {
-          console.log('store save' + targetUrl);
-          thi.$store.commit('updateUserState', {
-            userState: 1,
-            userName: data.username,
-            userId: data.id,
-            headImageUrl: data.header_pic
-          })
-          console.log('userState:');
-          console.log(thi.$store.getters.getState);
-          if (callback) {
-            callback()
-          }
-          thi.$router.push({
-            path: targetUrl
-          })
-        }
-      }
-    })
-
-  } else {
-    this.$router.push({
-      path: targetUrl
-    })
   }
 }

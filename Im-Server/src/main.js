@@ -10,6 +10,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import login from '../static/js/login'
+import util from '../static/js/util'
 import store from '../static/js/store'
 import ElementUI  from 'element-ui'
 import io from '../static/js/chatClient'
@@ -22,6 +23,7 @@ import '../static/js/customOrder'
 import 'mint-ui/lib/style.css'
 Vue.use(MintUI)
 Vue.use(login)
+Vue.use(util)
 Vue.use(ElementUI)
 Vue.use(io)
 Vue.use(AlloyFingerVue, { AlloyFinger:  AlloyFinger });
