@@ -40,20 +40,22 @@
                 />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
+
     <android.support.v7.widget.RecyclerView
-        android:layout_weight="1"
-        android:background="#e6e6e6"
         android:id="@+id/person_chat_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/person_chat_bottomNavigationView"
-        android:layout_below="@+id/appBarLayout" />
+        android:layout_below="@+id/appBarLayout"
+        android:layout_weight="1"
+        android:background="#e6e6e6" />
 
     <LinearLayout
         android:background="#eeeeee"
         android:id="@+id/person_chat_bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:minHeight="45dp"
+        android:layout_height="wrap_content">
         <LinearLayout
             android:background="#eeeeee"
             android:gravity="bottom"
@@ -87,14 +89,14 @@
                     android:id="@+id/person_chat_editText"
                     android:layout_width="wrap_content"
                     android:paddingLeft="10dp"
-                    android:paddingBottom="5dp"
+                    android:paddingBottom="8dp"
                     android:minHeight="45dp"
-                    android:layout_height="45dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:gravity="bottom"
                     android:layout_marginLeft="3dp"
                     android:layout_weight="1"
                     android:maxLines="3"
+                    android:lineSpacingExtra="2dp"
                     android:textCursorDrawable="@drawable/edittext_actived"
                     android:theme="@style/ChatEditText" />
                 <android.support.v7.widget.AppCompatImageView
@@ -114,24 +116,29 @@
                     android:layout_gravity="bottom"
                     android:layout_marginBottom="7dp"
                     android:layout_marginRight="10dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:srcCompat="@drawable/ic_vector_chat_more_icon" />
 
 
-                <TextView
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <android.support.v7.widget.AppCompatButton
                     android:layout_alignParentBottom="true"
                     android:id="@+id/person_chat_send_button"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/send_soild_shape"
                     android:layout_gravity="bottom"
                     android:gravity="center"
                     android:layout_width="45dp"
-                    android:layout_height="25dp"
-                    android:layout_marginBottom="3dp"
-                    android:layout_marginRight="10dp"
+
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginRight="8dp"
                     android:textSize="18dp"
-                    android:textColor="#FFFFFFFF"
-                    android:visibility="visible"
+                    android:textColor="#666666"
+                    android:visibility="gone"
                     android:text="发送"/>
+            </LinearLayout>
                 <!--   <ImageView
                        android:id="@+id/person_chat_send_button"
                        android:gravity="center"

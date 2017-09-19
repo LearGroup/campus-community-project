@@ -23,6 +23,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -68,7 +69,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     private static final String ARG_PARAM2 = "param2";
     private AppCompatImageView back_icon;
     private int IniteFragment = 0;
-    private TextView send_btn;
+    private AppCompatButton send_btn;
     private SharedPreferences sp;
     private static final String SHARE_PREFERENCE_NAME = "EmotionKeyboard";
     private static final String SHARE_PREFERENCE_SOFT_INPUT_HEIGHT = "soft_input_height";
@@ -274,6 +275,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
         mHiddenAction.setDuration(150);
         quitFullScreen();
         final View view = inflater.inflate(R.layout.fragment_person__chat_, container, false);
+
         ExpressionViewPager = (ViewPager) view.findViewById(R.id.chat_expression_viewpager);
         ExpressionMenuType = (RecyclerView) view.findViewById(R.id.chat_listmenuitem_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
@@ -283,7 +285,13 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
         ContentView = (RecyclerView) view.findViewById(R.id.person_chat_recyclerview);
         final Toolbar toolbar = (Toolbar) view.findViewById(R.id.person_chat_toolbar);
         setHasOptionsMenu(true);
-        send_btn = (TextView) view.findViewById(R.id.person_chat_send_button);
+        send_btn = (AppCompatButton) view.findViewById(R.id.person_chat_send_button);
+        send_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         chat_more_icon = (AppCompatImageView) view.findViewById(R.id.appCompatImageView6);
         input_text = (EditText) view.findViewById(R.id.person_chat_editText);
         toolbar.inflateMenu(R.menu.person_chat_menu_layout);

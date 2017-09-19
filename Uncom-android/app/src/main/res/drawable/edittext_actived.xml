@@ -6,5 +6,6 @@
         <solid android:color="#666666"
             />
     <padding
-        android:bottom="-4dp" />
+        android:top="3dp"
+         />
     </shape>

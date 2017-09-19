@@ -93,6 +93,11 @@
           <action name="getStrategy" class="tripLoad.loadAction" method="getStrategy"></action>
         
     </package>
+    
+    <package name="healthy" namespace="/healthy" extends="struts-default">
+          <global-allowed-methods>regex:.*</global-allowed-methods>
+          
+    </package>
 	
 	
 	

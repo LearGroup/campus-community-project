@@ -3,14 +3,10 @@
 /bean/
 /dao/
 /deckerPattern/
-/hibernate.cfg.xml
 /hql/
-/log4j.properties
-/log4j2.xml
 /login/
 /logout/
 /register/
 /save/
-/struts.xml
 /transmission/
 /tripLoad/
