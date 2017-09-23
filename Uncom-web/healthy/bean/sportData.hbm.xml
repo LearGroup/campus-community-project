@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping
+  PUBLIC "-//Hibernate?Hibernate Mapping DTD//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="bean.sportData" table="sport">
+		<id name="id" column="ID">
+			<generator class="identity"></generator>
+		</id>
+
+		<property name="sportName" column="sport_name"></property>
+		<property name="spendTime" column="spend_time"></property>
+		<property name="level" column="level"></property>
+		<property name="score" column="score"></property>
+		<property name="img" column="img"></property>
+		<property name="describe" column="describe"></property>
+	</class>
+</hibernate-mapping>
+

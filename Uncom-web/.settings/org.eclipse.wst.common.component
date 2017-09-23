@@ -7,6 +7,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/test"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/appFront"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/healthy"/>
         <property name="context-root" value="Uncom"/>
         <property name="java-output-path" value="/Uncom/build/classes"/>
     </wb-module>

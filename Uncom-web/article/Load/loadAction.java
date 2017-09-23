@@ -55,7 +55,7 @@ public class loadAction extends ActionSupport implements ModelDriven<articleData
 	}
 
 	public String getArticleCommentSetForOneLevel() throws IOException {
-		request = ServletActionContext.getRequest();
+		//request = ServletActionContext.getRequest();
 		SessionFactory sessionFactory = hibernateStartPrepare.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();

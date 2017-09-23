@@ -30,15 +30,18 @@ jdbc:mysql://localhost:3306/jsp_app
 
 
         <!-- Enable Hibernate's automatic session context management -->
-        <property name="current_session_context_class">thread</property>
-
-        <property name="hibernate.connection.pool.size">20 </property>   
-        
-        <property name="jdbc.fetch_size">50 </property> 
-            
-            
-        <!-- Disable the second-level cache  -->
-        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+        <property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+        <property name="hibernate.c3p0.max_size">20</property>
+        <property name="hibernate.c3p0.min_size">5</property>
+        <property name="hibernate.c3p0.timeout">120</property>
+        <property name="automaticTestTable">Test</property>
+        <property name="hibernate.c3p0.max_statements">100</property>
+        <property name="hibernate.c3p0.idle_test_period">120</property>
+        <property name="hibernate.c3p0.acquire_increment">1</property>
+        <property name="c3p0.testConnectionOnCheckout">true</property>
+        <property name="c3p0.idleConnectionTestPeriod">18000</property>
+        <property name="c3p0.maxIdleTime">25000</property>
+        <property name="c3p0.idle_test_period">120</property>
 
         <!-- Echo all executed SQL to stdout-->
         <property name="show_sql">true</property>
@@ -54,6 +57,8 @@ jdbc:mysql://localhost:3306/jsp_app
 	   <mapping resource="bean/tripAttractionData.hbm.xml"/>
 	   <mapping resource="bean/tripImgData.hbm.xml"/>
 	   <mapping resource="bean/strategyData.hbm.xml"/> 
+	   <mapping resource="bean/sportData.hbm.xml"/>
+	    <mapping resource="bean/foodData.hbm.xml"/>
 	   
 	</session-factory>
 </hibernate-configuration>

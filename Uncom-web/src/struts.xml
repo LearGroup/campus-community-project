@@ -96,7 +96,8 @@
     
     <package name="healthy" namespace="/healthy" extends="struts-default">
           <global-allowed-methods>regex:.*</global-allowed-methods>
-          
+          <action name="getSportList" class="healthyLoad.sportAction" method="getSportList"></action>
+          <action name="getFoodList" class="healthyLoad.sportAction" method="getFoodList"></action>
     </package>
 	
 	
