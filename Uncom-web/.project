@@ -53,8 +53,7 @@
 				<arguments>1.0-name-matches-false-false-node_modules</arguments>
 			</matcher>
 		</filter>
-		<filter>
-			<id>1501652855753</id>
+
 			<name></name>
 			<type>26</type>
 			<matcher>
