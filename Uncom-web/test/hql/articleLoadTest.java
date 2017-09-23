@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import dao.hibernateStartPrepare;
+import net.sf.json.JSONArray;
 
 public class articleLoadTest {
 	
@@ -26,15 +27,10 @@ public class articleLoadTest {
 		 String id="99d64054-3f29-4f41-8f05-3835aa068c25";
 		 String hql="select article from articleData article where article.id='99d64054-3f29-4f41-8f05-3835aa068c25'";
 		 Query query=session.createQuery(hql);
-		 articleData ad=(articleData) query.uniqueResult();
-		 System.out.println(ad);
-		 try {
-			transaction.commit();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}finally {
-			 session.close();
-		}
+			
+			JSONArray json = JSONArray.fromObject(query.list());
+			session.close();
+			System.out.println(json);
 		 
 	}
 }

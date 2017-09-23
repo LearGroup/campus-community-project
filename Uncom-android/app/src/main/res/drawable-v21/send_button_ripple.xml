@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:color="#333333"
+    tools:targetApi="lollipop">
+    <shape>
+        <!-- 中间的背景色-->
+        <solid android:color="@color/colorPrimary"/>
+    </shape>
+</ripple>

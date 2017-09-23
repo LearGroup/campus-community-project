@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_height="wrap_content"
-    android:clickable="true"
+    android:clickable="false"
     android:layout_width="wrap_content">
    <android.support.v7.widget.AppCompatImageView
        android:id="@+id/expression_icon_standard"

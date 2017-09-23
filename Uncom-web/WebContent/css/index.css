@@ -207,15 +207,23 @@ line-height: 1.5;
        box-shadow: black 0px 2px 0px;  
       
     }  
-.list-container .content-box .abstract{
+.list-container .content-box .abstract {
 	/*overflow:hidden;white-space:nowrap;*/
 	text-overflow: ellipsis;
-
 	max-height: 60px;
 	overflow:hidden;
 	display:block;
 	padding-top: 3px;
 }
+.list-container .content-box .abstract p{
+	text-overflow: ellipsis;
+	max-height: 60px;
+	overflow:hidden;
+	display:block;
+	padding-top: 3px;
+}
+
+
 .list-container .content-box .title{
 	line-height:1.5;
 	color: #737373;

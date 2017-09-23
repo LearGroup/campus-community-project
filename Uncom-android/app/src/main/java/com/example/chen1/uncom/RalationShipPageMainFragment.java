@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +51,7 @@ public class RalationShipPageMainFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_ralation_ship_page_main, container, false);
-        ScrollView sv = (ScrollView)view.findViewById(R.id.relation_ship_scroll_view);
+        NestedScrollView sv = (NestedScrollView)view.findViewById(R.id.relation_ship_scroll_view);
         sv.smoothScrollTo(0,0);
         group_listView=(ListView) view.findViewById(R.id.group_list_view);
         person_listview=(ListView)view.findViewById(R.id.person_list_view);

@@ -53,8 +53,7 @@ public class ExpessionStandardAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-
-            return CurrentPage*20+position;
+            return EmotionList.get(CurrentPage*20+position);
 
     }
 
@@ -74,8 +73,9 @@ public class ExpessionStandardAdapter extends BaseAdapter {
                 imageView.setImageResource(R.drawable.ic_expression_delete_icon);
                  LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,84);
                  lp.topMargin=10;
-            lp.rightMargin=20;
-               imageView.setLayoutParams(lp);
+                 lp.rightMargin=20;
+                 imageView.setLayoutParams(lp);
+
         }else{
             imageView.setImageResource(EmotionSet.get(EmotionList.get(CurrentPage*20+position)));
         }

@@ -12,8 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
@@ -22,7 +25,7 @@ import java.util.ArrayList;
 import me.relex.circleindicator.CircleIndicator;
 
 
-public class ChatExpressionStandardFragment extends Fragment {
+public class ChatExpressionStandardFragment  extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -93,6 +96,7 @@ public class ChatExpressionStandardFragment extends Fragment {
         CircleIndicator cir= (CircleIndicator) getActivity().findViewById(R.id.circleIndicator);
         cir.setViewPager(chat_expression_viewpager);
 
+
         return view;
     }
     private void InitPager(Context context) {
@@ -100,7 +104,9 @@ public class ChatExpressionStandardFragment extends Fragment {
         WindowManager wm = (WindowManager)context
                 .getSystemService(Context.WINDOW_SERVICE);
         int screenWidth = wm.getDefaultDisplay().getWidth();
-
+        EditText editText= (EditText) getActivity().findViewById(R.id.person_chat_editText);
+        GlobalOnItemClickManagerUtils globalOnItemClickManager= GlobalOnItemClickManagerUtils.getInstance(getActivity());
+        globalOnItemClickManager.attachToEditText((EditText) editText);
         viewList = new ArrayList<LinearLayout>();
         for (int i = 0; i < ExpressionPageCount; i++) {
             LayoutInflater layoutInflater=LayoutInflater.from(getContext());
@@ -114,6 +120,8 @@ public class ChatExpressionStandardFragment extends Fragment {
             gridView.setPadding(itemWidth,spacing,itemWidth,spacing);
             gridView.setVerticalSpacing(spacing);
             gridView.setAdapter(new ExpessionStandardAdapter(Emotion_map, ExpressionPageCount, i,context,screenWidth));
+            Log.v("emotion", "onItemClick: ");
+            gridView.setOnItemClickListener(globalOnItemClickManager.getOnItemClickListener(1));
             viewList.add(linearLayout);
         }
     }
@@ -121,5 +129,7 @@ public class ChatExpressionStandardFragment extends Fragment {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
+
+
 
 }

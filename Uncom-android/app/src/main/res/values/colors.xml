@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorEditTextNormal">#cdcdcd</color>
-    <color name="colorEditTextActivated">#33bb77</color>
-    <color name="colorPrimary">#33bb77</color>
-    <color name="colorPrimaryDark">#FCFCFC</color>
+    <color name="colorEditTextActivated">#009933</color>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#56A36C</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorIcon">#515151</color>
+
 </resources>
