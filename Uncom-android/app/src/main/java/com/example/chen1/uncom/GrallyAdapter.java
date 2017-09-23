@@ -74,6 +74,7 @@ public class GrallyAdapter extends RecyclerView.Adapter<GrallyAdapter.ViewHolder
     public int getItemCount() {
         return datalist==null?0:datalist.size();
     }
+
     public static class  ViewHolder extends  RecyclerView.ViewHolder  {
         public   AppCompatImageView imageView;
         public   Integer  ExpressionType;
@@ -82,9 +83,6 @@ public class GrallyAdapter extends RecyclerView.Adapter<GrallyAdapter.ViewHolder
             imageView=(AppCompatImageView)itemView.findViewById(R.id.chat_expression_type_icon);
         }
     }
-
-
-
 
 
 }

@@ -59,6 +59,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -82,6 +83,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     private EditText input_text;
     private int KeyBoardHeight;
     private RecyclerView ContentView;
+    private PersonChatRecyclerViewAdapter personChatRecyclerViewAdapter;
     private int ExpressionTypeCount;
     private InputMethodManager mInputManager;
     private List<Integer> list = new ArrayList<>();
@@ -275,30 +277,39 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
         mHiddenAction.setDuration(150);
         quitFullScreen();
         final View view = inflater.inflate(R.layout.fragment_person__chat_, container, false);
-
+        personChatRecyclerViewAdapter = new PersonChatRecyclerViewAdapter(getContext());
         ExpressionViewPager = (ViewPager) view.findViewById(R.id.chat_expression_viewpager);
         ExpressionMenuType = (RecyclerView) view.findViewById(R.id.chat_listmenuitem_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         ExpressionMenuType.setLayoutManager(linearLayoutManager);
         ExpressionMenuType.setHasFixedSize(true);
+        LinearLayoutManager contentViewLinearLayoutManager = new LinearLayoutManager(view.getContext());
+        contentViewLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         ContentView = (RecyclerView) view.findViewById(R.id.person_chat_recyclerview);
+        ContentView.setLayoutManager(contentViewLinearLayoutManager);
+        ContentView.setHasFixedSize(true);
+        ContentView.setAdapter(personChatRecyclerViewAdapter);
+
         final Toolbar toolbar = (Toolbar) view.findViewById(R.id.person_chat_toolbar);
         setHasOptionsMenu(true);
         send_btn = (AppCompatButton) view.findViewById(R.id.person_chat_send_button);
-        send_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         chat_more_icon = (AppCompatImageView) view.findViewById(R.id.appCompatImageView6);
         input_text = (EditText) view.findViewById(R.id.person_chat_editText);
         toolbar.inflateMenu(R.menu.person_chat_menu_layout);
         ExpressionLinearLayout = (LinearLayout) view.findViewById(R.id.Expression_LinearLayout);
         ExpressionBtn = (AppCompatImageView) view.findViewById(R.id.appCompatImageView5);
         back_icon = (AppCompatImageView) view.findViewById(R.id.person_chat_back_icon);
+        send_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String str=input_text.getText().toString();
+                ChatMessgaeContent item2= new ChatMessgaeContent("Hello World!",new Date(),R.drawable.head_img,true);
 
+                personChatRecyclerViewAdapter.add(item2,1);
+                ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
+            }
+        });
         back_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
