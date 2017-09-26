@@ -304,8 +304,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
             @Override
             public void onClick(View v) {
                 String str=input_text.getText().toString();
-                ChatMessgaeContent item2= new ChatMessgaeContent("Hello World!",new Date(),R.drawable.head_img,true);
-
+                ChatMessgaeContent item2= new ChatMessgaeContent(str,new Date(),R.drawable.head_img,true);
                 personChatRecyclerViewAdapter.add(item2,1);
                 ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
             }
