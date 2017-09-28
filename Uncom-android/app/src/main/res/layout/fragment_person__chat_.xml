@@ -8,12 +8,11 @@
     tools:context="com.example.chen1.uncom.Person_Chat_Fragment">
     <!-- TODO: Update blank fragment layout -->
 <LinearLayout
-    android:background="#e6e6e6"
+    android:background="#eeeeee"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <android.support.design.widget.AppBarLayout
-        app:elevation="0dp"
         android:layout_marginTop="-10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,22 +47,23 @@
         android:layout_above="@+id/person_chat_bottomNavigationView"
         android:layout_below="@+id/appBarLayout"
         android:layout_weight="1"
-        android:background="#e6e6e6" />
+        android:background="#eeeeee" />
 
     <LinearLayout
-        android:background="#eeeeee"
+
+        android:background="@color/colorPrimary"
         android:id="@+id/person_chat_bottomNavigationView"
         android:layout_width="match_parent"
         android:minHeight="45dp"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:background="#eeeeee"
+            android:background="@color/colorPrimary"
             android:gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
-                android:elevation="0dp"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -130,12 +130,11 @@
                     android:layout_gravity="bottom"
                     android:gravity="center"
                     android:layout_width="45dp"
-
                     android:layout_height="30dp"
                     android:layout_marginBottom="4dp"
                     android:layout_marginRight="8dp"
                     android:textSize="18dp"
-                    android:textColor="#666666"
+                    android:textColor="#ffffff"
                     android:visibility="gone"
                     android:text="发送"/>
             </LinearLayout>
@@ -160,7 +159,7 @@
 
     <LinearLayout
         android:elevation="0dp"
-        android:background="#e6e6e6"
+        android:background="@color/colorPrimary"
         android:layout_gravity="bottom"
         android:id="@+id/Expression_LinearLayout"
         android:visibility="gone"

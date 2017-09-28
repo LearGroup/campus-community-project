@@ -22,9 +22,7 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
     private ArrayList<ChatMessgaeContent> listItem =new ArrayList<ChatMessgaeContent>();
    public PersonChatRecyclerViewAdapter(Context context){
        this.context=context;
-       ChatMessgaeContent item= new ChatMessgaeContent("Hello World!",new Date(),R.drawable.head_img,false);
 
-       ChatMessgaeContent item2= new ChatMessgaeContent("Hello World!",new Date(),R.drawable.head_img,true);
 
    }
 

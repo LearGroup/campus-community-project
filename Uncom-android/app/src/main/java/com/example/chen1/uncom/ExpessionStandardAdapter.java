@@ -72,7 +72,7 @@ public class ExpessionStandardAdapter extends BaseAdapter {
         if(position==20||(PageCount.equals(CurrentPage+1)&&position==(EmotionList.size()-(CurrentPage)*20))){
                 imageView.setImageResource(R.drawable.ic_expression_delete_icon);
                  LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,84);
-                 lp.topMargin=10;
+                 lp.topMargin=0;
                  lp.rightMargin=20;
                  imageView.setLayoutParams(lp);
 

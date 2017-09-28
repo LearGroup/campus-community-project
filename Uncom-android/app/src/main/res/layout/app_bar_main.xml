@@ -13,10 +13,11 @@
         android:layout_marginTop="-10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="0dp">
 
+        >
+<!-- app:layout_scrollFlags="scroll|enterAlways"-->
         <android.support.v7.widget.Toolbar
-            app:layout_scrollFlags="scroll|enterAlways"
+
             android:layout_marginBottom="-5dp"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -33,9 +34,9 @@
         android:id="@+id/container"
        />
 
-
+<!--   app:layout_behavior="com.example.chen1.uncom.BottomNavigationViewBehavior"
+     -->
     <android.support.design.widget.BottomNavigationView
-        app:layout_behavior="com.example.chen1.uncom.BottomNavigationViewBehavior"
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         app:itemTextColor="@drawable/bottomnavigationviewitemicontint"

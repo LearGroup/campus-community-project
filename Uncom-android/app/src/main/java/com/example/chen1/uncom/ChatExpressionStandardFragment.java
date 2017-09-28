@@ -115,7 +115,7 @@ public class ChatExpressionStandardFragment  extends Fragment {
             gridView.setNumColumns(7);
             int itemWidth=dip2px(context,12);
             Log.v("dp:px", String.valueOf(itemWidth));
-            int spacing = (screenWidth-itemWidth*7)/14;
+            int spacing = (screenWidth-itemWidth*7-105)/14;
             gridView.setHorizontalSpacing(0);
             gridView.setPadding(itemWidth,spacing,itemWidth,spacing);
             gridView.setVerticalSpacing(0);

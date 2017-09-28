@@ -4,14 +4,14 @@
     android:orientation="vertical"
     android:layout_gravity="center"
     android:layout_height="match_parent"
-    android:paddingTop="7dp"
-    android:paddingBottom="7dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     android:layout_width="match_parent">
    <android.support.v7.widget.AppCompatImageView
 
        android:id="@+id/expression_icon_standard"
        android:layout_gravity="center"
-       android:layout_width="34dp"
-       android:layout_height="34dp"
+       android:layout_width="35dp"
+       android:layout_height="35dp"
        app:srcCompat="@drawable/ic_vector_chat_more_icon"/>
 </LinearLayout>
