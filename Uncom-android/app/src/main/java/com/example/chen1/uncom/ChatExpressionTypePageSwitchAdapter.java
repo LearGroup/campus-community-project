@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
 import java.security.cert.CertificateExpiredException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,6 @@ public class ChatExpressionTypePageSwitchAdapter extends FragmentPagerAdapter {
 
 
     private int  ExpressionTypeCount=2;
-
     public ChatExpressionTypePageSwitchAdapter(FragmentManager fm, List<Integer>viewlist) {
         super(fm);
         ExpressionTypeCount=viewlist.size();

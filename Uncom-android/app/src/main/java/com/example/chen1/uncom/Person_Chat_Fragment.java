@@ -25,6 +25,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -304,10 +305,10 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
             @Override
             public void onClick(View v) {
                 String str=input_text.getText().toString();
-                ChatMessgaeContent item2= new ChatMessgaeContent("Hello World!",new Date(),R.drawable.head_img,true);
-
+                ChatMessgaeContent item2= new ChatMessgaeContent(str,new Date(),R.drawable.head_img,true);
                 personChatRecyclerViewAdapter.add(item2,1);
                 ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
+                input_text.setText(null);
             }
         });
         back_icon.setOnClickListener(new View.OnClickListener() {
@@ -342,7 +343,11 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
         input_text.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+
                 if (event.getAction() == MotionEvent.ACTION_UP && ExpressionLinearLayout.isShown()) {
+                    if(personChatRecyclerViewAdapter.getItemCount()>=2){
+                        ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
+                    }
                     lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
                     ExpressionLinearLayout.setVisibility(View.GONE);//隐藏表情布局，显示软件盘
                     //软件盘显示后，释放内容高度
@@ -350,9 +355,23 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
                         @Override
                         public void run() {
                             unlockContentHeightDelayed();
+
+                        }
+                    }, 200L);
+                }else{
+                    input_text.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(personChatRecyclerViewAdapter.getItemCount()>=2){
+                                ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
+                            }
+
                         }
                     }, 200L);
                 }
+
+
+
                 return false;
             }
         });
@@ -386,18 +405,23 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
         ExpressionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(personChatRecyclerViewAdapter.getItemCount()>=2){
+                    ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
+                }
                 if (ExpressionLinearLayout.isShown()) {
                     Log.v("softInput", "true ");
                     lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
                     hideEmotionLayout(true);//隐藏表情布局，显示软件盘
                     unlockContentHeightDelayed();//软件盘显示后，释放内容高度
-
-
+                    if(personChatRecyclerViewAdapter.getItemCount()>=2){
+                        ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
+                    }
                 } else {
                     if (isSoftInputShown()) {//同上
                         lockContentHeight();
                         showEmotionLayout();
                         unlockContentHeightDelayed();
+
                     } else {
                         showEmotionLayout();//两者都没显示，直接显示表情布局
                     }
@@ -409,6 +433,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
         ExpressionViewPager.setAdapter(new ChatExpressionTypePageSwitchAdapter(getChildFragmentManager(), list));
         ExpressionViewPager.setCurrentItem(0);
         ExpressionMenuType.setAdapter(grallyAdapter);
+        ExpressionMenuType.setItemAnimator(new DefaultItemAnimator());
         grallyAdapter.setOnItemClickListener(new GrallyAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {

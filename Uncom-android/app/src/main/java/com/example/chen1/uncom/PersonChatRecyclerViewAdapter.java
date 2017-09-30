@@ -2,6 +2,7 @@ package com.example.chen1.uncom;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,8 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
     private ArrayList<ChatMessgaeContent> listItem =new ArrayList<ChatMessgaeContent>();
    public PersonChatRecyclerViewAdapter(Context context){
        this.context=context;
-       ChatMessgaeContent item= new ChatMessgaeContent("Hello World!",new Date(),R.drawable.head_img,false);
 
-       ChatMessgaeContent item2= new ChatMessgaeContent("Hello World!",new Date(),R.drawable.head_img,true);
 
-       listItem.add(item);
-       listItem.add(item2);
    }
 
     @Override
@@ -54,6 +51,11 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.itemView.setTag(position);
+        if(!listItem.get(position).getText().equals(null)){
+            String str =listItem.get(position).getText();
+            SpannableString spannableString= SpanStringUtils.getEmotionContent(1,context, holder.textView,str);
+             holder.textView.setText(spannableString);
+        }
         //holder.textView.setText(listItem.get(position));
 
     }
@@ -70,7 +72,7 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
     }
 
     public static class   ViewHolder extends  RecyclerView.ViewHolder {
-        TextView textView;
+        public TextView textView=null;
         public ViewHolder(View itemView) {
             super(itemView);
             textView=(TextView)itemView.findViewById(R.id.person_chat_own_content_textview);

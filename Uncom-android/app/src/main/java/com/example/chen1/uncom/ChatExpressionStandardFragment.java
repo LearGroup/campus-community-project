@@ -115,10 +115,10 @@ public class ChatExpressionStandardFragment  extends Fragment {
             gridView.setNumColumns(7);
             int itemWidth=dip2px(context,12);
             Log.v("dp:px", String.valueOf(itemWidth));
-            int spacing = (screenWidth-itemWidth*7)/14;
-            gridView.setHorizontalSpacing(itemWidth);
+            int spacing = (screenWidth-itemWidth*7-105)/14;
+            gridView.setHorizontalSpacing(0);
             gridView.setPadding(itemWidth,spacing,itemWidth,spacing);
-            gridView.setVerticalSpacing(spacing);
+            gridView.setVerticalSpacing(0);
             gridView.setAdapter(new ExpessionStandardAdapter(Emotion_map, ExpressionPageCount, i,context,screenWidth));
             Log.v("emotion", "onItemClick: ");
             gridView.setOnItemClickListener(globalOnItemClickManager.getOnItemClickListener(1));

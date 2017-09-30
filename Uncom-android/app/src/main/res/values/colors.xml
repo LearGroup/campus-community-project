@@ -6,5 +6,6 @@
     <color name="colorPrimaryDark">#56A36C</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorIcon">#515151</color>
+    <color name="colorMain">#6ABD78</color>
 
 </resources>

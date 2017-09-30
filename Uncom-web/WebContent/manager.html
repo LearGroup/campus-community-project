@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+			<script type="text/javascript" src="js/vue.min.js" ></script>
+			<script type="text/javascript" src="js/vue-router.min.js" ></script>
+			<script type="text/javascript" src="js/vuex.min.js" ></script>
+			<script type="text/javascript" src="js/jquery-3.1.1.min.js" ></script>
+			<script type="text/javascript" src="js/manageLogin.js" ></script>
+			<link rel="stylesheet" href="css/bootstrap.min.css" />
+			<link rel="stylesheet" href="css/font-awesome.min.css" />
+			<link rel="stylesheet" href="css/manageLogin.css" />
+		<title></title>
+	</head>
+	<body>
+		
+		<div id="app"  class="container-fluid root">
+			<div class="col-xs-12">
+				<router-view></router-view>
+			</div>
+			
+		</div>
+	</body>
+	
+	
+<template id="login">
+<div class="login col-xs-12 col-lg-3 col-lg-push-4 ">
+
+  <div class="panel panel-heading   col-xs-12   col-lg-12 col-lg-push-1 login-box text-center">
+    <h1 class="col-xs-12">{{ msg }}</h1>
+    <div class="input-group login_input_username_div " id="login_input_username_div">
+      <span class="input-group-addon"><i class="fa fa-user-o"></i></span>
+      <input type="text" name="login_username" class="form-control " id="login_input_username" placeholder="手机号/邮箱">
+    </div>
+    <br>
+    <div class="input-group login_input_password_div" id="login_input_password_div">
+      <span class="input-group-addon"><i class="fa fa-key"></i></span>
+      <input type="text" name="login_password" id="login_input_password" class="form-control" placeholder="密码">
+    </div>
+
+    <button v-on:click="login(0)" type="button" class="col-xs-12 btn btn-default btn-group-vertical login-btn" name="button" style="color:#42b983;"><i v-bind:class="{'fa fa-spinner fa-pulse':logins}"></i>登陆</button>
+    <div class="col-xs-12 text-center">
+      <a href="#">忘记密码</a>
+      <a href="#">|</a>
+      <a href="#">注册</a>
+    </div>
+
+
+
+  </div>
+</div>
+</template>	
+
+	
+	
+<template id="main">
+	<div class="col-xs-12">main page</div>
+	
+	
+</template>
+	
+<script type="text/javascript">
+	
+	
+	var loginPage =Vue.extend({
+		template:'#login',
+		data:function(){
+			return {msg:"欢迎登陆",
+			logins: false}
+		},
+		  created: function() {
+    var heigh
+    if (document.body.clientWidth > 768) {
+      heigh =0 + 'px'
+    } else {
+      heigh = window.innerHeight + 'px'
+    }
+    this.$parent.$data.item.height = heigh
+
+
+  //  this.checkStatus('Main/Contacts')
+  },
+  methods: {
+    login: function(tag) {
+      login(this, tag)
+    }
+  }
+	})
+	
+	
+	var mainPage =Vue.extend({
+		template:"#main",
+		data:function(){
+			return {}
+		}
+	})
+	
+	var routes=[
+	{path:'/login' ,component:loginPage},
+	{path:'/main', component:mainPage}
+	]
+	var router=new VueRouter({
+		routes:routes
+	})
+	
+	
+	var app =new Vue({
+		el:"#app",
+		data:{
+			item: {
+        'height': '0px'
+      }
+		},
+		router:router
+	})
+</script>
+</html>

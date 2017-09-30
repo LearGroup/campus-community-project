@@ -2,11 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e6e6e6"
     tools:context="com.example.chen1.uncom.ChatExpressionStandardFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.v4.view.ViewPager
+        android:background="@color/colorPrimary"
+        android:elevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/expression_standard_viewpager">

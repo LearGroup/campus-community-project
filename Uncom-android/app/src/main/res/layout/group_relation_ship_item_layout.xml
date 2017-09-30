@@ -4,31 +4,39 @@
     android:layout_width="match_parent"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
+    android:descendantFocusability="blocksDescendants"
     android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent">
     <android.support.constraint.ConstraintLayout
 
-        android:layout_width="match_parent"
+         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp">
         <android.support.v7.widget.AppCompatImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
             app:srcCompat="@drawable/ic_vector_group_travel"
-            tools:layout_editor_absoluteY="0dp"
-            tools:layout_editor_absoluteX="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
             android:id="@+id/appCompatImageView2" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="旅行小组"
-            android:textSize="25dp"
-            tools:layout_editor_absoluteY="2dp"
+            android:textSize="20dp"
             app:layout_constraintLeft_toRightOf="@+id/appCompatImageView2"
-            android:layout_marginLeft="8dp" />
+            android:layout_marginLeft="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="6dp" />
     </android.support.constraint.ConstraintLayout>
     <TextView
         android:layout_width="match_parent"
