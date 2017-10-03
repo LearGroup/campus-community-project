@@ -6,7 +6,7 @@
     android:orientation="vertical"
 
 
-    tools:context="com.example.chen1.uncom.RalationShipPageMainFragment">
+    tools:context="com.example.chen1.uncom.relationship.RalationShipPageMainFragment">
     <!-- TODO: Update blank fragment layout -->
   <android.support.v4.widget.NestedScrollView
       app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -65,13 +65,13 @@
               android:text="组织"
               android:textSize="20dp"/>
 
-          <com.example.chen1.uncom.relation_ship_listview
+          <com.example.chen1.uncom.relationship.relation_ship_listview
               android:divider="@null"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/group_list_view">
 
-          </com.example.chen1.uncom.relation_ship_listview>
+          </com.example.chen1.uncom.relationship.relation_ship_listview>
 
           <TextView
               android:paddingLeft="15dp"
@@ -82,13 +82,13 @@
               android:layout_height="wrap_content"
               android:text="个人"
               android:textSize="20dp"/>
-          <com.example.chen1.uncom.relation_ship_listview
+          <com.example.chen1.uncom.relationship.relation_ship_listview
               android:divider="@null"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/person_list_view">
 
-          </com.example.chen1.uncom.relation_ship_listview>
+          </com.example.chen1.uncom.relationship.relation_ship_listview>
       </LinearLayout>
   </android.support.v4.widget.NestedScrollView>
 

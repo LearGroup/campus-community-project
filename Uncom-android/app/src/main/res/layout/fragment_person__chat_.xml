@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.chen1.uncom.Person_Chat_Fragment">
+    tools:context="com.example.chen1.uncom.chat.Person_Chat_Fragment">
     <!-- TODO: Update blank fragment layout -->
 <LinearLayout
     android:background="#eeeeee"
@@ -97,7 +97,7 @@
                     android:layout_weight="1"
                     android:maxLines="3"
                     android:lineSpacingExtra="2dp"
-                    android:textCursorDrawable="@drawable/edittext_actived"
+                    android:textCursorDrawable="@drawable/access_cursor_active"
                     android:theme="@style/ChatEditText" />
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/appCompatImageView5"
