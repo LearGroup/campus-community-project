@@ -143,9 +143,14 @@
  var onlineCount = 0;
 
  io.on('connection', function(socket) {
+
+   
+
    console.log('一个用户上线了')
    //监听新用户加入
    socket.on("login", function(obj) {
+
+
      console.log('socket login' + obj.userName);
      console.log("add user")
      socket.join('mainRoom')
@@ -213,23 +218,25 @@
 
  router.post('/getFrendList', urlencodedParser, function(req, res, next) {
    console.log('getFrendList');
+   console.log(req.sessionID);
    if (req.session.user) {
      let id = req.session.user.id
-     connection.query('select us.username, us.header_pic, us.sex,rs.minor_user from relation_ship rs,user us where rs.main_user=' + '"' + id + '"' + ' and rs.level =4 and rs.minor_user=us.id', function(err, results, xfields) {
-       res.send(results)
+     connection.query('select us.header_pic,us.username,us.sex,us.age,us.email,us.self_abstract,us.sprovince,us.sarea,us.town,us.phone,rs.minor_user ,rs.level ,rs.id   from relation_ship rs,user us where rs.main_user=' + '"' + id + '"' + ' and rs.level =4 and rs.minor_user=us.id', function(err, results, xfields) {
+       console.log(results);
+       res.send(JSON.parse(JSON.stringify('{"status":"1","results":'+JSON.stringify(results)+'}')))
      })
+   }else{
+     res.send(JSON.parse(JSON.stringify('{"status":null}')));
    }
-
  })
 
 
  router.post("/checkStatus", urlencodedParser, function(req, res) {
    console.log('checkStatus');
-   console.log(req.session);
    if (req.session.user) {
-     res.send(req.session.user)
+     res.send(JSON.stringify('{"status":"1","results":'+JSON.stringify(req.session.user)+'}'))
    } else {
-     res.send("null")
+     res.send(JSON.parse(JSON.stringify('{"status":null}')))
    }
 
  })
@@ -242,9 +249,9 @@
      redisClient.lrange('historyMessage:' + req.session.user.id, 0, -1, function(err, res) {
 
        if (res) {
-         response.send(res)
+         response.send('{"status":"1","results":+'+res+'}')
        } else {
-         response.send(null)
+         response.send(JSON.parse(JSON.stringify('{"status":null}')))
        }
      })
    }
@@ -256,14 +263,13 @@
    var username = req.body.username
    var password = req.body.password
    var sql = null;
+   console.log(use+username,password);
    console.log('login sessionID');
-   console.log(req.session);
-   console.log(userCache);
-   console.log(userCache.userCacheModule);
+   console.log(req.sessionID);
    if (use == 'phone') {
-     sql = 'select us.username,us.id,us.header_pic from user us where us.phone="' + username + '" and us.password="' + password + '"'
+     sql = 'select * from user us where us.phone="' + username + '" and us.password="' + password + '"'
    } else {
-     sql = 'select us.username,us.id,us.header_pic from user us where us.email="' + username + '" and us.password="' + password + '"'
+     sql = 'select * from user us where us.email="' + username + '" and us.password="' + password + '"'
    }
    //访问用户数据库信息
    connection.query(sql, function(err, results, xfields) {
@@ -272,12 +278,13 @@
        console.log(err);
      }
      console.log('results');
-     console.log(results);
+     console.log(results[0]);
      if (results[0]) {
        req.session.user = results[0]
-       response.send(results[0])
+       let temp=JSON.parse(JSON.stringify('{"status":"1","results":'+JSON.stringify(results[0])+'}'))
+       response.send(temp)
      } else {
-       response.send('null')
+       response.send(JSON.parse(JSON.stringify('{"status":null}')))
      }
    })
  })

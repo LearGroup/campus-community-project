@@ -28,9 +28,10 @@ function checkStatus(targetUrl, callback) {
         withCredentials: true
       },
       crossDomain: true,
-      success: function(data) {
-        console.log('data' + data);
-        if (data == null) {
+      success: function(results) {
+        let data =results
+          console.log('data' + data.results);
+        if (data.status== null) {
           console.log('checkStatus push ');
           thi.$router.push({
             path: '/Login'
@@ -39,9 +40,9 @@ function checkStatus(targetUrl, callback) {
           console.log('store save' + targetUrl);
           thi.$store.commit('updateUserState', {
             userState: 1,
-            userName: data.username,
-            userId: data.id,
-            headImageUrl: data.header_pic
+            userName: data.results.username,
+            userId: data.results.id,
+            headImageUrl: data.results.header_pic
           })
           console.log('userState:');
           console.log(thi.$store.getters.getState);

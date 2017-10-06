@@ -59,9 +59,9 @@ function login(thi, data) {
           password: $("#login_input_password").val()
         },
         crossDomain: true,
-        success: function(date) {
-          console.log(date)
-          if (date == null || date.length == 0) {
+        success: function(results) {
+          let date =results
+          if (date.status == null || date.length == 0) {
             thi.logins = false;
             $("#login_input_username_div").attr("class", "input-group login_input_username_div has-error ")
             $("#login_input_password_div").attr("class", "input-group login_input_password_div has-error")
@@ -84,7 +84,7 @@ function login(thi, data) {
               socket.on('hello', function(data) {
                 console.log(data)
               })
-              
+
               thi.$router.push({
                 path: 'Main/Contacts'
               })

@@ -45,7 +45,8 @@ function getFrendList(thi) {
         id: thi.$store.getters.getUserId
       },
       crossDomain: true,
-      success: function(data) {
+      success: function(results) {
+        let data =results.results
         for (var i = 0; i < data.length; i++) {
           data[i]['class'] = 'row contact-item'
           data[i]['message'] = []
