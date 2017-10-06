@@ -1,5 +1,7 @@
 package com.example.chen1.uncom.relationship;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.AppCompatImageView;
@@ -8,15 +10,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.chen1.uncom.R;
+import com.example.chen1.uncom.bean.RelationShipLevelBean;
+import com.example.chen1.uncom.utils.LoadImageUtils;
+
+import java.util.ArrayList;
 
 /**
  * Created by chen1 on 2017/6/21.
  */
 
 public class person_relation_ship_adapter extends BaseAdapter {
+    private Context context;
+    private ArrayList<RelationShipLevelBean> data=null;
+    public person_relation_ship_adapter(Context context ,ArrayList<RelationShipLevelBean> dataList){
+        this.data=dataList;
+        this.context=context;
+    }
 
+    private TextView username;
     private AppCompatImageView headImage;
     /**
      * How many items are in the data set represented by this Adapter.
@@ -25,7 +39,7 @@ public class person_relation_ship_adapter extends BaseAdapter {
      */
     @Override
     public int getCount() {
-        return 8;
+        return data.size();
     }
 
     /**
@@ -70,17 +84,24 @@ public class person_relation_ship_adapter extends BaseAdapter {
      * @return A View corresponding to the data at the specified position.
      */
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater=LayoutInflater.from(parent.getContext());
         LinearLayout linearLayout=(LinearLayout)layoutInflater.inflate(R.layout.person_relation_ship_item_layout,null);
         headImage=(AppCompatImageView) linearLayout.findViewById(R.id.appCompatImageView3);
+        username=(TextView) linearLayout.findViewById(R.id.person_username);
+        username.setText(data.get(position).getUsername());
+        LoadImageUtils.getFirendHeaderImage(data.get(position).getHeader_pic(),context,headImage);
         headImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getFragmentManager();
+                person_detailed_information_fragment fragment = person_detailed_information_fragment.getInstance();
+                Bundle bundle=new Bundle();
+                bundle.putParcelable("frendData",data.get(position));
+                fragment.setArguments(bundle);
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout, person_detailed_information_fragment.getInstance()).commit();
+                fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout,fragment).commit();
 
             }
         });

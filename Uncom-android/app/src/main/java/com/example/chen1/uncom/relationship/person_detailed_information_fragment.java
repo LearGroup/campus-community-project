@@ -23,6 +23,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.chen1.uncom.R;
+import com.example.chen1.uncom.bean.RelationShipLevelBean;
+import com.example.chen1.uncom.utils.LoadImageUtils;
+
+import org.w3c.dom.Text;
 
 
 /**
@@ -42,6 +46,8 @@ public class person_detailed_information_fragment extends Fragment {
     // TODO: Rename and change types of parameters
     private CollapsingToolbarLayoutState state;
     private AppBarLayout appBarLayout;
+    private TextView username;
+    private RelationShipLevelBean frendData;
     private enum CollapsingToolbarLayoutState {
         EXPANDED,
         COLLAPSED,
@@ -90,10 +96,8 @@ public class person_detailed_information_fragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        Bundle bundle=getArguments();
+        frendData=bundle.getParcelable("frendData");
     }
     private void setFullScreen(){
         Window window = getActivity().getWindow();
@@ -130,9 +134,13 @@ public class person_detailed_information_fragment extends Fragment {
 
             }
         });
+        username=(TextView)view.findViewById(R.id.person_username);
+        username.setText(frendData.getUsername());
         person_iamgeview=(ImageView)view.findViewById(R.id.person_detaild_information_circleImageView);
+        LoadImageUtils.getFirendHeaderImage(frendData.getHeader_pic(),getContext(),person_iamgeview);
         constraintLayout=(ConstraintLayout)view.findViewById(R.id.person_detaild_information_constraintlayout);
         person_name=(TextView)view.findViewById(R.id.person_detaild_information_name);
+        person_name.setText(frendData.getUsername());
         person_back_icon=(AppCompatImageView)view.findViewById(R.id.person_detaild_information_back_icon);
         imageView=(ImageView)view.findViewById(R.id.person_detailed_information_background_img);
         imageView2=(ImageView)view.findViewById(R.id.person_detailed_information_background_img_two);

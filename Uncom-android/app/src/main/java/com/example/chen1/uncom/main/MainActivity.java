@@ -1,10 +1,15 @@
 package com.example.chen1.uncom.main;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -26,16 +31,22 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.example.chen1.uncom.FindPageMainFragment;
 import com.example.chen1.uncom.MePageMainFragment;
 import com.example.chen1.uncom.R;
+import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.relationship.RalationShipPageMainFragment;
 import com.example.chen1.uncom.SetPageMainFragment;
+import com.example.chen1.uncom.service.ChatCoreBinder;
+import com.example.chen1.uncom.service.CoreService;
 import com.example.chen1.uncom.utils.BackHandlerHelper;
 import com.example.chen1.uncom.utils.BottomNavigationViewHelper;
+import com.example.chen1.uncom.utils.LoadImageUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.URISyntaxException;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -52,7 +63,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MenuItem menuItem=null;
     private ViewPager viewPager;
     private NavigationView navigationView;
+    private ChatCoreBinder chatCoreBinder;
     private BottomNavigationView bottomNavigationView;
+    private ServiceConnection serviceConnection=new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            chatCoreBinder=(ChatCoreBinder)service;
+            try {
+                chatCoreBinder.startChatService(getApplicationContext(),getWindow().getDecorView().findViewById(android.R.id.content));
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
     private SectionsAdapter sectionsAdapter;
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener=
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -88,22 +116,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             window.setStatusBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_main);
+        Intent startIntent =new Intent(this, CoreService.class);
+        startService(startIntent);
+        bindService(startIntent,serviceConnection,BIND_AUTO_CREATE);
         this.getWindow()
                 .getDecorView()
                 .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         MIUISetStatusBarLightMode(this.getWindow(), true);
         FlymeSetStatusBarLightMode(this.getWindow(), true);
-        SharedPreferences sharedPreferences= this.getApplicationContext().getSharedPreferences("EMOTION_PREFS",MODE_PRIVATE);
-        SharedPreferences.Editor editor=sharedPreferences.edit();
-        if(sharedPreferences.getInt("startCount",-1)==-1){
-            editor.putInt("startCount",1);
-        }else{
-            int startCount=sharedPreferences.getInt("startCount",-1);
-            editor.putInt("startCount",++startCount);
-        }
-
-
        // setPageMainFragment = SetPageMainFragment.getInstance();
        /* fc.addFragment(ralationShipPageMainFragment,"ralationShipFragment");
         fc.addFragment(findPageMainFragment,"findPageMainFragment");

@@ -4,6 +4,8 @@ package com.example.chen1.uncom.bean;
 import android.app.Application;
 import android.content.Context;
 
+import java.security.AccessControlContext;
+
 /**
  * Created by chen1 on 2017/10/2.
  */

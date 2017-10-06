@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.chen1.uncom.R;
+import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.utils.SpanStringUtils;
 
 import java.util.ArrayList;
@@ -20,12 +21,12 @@ import java.util.ArrayList;
 public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonChatRecyclerViewAdapter.ViewHolder> implements  View.OnClickListener{
     private boolean ITEM_TYPE;
     private Context context;
+    private RelationShipLevelBean minor_data;
+
     private LayoutInflater layoutInflater;
     private ArrayList<ChatMessgaeContent> listItem =new ArrayList<ChatMessgaeContent>();
    public PersonChatRecyclerViewAdapter(Context context){
        this.context=context;
-
-
    }
 
     @Override

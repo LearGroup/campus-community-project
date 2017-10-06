@@ -33,14 +33,17 @@ import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.chen1.uncom.FragmentBackHandler;
+import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.expression.GrallyAdapter;
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.relationship.RalationShipPageMainFragment;
 import com.example.chen1.uncom.expression.ChatExpressionTypePageSwitchAdapter;
 import com.example.chen1.uncom.expression.SoftKeyBoardListener;
 import com.example.chen1.uncom.utils.BackHandlerHelper;
+import com.example.chen1.uncom.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,10 +65,12 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     private ViewPager ExpressionViewPager;
     // TODO: Rename and change types of parameters
     private String mParam1;
+    private RelationShipLevelBean frendData;
     private String mParam2;
     private ViewGroup viewGroup;
     private EditText input_text;
     private int KeyBoardHeight;
+    private TextView username;
     private RecyclerView ContentView;
     private PersonChatRecyclerViewAdapter personChatRecyclerViewAdapter;
     private int ExpressionTypeCount;
@@ -234,6 +239,8 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle=getArguments();
+        frendData=(RelationShipLevelBean) bundle.getParcelable("frendData");
     }
 
     private void quitFullScreen() {
@@ -248,7 +255,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         Log.v("PersonChatFramgent:", "onCreateview: ");
-
+        KeyBoardHeight= SharedPreferencesUtil.getSoftInputHeight(getContext());
         // Inflate the layout for this fragment
         final TranslateAnimation mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
@@ -261,6 +268,8 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
         mHiddenAction.setDuration(150);
         quitFullScreen();
         final View view = inflater.inflate(R.layout.fragment_person__chat_, container, false);
+        username=(TextView) view.findViewById(R.id.person_username);
+        username.setText(frendData.getUsername());
         personChatRecyclerViewAdapter = new PersonChatRecyclerViewAdapter(getContext());
         ExpressionViewPager = (ViewPager) view.findViewById(R.id.chat_expression_viewpager);
         ExpressionMenuType = (RecyclerView) view.findViewById(R.id.chat_listmenuitem_view);

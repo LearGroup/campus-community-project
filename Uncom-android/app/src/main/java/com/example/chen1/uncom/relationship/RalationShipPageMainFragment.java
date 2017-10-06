@@ -2,9 +2,11 @@ package com.example.chen1.uncom.relationship;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatImageView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,15 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.example.chen1.uncom.R;
+import com.example.chen1.uncom.bean.BeanDaoManager;
+import com.example.chen1.uncom.bean.RelationShipLevelBean;
+import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
+import com.example.chen1.uncom.bean.UserBeanAndJsonUtils;
+
+import org.greenrobot.greendao.query.Query;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class RalationShipPageMainFragment extends Fragment {
@@ -24,7 +35,7 @@ public class RalationShipPageMainFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private AppCompatImageView headImage;
-
+    private ArrayList<RelationShipLevelBean> personFrendList;
     private ListView group_listView;
     private ListView person_listview;
     private OnFragmentInteractionListener mListener;
@@ -39,6 +50,14 @@ public class RalationShipPageMainFragment extends Fragment {
         return ralationShipPageMainFragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        RelationShipLevelBeanDao relationShipLevelBeanDao= BeanDaoManager.getInstance(getContext()).getNewSession().getRelationShipLevelBeanDao();
+        Query query=relationShipLevelBeanDao.queryBuilder().where(RelationShipLevelBeanDao.Properties.Level.eq(4)).build();
+        personFrendList= (ArrayList<RelationShipLevelBean>) query.list();
+        Log.v("freendlist", String.valueOf(personFrendList));
+    }
 
     public RalationShipPageMainFragment() {
         // Required empty public constructor
@@ -54,10 +73,10 @@ public class RalationShipPageMainFragment extends Fragment {
         group_listView=(ListView) view.findViewById(R.id.group_list_view);
         person_listview=(ListView)view.findViewById(R.id.person_list_view);
         BaseAdapter group_baseAdapter=new group_relation_ship_adapter();
-        BaseAdapter person_baseAdapter=new person_relation_ship_adapter();
+        BaseAdapter person_baseAdapter=new person_relation_ship_adapter(getContext(),personFrendList);
         group_listView.setAdapter(group_baseAdapter);
         person_listview.setAdapter(person_baseAdapter);
-        person_listview.setOnItemClickListener(new Person_Item_OnClickListener());
+        person_listview.setOnItemClickListener(new Person_Item_OnClickListener(personFrendList));
         return view;
     }
 

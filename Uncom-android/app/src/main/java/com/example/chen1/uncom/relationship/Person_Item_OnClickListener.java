@@ -1,20 +1,31 @@
 package com.example.chen1.uncom.relationship;
 
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
 import com.example.chen1.uncom.R;
+import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.chat.Person_Chat_Fragment;
 import com.example.chen1.uncom.relationship.RalationShipPageMainFragment;
+
+import java.util.ArrayList;
 
 /**
  * Created by chen1 on 2017/6/21.
  */
 
 public class Person_Item_OnClickListener implements AdapterView.OnItemClickListener {
+    private ArrayList<RelationShipLevelBean> personFrendList;
+
+    public Person_Item_OnClickListener(ArrayList<RelationShipLevelBean> relationShipLevelBeanArrayList){
+        this.personFrendList=relationShipLevelBeanArrayList;
+    }
+
     /**
      * Callback method to be invoked when an item in this AdapterView has
      * been clicked.
@@ -30,10 +41,14 @@ public class Person_Item_OnClickListener implements AdapterView.OnItemClickListe
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Bundle bundle=new Bundle();
+        Log.v("PersonItemOnclickListener", String.valueOf(personFrendList.get(position)));
+        bundle.putParcelable("frendData",personFrendList.get(position));
+        Person_Chat_Fragment person_chat_fragment =Person_Chat_Fragment.getInstance();
+        person_chat_fragment.setArguments(bundle);
         FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout, Person_Chat_Fragment.getInstance()).commit();
+        fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout,person_chat_fragment).commit();
     }
 }

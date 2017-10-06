@@ -16,7 +16,7 @@ public class UserBean {
 
     private String password;
 
-    private String headerPic;
+    private String header_pic;
 
     private String province;
 
@@ -37,36 +37,36 @@ public class UserBean {
 
     private Integer sex;
 
-    private String createTime;
+    private String create_time;
 
-    private String updateTime;
+    private String update_time;
 
-    private Integer isDelete;
+    private Integer is_delete;
 
-    private String qqNumber;
+    private String qq_number;
 
-    private String wexinNumber;
+    private String wexin_number;
 
 
     private String weibo;
 
-    private String studentId;
+    private String student_id;
 
-    private String studentIdPassword;
+    private String student_id_password;
 
     private Integer age ;
 
-    @Generated(hash = 624161928)
-    public UserBean(String id, String username, String password, String headerPic,
+    @Generated(hash = 1513834423)
+    public UserBean(String id, String username, String password, String header_pic,
             String province, String town, String area, String sprovince,
             String stown, String sarea, String email, String phone, Integer sex,
-            String createTime, String updateTime, Integer isDelete, String qqNumber,
-            String wexinNumber, String weibo, String studentId,
-            String studentIdPassword, Integer age) {
+            String create_time, String update_time, Integer is_delete,
+            String qq_number, String wexin_number, String weibo, String student_id,
+            String student_id_password, Integer age) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.headerPic = headerPic;
+        this.header_pic = header_pic;
         this.province = province;
         this.town = town;
         this.area = area;
@@ -76,14 +76,14 @@ public class UserBean {
         this.email = email;
         this.phone = phone;
         this.sex = sex;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-        this.isDelete = isDelete;
-        this.qqNumber = qqNumber;
-        this.wexinNumber = wexinNumber;
+        this.create_time = create_time;
+        this.update_time = update_time;
+        this.is_delete = is_delete;
+        this.qq_number = qq_number;
+        this.wexin_number = wexin_number;
         this.weibo = weibo;
-        this.studentId = studentId;
-        this.studentIdPassword = studentIdPassword;
+        this.student_id = student_id;
+        this.student_id_password = student_id_password;
         this.age = age;
     }
 
@@ -115,12 +115,12 @@ public class UserBean {
         this.password = password;
     }
 
-    public String getHeaderPic() {
-        return this.headerPic;
+    public String getHeader_pic() {
+        return this.header_pic;
     }
 
-    public void setHeaderPic(String headerPic) {
-        this.headerPic = headerPic;
+    public void setHeader_pic(String header_pic) {
+        this.header_pic = header_pic;
     }
 
     public String getProvince() {
@@ -195,44 +195,44 @@ public class UserBean {
         this.sex = sex;
     }
 
-    public String getCreateTime() {
-        return this.createTime;
+    public String getCreate_time() {
+        return this.create_time;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
     }
 
-    public String getUpdateTime() {
-        return this.updateTime;
+    public String getUpdate_time() {
+        return this.update_time;
     }
 
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdate_time(String update_time) {
+        this.update_time = update_time;
     }
 
-    public Integer getIsDelete() {
-        return this.isDelete;
+    public Integer getIs_delete() {
+        return this.is_delete;
     }
 
-    public void setIsDelete(Integer isDelete) {
-        this.isDelete = isDelete;
+    public void setIs_delete(Integer is_delete) {
+        this.is_delete = is_delete;
     }
 
-    public String getQqNumber() {
-        return this.qqNumber;
+    public String getQq_number() {
+        return this.qq_number;
     }
 
-    public void setQqNumber(String qqNumber) {
-        this.qqNumber = qqNumber;
+    public void setQq_number(String qq_number) {
+        this.qq_number = qq_number;
     }
 
-    public String getWexinNumber() {
-        return this.wexinNumber;
+    public String getWexin_number() {
+        return this.wexin_number;
     }
 
-    public void setWexinNumber(String wexinNumber) {
-        this.wexinNumber = wexinNumber;
+    public void setWexin_number(String wexin_number) {
+        this.wexin_number = wexin_number;
     }
 
     public String getWeibo() {
@@ -243,20 +243,20 @@ public class UserBean {
         this.weibo = weibo;
     }
 
-    public String getStudentId() {
-        return this.studentId;
+    public String getStudent_id() {
+        return this.student_id;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public void setStudent_id(String student_id) {
+        this.student_id = student_id;
     }
 
-    public String getStudentIdPassword() {
-        return this.studentIdPassword;
+    public String getStudent_id_password() {
+        return this.student_id_password;
     }
 
-    public void setStudentIdPassword(String studentIdPassword) {
-        this.studentIdPassword = studentIdPassword;
+    public void setStudent_id_password(String student_id_password) {
+        this.student_id_password = student_id_password;
     }
 
     public Integer getAge() {

@@ -1,13 +1,16 @@
 package com.example.chen1.uncom.access;
 
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,11 +30,16 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.chen1.uncom.R;
+import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.BeanDaoManager;
 import com.example.chen1.uncom.bean.UserBean;
 import com.example.chen1.uncom.bean.UserBeanAndJsonUtils;
 import com.example.chen1.uncom.bean.UserBeanDao;
+import com.example.chen1.uncom.chat.ChatUserDataUtil;
+import com.example.chen1.uncom.expression.SoftKeyBoardListener;
 import com.example.chen1.uncom.main.MainActivity;
+import com.example.chen1.uncom.utils.PopupWindowUtils;
+import com.example.chen1.uncom.utils.SessionStoreJsonRequest;
 import com.example.chen1.uncom.utils.SharedPreferencesUtil;
 
 import org.json.JSONException;
@@ -70,6 +78,7 @@ public class LoginPageFragment extends Fragment {
 
 
     public LoginPageFragment() {
+
         // Required empty public constructor
     }
 
@@ -91,45 +100,74 @@ public class LoginPageFragment extends Fragment {
         return fragment;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private int getSoftButtonsBarHeight() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        //这个方法获取可能不是真实屏幕的高度
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int usableHeight = metrics.heightPixels;
+        //获取当前屏幕的真实高度
+        getActivity().getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+        int realHeight = metrics.heightPixels;
+        if (realHeight > usableHeight) {
+            return realHeight - usableHeight;
+        } else {
+            return 0;
+        }
+    }
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestQueue = Volley.newRequestQueue(getContext());
         String id=SharedPreferencesUtil.getUserId(getContext());
+        SoftKeyBoardListener.setListener(getActivity(), new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
+            @Override
+            public void keyBoardShow(int height) {
+                Rect r = new Rect();
+                /**
+                 * decorView是window中的最顶层view，可以从window中通过getDecorView获取到decorView。
+                 * 通过decorView获取到程序显示的区域，包括标题栏，但不包括状态栏。
+                 */
+                getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
+                //获取屏幕的高度
+                int screenHeight = getActivity().getWindow().getDecorView().getRootView().getHeight();
+                //计算软件盘的高度
+                int softInputHeight = screenHeight - r.bottom;
+                /**
+                 * 某些Android版本下，没有显示软键盘时减出来的高度总是144，而不是零，
+                 * 这是因为高度是包括了虚拟按键栏的(例如华为系列)，所以在API Level高于20时，
+                 * 我们需要减去底部虚拟按键栏的高度（如果有的话）
+                 */
+                if (Build.VERSION.SDK_INT >= 20) {
+                    // When SDK Level >= 20 (Android L), the softInputHeight will contain the height of softButtonsBar (if has)
+                    softInputHeight = softInputHeight - getSoftButtonsBarHeight();
+                }
+                if (softInputHeight < 0) {
+
+                }
+                //存一份到本地
+                if (softInputHeight > 0) {
+                    SharedPreferencesUtil.setSoftInputHeight(softInputHeight+105,getContext());
+                }
+
+            }
+
+            @Override
+            public void keyBoardHide(int height) {
+            /*    KeyBoardHeight=height;*/
+
+
+            }
+        });
         if(id!=""){
             jumpToMainActivity();
         }
+
     }
 
-    private PopupWindow popupWindow(String str,int layout,int width,int height,int timers) {
-        View view = LayoutInflater.from(getContext()).inflate(layout, null);
-        final PopupWindow menu = new PopupWindow(view, width, height);
-        if(str!=null){
-            TextView textview = (TextView) view.findViewById(R.id.popup_win_textview);
-            textview.setText(str);
-            menu.setAnimationStyle(R.style.popwin_anim_style);
-        }
-        // PopupWindow定义，显示view，以及初始化长和宽
-        // 显示在某个位置
-        menu.showAtLocation(rootView, Gravity.TOP, 0, 0);
-        if(timers==-1){
-            return menu;
-        }else{
-            CountDownTimer timer = new CountDownTimer(1500, 10) {
-                @Override
-                public void onTick(long millisUntilFinished) {
 
-                }
-
-                @Override
-                public void onFinish() {
-                    menu.dismiss();
-                }
-            };
-            timer.start();
-        }
-        return null;
-    }
 
 
     private void attemptLogin() throws AuthFailureError {
@@ -141,14 +179,14 @@ public class LoginPageFragment extends Fragment {
         Log.v("user_name:", String.valueOf(userTextView.getText().length()));
         Log.v("user_password:", user_password);
         if (user_name.length() == 0) {
-            popupWindow("请输入账号",R.layout.access_popupwindow_statustag_layout, LinearLayout.LayoutParams.MATCH_PARENT,150,1500);
+            PopupWindowUtils.popupWindow("请输入账号",R.layout.access_popupwindow_statustag_layout, LinearLayout.LayoutParams.MATCH_PARENT,150,1500,getContext(),rootView);
             userTextView.setFocusable(true);
             userTextView.setFocusableInTouchMode(true);
             userTextView.requestFocus();
             userTextView.findFocus();
             imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         } else if (user_password.length() == 0) {
-            popupWindow("请输入密码",R.layout.access_popupwindow_statustag_layout, LinearLayout.LayoutParams.MATCH_PARENT,150,1500);
+            PopupWindowUtils.popupWindow("请输入密码",R.layout.access_popupwindow_statustag_layout, LinearLayout.LayoutParams.MATCH_PARENT,150,1500,getContext(),rootView);
             passwordTextView.setFocusable(true);
             passwordTextView.setFocusableInTouchMode(true);
             passwordTextView.requestFocus();
@@ -163,10 +201,10 @@ public class LoginPageFragment extends Fragment {
 			user: $("#login_input_username").val(),
 			password: $("#login_input_password").val()
 			*/
-            final PopupWindow popwin= popupWindow(null,R.layout.access_popupwindow_loginwaiting_layout, LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT,-1);
+            final PopupWindow popwin= PopupWindowUtils.popupWindow(null,R.layout.access_popupwindow_loginwaiting_layout, LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT,-1,getContext(),rootView);
             //传一个参数，user=zhangqi
 
-            CountDownTimer timer = new CountDownTimer(1000, 10) {
+            CountDownTimer timer = new CountDownTimer(600, 10) {
                 @Override
                 public void onTick(long millisUntilFinished) {
 
@@ -175,24 +213,25 @@ public class LoginPageFragment extends Fragment {
                 public void onFinish() {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("use", "phone");
-                    map.put("user", user_name);
+                    map.put("username", user_name);
                     map.put("password", user_password);
                     JSONObject params = new JSONObject(map);
                     Log.v("json", String.valueOf(params));
-                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("http://10.0.2.2:8080/Uncom/login_Login.action",
+                    SessionStoreJsonRequest sessionStoreJsonRequest = new SessionStoreJsonRequest("http://10.0.2.2:8081/login",
                             params, new Response.Listener<JSONObject>() {
 
                         @Override
                         public void onResponse(JSONObject response) {
+                            Log.v("response", String.valueOf(response));
                             try {
                                 String status= response.getString("status");
                                 popwin.dismiss();
-                                if(status=="1"){
+                                if(status.equals("1")){
                                     Log.v("resopnse", String.valueOf(response));
                                     Log.v("resopnse", String.valueOf(response.getJSONObject("results").get("id")));
                                     UserBeanDao userBeanDao =BeanDaoManager.getInstance(getContext()).getNewSession().getUserBeanDao();
                                     UserBean userBean=userBeanDao.queryBuilder().where(UserBeanDao.Properties.Id.eq(response.getJSONObject("results").get("id"))).build().unique();
-                                    Log.v("resopnse", String.valueOf(userBean));
+                                    Log.v("resop nse", String.valueOf(userBean));
                                     if(userBean==null){
                                         userBean= UserBeanAndJsonUtils.getUserBean(response.getJSONObject("results"));
                                                userBeanDao.insert(userBean);
@@ -201,9 +240,23 @@ public class LoginPageFragment extends Fragment {
                                         userBeanDao.update(userBean);
                                     }
                                     SharedPreferencesUtil.setUserId((String) response.getJSONObject("results").get("id"),getContext());
-                                    jumpToMainActivity();
+                                    ChatUserDataUtil.getFriendList( CoreApplication.newInstance().getRequestQueue(),getContext(),rootView);
+                                    final PopupWindow popupWindows=PopupWindowUtils.popupWindow("正在加载资源...",R.layout.access_popupwindow_statustag_layout, LinearLayout.LayoutParams.MATCH_PARENT,150,1500,getContext(),rootView);
+                                    CountDownTimer timer = new CountDownTimer(1000,10) {
+                                        @Override
+                                        public void onTick(long millisUntilFinished) {
+
+                                        }
+
+                                        @Override
+                                        public void onFinish() {
+                                            jumpToMainActivity();
+                                        }
+                                    };
+                                    timer.start();
+
                                 }else{
-                                    popupWindow("账号密码错误",R.layout.access_popupwindow_statustag_layout, LinearLayout.LayoutParams.MATCH_PARENT,150,1500);
+                                    PopupWindowUtils.popupWindow("账号密码错误",R.layout.access_popupwindow_statustag_layout, LinearLayout.LayoutParams.MATCH_PARENT,150,1500,getContext(),rootView);
                                     passwordTextView.setFocusable(true);
                                     passwordTextView.setText(null,true);
                                     passwordTextView.setFocusableInTouchMode(true);
@@ -220,11 +273,13 @@ public class LoginPageFragment extends Fragment {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("LOGIN-ERROR", error.getMessage(), error);
-                            byte[] htmlBodyBytes = error.networkResponse.data;
-                            Log.e("LOGIN-ERROR", new String(htmlBodyBytes), error);
+                            popwin.dismiss();
+                            PopupWindowUtils.popupWindow("网络错误",R.layout.access_popupwindow_statustag_layout, LinearLayout.LayoutParams.MATCH_PARENT,150,1500,getContext(),rootView);
+
                         }
                     });
-                    requestQueue.add(jsonObjectRequest);
+                   // jumpToMainActivity();
+                    CoreApplication.newInstance().getRequestQueue().add(sessionStoreJsonRequest);
                 }
             };
             timer.start();

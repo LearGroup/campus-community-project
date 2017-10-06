@@ -22,4 +22,19 @@ public class SharedPreferencesUtil {
         editor.putString("user_id",id);
         editor.commit();
     }
+
+    public static void setSoftInputHeight(int height ,Context context){
+        SharedPreferences sharedPreferences =context.getSharedPreferences("user_info", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor =sharedPreferences.edit();
+        editor.putInt("soft_input_height",height);
+        editor.commit();
+    }
+
+    public static int getSoftInputHeight(Context context){
+        SharedPreferences sharedPreferences =context.getSharedPreferences("user_info", Context.MODE_PRIVATE);
+        int Id =sharedPreferences.getInt("soft_input_height",0);
+        return Id;
+    }
+
+
 }

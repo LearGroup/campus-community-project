@@ -25,7 +25,7 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
         public final static Property Id = new Property(0, String.class, "id", true, "ID");
         public final static Property Username = new Property(1, String.class, "username", false, "USERNAME");
         public final static Property Password = new Property(2, String.class, "password", false, "PASSWORD");
-        public final static Property HeaderPic = new Property(3, String.class, "headerPic", false, "HEADER_PIC");
+        public final static Property Header_pic = new Property(3, String.class, "header_pic", false, "HEADER_PIC");
         public final static Property Province = new Property(4, String.class, "province", false, "PROVINCE");
         public final static Property Town = new Property(5, String.class, "town", false, "TOWN");
         public final static Property Area = new Property(6, String.class, "area", false, "AREA");
@@ -35,14 +35,14 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
         public final static Property Email = new Property(10, String.class, "email", false, "EMAIL");
         public final static Property Phone = new Property(11, String.class, "phone", false, "PHONE");
         public final static Property Sex = new Property(12, Integer.class, "sex", false, "SEX");
-        public final static Property CreateTime = new Property(13, String.class, "createTime", false, "CREATE_TIME");
-        public final static Property UpdateTime = new Property(14, String.class, "updateTime", false, "UPDATE_TIME");
-        public final static Property IsDelete = new Property(15, Integer.class, "isDelete", false, "IS_DELETE");
-        public final static Property QqNumber = new Property(16, String.class, "qqNumber", false, "QQ_NUMBER");
-        public final static Property WexinNumber = new Property(17, String.class, "wexinNumber", false, "WEXIN_NUMBER");
+        public final static Property Create_time = new Property(13, String.class, "create_time", false, "CREATE_TIME");
+        public final static Property Update_time = new Property(14, String.class, "update_time", false, "UPDATE_TIME");
+        public final static Property Is_delete = new Property(15, Integer.class, "is_delete", false, "IS_DELETE");
+        public final static Property Qq_number = new Property(16, String.class, "qq_number", false, "QQ_NUMBER");
+        public final static Property Wexin_number = new Property(17, String.class, "wexin_number", false, "WEXIN_NUMBER");
         public final static Property Weibo = new Property(18, String.class, "weibo", false, "WEIBO");
-        public final static Property StudentId = new Property(19, String.class, "studentId", false, "STUDENT_ID");
-        public final static Property StudentIdPassword = new Property(20, String.class, "studentIdPassword", false, "STUDENT_ID_PASSWORD");
+        public final static Property Student_id = new Property(19, String.class, "student_id", false, "STUDENT_ID");
+        public final static Property Student_id_password = new Property(20, String.class, "student_id_password", false, "STUDENT_ID_PASSWORD");
         public final static Property Age = new Property(21, Integer.class, "age", false, "AGE");
     }
 
@@ -62,7 +62,7 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
                 "\"ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: id
                 "\"USERNAME\" TEXT," + // 1: username
                 "\"PASSWORD\" TEXT," + // 2: password
-                "\"HEADER_PIC\" TEXT," + // 3: headerPic
+                "\"HEADER_PIC\" TEXT," + // 3: header_pic
                 "\"PROVINCE\" TEXT," + // 4: province
                 "\"TOWN\" TEXT," + // 5: town
                 "\"AREA\" TEXT," + // 6: area
@@ -72,14 +72,14 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
                 "\"EMAIL\" TEXT," + // 10: email
                 "\"PHONE\" TEXT," + // 11: phone
                 "\"SEX\" INTEGER," + // 12: sex
-                "\"CREATE_TIME\" TEXT," + // 13: createTime
-                "\"UPDATE_TIME\" TEXT," + // 14: updateTime
-                "\"IS_DELETE\" INTEGER," + // 15: isDelete
-                "\"QQ_NUMBER\" TEXT," + // 16: qqNumber
-                "\"WEXIN_NUMBER\" TEXT," + // 17: wexinNumber
+                "\"CREATE_TIME\" TEXT," + // 13: create_time
+                "\"UPDATE_TIME\" TEXT," + // 14: update_time
+                "\"IS_DELETE\" INTEGER," + // 15: is_delete
+                "\"QQ_NUMBER\" TEXT," + // 16: qq_number
+                "\"WEXIN_NUMBER\" TEXT," + // 17: wexin_number
                 "\"WEIBO\" TEXT," + // 18: weibo
-                "\"STUDENT_ID\" TEXT," + // 19: studentId
-                "\"STUDENT_ID_PASSWORD\" TEXT," + // 20: studentIdPassword
+                "\"STUDENT_ID\" TEXT," + // 19: student_id
+                "\"STUDENT_ID_PASSWORD\" TEXT," + // 20: student_id_password
                 "\"AGE\" INTEGER);"); // 21: age
     }
 
@@ -108,9 +108,9 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
             stmt.bindString(3, password);
         }
  
-        String headerPic = entity.getHeaderPic();
-        if (headerPic != null) {
-            stmt.bindString(4, headerPic);
+        String header_pic = entity.getHeader_pic();
+        if (header_pic != null) {
+            stmt.bindString(4, header_pic);
         }
  
         String province = entity.getProvince();
@@ -158,29 +158,29 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
             stmt.bindLong(13, sex);
         }
  
-        String createTime = entity.getCreateTime();
-        if (createTime != null) {
-            stmt.bindString(14, createTime);
+        String create_time = entity.getCreate_time();
+        if (create_time != null) {
+            stmt.bindString(14, create_time);
         }
  
-        String updateTime = entity.getUpdateTime();
-        if (updateTime != null) {
-            stmt.bindString(15, updateTime);
+        String update_time = entity.getUpdate_time();
+        if (update_time != null) {
+            stmt.bindString(15, update_time);
         }
  
-        Integer isDelete = entity.getIsDelete();
-        if (isDelete != null) {
-            stmt.bindLong(16, isDelete);
+        Integer is_delete = entity.getIs_delete();
+        if (is_delete != null) {
+            stmt.bindLong(16, is_delete);
         }
  
-        String qqNumber = entity.getQqNumber();
-        if (qqNumber != null) {
-            stmt.bindString(17, qqNumber);
+        String qq_number = entity.getQq_number();
+        if (qq_number != null) {
+            stmt.bindString(17, qq_number);
         }
  
-        String wexinNumber = entity.getWexinNumber();
-        if (wexinNumber != null) {
-            stmt.bindString(18, wexinNumber);
+        String wexin_number = entity.getWexin_number();
+        if (wexin_number != null) {
+            stmt.bindString(18, wexin_number);
         }
  
         String weibo = entity.getWeibo();
@@ -188,14 +188,14 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
             stmt.bindString(19, weibo);
         }
  
-        String studentId = entity.getStudentId();
-        if (studentId != null) {
-            stmt.bindString(20, studentId);
+        String student_id = entity.getStudent_id();
+        if (student_id != null) {
+            stmt.bindString(20, student_id);
         }
  
-        String studentIdPassword = entity.getStudentIdPassword();
-        if (studentIdPassword != null) {
-            stmt.bindString(21, studentIdPassword);
+        String student_id_password = entity.getStudent_id_password();
+        if (student_id_password != null) {
+            stmt.bindString(21, student_id_password);
         }
  
         Integer age = entity.getAge();
@@ -223,9 +223,9 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
             stmt.bindString(3, password);
         }
  
-        String headerPic = entity.getHeaderPic();
-        if (headerPic != null) {
-            stmt.bindString(4, headerPic);
+        String header_pic = entity.getHeader_pic();
+        if (header_pic != null) {
+            stmt.bindString(4, header_pic);
         }
  
         String province = entity.getProvince();
@@ -273,29 +273,29 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
             stmt.bindLong(13, sex);
         }
  
-        String createTime = entity.getCreateTime();
-        if (createTime != null) {
-            stmt.bindString(14, createTime);
+        String create_time = entity.getCreate_time();
+        if (create_time != null) {
+            stmt.bindString(14, create_time);
         }
  
-        String updateTime = entity.getUpdateTime();
-        if (updateTime != null) {
-            stmt.bindString(15, updateTime);
+        String update_time = entity.getUpdate_time();
+        if (update_time != null) {
+            stmt.bindString(15, update_time);
         }
  
-        Integer isDelete = entity.getIsDelete();
-        if (isDelete != null) {
-            stmt.bindLong(16, isDelete);
+        Integer is_delete = entity.getIs_delete();
+        if (is_delete != null) {
+            stmt.bindLong(16, is_delete);
         }
  
-        String qqNumber = entity.getQqNumber();
-        if (qqNumber != null) {
-            stmt.bindString(17, qqNumber);
+        String qq_number = entity.getQq_number();
+        if (qq_number != null) {
+            stmt.bindString(17, qq_number);
         }
  
-        String wexinNumber = entity.getWexinNumber();
-        if (wexinNumber != null) {
-            stmt.bindString(18, wexinNumber);
+        String wexin_number = entity.getWexin_number();
+        if (wexin_number != null) {
+            stmt.bindString(18, wexin_number);
         }
  
         String weibo = entity.getWeibo();
@@ -303,14 +303,14 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
             stmt.bindString(19, weibo);
         }
  
-        String studentId = entity.getStudentId();
-        if (studentId != null) {
-            stmt.bindString(20, studentId);
+        String student_id = entity.getStudent_id();
+        if (student_id != null) {
+            stmt.bindString(20, student_id);
         }
  
-        String studentIdPassword = entity.getStudentIdPassword();
-        if (studentIdPassword != null) {
-            stmt.bindString(21, studentIdPassword);
+        String student_id_password = entity.getStudent_id_password();
+        if (student_id_password != null) {
+            stmt.bindString(21, student_id_password);
         }
  
         Integer age = entity.getAge();
@@ -330,7 +330,7 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
             cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // username
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // password
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // headerPic
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // header_pic
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // province
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // town
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // area
@@ -340,14 +340,14 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
             cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // email
             cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // phone
             cursor.isNull(offset + 12) ? null : cursor.getInt(offset + 12), // sex
-            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // createTime
-            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // updateTime
-            cursor.isNull(offset + 15) ? null : cursor.getInt(offset + 15), // isDelete
-            cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16), // qqNumber
-            cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17), // wexinNumber
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // create_time
+            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // update_time
+            cursor.isNull(offset + 15) ? null : cursor.getInt(offset + 15), // is_delete
+            cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16), // qq_number
+            cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17), // wexin_number
             cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18), // weibo
-            cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19), // studentId
-            cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20), // studentIdPassword
+            cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19), // student_id
+            cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20), // student_id_password
             cursor.isNull(offset + 21) ? null : cursor.getInt(offset + 21) // age
         );
         return entity;
@@ -358,7 +358,7 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
         entity.setUsername(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setPassword(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setHeaderPic(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setHeader_pic(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setProvince(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setTown(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setArea(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
@@ -368,14 +368,14 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
         entity.setEmail(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
         entity.setPhone(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
         entity.setSex(cursor.isNull(offset + 12) ? null : cursor.getInt(offset + 12));
-        entity.setCreateTime(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
-        entity.setUpdateTime(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
-        entity.setIsDelete(cursor.isNull(offset + 15) ? null : cursor.getInt(offset + 15));
-        entity.setQqNumber(cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16));
-        entity.setWexinNumber(cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17));
+        entity.setCreate_time(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setUpdate_time(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
+        entity.setIs_delete(cursor.isNull(offset + 15) ? null : cursor.getInt(offset + 15));
+        entity.setQq_number(cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16));
+        entity.setWexin_number(cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17));
         entity.setWeibo(cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18));
-        entity.setStudentId(cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19));
-        entity.setStudentIdPassword(cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20));
+        entity.setStudent_id(cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19));
+        entity.setStudent_id_password(cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20));
         entity.setAge(cursor.isNull(offset + 21) ? null : cursor.getInt(offset + 21));
      }
     
