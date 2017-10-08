@@ -12,7 +12,6 @@ import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,19 +20,16 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.BeanDaoManager;
 import com.example.chen1.uncom.bean.UserBean;
-import com.example.chen1.uncom.bean.UserBeanAndJsonUtils;
+import com.example.chen1.uncom.utils.UserBeanAndJsonUtils;
 import com.example.chen1.uncom.bean.UserBeanDao;
 import com.example.chen1.uncom.chat.ChatUserDataUtil;
 import com.example.chen1.uncom.expression.SoftKeyBoardListener;
@@ -229,7 +225,7 @@ public class LoginPageFragment extends Fragment {
                                 if(status.equals("1")){
                                     Log.v("resopnse", String.valueOf(response));
                                     Log.v("resopnse", String.valueOf(response.getJSONObject("results").get("id")));
-                                    UserBeanDao userBeanDao =BeanDaoManager.getInstance(getContext()).getNewSession().getUserBeanDao();
+                                    UserBeanDao userBeanDao =BeanDaoManager.getInstance().getNewSession().getUserBeanDao();
                                     UserBean userBean=userBeanDao.queryBuilder().where(UserBeanDao.Properties.Id.eq(response.getJSONObject("results").get("id"))).build().unique();
                                     Log.v("resop nse", String.valueOf(userBean));
                                     if(userBean==null){

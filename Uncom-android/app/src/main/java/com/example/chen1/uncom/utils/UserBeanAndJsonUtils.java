@@ -1,8 +1,10 @@
-package com.example.chen1.uncom.bean;
+package com.example.chen1.uncom.utils;
 
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.example.chen1.uncom.bean.RelationShipLevelBean;
+import com.example.chen1.uncom.bean.UserBean;
 
 import org.json.JSONArray;
 import org.json.JSONException;

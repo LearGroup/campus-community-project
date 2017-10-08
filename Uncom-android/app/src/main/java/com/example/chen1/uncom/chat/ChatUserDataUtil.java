@@ -12,8 +12,7 @@ import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.bean.BeanDaoManager;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
-import com.example.chen1.uncom.bean.UserBeanAndJsonUtils;
-import com.example.chen1.uncom.bean.UserBeanDao;
+import com.example.chen1.uncom.utils.UserBeanAndJsonUtils;
 import com.example.chen1.uncom.utils.PopupWindowUtils;
 import com.example.chen1.uncom.utils.SessionStoreJsonRequest;
 
@@ -40,9 +39,11 @@ public class ChatUserDataUtil {
         SessionStoreJsonRequest sessionStoreJsonRequest =new SessionStoreJsonRequest("http://10.0.2.2:8081/getFrendList",params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                RelationShipLevelBeanDao relationShipLevelBeanDao=BeanDaoManager.getInstance(context).getNewSession().getRelationShipLevelBeanDao();
+                Log.v("getFrendListResponse0", String.valueOf(response));
+                RelationShipLevelBeanDao relationShipLevelBeanDao=BeanDaoManager.getInstance().getDaoSession().getRelationShipLevelBeanDao();
                 try {
                     ArrayList<RelationShipLevelBean> Array= UserBeanAndJsonUtils.getRelationShipLevelBean(response.getJSONArray("results"));
+                    Log.v("ArraySize", String.valueOf(Array.size()));
                     if(Array.size()>0){
                         for (int i = 0; i <Array.size() ; i++) {
                             RelationShipLevelBean bean=relationShipLevelBeanDao.queryBuilder().where(RelationShipLevelBeanDao.Properties.Id.eq(Array.get(i).getId())).build().unique();

@@ -47,7 +47,6 @@ public class UserBean {
 
     private String wexin_number;
 
-
     private String weibo;
 
     private String student_id;

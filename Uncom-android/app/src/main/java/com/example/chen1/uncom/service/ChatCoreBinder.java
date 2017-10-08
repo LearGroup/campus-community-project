@@ -14,18 +14,14 @@ import io.socket.client.Socket;
  */
 
 public class ChatCoreBinder extends Binder {
-    private View rootView;
-    private Context context;
-    public void startChatService(Context context,View rootView) throws URISyntaxException {
-        this.context=context;
-        this.rootView=rootView;
+
+    private CoreService coreService;
+    public  ChatCoreBinder(CoreService coreService){
+        this.coreService=coreService;
     }
 
-    public Context getContext(){
-        return  context;
+    public CoreService getCoreService() throws URISyntaxException {
+        return coreService;
     }
 
-    public View getRootView(){
-        return rootView;
-    }
 }

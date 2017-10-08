@@ -37,7 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="43dp"
             android:id="@+id/linearLayout">
-
                     <android.support.v7.widget.RecyclerView
                         android:paddingBottom="5dp"
                         android:layout_gravity="bottom"
@@ -45,8 +44,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="43dp">
                     </android.support.v7.widget.RecyclerView>
-
-
 
         </LinearLayout>
     </RelativeLayout>

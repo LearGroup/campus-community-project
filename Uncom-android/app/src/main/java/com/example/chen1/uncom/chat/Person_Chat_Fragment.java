@@ -3,9 +3,12 @@ package com.example.chen1.uncom.chat;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -36,18 +39,35 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.chen1.uncom.FragmentBackHandler;
+import com.example.chen1.uncom.application.CoreApplication;
+import com.example.chen1.uncom.bean.BeanDaoManager;
+import com.example.chen1.uncom.bean.MessageHistoryBean;
+import com.example.chen1.uncom.bean.MessageHistoryBeanDao;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
+import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
+import com.example.chen1.uncom.bean.UserBean;
+import com.example.chen1.uncom.bean.UserBeanDao;
 import com.example.chen1.uncom.expression.GrallyAdapter;
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.relationship.RalationShipPageMainFragment;
 import com.example.chen1.uncom.expression.ChatExpressionTypePageSwitchAdapter;
 import com.example.chen1.uncom.expression.SoftKeyBoardListener;
 import com.example.chen1.uncom.utils.BackHandlerHelper;
+import com.example.chen1.uncom.utils.KeybordUtil;
 import com.example.chen1.uncom.utils.SharedPreferencesUtil;
 
+import org.greenrobot.greendao.query.Query;
+import org.greenrobot.greendao.query.QueryBuilder;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class Person_Chat_Fragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener, FragmentBackHandler {
@@ -59,10 +79,12 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     private int IniteFragment = 0;
     private AppCompatButton send_btn;
     private SharedPreferences sp;
+    private String user_id;
     private static final String SHARE_PREFERENCE_NAME = "EmotionKeyboard";
     private static final String SHARE_PREFERENCE_SOFT_INPUT_HEIGHT = "soft_input_height";
     private int ContentViewHeight;
     private ViewPager ExpressionViewPager;
+    private Handler getChatDataHandler;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private RelationShipLevelBean frendData;
@@ -75,12 +97,15 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     private PersonChatRecyclerViewAdapter personChatRecyclerViewAdapter;
     private int ExpressionTypeCount;
     private InputMethodManager mInputManager;
+    private MessageHistoryBeanDao messageHistoryBeanDao;
     private List<Integer> list = new ArrayList<>();
     private RecyclerView ExpressionMenuType;
     private AppCompatImageView chat_more_icon;
     private AppCompatImageView ExpressionBtn;
+    private  ArrayList<MessageHistoryBean> messgaeContents=null;
     private int ExpressionBtnStatus = 0;
     private LinearLayout ExpressionLinearLayout;
+
 
     public Person_Chat_Fragment() {
         // Required empty public constructor
@@ -240,7 +265,71 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle=getArguments();
+        user_id=SharedPreferencesUtil.getUserId(getContext());
         frendData=(RelationShipLevelBean) bundle.getParcelable("frendData");
+        messageHistoryBeanDao = BeanDaoManager.getInstance().getDaoSession().getMessageHistoryBeanDao();
+
+        QueryBuilder queryBuilder=messageHistoryBeanDao.queryBuilder();
+/*  queryBuilder.or(MessageHistoryBeanDao.Properties.OwnId.eq(frendData.getMinor_user()),
+                        queryBuilder.and( MessageHistoryBeanDao.Properties.OwnId.eq(user_id),
+                                MessageHistoryBeanDao.Properties.TargetId.eq(user_id))))*/
+//查询聊天对象对我发送的历史记录
+/* queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(frendData.getMinor_user()),
+                        MessageHistoryBeanDao.Properties.TargetId.eq(user_id))*/
+        Query query=queryBuilder.where(
+queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_id),
+        MessageHistoryBeanDao.Properties.TargetId.eq(frendData.getMinor_user())),queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(frendData.getMinor_user()),
+        MessageHistoryBeanDao.Properties.TargetId.eq(user_id)))).
+                orderDesc(MessageHistoryBeanDao.Properties.Time).limit(10).offset(0).build();
+
+              /*  queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_id),
+                        MessageHistoryBeanDao.Properties.TargetId.eq(frendData.getMinor_user()))).
+                orderDesc(MessageHistoryBeanDao.Properties.Time).limit(10).offset(0).build();*/
+
+        /*
+        Query query=messageHistoryBeanDao.queryBuilder().where(MessageHistoryBeanDao.Properties.OwnId.eq(frendData.getId())).orderDesc(MessageHistoryBeanDao.Properties.Time).limit(10).offset(0).build();
+   */   if(query!=null){
+
+            ArrayList<MessageHistoryBean>temp=(ArrayList<MessageHistoryBean>) query.list();
+            messgaeContents=new ArrayList<>();
+            Log.v("query", String.valueOf(query));
+            if(temp!=null){
+                for (int i = 0; i < temp.size(); i++) {
+                    Log.v("temp",temp.get(temp.size()-i-1).getContent());
+                    messgaeContents.add(i,temp.get(temp.size()-i-1));
+                }
+            }
+            }
+
+        getChatDataHandler=new Handler(){
+            //接收消息
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 0:
+                        JSONObject object=(JSONObject) msg.obj;
+                        try {
+                            //MessageHistoryBean item2= new MessageHistoryBean(frendData.getId(),str,new Date().toString(),true);
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            String d = format.format(object.getLong("time"));
+                            Date date=format.parse(d);
+                            Log.v("time", String.valueOf(date));
+                            personChatRecyclerViewAdapter.add(new MessageHistoryBean(null,object.getString("ownId"),user_id,object.getString("content"),date,false),1,messageHistoryBeanDao);
+                            ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+            }
+        };
+        CoreApplication.newInstance().setGetChatDataHandler(getChatDataHandler);
+        CoreApplication.newInstance().getCoreService().setGetChatDataHandler(getChatDataHandler);
     }
 
     private void quitFullScreen() {
@@ -267,10 +356,11 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
                 -1.0f);
         mHiddenAction.setDuration(150);
         quitFullScreen();
+
         final View view = inflater.inflate(R.layout.fragment_person__chat_, container, false);
         username=(TextView) view.findViewById(R.id.person_username);
         username.setText(frendData.getUsername());
-        personChatRecyclerViewAdapter = new PersonChatRecyclerViewAdapter(getContext());
+        personChatRecyclerViewAdapter = new PersonChatRecyclerViewAdapter(getContext(),frendData);
         ExpressionViewPager = (ViewPager) view.findViewById(R.id.chat_expression_viewpager);
         ExpressionMenuType = (RecyclerView) view.findViewById(R.id.chat_listmenuitem_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
@@ -293,19 +383,30 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
         ExpressionLinearLayout = (LinearLayout) view.findViewById(R.id.Expression_LinearLayout);
         ExpressionBtn = (AppCompatImageView) view.findViewById(R.id.appCompatImageView5);
         back_icon = (AppCompatImageView) view.findViewById(R.id.person_chat_back_icon);
+        if(messgaeContents!=null && messgaeContents.size()>0){
+            personChatRecyclerViewAdapter.setListItem(messgaeContents);
+            ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
+        }
         send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String str=input_text.getText().toString();
-                ChatMessgaeContent item2= new ChatMessgaeContent(str,new Date(),R.drawable.head_img,true);
-                personChatRecyclerViewAdapter.add(item2,1);
+                /*str,new Date().toString(),R.drawable.head_img,true*/
+               MessageHistoryBean item2= new MessageHistoryBean(null,user_id,frendData.getMinor_user(),str,new Date(),true);
+               personChatRecyclerViewAdapter.add(item2,1,messageHistoryBeanDao);
                 ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
+                Message message=new Message();
+                message.obj=item2;
+                CoreApplication.newInstance().getCoreService().getSendChatHandler().sendMessage(message);
                 input_text.setText(null);
             }
         });
         back_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                //得到InputMethodManager的实例
+                KeybordUtil.closeKeybord(input_text,getContext());
                 FragmentManager fragmentManager = RalationShipPageMainFragment.getInstance().getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
@@ -424,17 +525,14 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
         GrallyAdapter grallyAdapter = new GrallyAdapter(view.getContext());
         ExpressionViewPager.setAdapter(new ChatExpressionTypePageSwitchAdapter(getChildFragmentManager(), list));
         ExpressionViewPager.setCurrentItem(0);
-        ExpressionMenuType.setAdapter(grallyAdapter);
         ExpressionMenuType.setItemAnimator(new DefaultItemAnimator());
         grallyAdapter.setOnItemClickListener(new GrallyAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 ExpressionViewPager.setCurrentItem(position);
-
             }
-
-
         });
+        ExpressionMenuType.setAdapter(grallyAdapter);
 
         return view;
     }
@@ -452,6 +550,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
 
     @Override
     public boolean onBackPressed() {
+
         if (ExpressionLinearLayout.isShown()) {
             ExpressionLinearLayout.setVisibility(View.GONE);
             return true;

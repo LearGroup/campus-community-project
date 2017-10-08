@@ -18,6 +18,8 @@ import com.example.chen1.uncom.utils.LoadImageUtils;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by chen1 on 2017/6/21.
  */
@@ -31,7 +33,17 @@ public class person_relation_ship_adapter extends BaseAdapter {
     }
 
     private TextView username;
-    private AppCompatImageView headImage;
+    private CircleImageView headImage;
+
+
+    public ArrayList<RelationShipLevelBean> getData() {
+        return data;
+    }
+
+    public void setData(ArrayList<RelationShipLevelBean> data) {
+        this.data = data;
+    }
+
     /**
      * How many items are in the data set represented by this Adapter.
      *
@@ -39,6 +51,9 @@ public class person_relation_ship_adapter extends BaseAdapter {
      */
     @Override
     public int getCount() {
+        if(data==null){
+            return 0;
+        }
         return data.size();
     }
 
@@ -87,7 +102,7 @@ public class person_relation_ship_adapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater=LayoutInflater.from(parent.getContext());
         LinearLayout linearLayout=(LinearLayout)layoutInflater.inflate(R.layout.person_relation_ship_item_layout,null);
-        headImage=(AppCompatImageView) linearLayout.findViewById(R.id.appCompatImageView3);
+        headImage=(CircleImageView) linearLayout.findViewById(R.id.appCompatImageView3);
         username=(TextView) linearLayout.findViewById(R.id.person_username);
         username.setText(data.get(position).getUsername());
         LoadImageUtils.getFirendHeaderImage(data.get(position).getHeader_pic(),context,headImage);

@@ -35,6 +35,10 @@ public class RelationShipLevelBeanDao extends AbstractDao<RelationShipLevelBean,
         public final static Property Stown = new Property(10, String.class, "stown", false, "STOWN");
         public final static Property Phone = new Property(11, String.class, "phone", false, "PHONE");
         public final static Property Age = new Property(12, Integer.class, "age", false, "AGE");
+        public final static Property Last_message = new Property(13, String.class, "last_message", false, "LAST_MESSAGE");
+        public final static Property Last_active_time = new Property(14, java.util.Date.class, "last_active_time", false, "LAST_ACTIVE_TIME");
+        public final static Property Connect_time = new Property(15, java.util.Date.class, "connect_time", false, "CONNECT_TIME");
+        public final static Property Active = new Property(16, boolean.class, "active", false, "ACTIVE");
     }
 
 
@@ -62,7 +66,11 @@ public class RelationShipLevelBeanDao extends AbstractDao<RelationShipLevelBean,
                 "\"SAREA\" TEXT," + // 9: sarea
                 "\"STOWN\" TEXT," + // 10: stown
                 "\"PHONE\" TEXT," + // 11: phone
-                "\"AGE\" INTEGER);"); // 12: age
+                "\"AGE\" INTEGER," + // 12: age
+                "\"LAST_MESSAGE\" TEXT," + // 13: last_message
+                "\"LAST_ACTIVE_TIME\" INTEGER," + // 14: last_active_time
+                "\"CONNECT_TIME\" INTEGER," + // 15: connect_time
+                "\"ACTIVE\" INTEGER NOT NULL );"); // 16: active
     }
 
     /** Drops the underlying database table. */
@@ -139,6 +147,22 @@ public class RelationShipLevelBeanDao extends AbstractDao<RelationShipLevelBean,
         if (age != null) {
             stmt.bindLong(13, age);
         }
+ 
+        String last_message = entity.getLast_message();
+        if (last_message != null) {
+            stmt.bindString(14, last_message);
+        }
+ 
+        java.util.Date last_active_time = entity.getLast_active_time();
+        if (last_active_time != null) {
+            stmt.bindLong(15, last_active_time.getTime());
+        }
+ 
+        java.util.Date connect_time = entity.getConnect_time();
+        if (connect_time != null) {
+            stmt.bindLong(16, connect_time.getTime());
+        }
+        stmt.bindLong(17, entity.getActive() ? 1L: 0L);
     }
 
     @Override
@@ -209,6 +233,22 @@ public class RelationShipLevelBeanDao extends AbstractDao<RelationShipLevelBean,
         if (age != null) {
             stmt.bindLong(13, age);
         }
+ 
+        String last_message = entity.getLast_message();
+        if (last_message != null) {
+            stmt.bindString(14, last_message);
+        }
+ 
+        java.util.Date last_active_time = entity.getLast_active_time();
+        if (last_active_time != null) {
+            stmt.bindLong(15, last_active_time.getTime());
+        }
+ 
+        java.util.Date connect_time = entity.getConnect_time();
+        if (connect_time != null) {
+            stmt.bindLong(16, connect_time.getTime());
+        }
+        stmt.bindLong(17, entity.getActive() ? 1L: 0L);
     }
 
     @Override
@@ -231,7 +271,11 @@ public class RelationShipLevelBeanDao extends AbstractDao<RelationShipLevelBean,
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // sarea
             cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // stown
             cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // phone
-            cursor.isNull(offset + 12) ? null : cursor.getInt(offset + 12) // age
+            cursor.isNull(offset + 12) ? null : cursor.getInt(offset + 12), // age
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // last_message
+            cursor.isNull(offset + 14) ? null : new java.util.Date(cursor.getLong(offset + 14)), // last_active_time
+            cursor.isNull(offset + 15) ? null : new java.util.Date(cursor.getLong(offset + 15)), // connect_time
+            cursor.getShort(offset + 16) != 0 // active
         );
         return entity;
     }
@@ -251,6 +295,10 @@ public class RelationShipLevelBeanDao extends AbstractDao<RelationShipLevelBean,
         entity.setStown(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
         entity.setPhone(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
         entity.setAge(cursor.isNull(offset + 12) ? null : cursor.getInt(offset + 12));
+        entity.setLast_message(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setLast_active_time(cursor.isNull(offset + 14) ? null : new java.util.Date(cursor.getLong(offset + 14)));
+        entity.setConnect_time(cursor.isNull(offset + 15) ? null : new java.util.Date(cursor.getLong(offset + 15)));
+        entity.setActive(cursor.getShort(offset + 16) != 0);
      }
     
     @Override

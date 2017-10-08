@@ -13,6 +13,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <android.support.design.widget.AppBarLayout
+        app:elevation="0dp"
+        android:background="#dddddd"
         android:layout_marginTop="-10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,13 +53,14 @@
         android:background="#eeeeee" />
 
     <LinearLayout
-
+        android:elevation="0dp"
         android:background="@color/colorPrimary"
         android:id="@+id/person_chat_bottomNavigationView"
         android:layout_width="match_parent"
         android:minHeight="45dp"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:elevation="0dp"
             android:background="@color/colorPrimary"
             android:gravity="bottom"
             android:layout_width="match_parent"
@@ -159,7 +162,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:elevation="0dp"
+        app:elevation="0dp"
         android:background="@color/colorPrimary"
         android:layout_gravity="bottom"
         android:id="@+id/Expression_LinearLayout"

@@ -1,18 +1,31 @@
 package com.example.chen1.uncom.chat;
 
 import android.content.Context;
+import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.chen1.uncom.R;
+import com.example.chen1.uncom.application.CoreApplication;
+import com.example.chen1.uncom.bean.BeanDaoManager;
+import com.example.chen1.uncom.bean.MessageHistoryBean;
+import com.example.chen1.uncom.bean.MessageHistoryBeanDao;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
+import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
+import com.example.chen1.uncom.bean.UserBeanDao;
+import com.example.chen1.uncom.utils.LoadImageUtils;
 import com.example.chen1.uncom.utils.SpanStringUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by chen1 on 2017/9/21.
@@ -22,16 +35,17 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
     private boolean ITEM_TYPE;
     private Context context;
     private RelationShipLevelBean minor_data;
-
+    private RelationShipLevelBean frendData;
     private LayoutInflater layoutInflater;
-    private ArrayList<ChatMessgaeContent> listItem =new ArrayList<ChatMessgaeContent>();
-   public PersonChatRecyclerViewAdapter(Context context){
+    private ArrayList<MessageHistoryBean> listItem =new ArrayList<MessageHistoryBean>();
+   public PersonChatRecyclerViewAdapter(Context context,RelationShipLevelBean data){
        this.context=context;
+       frendData=data;
    }
 
     @Override
     public int getItemViewType(int position) {
-        if(listItem.get(position).isMessageType()){
+        if(listItem.get(position).getMessageType()){
             return  1;
         }else {
             return 0;
@@ -54,9 +68,10 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.itemView.setTag(position);
-        if(!listItem.get(position).getText().equals(null)){
-            String str =listItem.get(position).getText();
-            SpannableString spannableString= SpanStringUtils.getEmotionContent(1,context, holder.textView,str);
+        LoadImageUtils.getFirendHeaderImage(frendData.getHeader_pic(),context,holder.header_image);
+        if(!listItem.get(position).getContent().equals(null)){
+            String str =listItem.get(position).getContent();
+             SpannableString spannableString= SpanStringUtils.getEmotionContent(1,context, holder.textView,str);
              holder.textView.setText(spannableString);
         }
         //holder.textView.setText(listItem.get(position));
@@ -76,16 +91,52 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
 
     public static class   ViewHolder extends  RecyclerView.ViewHolder {
         public TextView textView=null;
+        public CircleImageView header_image=null;
         public ViewHolder(View itemView) {
             super(itemView);
+            header_image=(CircleImageView)itemView.findViewById(R.id.person_chat_own_header_circleImageView);
             textView=(TextView)itemView.findViewById(R.id.person_chat_own_content_textview);
         }
     }
 
 
-    public   void add(ChatMessgaeContent cmc,int position){
-        listItem.add(cmc);
-        notifyItemInserted(listItem.size());
+    public   void add(MessageHistoryBean messageHistoryBean, int position , MessageHistoryBeanDao messageHistoryBeanDao){
+        RelationShipLevelBeanDao   relationShipLevelBeanDao = BeanDaoManager.getInstance().getDaoSession().getRelationShipLevelBeanDao();
+       //如果发送信息者的id为当前fendData的id相同，或者我发送信息时targetid与fendDataid相同
+        Log.v("messageId",messageHistoryBean.getOwnId());
+        Log.v("frenDataId",frendData.getMinor_user());
+        Log.v("MessageType", String.valueOf(messageHistoryBean.getMessageType()));
+        if((messageHistoryBean.getMessageType()==false && messageHistoryBean.getOwnId().equals(frendData.getMinor_user())) || (messageHistoryBean.getTargetId().equals(frendData.getMinor_user())&& messageHistoryBean.getMessageType()==true) ){
+            Log.v("active1","true");
+            listItem.add(messageHistoryBean);
+            frendData.setLast_message(messageHistoryBean.getContent());
+            frendData.setLast_active_time(messageHistoryBean.getTime());
+            if(frendData.getActive()==false){
+                frendData.setActive(true);
+            }
+            CoreApplication.newInstance().updateActivePersonMessageList(frendData);
+            relationShipLevelBeanDao.update(frendData);
+            notifyItemInserted(listItem.size());
+        }else{
+            RelationShipLevelBean relationShipLevelBean=CoreApplication.newInstance().getRelationShipBean(messageHistoryBean.getOwnId());
+            relationShipLevelBean.setLast_message(messageHistoryBean.getContent());
+            Log.v("active2",relationShipLevelBean.getUsername());
+            relationShipLevelBean.setLast_active_time(messageHistoryBean.getTime());
+            if(relationShipLevelBean.getActive()==false){
+                relationShipLevelBean.setActive(true);
+            }
+            CoreApplication.newInstance().updateActivePersonMessageList(relationShipLevelBean);
+            relationShipLevelBeanDao.update(relationShipLevelBean);
+        }
+        messageHistoryBeanDao.insert(messageHistoryBean);
     }
 
+    public ArrayList<MessageHistoryBean> getListItem() {
+        return listItem;
+    }
+
+    public void setListItem(ArrayList<MessageHistoryBean> listItem) {
+        this.listItem = listItem;
+        notifyItemInserted(listItem.size());
+    }
 }

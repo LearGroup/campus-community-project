@@ -4,6 +4,8 @@ package com.example.chen1.uncom.bean;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.chen1.uncom.application.CoreApplication;
+
 import java.security.AccessControlContext;
 
 /**
@@ -12,39 +14,29 @@ import java.security.AccessControlContext;
 
 public class BeanDaoManager {
 
-    private DaoMaster daoMaster;
-    private DaoSession daoSession;
-    private static volatile BeanDaoManager instance =null;
-    public BeanDaoManager(Context context){
-        if(instance==null){
-            DaoMaster.DevOpenHelper devOpenHelper =new
-                    DaoMaster.DevOpenHelper(context,"user.db");
-            daoMaster= new DaoMaster(devOpenHelper.getWritableDatabase());
-            daoSession=daoMaster.newSession();
+    private static BeanDaoManager mGreenDaoManager;
+    private DaoMaster mMaster;
+    private DaoSession mDaosession;
+
+    public BeanDaoManager() {
+        DaoMaster.DevOpenHelper devOpenHelper=new DaoMaster.DevOpenHelper(CoreApplication.newInstance().getApplicationContext(),"user-db",null);
+        mMaster=new DaoMaster(devOpenHelper.getWritableDatabase());
+        mDaosession=mMaster.newSession();
+    }
+    public static BeanDaoManager getInstance(){
+        if(mGreenDaoManager==null){
+            mGreenDaoManager=new BeanDaoManager();
         }
+        return mGreenDaoManager;
     }
-
-    public static BeanDaoManager getInstance(Context context){
-        if(instance==null){
-            synchronized (BeanDaoManager.class){
-                instance=new BeanDaoManager(context);
-            }
-        }
-        return instance;
+    public DaoMaster getMaster(){
+        return mMaster;
     }
-
-
-    public DaoMaster getDaoMaster() {
-        return daoMaster;
+    public DaoSession getDaoSession(){
+        return mDaosession;
     }
-
-
-    public DaoSession getDaoSession() {
-        return daoSession;
-    }
-
     public DaoSession getNewSession(){
-        daoSession=daoMaster.newSession();
-        return daoSession;
+        mDaosession=mMaster.newSession();
+        return mDaosession;
     }
 }

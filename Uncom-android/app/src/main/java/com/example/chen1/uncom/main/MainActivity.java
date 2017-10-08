@@ -1,15 +1,14 @@
 package com.example.chen1.uncom.main;
 
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -28,25 +27,31 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.example.chen1.uncom.FindPageMainFragment;
 import com.example.chen1.uncom.MePageMainFragment;
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
+import com.example.chen1.uncom.bean.BeanDaoManager;
+import com.example.chen1.uncom.bean.MessageHistoryBeanDao;
+import com.example.chen1.uncom.bean.RelationShipLevelBean;
+import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
 import com.example.chen1.uncom.relationship.RalationShipPageMainFragment;
-import com.example.chen1.uncom.SetPageMainFragment;
+import com.example.chen1.uncom.set.SetPageMainFragment;
 import com.example.chen1.uncom.service.ChatCoreBinder;
 import com.example.chen1.uncom.service.CoreService;
 import com.example.chen1.uncom.utils.BackHandlerHelper;
 import com.example.chen1.uncom.utils.BottomNavigationViewHelper;
-import com.example.chen1.uncom.utils.LoadImageUtils;
+
+import org.greenrobot.greendao.query.Query;
+import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -54,23 +59,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * 窗体控件上一次的高度,用于监听键盘弹起
      */
-
+    private int CONNECTION_ERROR =-1;
+    private int RECONNECTION =0;
     private SetPageMainFragment setPageMainFragment;
     private RalationShipPageMainFragment ralationShipPageMainFragment;
     private FindPageMainFragment findPageMainFragment;
     private MePageMainFragment mePageMainFragment;
     private int mLastHeight;
+    private PopupWindow popupWindow;
     private MenuItem menuItem=null;
     private ViewPager viewPager;
     private NavigationView navigationView;
     private ChatCoreBinder chatCoreBinder;
+    private  CoreService coreService;
+    private Handler coreHandler;
     private BottomNavigationView bottomNavigationView;
     private ServiceConnection serviceConnection=new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             chatCoreBinder=(ChatCoreBinder)service;
             try {
-                chatCoreBinder.startChatService(getApplicationContext(),getWindow().getDecorView().findViewById(android.R.id.content));
+                coreService=chatCoreBinder.getCoreService();
+                CoreApplication.newInstance().setCoreService(coreService);
+                coreService.setHandler(coreHandler);
+                coreService.setContext(getApplicationContext());
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
@@ -116,9 +128,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             window.setStatusBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_main);
-        Intent startIntent =new Intent(this, CoreService.class);
-        startService(startIntent);
-        bindService(startIntent,serviceConnection,BIND_AUTO_CREATE);
         this.getWindow()
                 .getDecorView()
                 .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -170,7 +179,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         viewPager.setAdapter(sectionsAdapter);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
-    }
+        Intent startIntent =new Intent(this, CoreService.class);
+        startService(startIntent);
+        bindService(startIntent,serviceConnection,BIND_AUTO_CREATE);
+        coreHandler= new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 0:
+                        SetPageMainFragment.getInstance().setCONNECTION_STATUS(CONNECTION_ERROR);
+                        break;
+                    case 1:
+                        SetPageMainFragment.getInstance().setCONNECTION_STATUS(RECONNECTION);
+                           break;
+                    default:
+                        break;
+                }
+            }
+        };
+        //当personFrendList 数据为空 说明为第一次进入状态或重载状态。开启子线程获取相关信息
+        if(CoreApplication.newInstance().getPersonFrendList()==null){
+            Log.v("personFrendListNode","none");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    RelationShipLevelBeanDao relationShipLevelBeanDao= BeanDaoManager.getInstance().getDaoSession().getRelationShipLevelBeanDao();
+                    QueryBuilder queryBuilder=relationShipLevelBeanDao.queryBuilder();
+                    Query query=queryBuilder.where(RelationShipLevelBeanDao.Properties.Level.eq(4)).build();
+                    CoreApplication.newInstance().setPersonFrendList((ArrayList<RelationShipLevelBean>) query.list());
+                    Log.v("CoreApplicationListSize", String.valueOf(CoreApplication.newInstance().getPersonFrendList().size()));
+                    query=queryBuilder.where(queryBuilder.and(RelationShipLevelBeanDao.Properties.Level.eq(4),RelationShipLevelBeanDao.Properties.Active.eq(true))).orderDesc(RelationShipLevelBeanDao.Properties.Last_active_time).build();
+                    ArrayList<RelationShipLevelBean> list= (ArrayList<RelationShipLevelBean>) query.list();
+                    for (int i = 0; i <list.size(); i++) {
+                        Log.v("newtheard",list.get(i).getUsername());
+                        if(list.get(i).getActive()==true){
+                            CoreApplication.newInstance().getActivePersonMessageList().add(list.get(i));
+                        }
+                    }
+                    Log.v("CoreApplicationActiveList", String.valueOf(CoreApplication.newInstance().getActivePersonMessageList().size()));
+                }
+            }).start();
+        }
+          }
 
     public static boolean FlymeSetStatusBarLightMode(Window window, boolean dark) {
         boolean result = false;
@@ -281,5 +332,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (!BackHandlerHelper.handleBackPress(this)) {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(serviceConnection);
     }
 }

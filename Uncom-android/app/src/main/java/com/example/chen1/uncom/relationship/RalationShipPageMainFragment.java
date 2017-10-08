@@ -14,15 +14,14 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.example.chen1.uncom.R;
+import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.BeanDaoManager;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
-import com.example.chen1.uncom.bean.UserBeanAndJsonUtils;
 
 import org.greenrobot.greendao.query.Query;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class RalationShipPageMainFragment extends Fragment {
@@ -53,9 +52,7 @@ public class RalationShipPageMainFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RelationShipLevelBeanDao relationShipLevelBeanDao= BeanDaoManager.getInstance(getContext()).getNewSession().getRelationShipLevelBeanDao();
-        Query query=relationShipLevelBeanDao.queryBuilder().where(RelationShipLevelBeanDao.Properties.Level.eq(4)).build();
-        personFrendList= (ArrayList<RelationShipLevelBean>) query.list();
+        personFrendList= CoreApplication.newInstance().getPersonFrendList();
         Log.v("freendlist", String.valueOf(personFrendList));
     }
 
@@ -70,10 +67,13 @@ public class RalationShipPageMainFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_ralation_ship_page_main, container, false);
         NestedScrollView sv = (NestedScrollView)view.findViewById(R.id.relation_ship_scroll_view);
         sv.smoothScrollTo(0,0);
+        if(personFrendList==null){
+            personFrendList= CoreApplication.newInstance().getPersonFrendList();
+        }
         group_listView=(ListView) view.findViewById(R.id.group_list_view);
         person_listview=(ListView)view.findViewById(R.id.person_list_view);
         BaseAdapter group_baseAdapter=new group_relation_ship_adapter();
-        BaseAdapter person_baseAdapter=new person_relation_ship_adapter(getContext(),personFrendList);
+        person_relation_ship_adapter person_baseAdapter=new person_relation_ship_adapter(getContext(),personFrendList);
         group_listView.setAdapter(group_baseAdapter);
         person_listview.setAdapter(person_baseAdapter);
         person_listview.setOnItemClickListener(new Person_Item_OnClickListener(personFrendList));

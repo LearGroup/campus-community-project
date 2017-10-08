@@ -8,8 +8,8 @@ import java.util.Date;
 
 public class ChatMessgaeContent {
     private  String text;
-    private  Date time;
-    private  int headImageId;
+    private  String time;
+    private  String headImageId;
     private  boolean MessageType;//1:own 0:opposite
 
 
@@ -26,22 +26,22 @@ public class ChatMessgaeContent {
 
     }
 
-    public ChatMessgaeContent(String text, Date time, int headImageId, boolean messageType) {
+    public ChatMessgaeContent(String text, String time, String headImageId, boolean messageType) {
         this.text = text;
         this.time = time;
         this.headImageId = headImageId;
-        MessageType = messageType;
+        MessageType = messageType;//
     }
 
     public String getText() {
         return text;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public int getHeadImageId() {
+    public String getHeadImageId() {
         return headImageId;
     }
 
@@ -49,11 +49,11 @@ public class ChatMessgaeContent {
         this.text = text;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
-    public void setHeadImageId(int headImageId) {
+    public void setHeadImageId(String headImageId) {
         this.headImageId = headImageId;
     }
 }
