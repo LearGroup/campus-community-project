@@ -34,23 +34,14 @@
         <item name="colorControlActivated">@color/colorEditTextActivated</item>
     </style>
 
-
-    <style name="RedButton" parent="AppTheme">
-        <item name="buttonStyle">@style/Widget.AppCompat.Button</item>
-        <item name="colorButtonNormal">@color/colorEditTextActivated</item>
-        <item name="colorControlActivated">@color/colorEditTextActivated</item>
+<!--设置popupwindow的弹出消失动画-->
+    <style name="popwin_anim_style">
+        <item name="android:windowEnterAnimation">@anim/access_popupwindow_translate_from</item>
+        <item name="android:windowExitAnimation">@anim/access_popupwindow_translate_to</item>
     </style>
 
-
-
-    <style name="horizontal_slide" parent="android:style/Theme.Holo.Light.NoActionBar">
-        <item name="android:windowAnimationStyle">@style/AnimFade2</item>
+    <style name="MyButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/colorIcon</item>
+        <item name="colorButtonNormal">@color/colorIcon</item>
     </style>
-    <style name="AnimFade2" parent="@android:style/Animation.Activity">
-        <item name="android:activityOpenEnterAnimation">@anim/edittext_slide_in_from_right</item>
-        <item name="android:activityOpenExitAnimation">@anim/edittext_slide_out_to_left</item>
-        <item name="android:activityCloseExitAnimation">@anim/edittext_slide_out_to_right</item>
-        <item name="android:activityCloseEnterAnimation">@anim/edittext_slide_in_from_left</item>
-    </style>
-
 </resources>

@@ -7,12 +7,12 @@
     solid中的颜色是阴影的颜色，也可以设置角度等等 -->
     <item
 
-        android:top="2dp"
+        android:bottom="2dp"
         >
         <shape android:shape="rectangle" >
 
             <gradient
-                android:angle="270"
+
                 android:endColor="#dddddd"
                 android:startColor="#dddddd" />
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#e6e6e6"
     android:fitsSystemWindows="true"
-    tools:context="com.example.chen1.uncom.Person_Chat_Fragment">
+    tools:context="com.example.chen1.uncom.chat.Person_Chat_Fragment">
     <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
         android:gravity="bottom"

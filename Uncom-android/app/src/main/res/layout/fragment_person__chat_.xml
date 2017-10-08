@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.chen1.uncom.Person_Chat_Fragment">
+    tools:context="com.example.chen1.uncom.chat.Person_Chat_Fragment">
     <!-- TODO: Update blank fragment layout -->
 <LinearLayout
     android:background="#eeeeee"
@@ -13,6 +13,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <android.support.design.widget.AppBarLayout
+        app:elevation="0dp"
+        android:background="#dddddd"
         android:layout_marginTop="-10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,6 +33,7 @@
                 tools:ignore="DuplicateIds"
                 app:srcCompat="@drawable/ic_vector_back_black" />
             <TextView
+                android:id="@+id/person_username"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="陈广不平"
@@ -50,13 +53,14 @@
         android:background="#eeeeee" />
 
     <LinearLayout
-
+        android:elevation="0dp"
         android:background="@color/colorPrimary"
         android:id="@+id/person_chat_bottomNavigationView"
         android:layout_width="match_parent"
         android:minHeight="45dp"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:elevation="0dp"
             android:background="@color/colorPrimary"
             android:gravity="bottom"
             android:layout_width="match_parent"
@@ -97,7 +101,7 @@
                     android:layout_weight="1"
                     android:maxLines="3"
                     android:lineSpacingExtra="2dp"
-                    android:textCursorDrawable="@drawable/edittext_actived"
+                    android:textCursorDrawable="@drawable/access_cursor_active"
                     android:theme="@style/ChatEditText" />
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/appCompatImageView5"
@@ -158,7 +162,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:elevation="0dp"
+        app:elevation="0dp"
         android:background="@color/colorPrimary"
         android:layout_gravity="bottom"
         android:id="@+id/Expression_LinearLayout"

@@ -1,7 +1,12 @@
 package login;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.HashMap;
+
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,6 +20,7 @@ import com.mysql.fabric.Response;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import dao.hibernateStartPrepare;
+import net.sf.json.JSONObject;
 import transmission.ReseponseUtil;
 import bean.userData;
 
@@ -23,7 +29,13 @@ public class loginAction extends ActionSupport {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private HttpSession session = null;
-
+	private String use;
+	private String password;
+	private String username;
+	private JSONObject userContent;
+	
+	
+	
 	public void CloseWirter(PrintWriter out) {
 		if (null != out) {
 			out.flush();
@@ -31,7 +43,7 @@ public class loginAction extends ActionSupport {
 		}
 
 	}
-
+	
 	public PrintWriter getPrintWriter() throws IOException {
 		response = ServletActionContext.getResponse();
 		response.setContentType("text/text");
@@ -117,38 +129,41 @@ public class loginAction extends ActionSupport {
 	}
 
 	public String Login() throws Exception {
-
+		userContent=new JSONObject();
 		System.out.println("Get into Login");
 		request = ServletActionContext.getRequest();
 		PrintWriter out = getPrintWriter();
 		session = ServletActionContext.getRequest().getSession();
-		String sors = request.getParameter("use");
-		String username = request.getParameter("user");
-		String password = request.getParameter("password");
-		userData user = getUser(sors, username);
+        userContent=JSONObject.fromObject(request.getReader().readLine());
+		System.out.println(userContent);
+		use=(String) userContent.get("use");
+		username=(String)userContent.get("user");
+		password=(String)userContent.get("password");
+		userData user = getUser(use, username);
 		if (user == null) {
-			out.print("0");
+			out.print(JSONObject.fromObject("{status:0}"));
 		} else if (password.equals(user.getPassword())) {
-			if (sors.equals("phone")) {
+			if (use.equals("phone")) {
 				if (user.getPhone().equals(username)) {
-					out.print("1" + user.getUsername());
-					/*System.out.println("set session: " + user.getUsername());*/
+					
+					out.print(JSONObject.fromObject("{status:1,results:"+JSONObject.fromObject(user)+"}"));
+					System.out.println("set session: " + user.getUsername());
 					session.setAttribute("user", user);
 					session.setAttribute("username", user.getUsername());
 				} else {
-					out.print("0");
+					out.print(JSONObject.fromObject("{status:0}"));
 				}
-			} else if (sors.equals("email")) {
+			} else if (use.equals("email")) {
 				if (user.getEmail().equals(username)) {
-					out.print("1" + user.getUsername());
+					out.print(JSONObject.fromObject("{status:1,results:"+JSONObject.fromObject(user)+"}"));
 					session.setAttribute("user", user);
 					session.setAttribute("username", user.getUsername());
 				} else {
-					out.print("0");
+					out.print(JSONObject.fromObject("{status:0}"));
 				}
 			}
 		} else {
-			out.print("0");
+			out.print(JSONObject.fromObject("{status:0}"));
 		}
 		CloseWirter(out);
 

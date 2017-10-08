@@ -21,82 +21,91 @@ public class userData implements Serializable{
 	
 
 	@Column(type="varchar(30)",field="id",primarykey=true,defaultNull=false )
-	private String id;//Ö÷¼ü
+	private String id;//ï¿½ï¿½ï¿½ï¿½
 	
 	
 	@Column(field="username",type="varchar(30)",defaultNull=false)
-	private String username;//ÓÃ»§êÇ³Æ
+	private String username;//ï¿½Ã»ï¿½ï¿½Ç³ï¿½
 	
 	@Column(field="password",type="varchar(30)",defaultNull=false)
-	private String password;//ÃÜÂë
+	private String password;//ï¿½ï¿½ï¿½ï¿½
 	
 	@Column(field="headerPic",type="varchar(30)")
-	private String headerPic;//Í·Ïñ¡¤
+	private String headerPic;//Í·ï¿½ï¿½
 	
 	@Column(field="province",type="varchar(30)")
-	private String province;//ËùÔÚÊ¡
+	private String province;//ï¿½ï¿½ï¿½ï¿½Ê¡
 	
 	@Column(field="town",type="varchar(30)")
-	private String town;//ÊÐ
+	private String town;//ï¿½ï¿½
 	
 	@Column(field="area",type="varchar(30)")
-	private String area;//Çø
+	private String area;//ï¿½ï¿½
 	
 	@Column(field="sprovince",type="varchar(30)")
-	private String sprovince;//Ñ§Ð£ËùÔÚÊ¡
+	private String sprovince;//Ñ§Ð£ï¿½ï¿½ï¿½ï¿½Ê¡
 	
 	@Column(field="stown",type="varchar(30)")
-	private String stown;//Ñ§Ð£ÊÐ
+	private String stown;//Ñ§Ð£ï¿½ï¿½
 	
 	@Column(field="sarea",type="varchar(30)")
-	private String sarea;//Ñ§Ð£Çø
+	private String sarea;//Ñ§Ð£ï¿½ï¿½
 	
 	@Column(field="email",type="varchar(30)")
-	private String email;//µç×ÓÓÊÏä
+	private String email;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	
 	@Column(field="phone",type="varchar(17)")
-	private String phone;//µç»°
+	private String phone;//ï¿½ç»°
 	
 	
 	@Column(field="sex",type="varchar(2)")
-	private Integer sex;//ÐÔ±ð 1ÄÐ 0Å® 3±£ÃÜ
+	private Integer sex;//ï¿½Ô±ï¿½ 1ï¿½ï¿½ 0Å® 3ï¿½ï¿½ï¿½ï¿½
 	
 	@Column(field="create_time",type="datetime")
-	private String createTime;//´´½¨Ê±¼ä
+	private String createTime;//ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 	
 	@Column(field="update_time",type="timestamp")
-	private String updateTime;//×îºó¸üÐÂÊ±¼ä
+	private String updateTime;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 	
 	@Column(field="is_delete",type="int(1)")
-	private String isDelete;//É¾³ý×´Ì¬ 1É¾³ý 0Î´É¾³ý
+	private Integer isDelete;//É¾ï¿½ï¿½×´Ì¬ 1É¾ï¿½ï¿½ 0Î´É¾ï¿½ï¿½
 	
 	
 	@Column(field="qq_number",type="varchar(16)")
-	private String qqNumber;//QQºÅÂë
+	private String qqNumber;//QQï¿½ï¿½ï¿½ï¿½
 	
 	@Column(field="wexin_number",type="varchar(30)")
-	private String wexinNumber;//Î¢ÐÅºÅÂë
+	private String wexinNumber;//Î¢ï¿½Åºï¿½ï¿½ï¿½
 	
 	
 	@Column(field="weibo",type="varchar(30)")
-	private String weibo;//Î¢²©
+	private String weibo;//Î¢ï¿½ï¿½
 	
 	@Column(field="student_id",type="varchar(20)")
-	private String studentId;//Ñ§ºÅ
+	private String studentId;//Ñ§ï¿½ï¿½
 	
 
 	@Column(field="student_id_password",type="varchar(30)")
-	private String studentIdPassword;//Ñ§ºÅÃÜÂë
+	private String studentIdPassword;//Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
+	private Integer age ;
 	
 	
-	
-	
+	public Integer getAge() {
+		return age;
+	}
+
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+
 	/**
 	 * @return the id
 	 */
 	@Id
-	@GeneratedValue(generator = "uuid2" )   //Ö¸¶¨Éú³ÉÆ÷Ãû³Æ  
+	@GeneratedValue(generator = "uuid2" )   //Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator" )  
 	public String getId() {
 		return id;
@@ -319,26 +328,14 @@ public class userData implements Serializable{
 	}
 
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "user_data [id=" + id + ", username=" + username + ", password=" + password + ", headerPic=" + headerPic
-				+ ", province=" + province + ", town=" + town + ", area=" + area + ", sprovince=" + sprovince
-				+ ", stown=" + stown + ", sarea=" + sarea + ", email=" + email + ", phone=" + phone + ", sex=" + sex
-				+ ", createTime=" + createTime + ", updateTime=" + updateTime + ", isDelete=" + isDelete + ", qqNumber="
-				+ qqNumber + ", wexinNumber=" + wexinNumber + ", weibo=" + weibo + ", studentId=" + studentId
-				+ ", studentIdPassword=" + studentIdPassword + ", getId()=" + getId() + ", getUsername()="
-				+ getUsername() + ", getPassword()=" + getPassword() + ", getHeaderPic()=" + getHeaderPic()
-				+ ", getProvince()=" + getProvince() + ", getTown()=" + getTown() + ", getArea()=" + getArea()
-				+ ", getSprovince()=" + getSprovince() + ", getStown()=" + getStown() + ", getSarea()=" + getSarea()
-				+ ", getEmail()=" + getEmail() + ", getPhone()=" + getPhone() + ", getSex()=" + getSex()
-				+ ", getCreateTime()=" + getCreateTime() + ", getUpdateTime()=" + getUpdateTime() + ", getIsDelete()="
-				+ getIsDelete() + ", getQqNumber()=" + getQqNumber() + ", getWexinNumber()=" + getWexinNumber()
-				+ ", getWeibo()=" + getWeibo() + ", getStudentId()=" + getStudentId() + ", getStudentIdPassword()="
-				+ getStudentIdPassword() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+
+	public Integer getIsDelete() {
+		return isDelete;
+	}
+
+
+	public void setIsDelete(Integer isDelete) {
+		this.isDelete = isDelete;
 	}
 
 
@@ -358,20 +355,7 @@ public class userData implements Serializable{
 	}
 
 
-	/**
-	 * @return the isDelete
-	 */
-	public String getIsDelete() {
-		return isDelete;
-	}
-
-
-	/**
-	 * @param isDelete the isDelete to set
-	 */
-	public void setIsDelete(String isDelete) {
-		this.isDelete = isDelete;
-	}
+	
 
 
 	/**
@@ -451,6 +435,26 @@ public class userData implements Serializable{
 	 */
 	public void setStudentIdPassword(String studentIdPassword) {
 		this.studentIdPassword = studentIdPassword;
+	}
+
+
+	@Override
+	public String toString() {
+		return "userData [id=" + id + ", username=" + username + ", password=" + password + ", headerPic=" + headerPic
+				+ ", province=" + province + ", town=" + town + ", area=" + area + ", sprovince=" + sprovince
+				+ ", stown=" + stown + ", sarea=" + sarea + ", email=" + email + ", phone=" + phone + ", sex=" + sex
+				+ ", createTime=" + createTime + ", updateTime=" + updateTime + ", isDelete=" + isDelete + ", qqNumber="
+				+ qqNumber + ", wexinNumber=" + wexinNumber + ", weibo=" + weibo + ", studentId=" + studentId
+				+ ", studentIdPassword=" + studentIdPassword + ", age=" + age + ", getAge()=" + getAge() + ", getId()="
+				+ getId() + ", getUsername()=" + getUsername() + ", getPassword()=" + getPassword()
+				+ ", getHeaderPic()=" + getHeaderPic() + ", getProvince()=" + getProvince() + ", getTown()=" + getTown()
+				+ ", getArea()=" + getArea() + ", getSprovince()=" + getSprovince() + ", getStown()=" + getStown()
+				+ ", getSarea()=" + getSarea() + ", getEmail()=" + getEmail() + ", getPhone()=" + getPhone()
+				+ ", getSex()=" + getSex() + ", getCreateTime()=" + getCreateTime() + ", getIsDelete()=" + getIsDelete()
+				+ ", getUpdateTime()=" + getUpdateTime() + ", getQqNumber()=" + getQqNumber() + ", getWexinNumber()="
+				+ getWexinNumber() + ", getWeibo()=" + getWeibo() + ", getStudentId()=" + getStudentId()
+				+ ", getStudentIdPassword()=" + getStudentIdPassword() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
 
 
