@@ -60,8 +60,10 @@ function login(thi, data) {
         },
         crossDomain: true,
         success: function(results) {
-          let date =results
-          if (date.status == null || date.length == 0) {
+          console.log('loginResponse');
+          let date =results.results
+          console.log(results);
+          if (results.status == null || results.length == 0) {
             thi.logins = false;
             $("#login_input_username_div").attr("class", "input-group login_input_username_div has-error ")
             $("#login_input_password_div").attr("class", "input-group login_input_password_div has-error")

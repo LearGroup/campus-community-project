@@ -74,7 +74,13 @@ function pullCurrentMessageList(thi) {
       withCredentials: true
     },
     crossDomain: true,
-    success: function(data) {
+    success: function(results) {
+      console.log('pullCurrentMessageListresponse');
+      console.log(results.status);
+      let data;
+      if(results.status!=null){
+        data=results.results
+      }
       console.log('data' + data);
       if (data) {
         let list = thi.$store.getters.getFrendList

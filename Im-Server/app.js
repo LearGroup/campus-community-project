@@ -144,7 +144,7 @@
 
  io.on('connection', function(socket) {
 
-   
+
 
    console.log('一个用户上线了')
    //监听新用户加入
@@ -166,15 +166,16 @@
    socket.on("message", function(data) {
      console.log('socketList');
      console.log(socketList);
-     var targetId = data.targetId
+     var targetId = data.targetId//发送目标id
      var time = data.time
      var content = data.content
      var myName = data.myName
-     var ownId = data.ownId
-     console.log(targetId + content + time)
+     var ownId = data.ownId//发送者id
+     console.log(targetId + content + time+ownId)
      console.log(socketList[targetId]);
      if (io.sockets.connected[socketList[targetId]]) {
        console.log('向' + socketList[targetId] + '发送信息');
+       console.log(time)
        io.sockets.connected[socketList[targetId]].emit('message', {
          time: time,
          content: content,
@@ -249,7 +250,7 @@
      redisClient.lrange('historyMessage:' + req.session.user.id, 0, -1, function(err, res) {
 
        if (res) {
-         response.send('{"status":"1","results":+'+res+'}')
+         response.send(JSON.parse('{"status":"1","results":'+JSON.stringify(res)+'}'))
        } else {
          response.send(JSON.parse(JSON.stringify('{"status":null}')))
        }

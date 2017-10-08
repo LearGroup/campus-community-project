@@ -28,7 +28,7 @@ function sendMessage(thi, event) {
   console.log(message)
   if (thi.sendMessages) {
     data = {
-      time: new Date(),
+      time:Date.parse(new Date()),
       objectType: 'own',
       chat: message
     }
@@ -39,6 +39,7 @@ function sendMessage(thi, event) {
     let header_pic = thi.$store.getters.getHeadImageUrl
     console.log('send ownId');
     console.log(ownId);
+    console.log(data.time)
     console.log('socekt');
     console.log(socket);
     if (!socket) {
@@ -47,6 +48,8 @@ function sendMessage(thi, event) {
     }
     console.log(current_obj);
     console.log(myName);
+    console.log('send targetId');
+    console.log(current_obj.minor_user);
     socket.emit('message', {
       time: data.time,
       targetId: current_obj.minor_user,

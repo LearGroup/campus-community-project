@@ -97,6 +97,7 @@ export default {
       heigh = window.innerHeight + 'px'
       higt = window.innerHeight - 100 + 'px'
     }
+     console.log("ChatPagebeForeMount")
     this.$parent.$data.item.height = heigh
     this.viewconfig.messageBoxStyle['max-height'] = higt
     this.viewconfig.messageBoxStyle['min-height'] = higt
@@ -104,6 +105,7 @@ export default {
   },
   methods: {
     sendMessage: function(event) {
+       console.log("ChatPageSendMessage")
       pageJs.sendMessage(this, event)
     }
   },
