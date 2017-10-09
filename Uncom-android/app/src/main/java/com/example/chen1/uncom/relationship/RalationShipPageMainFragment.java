@@ -6,12 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
@@ -65,7 +67,7 @@ public class RalationShipPageMainFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_ralation_ship_page_main, container, false);
-        NestedScrollView sv = (NestedScrollView)view.findViewById(R.id.relation_ship_scroll_view);
+        ScrollView sv = (ScrollView) view.findViewById(R.id.relation_ship_scroll_view);
         sv.smoothScrollTo(0,0);
         if(personFrendList==null){
             personFrendList= CoreApplication.newInstance().getPersonFrendList();

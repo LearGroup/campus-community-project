@@ -85,7 +85,9 @@ public class CoreService extends Service  {
                 public void run() {
                     try {
                         Log.v("createNewThread","ok");
-                        socket= IO.socket("http://10.0.2.2:8081");
+                        /*http://47.95.0.73:8081*/
+                        /*http://10.0.2.2:8081*/
+                        socket= IO.socket("http://47.95.0.73:8081");
                         socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
                             @Override
                             public void call(Object... args) {

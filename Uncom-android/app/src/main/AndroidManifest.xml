@@ -11,15 +11,15 @@
     <application
         android:name=".application.CoreApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/catsicon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/catsicon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".access.AccessActivity"
             android:theme="@style/AppTheme"
-            android:label="@string/title_activity_access"
+            android:label="ThinkIn"
             android:windowSoftInputMode="stateVisible|adjustResize"
             >
             <intent-filter>

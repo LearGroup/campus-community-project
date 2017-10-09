@@ -36,7 +36,7 @@ public class ChatUserDataUtil {
         Map<String, String> map = new HashMap<String, String>();
         map.put("use", "phone");
         JSONObject params = new JSONObject(map);
-        SessionStoreJsonRequest sessionStoreJsonRequest =new SessionStoreJsonRequest("http://10.0.2.2:8081/getFrendList",params, new Response.Listener<JSONObject>() {
+        SessionStoreJsonRequest sessionStoreJsonRequest =new SessionStoreJsonRequest("http://47.95.0.73:8081/getFrendList",params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.v("getFrendListResponse0", String.valueOf(response));

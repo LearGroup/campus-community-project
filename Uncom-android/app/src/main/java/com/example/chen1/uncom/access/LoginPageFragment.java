@@ -213,7 +213,7 @@ public class LoginPageFragment extends Fragment {
                     map.put("password", user_password);
                     JSONObject params = new JSONObject(map);
                     Log.v("json", String.valueOf(params));
-                    SessionStoreJsonRequest sessionStoreJsonRequest = new SessionStoreJsonRequest("http://10.0.2.2:8081/login",
+                    SessionStoreJsonRequest sessionStoreJsonRequest = new SessionStoreJsonRequest("http://47.95.0.73:8081/login",
                             params, new Response.Listener<JSONObject>() {
 
                         @Override

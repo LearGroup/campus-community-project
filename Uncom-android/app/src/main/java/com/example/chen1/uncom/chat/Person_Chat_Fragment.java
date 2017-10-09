@@ -80,6 +80,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     private AppCompatButton send_btn;
     private SharedPreferences sp;
     private String user_id;
+
     private static final String SHARE_PREFERENCE_NAME = "EmotionKeyboard";
     private static final String SHARE_PREFERENCE_SOFT_INPUT_HEIGHT = "soft_input_height";
     private int ContentViewHeight;
@@ -106,6 +107,14 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     private int ExpressionBtnStatus = 0;
     private LinearLayout ExpressionLinearLayout;
 
+
+    public RelationShipLevelBean getFrendData() {
+        return frendData;
+    }
+
+    public void setFrendData(RelationShipLevelBean frendData) {
+        this.frendData = frendData;
+    }
 
     public Person_Chat_Fragment() {
         // Required empty public constructor
@@ -264,11 +273,8 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle=getArguments();
         user_id=SharedPreferencesUtil.getUserId(getContext());
-        frendData=(RelationShipLevelBean) bundle.getParcelable("frendData");
         messageHistoryBeanDao = BeanDaoManager.getInstance().getDaoSession().getMessageHistoryBeanDao();
-
         QueryBuilder queryBuilder=messageHistoryBeanDao.queryBuilder();
 /*  queryBuilder.or(MessageHistoryBeanDao.Properties.OwnId.eq(frendData.getMinor_user()),
                         queryBuilder.and( MessageHistoryBeanDao.Properties.OwnId.eq(user_id),
