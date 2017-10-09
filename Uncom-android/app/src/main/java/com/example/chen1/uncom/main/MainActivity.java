@@ -128,12 +128,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             window.setStatusBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_main);
+/*
         this.getWindow()
                 .getDecorView()
                 .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+*/
 
-        MIUISetStatusBarLightMode(this.getWindow(), true);
-        FlymeSetStatusBarLightMode(this.getWindow(), true);
+      //  MIUISetStatusBarLightMode(this.getWindow(), true);
+      //  FlymeSetStatusBarLightMode(this.getWindow(), true);
        // setPageMainFragment = SetPageMainFragment.getInstance();
        /* fc.addFragment(ralationShipPageMainFragment,"ralationShipFragment");
         fc.addFragment(findPageMainFragment,"findPageMainFragment");

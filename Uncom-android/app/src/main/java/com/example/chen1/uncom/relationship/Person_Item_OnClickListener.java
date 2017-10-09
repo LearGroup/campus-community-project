@@ -41,11 +41,8 @@ public class Person_Item_OnClickListener implements AdapterView.OnItemClickListe
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Bundle bundle=new Bundle();
-        Log.v("PersonItemOnclickListener", String.valueOf(personFrendList.get(position)));
-        bundle.putParcelable("frendData",personFrendList.get(position));
         Person_Chat_Fragment person_chat_fragment =Person_Chat_Fragment.getInstance();
-        person_chat_fragment.setArguments(bundle);
+        person_chat_fragment.setFrendData(personFrendList.get(position));
         FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

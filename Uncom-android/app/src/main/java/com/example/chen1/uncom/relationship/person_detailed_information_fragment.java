@@ -6,12 +6,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -151,7 +153,7 @@ public class person_detailed_information_fragment extends Fragment {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
 
-                if(verticalOffset==0)
+/*                if(verticalOffset==0)
                 {
                     //全展开
                     person_name.setVisibility(View.GONE);
@@ -187,11 +189,34 @@ public class person_detailed_information_fragment extends Fragment {
 
                         if(state == CollapsingToolbarLayoutState.COLLAPSED){
                         }
-                        toolbar.getMenu().findItem(R.id.person_detaild_information_menu_set).setIcon(R.drawable.ic_vector_person_detail_information_option_white_icon);
+
                         person_back_icon.setImageResource(R.drawable.ic_vector_back_icon);
                         state = CollapsingToolbarLayoutState.INTERNEDIATE;//修改状态标记为中间
                     }
+                }*/
+
+                final CollapsingToolbarLayout collapsing_toolbar_layout = (CollapsingToolbarLayout)view.findViewById(R.id.collapsing_toolbar_layout);
+                collapsing_toolbar_layout.setTitle("");
+                collapsing_toolbar_layout.setCollapsedTitleTextColor(getResources().getColor(R.color.colorPrimary));
+                collapsing_toolbar_layout.setExpandedTitleColor(getResources().getColor(R.color.colorPrimary));
+                collapsing_toolbar_layout.setExpandedTitleColor(Color.TRANSPARENT);
+                Log.v("Tag", "appBarLayoutHeight:" + appBarLayout.getHeight() + " getTotalScrollRange:" + appBarLayout.getTotalScrollRange() + " offSet:" + verticalOffset);
+                if(Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()){
+                    toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimary));
+                    collapsing_toolbar_layout.setTitle("keep");
+                    person_name.setVisibility(View.VISIBLE);
+                }else{
+                    person_name.setVisibility(View.GONE);
+                    collapsing_toolbar_layout.setTitle("");
                 }
+
+
+
+
+
+
+
+
             }
         });
         return view;

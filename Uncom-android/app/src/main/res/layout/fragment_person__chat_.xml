@@ -14,7 +14,7 @@
     android:orientation="vertical">
     <android.support.design.widget.AppBarLayout
         app:elevation="0dp"
-        android:background="#dddddd"
+        android:background="@color/colorToolBar"
         android:layout_marginTop="-10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,12 +31,13 @@
                 android:clickable="true"
                 android:onClick="onClick"
                 tools:ignore="DuplicateIds"
-                app:srcCompat="@drawable/ic_vector_back_black" />
+                app:srcCompat="@drawable/ic_vector_back_icon" />
             <TextView
                 android:id="@+id/person_username"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="陈广不平"
+                android:textColor="@color/colorPrimary"
                 android:textSize="20dp"
                 android:layout_marginLeft="35dp"
                 />

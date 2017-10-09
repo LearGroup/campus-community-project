@@ -53,15 +53,17 @@ public class SetPageMainFragment extends Fragment {
     }
 
     public void setCONNECTION_STATUS(int CONNECTION_STATUS) {
-        this.CONNECTION_STATUS = CONNECTION_STATUS;
-        popupWindow=(LinearLayout) rootView.findViewById(R.id.popupwindow);
-        if(CONNECTION_STATUS==CONNECTION_ERROR && rootView!=null){
-            if(popupWindow.getVisibility()!=View.VISIBLE){
-                popupWindow.setVisibility(View.VISIBLE);
-            }
-        }else if(CONNECTION_STATUS==RECONNECTION && rootView!=null){
-            if(popupWindow.getVisibility()!=View.GONE){
-                popupWindow.setVisibility(View.GONE);
+        if(popupWindow!=null){
+            this.CONNECTION_STATUS = CONNECTION_STATUS;
+            popupWindow=(LinearLayout) rootView.findViewById(R.id.popupwindow);
+            if(CONNECTION_STATUS==CONNECTION_ERROR && rootView!=null){
+                if(popupWindow.getVisibility()!=View.VISIBLE){
+                    popupWindow.setVisibility(View.VISIBLE);
+                }
+            }else if(CONNECTION_STATUS==RECONNECTION && rootView!=null){
+                if(popupWindow.getVisibility()!=View.GONE){
+                    popupWindow.setVisibility(View.GONE);
+                }
             }
         }
     }
@@ -81,10 +83,6 @@ public class SetPageMainFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static SetPageMainFragment newInstance(String param1, String param2) {
         SetPageMainFragment fragment = new SetPageMainFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -92,10 +90,6 @@ public class SetPageMainFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.v("SetPageMainFramgent:", "onCreate: ");
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -119,11 +113,8 @@ public class SetPageMainFragment extends Fragment {
 
             @Override
             public void onItemClick(View view, int position, RelationShipLevelBean relationShipLevelBean) {
-                Bundle bundle=new Bundle();
-                Log.v("SetPageFragmentOnclickfrendData", String.valueOf(relationShipLevelBean));
-                bundle.putParcelable("frendData",relationShipLevelBean);
                 Person_Chat_Fragment person_chat_fragment =Person_Chat_Fragment.getInstance();
-                person_chat_fragment.setArguments(bundle);
+                person_chat_fragment.setFrendData(relationShipLevelBean);
                 FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getFragmentManager();
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

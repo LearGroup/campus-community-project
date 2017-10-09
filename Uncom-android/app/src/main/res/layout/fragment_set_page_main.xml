@@ -3,9 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/colorPrimary"
     tools:context="com.example.chen1.uncom.set.SetPageMainFragment"
     android:orientation="vertical">
     <LinearLayout
+
         android:id="@+id/popupwindow"
         android:visibility="gone"
         android:orientation="horizontal"
@@ -24,13 +26,12 @@
              />
     </LinearLayout>
 
-
         <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="10dp"
             android:id="@+id/set_page_main_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
+         >
 
         </android.support.v7.widget.RecyclerView>
 
