@@ -213,7 +213,8 @@ public class LoginPageFragment extends Fragment {
                     map.put("password", user_password);
                     JSONObject params = new JSONObject(map);
                     Log.v("json", String.valueOf(params));
-                    SessionStoreJsonRequest sessionStoreJsonRequest = new SessionStoreJsonRequest("http://47.95.0.73:8081/login",
+                    /*http://10.0.2.2:8081*/
+                    SessionStoreJsonRequest sessionStoreJsonRequest = new SessionStoreJsonRequest("http://10.0.2.2:8081/login",
                             params, new Response.Listener<JSONObject>() {
 
                         @Override
@@ -235,7 +236,7 @@ public class LoginPageFragment extends Fragment {
                                         userBean=UserBeanAndJsonUtils.getUpdatedUserBean(userBean,response.getJSONObject("results"));
                                         userBeanDao.update(userBean);
                                     }
-                                    SharedPreferencesUtil.setUserId((String) response.getJSONObject("results").get("id"),getContext());
+                                    SharedPreferencesUtil.setUserId((String)response.getJSONObject("results").get("id"),getContext());
                                     ChatUserDataUtil.getFriendList( CoreApplication.newInstance().getRequestQueue(),getContext(),rootView);
                                     final PopupWindow popupWindows=PopupWindowUtils.popupWindow("正在加载资源...",R.layout.access_popupwindow_statustag_layout, LinearLayout.LayoutParams.MATCH_PARENT,150,1500,getContext(),rootView);
                                     CountDownTimer timer = new CountDownTimer(1000,10) {

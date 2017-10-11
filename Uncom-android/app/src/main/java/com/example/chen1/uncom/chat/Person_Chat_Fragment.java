@@ -58,6 +58,7 @@ import com.example.chen1.uncom.utils.SharedPreferencesUtil;
 
 import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -314,16 +315,23 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 0:
-                        JSONObject object=(JSONObject) msg.obj;
+                        JSONArray jsonArray=(JSONArray) msg.obj;
                         try {
+                            for (int i = 0; i <jsonArray.length() ; i++) {
+                                JSONObject object=jsonArray.getJSONObject(i);
+                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                String str=  object.getString("time");
+                                str=str.replaceAll( "\\\\",  "");
+                                str=str.replaceAll("\"","");
+                                String d = format.format(Long.parseLong(str));
+                                Date date=format.parse(d);
+                                Log.v("time", String.valueOf(date));
+                                personChatRecyclerViewAdapter.add(new MessageHistoryBean(null,object.getString("ownId"),user_id,object.getString("content"),date,false),1,messageHistoryBeanDao);
+                                ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
+
+                            }
                             //MessageHistoryBean item2= new MessageHistoryBean(frendData.getId(),str,new Date().toString(),true);
-                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            String d = format.format(object.getLong("time"));
-                            Date date=format.parse(d);
-                            Log.v("time", String.valueOf(date));
-                            personChatRecyclerViewAdapter.add(new MessageHistoryBean(null,object.getString("ownId"),user_id,object.getString("content"),date,false),1,messageHistoryBeanDao);
-                            ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
-                        } catch (NumberFormatException e) {
+                                             } catch (NumberFormatException e) {
                             e.printStackTrace();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -402,6 +410,7 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
                personChatRecyclerViewAdapter.add(item2,1,messageHistoryBeanDao);
                 ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
                 Message message=new Message();
+                message.what=0;
                 message.obj=item2;
                 CoreApplication.newInstance().getCoreService().getSendChatHandler().sendMessage(message);
                 input_text.setText(null);

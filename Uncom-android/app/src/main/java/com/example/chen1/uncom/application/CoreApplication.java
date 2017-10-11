@@ -19,6 +19,7 @@ import com.example.chen1.uncom.service.CoreService;
 import com.example.chen1.uncom.set.SetPageMainFragmentAdapter;
 import com.example.chen1.uncom.utils.SharedPreferencesUtil;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,11 +42,11 @@ public class CoreApplication extends Application {
     private static CoreApplication instance;
     private RequestQueue requestQueue;
     private SharedPreferences preferences;
-    private Handler getChatDataHandler;
+    private Handler getChatDataHandler;  //当用户在对应的聊天界面，将数据发送到聊天界面
     private  String user_id;
     private MessageHistoryBeanDao messageHistoryBeanDao;
     private MessageHistoryBean messageHistoryBean;
-    private Handler coreAppGetChatDataHandler;
+    private Handler coreAppGetChatDataHandler;//获取消息数据 用户不在对应的聊天界面
     private RelationShipLevelBeanDao relationShipLevelBeanDao;
     private ArrayList<RelationShipLevelBean>personFrendList;
     private ArrayList<RelationShipLevelBean>activePersonMessageList=new ArrayList<>();
@@ -65,32 +66,43 @@ public class CoreApplication extends Application {
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 0:
-                        JSONObject object=(JSONObject) msg.obj;
+                        JSONArray jsonArray=(JSONArray) msg.obj;
                         try {
+                            /*获取relationShipLevelBeanDao*/
                             if(relationShipLevelBeanDao==null){
                                 relationShipLevelBeanDao = BeanDaoManager.getInstance().getDaoSession().getRelationShipLevelBeanDao();
                             }
+                            /*获取user_id*/
                             if(user_id==null){
                                 user_id= SharedPreferencesUtil.getUserId(getApplicationContext());
                             }
+                            /*获取messageHistoryBeanDao*/
                             if(messageHistoryBeanDao==null){
                                 messageHistoryBeanDao = BeanDaoManager.getInstance().getDaoSession().getMessageHistoryBeanDao();
                             }
+                            for (int i = 0; i <jsonArray.length() ; i++) {
+
+                                JSONObject object=jsonArray.getJSONObject(i);
                                 //MessageHistoryBean item2= new MessageHistoryBean(frendData.getId(),str,new Date().toString(),true);
-                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            String d = format.format(object.getLong("time"));
-                            Date date=format.parse(d);
-                            Log.v("time", String.valueOf(date));
-                            messageHistoryBean=new MessageHistoryBean(null,object.getString("ownId"),user_id,object.getString("content"),date,false);
-                            RelationShipLevelBean relationShipLevelBean= getRelationShipBean(messageHistoryBean.getOwnId());
-                            relationShipLevelBean.setLast_message(messageHistoryBean.getContent());
-                            relationShipLevelBean.setLast_active_time(messageHistoryBean.getTime());
-                            if(relationShipLevelBean.getActive()==false){
-                                relationShipLevelBean.setActive(true);
+                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                String str=  object.getString("time");
+                                str=str.replaceAll( "\\\\",  "");
+                                str=str.replaceAll("\"","");
+                                String d = format.format(Long.parseLong(str));
+                                Date date=format.parse(d);
+                                Log.v("time", String.valueOf(date));
+                                messageHistoryBean=new MessageHistoryBean(null,object.getString("ownId"),user_id,object.getString("content"),date,false);
+                                RelationShipLevelBean relationShipLevelBean= getRelationShipBean(messageHistoryBean.getOwnId());
+                                relationShipLevelBean.setLast_message(messageHistoryBean.getContent());
+                                relationShipLevelBean.setLast_active_time(messageHistoryBean.getTime());
+                                if(relationShipLevelBean.getActive()==false){
+                                    relationShipLevelBean.setActive(true);
+                                }
+                                updateActivePersonMessageList(relationShipLevelBean);
+                                relationShipLevelBeanDao.update(relationShipLevelBean);
+                                messageHistoryBeanDao.insert(messageHistoryBean);
                             }
-                           updateActivePersonMessageList(relationShipLevelBean);
-                            relationShipLevelBeanDao.update(relationShipLevelBean);
-                            messageHistoryBeanDao.insert(messageHistoryBean);
+
 
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
@@ -194,7 +206,8 @@ public class CoreApplication extends Application {
                 builder.append(requestHeaders.get(COOKIE_KEY));
             }
             requestHeaders.put(COOKIE_KEY, builder.toString());
-            Log.v("headers", String.valueOf(requestHeaders));
+
+            Log.v("sessionid",sessionId);
         }
     }
 

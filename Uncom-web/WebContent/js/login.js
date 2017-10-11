@@ -3,7 +3,6 @@ var time = null;
 function login(data) {
 	var sors;
 	var sor;
-
 	if(!$("#login_input_username").val()) {
 		$("#login_input_username_div").attr("class", "form-group-sm has-error")
 		$("#login_input_username").attr("placeholder", "账号不能为空")
@@ -38,13 +37,19 @@ function login(data) {
 	} else {
 		$("#login_input_password_div").attr("class", "form-group-sm has-success")
 		clearTimeout(time);
+		
 		time = setTimeout(function(){
-			$.post("/Uncom/login_Login.action", {
-				use: sor,
-				user: $("#login_input_username").val(),
-				password: $("#login_input_password").val()
-			}, function(date){
-				if(date == "0" ){
+			$.ajax({
+				type:"post",
+				url:"/Uncom/login_Login.action",
+				async:true,
+				dataType: "json",
+				data:{
+					"use": sor,
+					"user": $("#login_input_username").val(),
+					"password": $("#login_input_password").val()},
+				    success:function(date){
+						if(date == "0" ){
 
 					$("#login_input_username_div").attr("class", "form-group-sm has-error ")
 					$("#login_input_password_div").attr("class", "form-group-sm has-error")
@@ -86,7 +91,9 @@ function login(data) {
 					}
 
 				}
-			})
+				}
+			});
+			
 		}, 200)
 	}
 

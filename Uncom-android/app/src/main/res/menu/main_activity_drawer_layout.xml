@@ -27,9 +27,9 @@
                 android:icon="@drawable/is_menu_share"
                 android:title="Share" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_ofline"
                 android:icon="@drawable/is_menu_send"
-                android:title="Send" />
+                android:title="退出" />
         </menu>
     </item>
 

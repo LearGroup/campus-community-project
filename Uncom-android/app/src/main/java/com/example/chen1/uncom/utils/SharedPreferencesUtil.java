@@ -37,4 +37,12 @@ public class SharedPreferencesUtil {
     }
 
 
+    public static String getSessionId(Context context){
+        SharedPreferences sharedPreferences =context.getSharedPreferences("user_info", Context.MODE_PRIVATE);
+        String sessionId =sharedPreferences.getString("SESSION_COOKIE","null");
+        return sessionId;
+
+    }
+
+
 }
