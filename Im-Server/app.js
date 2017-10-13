@@ -68,7 +68,7 @@
  var connection = mysql.createConnection({
    host: '127.0.0.1',
    user: 'root',
-   password: '123456789',
+   password: '18247352203',
    database: 'currency_db'
  });
  var app = express()
@@ -84,7 +84,7 @@
    store: new redisStore({
      host: 'localhost',
      port: 6379,
-     pass: 18247352203,
+     pass: '18247352203',
      db: "0"
    }), // 本地存储session（文本文件，也可以选择其他store，比如redis的）,
    saveUninitialized: false, // 是否自动保存未初始化的会话，建议false
@@ -145,20 +145,54 @@
  io.on('connection', function(socket) {
 
 
+   socket.on('synchronization',function(data){
+    console.log("synchronization ID",socket.userId)
+     redisClient.lrange('historyMessage:' + socket.userId, 0, -1, function(err, res) {
+     if (res.length!=0) {
+        console.log("有历史信息",res)
+         socket.emit('message',JSON.parse('{"status":"1","results":['+res+']}'))
+         redisClient.del('historyMessage:' + socket.userId)
+       } else {
+        socket.emit('message',JSON.parse('{"status":"null"}'))
+       }
+     })
+   })
+
+
+   socket.on("ofline",function(obj){
+    console.log("ofline")
+    console.log(obj.sessionId)
+    redisClient.del(obj.sessionId,function(err,results){
+      if(err){
+        console.log(err)
+      }
+      console.log(results)
+      socket.emit("checkStatus",JSON.parse('{"status":"2"}'))
+      socket.disconnect(true)
+    })
+
+   })
+
 
    console.log('一个用户上线了')
    //监听新用户加入
    socket.on("login", function(obj) {
-
-
      console.log('socket login' + obj.userName);
      console.log("add user")
      socket.join('mainRoom')
+     socket.userId=obj.userId
      socketList[obj.userId] = socket.id
      socket.emit("loginResponse", "欢迎登陆~")
      console.log(socketList)
      /* console.log(io.sockets.sockets[socketList[obj.userId]])*/
-     socket.emit("hello", "欢迎回来~")
+     socket.emit("checkStatus",JSON.parse('{"status":"1"}'))
+     console.log("loginreconnect",socket.id)
+     /*redisClient.lrange('historyMessage:' + socket.id, 0, -1, function(err, res) {
+     if (res) {
+        console.log("有历史信息",res)
+         socket.emit('message',JSON.parse('{"status":"1","results":['+JSON.stringify(res)+']}'))
+       } 
+     })*/
    })
 
 
@@ -176,12 +210,12 @@
      if (io.sockets.connected[socketList[targetId]]) {
        console.log('向' + socketList[targetId] + '发送信息');
        console.log(time)
-       io.sockets.connected[socketList[targetId]].emit('message', {
-         time: time,
-         content: content,
-         myName: myName,
-         ownId: ownId
-       });
+       io.sockets.connected[socketList[targetId]].emit('message',JSON.parse('{"status":"1","results":'+'['+JSON.stringify({
+         "time": time,
+         "content": content,
+         "myName": myName,
+         "ownId": ownId
+       })+ ']}'));
      } else {
        console.log('用户不在线');
        redisClient.select('0', function(err) {
@@ -195,6 +229,10 @@
        })
      }
 
+   })
+
+   socket.on('reconnect',function(data){
+     console.log("reconnect")
    })
 
  })
@@ -221,13 +259,15 @@
    console.log('getFrendList');
    console.log(req.sessionID);
    if (req.session.user) {
+      console.log("userId",req.session.user.id)
      let id = req.session.user.id
      connection.query('select us.header_pic,us.username,us.sex,us.age,us.email,us.self_abstract,us.sprovince,us.sarea,us.town,us.phone,rs.minor_user ,rs.level ,rs.id   from relation_ship rs,user us where rs.main_user=' + '"' + id + '"' + ' and rs.level =4 and rs.minor_user=us.id', function(err, results, xfields) {
+       console.log(err)
        console.log(results);
        res.send(JSON.parse(JSON.stringify('{"status":"1","results":'+JSON.stringify(results)+'}')))
      })
    }else{
-     res.send(JSON.parse(JSON.stringify('{"status":null}')));
+     res.send(JSON.parse(JSON.stringify('{"status":"0"}')));
    }
  })
 
