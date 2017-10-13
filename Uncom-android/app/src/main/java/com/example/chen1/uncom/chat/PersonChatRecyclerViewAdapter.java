@@ -76,7 +76,7 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
              holder.textView.setText(spannableString);
         }
         //如果该条信息与上一条信息时间差大于3分钟 则显示这条数据发送的时间
-        if((position-1)>0&&((listItem.get(position).getTime().getTime()-listItem.get(position-1).getTime().getTime())/1000>180)){
+        if((position-1)>=0&&((listItem.get(position).getTime().getTime()-listItem.get(position-1).getTime().getTime())/1000>180)){
             holder.messageTime.setVisibility(View.VISIBLE);
             holder.messageTime.setText(TimeUtils.compareTimeChatDisplay(listItem.get(position).getTime(),listItem.get(position-1).getTime()));
 

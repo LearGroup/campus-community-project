@@ -212,8 +212,9 @@ public class CoreApplication extends Application {
     /**
      * 更新界面好友信息数据(Set)
      * @param relationShipLevelBean  消息Bean(当前指定为好友信息Bean)
-     * @param isRealChange  1表示除了更新未读提示外，还会对该信息在聚合(Set)页面的位置进行更新
-     *                      2表示只是更新未读提示(expample:他只是看了这个人发来的的消息，而并没有给这个人回复)
+     * @param isRealChange  1表示除了更新未读提示外，还会对该信息在聚合(Set)页面的位置进行更新(example:某人给我发了信息，
+     *                      而之前也有人给我发了信息，我认为这时，不能直接放到头部)
+     *                      2表示只是更新未读提示(example:他只是看了这个人发来的的消息，而并没有给这个人回复)
      *                      3除了更新未读提示 还会更新其位置，并更新到最顶端(example:该用户不仅看了这个人发来的的消息，
      *                       并且也回复了他)
      */
@@ -263,6 +264,10 @@ public class CoreApplication extends Application {
                 setPageMainFragmentAdapter.notifyDataSetChanged();
                 return "";
             }
+        }
+        //对应一个特殊情况：处理该条消息时，聚合(Set)界面为空
+        if(isRealChange == 1 || isRealChange == 3){
+            activePersonMessageList.add(0, relationShipLevelBean);
         }
         return "";
     }

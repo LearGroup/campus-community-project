@@ -164,7 +164,7 @@
     </LinearLayout>
 
     <LinearLayout
-        app:elevation="0dp"
+        android:elevation="0dp"
         android:background="@color/colorPrimary"
         android:layout_gravity="bottom"
         android:id="@+id/Expression_LinearLayout"

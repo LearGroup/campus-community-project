@@ -142,7 +142,7 @@ public class LoginPageFragment extends Fragment {
                 }
                 //存一份到本地
                 if (softInputHeight > 0) {
-                    SharedPreferencesUtil.setSoftInputHeight(softInputHeight+105,getContext());
+                    SharedPreferencesUtil.setSoftInputHeight(softInputHeight,getContext());
                 }
 
             }

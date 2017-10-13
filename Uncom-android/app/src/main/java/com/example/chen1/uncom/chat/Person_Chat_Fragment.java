@@ -434,13 +434,14 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
         SoftKeyBoardListener.setListener(getActivity(), new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
             @Override
             public void keyBoardShow(int height) {
-
-                KeyBoardHeight = height;
+                if(KeyBoardHeight !=height){
+                    KeyBoardHeight = height;
+                    SharedPreferencesUtil.setSoftInputHeight(KeyBoardHeight,getContext());
+                }
                 if (ExpressionLinearLayout.isShown()) {
                     lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
                     ExpressionLinearLayout.setVisibility(View.GONE);
                     unlockContentHeightDelayed();
-
                 }
             }
 
