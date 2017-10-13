@@ -115,7 +115,7 @@ public class SetPageMainFragment extends Fragment {
             public void onItemClick(View view, int position, RelationShipLevelBean relationShipLevelBean) {
                 Person_Chat_Fragment person_chat_fragment =Person_Chat_Fragment.getInstance();
                 person_chat_fragment.setFrendData(relationShipLevelBean);
-                FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getFragmentManager();
+                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout,person_chat_fragment).commit();

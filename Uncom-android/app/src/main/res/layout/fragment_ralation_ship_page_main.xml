@@ -19,11 +19,15 @@
 
           android:orientation="vertical">
           <android.support.constraint.ConstraintLayout
+              android:id="@+id/new_relationship_button"
+              android:clickable="true"
+              android:background="?android:attr/selectableItemBackground"
               android:paddingLeft="15dp"
               android:paddingRight="15dp"
               android:layout_width="match_parent"
               android:layout_height="50dp"
               >
+
               <android.support.v7.widget.AppCompatImageView
                   android:layout_width="35dp"
                   android:layout_height="35dp"

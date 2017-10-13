@@ -55,11 +55,12 @@ public class loadAction extends ActionSupport implements ModelDriven<articleData
 	}
 
 	public String getArticleCommentSetForOneLevel() throws IOException {
-		//request = ServletActionContext.getRequest();
+		request = ServletActionContext.getRequest();
 		SessionFactory sessionFactory = hibernateStartPrepare.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		String articleId = (String) request.getSession().getAttribute("articleId");
+		System.out.println("commentArticleId:"+articleId);
 		String sql = "select cd from commentData cd where articleId='" + articleId + "'"
 				+ "and commentParentId=null order by createTime desc,commentChildCount desc";
 		commentSum = Integer.parseInt(request.getParameter("sum"));

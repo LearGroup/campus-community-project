@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
+    android:layout_height="match_parent"
+    tools:context="com.example.chen1.uncom.relationship.NewRelationShipFragment">
+
+    <android.support.design.widget.AppBarLayout
+        app:elevation="0dp"
+        android:background="@color/colorToolBar"
+        android:layout_marginTop="-10dp"
+        android:layout_width="match_parent"
+        android:fitsSystemWindows="true"
+        android:layout_height="wrap_content"
+        android:id="@+id/peron_dtailed_information_appbar_layout">
+            <android.support.v7.widget.Toolbar
+                android:background="@color/colorToolBar"
+                android:layout_marginBottom="-5dp"
+                android:id="@+id/new_relationship_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme"
+                >
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="25dp"
+                    android:id="@+id/new_relationship_back_icon"
+                    android:layout_height="25dp"
+                    android:clickable="true"
+                    android:onClick="onClick"
+                    tools:ignore="DuplicateIds"
+                    app:srcCompat="@drawable/ic_vector_back_icon" />
+                <TextView
+                    android:id="@+id/person_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="新关系"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="35dp"
+                    />
+
+            </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+</LinearLayout>

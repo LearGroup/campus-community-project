@@ -21,23 +21,26 @@ public class MessageHistoryBean implements Parcelable {
     private String targetId;//发送目标的id
     private String content;
     private Date time;
+    private boolean looke ; //true 浏览过 false未浏览
     private  boolean MessageType;//1:own 0:opposite
 
     protected MessageHistoryBean(Parcel in) {
         ownId = in.readString();
         targetId = in.readString();
         content = in.readString();
+        looke = in.readByte() != 0;
         MessageType = in.readByte() != 0;
     }
 
-    @Generated(hash = 1179395214)
+    @Generated(hash = 1393772422)
     public MessageHistoryBean(Long id, String ownId, String targetId, String content, Date time,
-            boolean MessageType) {
+            boolean looke, boolean MessageType) {
         this.id = id;
         this.ownId = ownId;
         this.targetId = targetId;
         this.content = content;
         this.time = time;
+        this.looke = looke;
         this.MessageType = MessageType;
     }
 
@@ -50,6 +53,7 @@ public class MessageHistoryBean implements Parcelable {
         dest.writeString(ownId);
         dest.writeString(targetId);
         dest.writeString(content);
+        dest.writeByte((byte) (looke ? 1 : 0));
         dest.writeByte((byte) (MessageType ? 1 : 0));
     }
 
@@ -96,6 +100,14 @@ public class MessageHistoryBean implements Parcelable {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public boolean getLooke() {
+        return this.looke;
+    }
+
+    public void setLooke(boolean looke) {
+        this.looke = looke;
     }
 
     public boolean getMessageType() {

@@ -2,6 +2,7 @@ package com.example.chen1.uncom.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 /**
  * Created by chen1 on 2017/10/3.
@@ -15,7 +16,12 @@ public class SharedPreferencesUtil {
         return Id;
     }
 
-
+    public static  void delUsetId(Context context){
+        SharedPreferences sharedPreferences =context.getSharedPreferences("user_info", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor =sharedPreferences.edit();
+        editor.remove("user_id");
+        editor.commit();
+    }
     public static void setUserId(String id,Context context){
         SharedPreferences sharedPreferences =context.getSharedPreferences("user_info", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor =sharedPreferences.edit();
@@ -38,10 +44,19 @@ public class SharedPreferencesUtil {
 
 
     public static String getSessionId(Context context){
-        SharedPreferences sharedPreferences =context.getSharedPreferences("user_info", Context.MODE_PRIVATE);
-        String sessionId =sharedPreferences.getString("SESSION_COOKIE","null");
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String sessionId =sharedPreferences.getString("skey","null");
         return sessionId;
 
+    }
+
+    public static String delSessionId(Context context){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor =sharedPreferences.edit();
+        editor.remove("skey");
+        editor.commit();
+        return "1";
     }
 
 

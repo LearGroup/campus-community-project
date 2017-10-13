@@ -81,6 +81,7 @@ public class CoreService extends Service  {
         login.put("userId",userBean.getId());
         loginData=new JSONObject(login);
         Log.v("createCoreService","ok");
+        Log.v("user_id", "ss"+user_id);
         if(thread==null){
          thread= new Thread(new Runnable() {
                 @Override
@@ -147,6 +148,7 @@ public class CoreService extends Service  {
                                 JSONObject object=(JSONObject) args[0];
                                 try {
 
+                                    //当用户在对应的聊天界面，将数据发送到聊天界面
                                 //    Log.v("chatresponse", String.valueOf(jsonArray));
                                     if(getChatDataHandler!=null && object.getString("status").equals("1")){
                                         JSONArray jsonArray=object.getJSONArray("results");
@@ -154,7 +156,6 @@ public class CoreService extends Service  {
                                         Message message=new Message();
                                         message.what=0;
                                         message.obj=jsonArray;
-                                        //当用户在对应的聊天界面，将数据发送到聊天界面
                                         getChatDataHandler.sendMessage(message);
                                     }else if(object.getString("status").equals("1")){
                                         JSONArray jsonArray=object.getJSONArray("results");
@@ -178,6 +179,7 @@ public class CoreService extends Service  {
                                 Log.v("synchronization", String.valueOf(object));
                             }
                         }).on("checkStatus", new Emitter.Listener() {
+                            //获取服务端传来的状态码：1 同步信息   2 退出账户
                             @Override
                             public void call(Object... args) {
                                 JSONObject object=(JSONObject)args[0];
@@ -185,6 +187,13 @@ public class CoreService extends Service  {
                                     Log.v("checkStatus", object.getString("status"));
                                     if(object.getString("status").equals("1")){
                                         socket.emit("synchronization");
+                                    }else if(object.getString("status").equals("2")){
+                                        SharedPreferencesUtil.delSessionId(context);
+                                        Message message=new Message();
+                                        message.what=2;
+                                        message.obj="ofline";
+                                        coreAppGetChatDataHandler.sendMessage(message);
+
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -218,14 +227,19 @@ public class CoreService extends Service  {
                                     socket.emit("message",params);
                                     break;
                                 }
+                                //账户退出动作：删除本地存储的sessionid,关闭socket连接，退出界面
                                 case 1:{
                                     Log.v("ofline","ok");
-                                    String sessionId = String.valueOf(SharedPreferencesUtil.getSessionId(context).split("\\."));
+                                    String sessionId =SharedPreferencesUtil.getSessionId(context);
+                                    Log.v("ofline",sessionId);
                                     String id ="sess:"+sessionId.split("\\.")[0].substring(4);
                                     HashMap<String,String> data=new HashMap<String, String>();
                                     data.put("sessionId",id);
+                                    Log.v("ofline",id);
                                     JSONObject params = new JSONObject(data);
                                     socket.emit("ofline",params);
+                                    Log.v("ofline", String.valueOf(params));
+                                    Log.v("oflined","ok");
                                     break;
                                 }
                             }

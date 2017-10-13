@@ -81,7 +81,8 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     private AppCompatButton send_btn;
     private SharedPreferences sp;
     private String user_id;
-
+    private RelationShipLevelBeanDao  relationShipLevelBeanDao;
+    private  boolean isVisible;//判断当前fragment是否可见
     private static final String SHARE_PREFERENCE_NAME = "EmotionKeyboard";
     private static final String SHARE_PREFERENCE_SOFT_INPUT_HEIGHT = "soft_input_height";
     private int ContentViewHeight;
@@ -115,6 +116,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
 
     public void setFrendData(RelationShipLevelBean frendData) {
         this.frendData = frendData;
+        relationShipLevelBeanDao = BeanDaoManager.getInstance().getDaoSession().getRelationShipLevelBeanDao();
     }
 
     public Person_Chat_Fragment() {
@@ -326,7 +328,8 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
                                 String d = format.format(Long.parseLong(str));
                                 Date date=format.parse(d);
                                 Log.v("time", String.valueOf(date));
-                                personChatRecyclerViewAdapter.add(new MessageHistoryBean(null,object.getString("ownId"),user_id,object.getString("content"),date,false),1,messageHistoryBeanDao);
+
+                                personChatRecyclerViewAdapter.add(isVisible,new MessageHistoryBean(null,object.getString("ownId"),user_id,object.getString("content"),date,false,false),1,messageHistoryBeanDao);
                                 ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
 
                             }
@@ -370,7 +373,7 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
                 -1.0f);
         mHiddenAction.setDuration(150);
         quitFullScreen();
-
+        isVisible = true;
         final View view = inflater.inflate(R.layout.fragment_person__chat_, container, false);
         username=(TextView) view.findViewById(R.id.person_username);
         username.setText(frendData.getUsername());
@@ -406,8 +409,8 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
             public void onClick(View v) {
                 String str=input_text.getText().toString();
                 /*str,new Date().toString(),R.drawable.head_img,true*/
-               MessageHistoryBean item2= new MessageHistoryBean(null,user_id,frendData.getMinor_user(),str,new Date(),true);
-               personChatRecyclerViewAdapter.add(item2,1,messageHistoryBeanDao);
+               MessageHistoryBean item2= new MessageHistoryBean(null,user_id,frendData.getMinor_user(),str,new Date(),false,true);
+               personChatRecyclerViewAdapter.add(isVisible,item2,1,messageHistoryBeanDao);
                 ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
                 Message message=new Message();
                 message.what=0;
@@ -547,8 +550,13 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
                 ExpressionViewPager.setCurrentItem(position);
             }
         });
+        //当进入聊天页面 则可判断该用户已浏览该好友的未读消息
         ExpressionMenuType.setAdapter(grallyAdapter);
-
+        if(frendData.getUn_look()!=null &&  frendData.getUn_look()!=0){
+            frendData.setUn_look(0);
+            CoreApplication.newInstance().updateActivePersonMessageList(frendData,2);
+            relationShipLevelBeanDao.update(frendData);
+        }
         return view;
     }
 
@@ -573,6 +581,30 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
         return BackHandlerHelper.handleBackPress(this);
     }
 
+
+    /**
+     * 判断当前fragment是否可见
+     * @param isVisibleToUser
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        Log.v("setUserVisibleHint", "gaga:"+String.valueOf(getUserVisibleHint()));
+        if(isVisibleToUser) {
+            isVisible = true;
+        } else {
+            isVisible = false;
+        }
+        super.setUserVisibleHint(isVisibleToUser);
+
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        isVisible = false;
+        Log.v("PersonChatFragment OnStop","ok");
+    }
 
     interface onBackListener {
         public void backListener();

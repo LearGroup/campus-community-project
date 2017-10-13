@@ -44,6 +44,7 @@ import com.example.chen1.uncom.service.ChatCoreBinder;
 import com.example.chen1.uncom.service.CoreService;
 import com.example.chen1.uncom.utils.BackHandlerHelper;
 import com.example.chen1.uncom.utils.BottomNavigationViewHelper;
+import com.example.chen1.uncom.utils.SharedPreferencesUtil;
 
 import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
@@ -179,11 +180,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
+
         viewPager.setAdapter(sectionsAdapter);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         Intent startIntent =new Intent(this, CoreService.class);
-        startService(startIntent);
-        bindService(startIntent,serviceConnection,BIND_AUTO_CREATE);
+        getApplicationContext().startService(startIntent);
+        CoreApplication.newInstance().setServiceConnection(serviceConnection);
+        getApplicationContext().bindService(startIntent,serviceConnection,BIND_AUTO_CREATE);
         coreHandler= new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -321,9 +324,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_ofline) {
+            String sessionId = SharedPreferencesUtil.getSessionId(getApplicationContext());
+            Log.v("ofline2",sessionId);
             Message message=new Message();
             message.what=1;
             message.obj="usr_session_id";
+            CoreApplication.newInstance().setActivity(this);
             CoreApplication.newInstance().getCoreService().getSendChatHandler().sendMessage(message);
         }
 
@@ -342,6 +348,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(serviceConnection);
+
     }
 }
