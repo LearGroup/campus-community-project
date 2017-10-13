@@ -51,7 +51,7 @@ function sendMessage(thi, event) {
     console.log('send targetId');
     console.log(current_obj.minor_user);
     socket.emit('message', {
-      time: data.time,
+      time: ""+data.time+"",
       targetId: current_obj.minor_user,
       content: data.chat,
       ownId: ownId,
