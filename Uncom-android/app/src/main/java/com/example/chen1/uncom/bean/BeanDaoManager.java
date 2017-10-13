@@ -3,8 +3,10 @@ package com.example.chen1.uncom.bean;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.example.chen1.uncom.application.CoreApplication;
+import com.example.chen1.uncom.utils.SharedPreferencesUtil;
 
 import java.security.AccessControlContext;
 
@@ -14,16 +16,18 @@ import java.security.AccessControlContext;
 
 public class BeanDaoManager {
 
-    private static BeanDaoManager mGreenDaoManager;
+    private static BeanDaoManager mGreenDaoManager=null;
     private DaoMaster mMaster;
     private DaoSession mDaosession;
 
     public BeanDaoManager() {
-        DaoMaster.DevOpenHelper devOpenHelper=new DaoMaster.DevOpenHelper(CoreApplication.newInstance().getApplicationContext(),"user-db",null);
+        String id = SharedPreferencesUtil.getUserId(CoreApplication.newInstance().getApplicationContext());
+        Log.v("BeanManagerId:",id);
+        DaoMaster.DevOpenHelper devOpenHelper=new DaoMaster.DevOpenHelper(CoreApplication.newInstance().getApplicationContext(),"user"+id,null);
         mMaster=new DaoMaster(devOpenHelper.getWritableDatabase());
         mDaosession=mMaster.newSession();
     }
-    public static BeanDaoManager getInstance(){
+    public  static   BeanDaoManager getInstance(){
         if(mGreenDaoManager==null){
             mGreenDaoManager=new BeanDaoManager();
         }

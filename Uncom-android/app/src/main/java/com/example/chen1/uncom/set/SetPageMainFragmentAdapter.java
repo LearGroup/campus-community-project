@@ -14,9 +14,13 @@ import com.example.chen1.uncom.bean.MessageHistoryBeanDao;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
 import com.example.chen1.uncom.utils.LoadImageUtils;
+import com.example.chen1.uncom.utils.TimeUtils;
 
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -71,7 +75,24 @@ public class SetPageMainFragmentAdapter extends RecyclerView.Adapter<SetPageMain
         LoadImageUtils.getFirendHeaderImage(personMessageList.get(position).getHeader_pic(),context,holder.headImage);
         holder.userNameTextView.setText(personMessageList.get(position).getUsername());
         holder.lastMessageTextView.setText(personMessageList.get(position).getLast_message());
-    }
+        Integer temper=personMessageList.get(position).getUn_look();
+        Log.v("SetPageFragmentAdapterTemper", String.valueOf(temper));
+        if(temper!=null && temper>0){
+            if(!holder.unLookSum.isShown()){
+                holder.unLookSum.setVisibility(View.VISIBLE);
+            }
+            holder.unLookSum.setText(""+temper);
+        }else{
+            holder.unLookSum.setVisibility(View.GONE);
+        }
+        if(personMessageList!=null&&personMessageList.size()>0){
+            Log.v("teimse","a"+personMessageList.size());
+            holder.messageDate.setText(TimeUtils.compareTime(new Date(),personMessageList.get(position).getLast_active_time()));
+        }
+     }
+
+
+
 
     @Override
     public int getItemCount() {
@@ -87,8 +108,12 @@ public class SetPageMainFragmentAdapter extends RecyclerView.Adapter<SetPageMain
         private TextView lastMessageTextView;
         private TextView userNameTextView;
         private CircleImageView headImage;
+        private TextView messageDate;
+        private TextView unLookSum;
         public ViewHolder(View itemView) {
             super(itemView);
+            messageDate=(TextView)itemView.findViewById(R.id.textView3);
+            unLookSum=(TextView)itemView.findViewById(R.id.unlook_sum);
             lastMessageTextView= (TextView) itemView.findViewById(R.id.person_last_message);
             userNameTextView= (TextView) itemView.findViewById(R.id.person_username);
             headImage= (CircleImageView) itemView.findViewById(R.id.circleImageView);

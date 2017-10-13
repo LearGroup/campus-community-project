@@ -58,6 +58,10 @@ public class LoginPageFragment extends Fragment {
     private static RequestQueue requestQueue;
     private static LoginPageFragment loginPageFragment = null;
 
+
+    /**
+     * 跳转到MainActivity
+     */
     private void jumpToMainActivity(){
         InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         //得到InputMethodManager的实例
@@ -69,6 +73,7 @@ public class LoginPageFragment extends Fragment {
         }
         Intent intent =new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
+
         getActivity().finish();
     }
 
@@ -87,14 +92,6 @@ public class LoginPageFragment extends Fragment {
     }
 
 
-    public static LoginPageFragment newInstance(String param1, String param2) {
-        LoginPageFragment fragment = new LoginPageFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private int getSoftButtonsBarHeight() {
@@ -164,8 +161,10 @@ public class LoginPageFragment extends Fragment {
     }
 
 
-
-
+    /**
+     * 登陆方法
+     * @throws AuthFailureError
+     */
     private void attemptLogin() throws AuthFailureError {
         String tag_json_obj = "json_obj_req";
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -199,7 +198,7 @@ public class LoginPageFragment extends Fragment {
 			*/
             final PopupWindow popwin= PopupWindowUtils.popupWindow(null,R.layout.access_popupwindow_loginwaiting_layout, LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT,-1,getContext(),rootView);
             //传一个参数，user=zhangqi
-
+            //为了保证popupWindow能有好的视觉体验，故延迟了600毫秒...
             CountDownTimer timer = new CountDownTimer(600, 10) {
                 @Override
                 public void onTick(long millisUntilFinished) {
@@ -213,6 +212,7 @@ public class LoginPageFragment extends Fragment {
                     map.put("password", user_password);
                     JSONObject params = new JSONObject(map);
                     Log.v("json", String.valueOf(params));
+                    /*http://10.0.2.2:8081 本地调试用IP地址，本地调试时不能使用127.0.0.1:8081*/
                     SessionStoreJsonRequest sessionStoreJsonRequest = new SessionStoreJsonRequest("http://47.95.0.73:8081/login",
                             params, new Response.Listener<JSONObject>() {
 
@@ -225,17 +225,19 @@ public class LoginPageFragment extends Fragment {
                                 if(status.equals("1")){
                                     Log.v("resopnse", String.valueOf(response));
                                     Log.v("resopnse", String.valueOf(response.getJSONObject("results").get("id")));
-                                    UserBeanDao userBeanDao =BeanDaoManager.getInstance().getNewSession().getUserBeanDao();
+                                    SharedPreferencesUtil.setUserId((String)response.getJSONObject("results").get("id"),getContext());
+                                    UserBeanDao userBeanDao =BeanDaoManager.getInstance().getDaoSession().getUserBeanDao();
                                     UserBean userBean=userBeanDao.queryBuilder().where(UserBeanDao.Properties.Id.eq(response.getJSONObject("results").get("id"))).build().unique();
                                     Log.v("resop nse", String.valueOf(userBean));
                                     if(userBean==null){
                                         userBean= UserBeanAndJsonUtils.getUserBean(response.getJSONObject("results"));
                                                userBeanDao.insert(userBean);
+                                        Log.v("saveUserBean", "1");
                                     }else{
                                         userBean=UserBeanAndJsonUtils.getUpdatedUserBean(userBean,response.getJSONObject("results"));
                                         userBeanDao.update(userBean);
+                                        Log.v("saveUserBean", "2");
                                     }
-                                    SharedPreferencesUtil.setUserId((String) response.getJSONObject("results").get("id"),getContext());
                                     ChatUserDataUtil.getFriendList( CoreApplication.newInstance().getRequestQueue(),getContext(),rootView);
                                     final PopupWindow popupWindows=PopupWindowUtils.popupWindow("正在加载资源...",R.layout.access_popupwindow_statustag_layout, LinearLayout.LayoutParams.MATCH_PARENT,150,1500,getContext(),rootView);
                                     CountDownTimer timer = new CountDownTimer(1000,10) {

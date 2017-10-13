@@ -19,21 +19,22 @@ public class RelationShipLevelBean implements Parcelable{
     @Id
     private String id;
     private Integer level;
-    private String minor_user;
+    private String minor_user;//用户Id
     private String header_pic;
     private String username;
     private Integer sex;
     private String email;
-    private String self_abstract;
+    private String self_abstract;//自述(心情短语)
     private String sprovince;
     private String sarea;
     private String stown;
     private String phone;
     private Integer age;
-    private String last_message;
-    private Date last_active_time;
-    private Date connect_time;
-    private boolean active;
+    private String last_message;//最后活动的消息
+    private Date last_active_time;//最后的活动时间
+    private Date connect_time;//与用户建立关系时间
+    private boolean active;//是否在聚合(Set)界面中
+    private Integer un_look;//未浏览信息总数
 
 
     protected RelationShipLevelBean(Parcel in) {
@@ -51,11 +52,11 @@ public class RelationShipLevelBean implements Parcelable{
         active = in.readByte() != 0;
     }
 
-    @Generated(hash = 401612921)
+    @Generated(hash = 1069690631)
     public RelationShipLevelBean(String id, Integer level, String minor_user, String header_pic,
             String username, Integer sex, String email, String self_abstract, String sprovince,
             String sarea, String stown, String phone, Integer age, String last_message,
-            Date last_active_time, Date connect_time, boolean active) {
+            Date last_active_time, Date connect_time, boolean active, Integer un_look) {
         this.id = id;
         this.level = level;
         this.minor_user = minor_user;
@@ -73,6 +74,7 @@ public class RelationShipLevelBean implements Parcelable{
         this.last_active_time = last_active_time;
         this.connect_time = connect_time;
         this.active = active;
+        this.un_look = un_look;
     }
 
     @Generated(hash = 831056549)
@@ -234,6 +236,14 @@ public class RelationShipLevelBean implements Parcelable{
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Integer getUn_look() {
+        return this.un_look;
+    }
+
+    public void setUn_look(Integer un_look) {
+        this.un_look = un_look;
     }
 
     public static final Creator<RelationShipLevelBean> CREATOR = new Creator<RelationShipLevelBean>() {

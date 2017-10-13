@@ -3,7 +3,10 @@ package com.example.chen1.uncom.relationship;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +23,7 @@ import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.BeanDaoManager;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
+import com.example.chen1.uncom.chat.Person_Chat_Fragment;
 
 import org.greenrobot.greendao.query.Query;
 
@@ -39,6 +43,7 @@ public class RalationShipPageMainFragment extends Fragment {
     private ArrayList<RelationShipLevelBean> personFrendList;
     private ListView group_listView;
     private ListView person_listview;
+    private ConstraintLayout new_relation_ship_button;
     private OnFragmentInteractionListener mListener;
     private static RalationShipPageMainFragment ralationShipPageMainFragment=null;
 
@@ -72,6 +77,7 @@ public class RalationShipPageMainFragment extends Fragment {
         if(personFrendList==null){
             personFrendList= CoreApplication.newInstance().getPersonFrendList();
         }
+        new_relation_ship_button=(ConstraintLayout)view.findViewById(R.id.new_relationship_button);
         group_listView=(ListView) view.findViewById(R.id.group_list_view);
         person_listview=(ListView)view.findViewById(R.id.person_list_view);
         BaseAdapter group_baseAdapter=new group_relation_ship_adapter();
@@ -79,9 +85,9 @@ public class RalationShipPageMainFragment extends Fragment {
         group_listView.setAdapter(group_baseAdapter);
         person_listview.setAdapter(person_baseAdapter);
         person_listview.setOnItemClickListener(new Person_Item_OnClickListener(personFrendList));
+        new_relation_ship_button.setOnClickListener(new NewRelationShipButtonOnclickListener());
         return view;
     }
-
 
 
 

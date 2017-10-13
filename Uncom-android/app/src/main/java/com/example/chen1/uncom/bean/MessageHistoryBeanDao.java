@@ -27,7 +27,8 @@ public class MessageHistoryBeanDao extends AbstractDao<MessageHistoryBean, Long>
         public final static Property TargetId = new Property(2, String.class, "targetId", false, "TARGET_ID");
         public final static Property Content = new Property(3, String.class, "content", false, "CONTENT");
         public final static Property Time = new Property(4, java.util.Date.class, "time", false, "TIME");
-        public final static Property MessageType = new Property(5, boolean.class, "MessageType", false, "MESSAGE_TYPE");
+        public final static Property Looke = new Property(5, boolean.class, "looke", false, "LOOKE");
+        public final static Property MessageType = new Property(6, boolean.class, "MessageType", false, "MESSAGE_TYPE");
     }
 
 
@@ -48,7 +49,8 @@ public class MessageHistoryBeanDao extends AbstractDao<MessageHistoryBean, Long>
                 "\"TARGET_ID\" TEXT," + // 2: targetId
                 "\"CONTENT\" TEXT," + // 3: content
                 "\"TIME\" INTEGER," + // 4: time
-                "\"MESSAGE_TYPE\" INTEGER NOT NULL );"); // 5: MessageType
+                "\"LOOKE\" INTEGER NOT NULL ," + // 5: looke
+                "\"MESSAGE_TYPE\" INTEGER NOT NULL );"); // 6: MessageType
     }
 
     /** Drops the underlying database table. */
@@ -85,7 +87,8 @@ public class MessageHistoryBeanDao extends AbstractDao<MessageHistoryBean, Long>
         if (time != null) {
             stmt.bindLong(5, time.getTime());
         }
-        stmt.bindLong(6, entity.getMessageType() ? 1L: 0L);
+        stmt.bindLong(6, entity.getLooke() ? 1L: 0L);
+        stmt.bindLong(7, entity.getMessageType() ? 1L: 0L);
     }
 
     @Override
@@ -116,7 +119,8 @@ public class MessageHistoryBeanDao extends AbstractDao<MessageHistoryBean, Long>
         if (time != null) {
             stmt.bindLong(5, time.getTime());
         }
-        stmt.bindLong(6, entity.getMessageType() ? 1L: 0L);
+        stmt.bindLong(6, entity.getLooke() ? 1L: 0L);
+        stmt.bindLong(7, entity.getMessageType() ? 1L: 0L);
     }
 
     @Override
@@ -132,7 +136,8 @@ public class MessageHistoryBeanDao extends AbstractDao<MessageHistoryBean, Long>
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // targetId
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // content
             cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)), // time
-            cursor.getShort(offset + 5) != 0 // MessageType
+            cursor.getShort(offset + 5) != 0, // looke
+            cursor.getShort(offset + 6) != 0 // MessageType
         );
         return entity;
     }
@@ -144,7 +149,8 @@ public class MessageHistoryBeanDao extends AbstractDao<MessageHistoryBean, Long>
         entity.setTargetId(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setContent(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setTime(cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)));
-        entity.setMessageType(cursor.getShort(offset + 5) != 0);
+        entity.setLooke(cursor.getShort(offset + 5) != 0);
+        entity.setMessageType(cursor.getShort(offset + 6) != 0);
      }
     
     @Override

@@ -31,8 +31,8 @@ jdbc:mysql://localhost:3306/jsp_app
 
         <!-- Enable Hibernate's automatic session context management -->
         <property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
-        <property name="hibernate.c3p0.max_size">20</property>
-        <property name="hibernate.c3p0.min_size">5</property>
+        <property name="hibernate.c3p0.max_size">30</property>
+        <property name="hibernate.c3p0.min_size">10</property>
         <property name="hibernate.c3p0.timeout">120</property>
         <property name="automaticTestTable">Test</property>
         <property name="hibernate.c3p0.max_statements">100</property>

@@ -12,7 +12,7 @@
         android:name=".application.CoreApplication"
         android:allowBackup="true"
         android:icon="@mipmap/catsicon"
-        android:label="@string/app_name"
+        android:label="ThinkIn"
         android:roundIcon="@mipmap/catsicon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -33,7 +33,7 @@
             android:name=".main.MainActivity"
             android:label="@string/app_name"></activity
           >
-        <service android:name=".service.CoreService"/>
+        <service android:name=".service.CoreService" android:process=""/>
     </application>
 
 </manifest>

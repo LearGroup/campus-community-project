@@ -43,7 +43,7 @@ public class Person_Item_OnClickListener implements AdapterView.OnItemClickListe
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Person_Chat_Fragment person_chat_fragment =Person_Chat_Fragment.getInstance();
         person_chat_fragment.setFrendData(personFrendList.get(position));
-        FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getFragmentManager();
+        FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout,person_chat_fragment).commit();

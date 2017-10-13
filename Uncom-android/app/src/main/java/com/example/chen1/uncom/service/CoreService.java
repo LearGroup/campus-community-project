@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.preference.Preference;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -29,6 +30,7 @@ import com.example.chen1.uncom.utils.CoreServiceCallBack;
 import com.example.chen1.uncom.utils.PopupWindowUtils;
 import com.example.chen1.uncom.utils.SharedPreferencesUtil;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -79,6 +81,7 @@ public class CoreService extends Service  {
         login.put("userId",userBean.getId());
         loginData=new JSONObject(login);
         Log.v("createCoreService","ok");
+        Log.v("user_id", "ss"+user_id);
         if(thread==null){
          thread= new Thread(new Runnable() {
                 @Override
@@ -103,21 +106,22 @@ public class CoreService extends Service  {
                             @Override
                             public void call(Object... args) {
                                 Log.v("DISCONNECT","ok");
-                            }
-                        }).on(Socket.EVENT_RECONNECT, new Emitter.Listener() {
-                            @Override
-                            public void call(Object... args) {
-                                Log.v("EVENT_RECONNECT","ok");
                                 if(handler!=null){
                                     Message message=new Message();
                                     message.what=0;
                                     handler.sendMessage(message);
                                 }
                             }
-                        }).on(Socket.EVENT_CONNECT_ERROR, new Emitter.Listener() {
+                        }).on(Socket.EVENT_RECONNECT, new Emitter.Listener() {
                             @Override
                             public void call(Object... args) {
                                 Log.v("EVENT_RECONNECT","ok");
+                                socket.emit("synchronization","synchronization");
+                            }
+                        }).on(Socket.EVENT_CONNECT_ERROR, new Emitter.Listener() {
+                            @Override
+                            public void call(Object... args) {
+                                Log.v("EVENT_RECONNECT_ERROR","ok");
 
                                 if(handler!=null){
                                     Message message=new Message();
@@ -129,6 +133,11 @@ public class CoreService extends Service  {
                             @Override
                             public void call(Object... args) {
                                 Log.v("EVENT_CONNECT_TIMEOUT","ok");
+                                if(handler!=null){
+                                    Message message=new Message();
+                                    message.what=0;
+                                    handler.sendMessage(message);
+                                }
 
                             }
                         }).on("message", new Emitter.Listener() {
@@ -137,20 +146,57 @@ public class CoreService extends Service  {
                             public void call(Object... args) {
                                 Log.v("chatresponse", String.valueOf(args[0]));
                                 JSONObject object=(JSONObject) args[0];
-                                Log.v("chatresponse", String.valueOf(object));
-                                if(getChatDataHandler!=null){
+                                try {
 
-                                    Message message=new Message();
-                                    message.what=0;
-                                    message.obj=object;
-                                    getChatDataHandler.sendMessage(message);
-                                }else{
+                                    //当用户在对应的聊天界面，将数据发送到聊天界面
+                                //    Log.v("chatresponse", String.valueOf(jsonArray));
+                                    if(getChatDataHandler!=null && object.getString("status").equals("1")){
+                                        JSONArray jsonArray=object.getJSONArray("results");
+                                        Log.v("chatresponse", "1");
                                         Message message=new Message();
                                         message.what=0;
-                                        message.obj=object;
+                                        message.obj=jsonArray;
+                                        getChatDataHandler.sendMessage(message);
+                                    }else if(object.getString("status").equals("1")){
+                                        JSONArray jsonArray=object.getJSONArray("results");
+                                    /*若getChatDataHandler=null说明chat界面尚未初始化*/
+                                        Log.v("chatresponse", "2");
+                                        Message message=new Message();
+                                        message.what=0;
+                                        message.obj=jsonArray;
                                         coreAppGetChatDataHandler.sendMessage(message);
                                         //CoreApplication.newInstance().updateActivePersonMessageList(relationShipLevelBean);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 
+                            }
+                        }).on("synchronization", new Emitter.Listener() {
+                            @Override
+                            public void call(Object... args) {
+                                JSONObject object=(JSONObject) args[0];
+                                Log.v("synchronization", String.valueOf(object));
+                            }
+                        }).on("checkStatus", new Emitter.Listener() {
+                            //获取服务端传来的状态码：1 同步信息   2 退出账户
+                            @Override
+                            public void call(Object... args) {
+                                JSONObject object=(JSONObject)args[0];
+                                try {
+                                    Log.v("checkStatus", object.getString("status"));
+                                    if(object.getString("status").equals("1")){
+                                        socket.emit("synchronization");
+                                    }else if(object.getString("status").equals("2")){
+                                        SharedPreferencesUtil.delSessionId(context);
+                                        Message message=new Message();
+                                        message.what=2;
+                                        message.obj="ofline";
+                                        coreAppGetChatDataHandler.sendMessage(message);
+
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
                             }
                         });
@@ -165,18 +211,38 @@ public class CoreService extends Service  {
                         @Override
                         public void handleMessage(Message msg) {
                             super.handleMessage(msg);
-                            MessageHistoryBean messageHistoryBean= (MessageHistoryBean) msg.obj;
-                            Log.v("getSendWork",messageHistoryBean.getContent());
-                            Log.v("getSendWork",messageHistoryBean.getOwnId());
-                            Log.v("getSendWork", user_id);
-                            HashMap<String,String> data=new HashMap<String, String>();
-                            Long time=messageHistoryBean.getTime().getTime();
-                            data.put("time", String.valueOf(time));
-                            data.put("targetId", messageHistoryBean.getTargetId());
-                            data.put("content",messageHistoryBean.getContent());
-                            data.put("ownId",messageHistoryBean.getOwnId());
-                            JSONObject params = new JSONObject(data);
-                            socket.emit("message",params);
+                            switch (msg.what){
+                                case 0:{
+                                    MessageHistoryBean messageHistoryBean= (MessageHistoryBean) msg.obj;
+                                    Log.v("getSendWork",messageHistoryBean.getContent());
+                                    Log.v("getSendWork",messageHistoryBean.getOwnId());
+                                    Log.v("getSendWork", user_id);
+                                    HashMap<String,String> data=new HashMap<String, String>();
+                                    Long time=messageHistoryBean.getTime().getTime();
+                                    data.put("time", String.valueOf(time));
+                                    data.put("targetId", messageHistoryBean.getTargetId());
+                                    data.put("content",messageHistoryBean.getContent());
+                                    data.put("ownId",messageHistoryBean.getOwnId());
+                                    JSONObject params = new JSONObject(data);
+                                    socket.emit("message",params);
+                                    break;
+                                }
+                                //账户退出动作：删除本地存储的sessionid,关闭socket连接，退出界面
+                                case 1:{
+                                    Log.v("ofline","ok");
+                                    String sessionId =SharedPreferencesUtil.getSessionId(context);
+                                    Log.v("ofline",sessionId);
+                                    String id ="sess:"+sessionId.split("\\.")[0].substring(4);
+                                    HashMap<String,String> data=new HashMap<String, String>();
+                                    data.put("sessionId",id);
+                                    Log.v("ofline",id);
+                                    JSONObject params = new JSONObject(data);
+                                    socket.emit("ofline",params);
+                                    Log.v("ofline", String.valueOf(params));
+                                    Log.v("oflined","ok");
+                                    break;
+                                }
+                            }
 
                         }
                     };

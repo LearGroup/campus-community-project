@@ -124,16 +124,15 @@ public class person_detailed_information_fragment extends Fragment {
         final View view=inflater.inflate(R.layout.fragment_person_detailed_information_fragment, container, false);
         final Toolbar toolbar=(Toolbar)view.findViewById(R.id.person_detailed_information_toolbar);
         setHasOptionsMenu(true);
-         toolbar.inflateMenu(R.menu.person_detail_menu_layout);
+        toolbar.inflateMenu(R.menu.person_detail_menu_layout);
         AppCompatImageView appCompatImageView=(AppCompatImageView) view.findViewById(R.id.person_detaild_information_back_icon);
         appCompatImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getFragmentManager();
+                FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
                 fragmentManager.popBackStack();
-
             }
         });
         username=(TextView)view.findViewById(R.id.person_username);
