@@ -3,7 +3,6 @@ package com.example.chen1.uncom.chat;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,13 +44,12 @@ import com.example.chen1.uncom.bean.MessageHistoryBean;
 import com.example.chen1.uncom.bean.MessageHistoryBeanDao;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
-import com.example.chen1.uncom.bean.UserBean;
-import com.example.chen1.uncom.bean.UserBeanDao;
 import com.example.chen1.uncom.expression.GrallyAdapter;
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.relationship.RalationShipPageMainFragment;
 import com.example.chen1.uncom.expression.ChatExpressionTypePageSwitchAdapter;
 import com.example.chen1.uncom.expression.SoftKeyBoardListener;
+import com.example.chen1.uncom.utils.Anim;
 import com.example.chen1.uncom.utils.BackHandlerHelper;
 import com.example.chen1.uncom.utils.KeybordUtil;
 import com.example.chen1.uncom.utils.SharedPreferencesUtil;
@@ -62,16 +60,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 
-public class Person_Chat_Fragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener, FragmentBackHandler {
+public class PersonChatFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener, FragmentBackHandler {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -119,7 +115,7 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
         relationShipLevelBeanDao = BeanDaoManager.getInstance().getDaoSession().getRelationShipLevelBeanDao();
     }
 
-    public Person_Chat_Fragment() {
+    public PersonChatFragment() {
         // Required empty public constructor
     }
 
@@ -134,18 +130,18 @@ public class Person_Chat_Fragment extends Fragment implements NavigationView.OnN
     }
 
 
-    private static Person_Chat_Fragment person_chat_fragment = null;
+    private static PersonChatFragment person_chat_fragment = null;
 
-    public static Person_Chat_Fragment getInstance() {
+    public static PersonChatFragment getInstance() {
         if (person_chat_fragment == null) {
-            person_chat_fragment = new Person_Chat_Fragment();
+            person_chat_fragment = new PersonChatFragment();
         }
         return person_chat_fragment;
     }
 
 
-    public static Person_Chat_Fragment newInstance(String param1, String param2) {
-        Person_Chat_Fragment fragment = new Person_Chat_Fragment();
+    public static PersonChatFragment newInstance(String param1, String param2) {
+        PersonChatFragment fragment = new PersonChatFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -434,13 +430,14 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
         SoftKeyBoardListener.setListener(getActivity(), new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
             @Override
             public void keyBoardShow(int height) {
-
-                KeyBoardHeight = height;
+                if(KeyBoardHeight !=height){
+                    KeyBoardHeight = height;
+                    SharedPreferencesUtil.setSoftInputHeight(KeyBoardHeight,getContext());
+                }
                 if (ExpressionLinearLayout.isShown()) {
                     lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
                     ExpressionLinearLayout.setVisibility(View.GONE);
                     unlockContentHeightDelayed();
-
                 }
             }
 
@@ -604,6 +601,11 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
         super.onStop();
         isVisible = false;
         Log.v("PersonChatFragment OnStop","ok");
+    }
+
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        return Anim.defaultFragmentAnim(getActivity(),transit,enter,nextAnim);
     }
 
     interface onBackListener {

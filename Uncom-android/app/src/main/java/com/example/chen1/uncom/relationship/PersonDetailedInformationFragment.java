@@ -21,30 +21,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
+import com.example.chen1.uncom.utils.Anim;
 import com.example.chen1.uncom.utils.LoadImageUtils;
-
-import org.w3c.dom.Text;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link person_detailed_information_fragment.OnFragmentInteractionListener} interface
+ * {@link PersonDetailedInformationFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link person_detailed_information_fragment#newInstance} factory method to
+ * Use the {@link PersonDetailedInformationFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class person_detailed_information_fragment extends Fragment {
+public class PersonDetailedInformationFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static  person_detailed_information_fragment fragment=null;
+    private static PersonDetailedInformationFragment fragment=null;
     // TODO: Rename and change types of parameters
     private CollapsingToolbarLayoutState state;
     private AppBarLayout appBarLayout;
@@ -66,13 +66,13 @@ public class person_detailed_information_fragment extends Fragment {
     private ConstraintLayout constraintLayout;
     private OnFragmentInteractionListener mListener;
     private ImageView  person_iamgeview;
-    public person_detailed_information_fragment() {
+    public PersonDetailedInformationFragment() {
         // Required empty public constructor
     }
 
-    public static  person_detailed_information_fragment getInstance(){
+    public static PersonDetailedInformationFragment getInstance(){
         if(fragment==null){
-            fragment=new person_detailed_information_fragment();
+            fragment=new PersonDetailedInformationFragment();
         }
         return fragment;
     }
@@ -82,11 +82,11 @@ public class person_detailed_information_fragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment person_detailed_information_fragment.
+     * @return A new instance of fragment PersonDetailedInformationFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static person_detailed_information_fragment newInstance(String param1, String param2) {
-        person_detailed_information_fragment fragment = new person_detailed_information_fragment();
+    public static PersonDetailedInformationFragment newInstance(String param1, String param2) {
+        PersonDetailedInformationFragment fragment = new PersonDetailedInformationFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -151,49 +151,6 @@ public class person_detailed_information_fragment extends Fragment {
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-
-/*                if(verticalOffset==0)
-                {
-                    //全展开
-                    person_name.setVisibility(View.GONE);
-                    if (state != CollapsingToolbarLayoutState.EXPANDED) {
-                        state = CollapsingToolbarLayoutState.EXPANDED;//修改状态标记为展开
-                        toolbar.setTitle("心灵鸡汤");//设置title为EXPANDED
-                    }
-                } else if(Math.abs(verticalOffset)>= appBarLayout.getTotalScrollRange())
-                {
-                    if (state != CollapsingToolbarLayoutState.COLLAPSED) {
-                        toolbar.getMenu().findItem(R.id.person_detaild_information_menu_set).setIcon(R.drawable.ic_vector_person_detaild_information_option_icon);
-                        person_back_icon.setImageResource(R.drawable.ic_vector_back_black_icon);
-                        state = CollapsingToolbarLayoutState.COLLAPSED;//修改状态标记为折叠
-                        if(imageView.getVisibility()==View.VISIBLE) {
-                            imageView2.setVisibility(View.VISIBLE);
-                            imageView.setVisibility(View.GONE);
-                            constraintLayout.setVisibility(View.GONE);
-                            person_name.setVisibility(View.VISIBLE);
-
-                        }
-                    }
-
-                }else{
-                    imageView.setVisibility(View.VISIBLE);
-                        if(imageView.getVisibility()==View.VISIBLE&&state==CollapsingToolbarLayoutState.INTERNEDIATE){
-                            imageView2.setVisibility(View.GONE);
-                            constraintLayout.setVisibility(View.VISIBLE);
-                            person_name.setVisibility(View.GONE);
-                    }
-
-                    //constraintLayout.setVisibility(View.VISIBLE);
-                    if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
-
-                        if(state == CollapsingToolbarLayoutState.COLLAPSED){
-                        }
-
-                        person_back_icon.setImageResource(R.drawable.ic_vector_back_icon);
-                        state = CollapsingToolbarLayoutState.INTERNEDIATE;//修改状态标记为中间
-                    }
-                }*/
-
                 final CollapsingToolbarLayout collapsing_toolbar_layout = (CollapsingToolbarLayout)view.findViewById(R.id.collapsing_toolbar_layout);
                 collapsing_toolbar_layout.setTitle("");
                 collapsing_toolbar_layout.setCollapsedTitleTextColor(getResources().getColor(R.color.colorPrimary));
@@ -208,29 +165,12 @@ public class person_detailed_information_fragment extends Fragment {
                     person_name.setVisibility(View.GONE);
                     collapsing_toolbar_layout.setTitle("");
                 }
-
-
-
-
-
-
-
-
             }
         });
         return view;
     }
 
 
-    /*@Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        if (imageView.getVisibility()==View.VISIBLE) {
-            menu.findItem(R.id.person_detaild_information_menu_set).setIcon(R.drawable.ic_vector_person_detaild_information_option_icon);
-        }
-        if(imageView.getVisibility()==View.VISIBLE&&state==CollapsingToolbarLayoutState.INTERNEDIATE) {
-            menu.findItem(R.id.person_detaild_information_menu_set).setIcon(R.drawable.ic_vector_person_detail_information_option_white_icon);
-        }
-    }*/
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
          menu.clear();
@@ -253,5 +193,11 @@ public class person_detailed_information_fragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        return Anim.defaultFragmentAnim(getActivity(),transit,enter,nextAnim);
     }
 }

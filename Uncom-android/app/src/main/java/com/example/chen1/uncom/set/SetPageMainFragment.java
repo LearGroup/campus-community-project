@@ -16,8 +16,7 @@ import android.widget.LinearLayout;
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
-import com.example.chen1.uncom.chat.Person_Chat_Fragment;
-import com.example.chen1.uncom.relationship.RalationShipPageMainFragment;
+import com.example.chen1.uncom.chat.PersonChatFragment;
 
 
 /**
@@ -113,7 +112,7 @@ public class SetPageMainFragment extends Fragment {
 
             @Override
             public void onItemClick(View view, int position, RelationShipLevelBean relationShipLevelBean) {
-                Person_Chat_Fragment person_chat_fragment =Person_Chat_Fragment.getInstance();
+                PersonChatFragment person_chat_fragment = PersonChatFragment.getInstance();
                 person_chat_fragment.setFrendData(relationShipLevelBean);
                 FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();

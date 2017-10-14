@@ -28,6 +28,8 @@ import com.android.volley.VolleyError;
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.BeanDaoManager;
+import com.example.chen1.uncom.bean.MessageHistoryBeanDao;
+import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
 import com.example.chen1.uncom.bean.UserBean;
 import com.example.chen1.uncom.utils.UserBeanAndJsonUtils;
 import com.example.chen1.uncom.bean.UserBeanDao;
@@ -142,7 +144,7 @@ public class LoginPageFragment extends Fragment {
                 }
                 //存一份到本地
                 if (softInputHeight > 0) {
-                    SharedPreferencesUtil.setSoftInputHeight(softInputHeight+105,getContext());
+                    SharedPreferencesUtil.setSoftInputHeight(softInputHeight,getContext());
                 }
 
             }
@@ -187,15 +189,7 @@ public class LoginPageFragment extends Fragment {
             passwordTextView.requestFocus();
             passwordTextView.findFocus();
             imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-          /*  Intent intent =new Intent(getActivity(),MainActivity.class);
-            startActivity(intent);
-            getActivity().finish();*/
         } else {
-            /*
-            use: sor,
-			user: $("#login_input_username").val(),
-			password: $("#login_input_password").val()
-			*/
             final PopupWindow popwin= PopupWindowUtils.popupWindow(null,R.layout.access_popupwindow_loginwaiting_layout, LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT,-1,getContext(),rootView);
             //传一个参数，user=zhangqi
             //为了保证popupWindow能有好的视觉体验，故延迟了600毫秒...
@@ -226,12 +220,15 @@ public class LoginPageFragment extends Fragment {
                                     Log.v("resopnse", String.valueOf(response));
                                     Log.v("resopnse", String.valueOf(response.getJSONObject("results").get("id")));
                                     SharedPreferencesUtil.setUserId((String)response.getJSONObject("results").get("id"),getContext());
-                                    UserBeanDao userBeanDao =BeanDaoManager.getInstance().getDaoSession().getUserBeanDao();
+                                    //必须使用getInstance(1)这样会创建一个新的数据库
+                                    UserBeanDao userBeanDao =BeanDaoManager.getInstance(1).getNewSession().getUserBeanDao();
                                     UserBean userBean=userBeanDao.queryBuilder().where(UserBeanDao.Properties.Id.eq(response.getJSONObject("results").get("id"))).build().unique();
                                     Log.v("resop nse", String.valueOf(userBean));
                                     if(userBean==null){
                                         userBean= UserBeanAndJsonUtils.getUserBean(response.getJSONObject("results"));
                                                userBeanDao.insert(userBean);
+                                        Log.v("username",userBean.getUsername());
+                                        Log.v("user_id",userBean.getId());
                                         Log.v("saveUserBean", "1");
                                     }else{
                                         userBean=UserBeanAndJsonUtils.getUpdatedUserBean(userBean,response.getJSONObject("results"));
@@ -248,6 +245,14 @@ public class LoginPageFragment extends Fragment {
 
                                         @Override
                                         public void onFinish() {
+                                            //当用户登录后，进行一次强制同步，会将在内存缓存的关系数据清空，重新从磁盘中读取，目的是避免多用户登陆造成信息泄露
+                                            CoreApplication.newInstance().syncData(1);
+                                            //同时初始化内存中的相关变量
+                                            CoreApplication.newInstance().setUser_id(SharedPreferencesUtil.getUserId(getContext()));
+                                            RelationShipLevelBeanDao relationShipLevelBeanDao=BeanDaoManager.getInstance().getDaoSession().getRelationShipLevelBeanDao();
+                                            MessageHistoryBeanDao messageHistoryBeanDao=BeanDaoManager.getInstance().getDaoSession().getMessageHistoryBeanDao();
+                                            CoreApplication.newInstance().setRelationShipLevelBeanDao(relationShipLevelBeanDao);
+                                            CoreApplication.newInstance().setMessageHistoryBeanDao(messageHistoryBeanDao);
                                             jumpToMainActivity();
                                         }
                                     };
@@ -319,6 +324,4 @@ public class LoginPageFragment extends Fragment {
         });
         return view;
     }
-
-
 }

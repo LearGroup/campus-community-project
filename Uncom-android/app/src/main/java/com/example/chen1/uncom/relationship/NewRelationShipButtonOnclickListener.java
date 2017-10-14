@@ -5,8 +5,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import com.example.chen1.uncom.R;
-import com.example.chen1.uncom.bean.RelationShipLevelBean;
-import com.example.chen1.uncom.chat.Person_Chat_Fragment;
 
 /**
  * Created by chen1 on 2017/10/13.

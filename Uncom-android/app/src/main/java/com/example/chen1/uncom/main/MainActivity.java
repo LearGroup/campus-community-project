@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
        drawer.setDrawerListener(toggle);
         toggle.syncState();
-        toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.colorIcon), PorterDuff.Mode.SRC_ATOP);
+        toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
         sectionsAdapter=new SectionsAdapter(getSupportFragmentManager());
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
@@ -187,6 +187,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getApplicationContext().startService(startIntent);
         CoreApplication.newInstance().setServiceConnection(serviceConnection);
         getApplicationContext().bindService(startIntent,serviceConnection,BIND_AUTO_CREATE);
+       //网络连接状态判断
         coreHandler= new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -203,30 +204,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         };
-        //当personFrendList 数据为空 说明为第一次进入状态或重载状态。开启子线程获取相关信息
-        if(CoreApplication.newInstance().getPersonFrendList()==null){
-            Log.v("personFrendListNode","none");
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    RelationShipLevelBeanDao relationShipLevelBeanDao= BeanDaoManager.getInstance().getDaoSession().getRelationShipLevelBeanDao();
-                    QueryBuilder queryBuilder=relationShipLevelBeanDao.queryBuilder();
-                    Query query=queryBuilder.where(RelationShipLevelBeanDao.Properties.Level.eq(4)).build();
-                    CoreApplication.newInstance().setPersonFrendList((ArrayList<RelationShipLevelBean>) query.list());
-                    Log.v("CoreApplicationListSize", String.valueOf(CoreApplication.newInstance().getPersonFrendList().size()));
-                    query=queryBuilder.where(queryBuilder.and(RelationShipLevelBeanDao.Properties.Level.eq(4),RelationShipLevelBeanDao.Properties.Active.eq(true))).orderDesc(RelationShipLevelBeanDao.Properties.Last_active_time).build();
-                    ArrayList<RelationShipLevelBean> list= (ArrayList<RelationShipLevelBean>) query.list();
-                    for (int i = 0; i <list.size(); i++) {
-                        Log.v("newtheard",list.get(i).getUsername());
-                        if(list.get(i).getActive()==true){
-                            CoreApplication.newInstance().getActivePersonMessageList().add(list.get(i));
-                        }
-                    }
-                    Log.v("CoreApplicationActiveList", String.valueOf(CoreApplication.newInstance().getActivePersonMessageList().size()));
-                }
-            }).start();
-        }
-          }
+        CoreApplication.newInstance().syncData(0);
+    }
 
     public static boolean FlymeSetStatusBarLightMode(Window window, boolean dark) {
         boolean result = false;
@@ -324,8 +303,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_ofline) {
-            String sessionId = SharedPreferencesUtil.getSessionId(getApplicationContext());
-            Log.v("ofline2",sessionId);
+            Log.v("点击退出登陆按钮","ok");
             Message message=new Message();
             message.what=1;
             message.obj="usr_session_id";

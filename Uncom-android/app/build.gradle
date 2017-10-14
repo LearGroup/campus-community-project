@@ -6,6 +6,12 @@ greendao {
     daoPackage 'com.example.chen1.uncom.bean'
     targetGenDir 'src/main/java'
 }
+
+
+
+
+
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"

@@ -76,12 +76,13 @@ public class CoreService extends Service  {
         DaoSession session= BeanDaoManager.getInstance().getDaoSession();
         UserBeanDao userBeanDao = session.getUserBeanDao();
         userBean=userBeanDao.queryBuilder().where(UserBeanDao.Properties.Id.eq(user_id)).build().unique();
+        Log.v("CoreServiceUser_id",user_id);
         HashMap<String ,String > login=new HashMap<>();
         login.put("userName",userBean.getUsername());
         login.put("userId",userBean.getId());
         loginData=new JSONObject(login);
         Log.v("createCoreService","ok");
-        Log.v("user_id", "ss"+user_id);
+        Log.v("CoreService_user_id", "ss"+user_id);
         if(thread==null){
          thread= new Thread(new Runnable() {
                 @Override
@@ -192,6 +193,7 @@ public class CoreService extends Service  {
                                         Message message=new Message();
                                         message.what=2;
                                         message.obj="ofline";
+                                        Log.v("checkStatus","ok");
                                         coreAppGetChatDataHandler.sendMessage(message);
 
                                     }

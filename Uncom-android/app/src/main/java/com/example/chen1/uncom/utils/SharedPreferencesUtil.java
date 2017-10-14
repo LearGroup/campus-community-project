@@ -3,6 +3,7 @@ package com.example.chen1.uncom.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 /**
  * Created by chen1 on 2017/10/3.
@@ -13,6 +14,7 @@ public class SharedPreferencesUtil {
     public static String getUserId(Context context){
         SharedPreferences sharedPreferences =context.getSharedPreferences("user_info", Context.MODE_PRIVATE);
         String Id =sharedPreferences.getString("user_id","");
+        Log.v("ShardPreferencesUtilsUser_id",Id);
         return Id;
     }
 
@@ -30,6 +32,7 @@ public class SharedPreferencesUtil {
     }
 
     public static void setSoftInputHeight(int height ,Context context){
+
         SharedPreferences sharedPreferences =context.getSharedPreferences("user_info", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor =sharedPreferences.edit();
         editor.putInt("soft_input_height",height);
