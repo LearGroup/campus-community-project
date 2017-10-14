@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +23,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by chen1 on 2017/6/21.
  */
 
-public class person_relation_ship_adapter extends BaseAdapter {
+public class PersonRelationShipAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<RelationShipLevelBean> data=null;
-    public person_relation_ship_adapter(Context context ,ArrayList<RelationShipLevelBean> dataList){
+    public PersonRelationShipAdapter(Context context , ArrayList<RelationShipLevelBean> dataList){
         this.data=dataList;
         this.context=context;
     }
@@ -110,12 +109,11 @@ public class person_relation_ship_adapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getFragmentManager();
-                person_detailed_information_fragment fragment = person_detailed_information_fragment.getInstance();
+                PersonDetailedInformationFragment fragment = PersonDetailedInformationFragment.getInstance();
                 Bundle bundle=new Bundle();
                 bundle.putParcelable("frendData",data.get(position));
                 fragment.setArguments(bundle);
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout,fragment).commit();
 
             }

@@ -1,17 +1,14 @@
 package com.example.chen1.uncom.relationship;
 
 
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
-import com.example.chen1.uncom.chat.Person_Chat_Fragment;
-import com.example.chen1.uncom.relationship.RalationShipPageMainFragment;
+import com.example.chen1.uncom.chat.PersonChatFragment;
 
 import java.util.ArrayList;
 
@@ -19,10 +16,10 @@ import java.util.ArrayList;
  * Created by chen1 on 2017/6/21.
  */
 
-public class Person_Item_OnClickListener implements AdapterView.OnItemClickListener {
+public class PersonItemOnClickListener implements AdapterView.OnItemClickListener {
     private ArrayList<RelationShipLevelBean> personFrendList;
 
-    public Person_Item_OnClickListener(ArrayList<RelationShipLevelBean> relationShipLevelBeanArrayList){
+    public PersonItemOnClickListener(ArrayList<RelationShipLevelBean> relationShipLevelBeanArrayList){
         this.personFrendList=relationShipLevelBeanArrayList;
     }
 
@@ -41,7 +38,7 @@ public class Person_Item_OnClickListener implements AdapterView.OnItemClickListe
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Person_Chat_Fragment person_chat_fragment =Person_Chat_Fragment.getInstance();
+        PersonChatFragment person_chat_fragment = PersonChatFragment.getInstance();
         person_chat_fragment.setFrendData(personFrendList.get(position));
         FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();

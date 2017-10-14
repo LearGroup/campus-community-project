@@ -27,6 +27,21 @@ public class BeanDaoManager {
         mMaster=new DaoMaster(devOpenHelper.getWritableDatabase());
         mDaosession=mMaster.newSession();
     }
+
+    /**
+     * 获取数据库操作句柄
+     * 0   获取默认数据库操作句柄 1获取新的数据库操作
+     * @return
+     */
+    public  static   BeanDaoManager getInstance(int status){
+        if(mGreenDaoManager==null || status==1){
+            mGreenDaoManager=new BeanDaoManager();
+        }
+        return mGreenDaoManager;
+    }
+
+
+
     public  static   BeanDaoManager getInstance(){
         if(mGreenDaoManager==null){
             mGreenDaoManager=new BeanDaoManager();
@@ -37,6 +52,9 @@ public class BeanDaoManager {
         return mMaster;
     }
     public DaoSession getDaoSession(){
+        if(mDaosession==null){
+            mDaosession=mMaster.newSession();
+        }
         return mDaosession;
     }
     public DaoSession getNewSession(){

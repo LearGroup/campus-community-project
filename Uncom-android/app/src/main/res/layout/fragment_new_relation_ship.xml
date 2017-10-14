@@ -45,6 +45,18 @@
             </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
+    <android.support.v7.widget.SearchView
+        android:id="@+id/search_column"
+        app:defaultQueryHint="手机号/邮箱号/用户名"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+    </android.support.v7.widget.SearchView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_page_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

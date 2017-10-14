@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.chen1.uncom.chat.Person_Chat_Fragment">
+    tools:context="com.example.chen1.uncom.chat.PersonChatFragment">
     <!-- TODO: Update blank fragment layout -->
 <LinearLayout
     android:background="#eeeeee"

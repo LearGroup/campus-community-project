@@ -3,9 +3,12 @@
     <color name="colorEditTextNormal">#cdcdcd</color>
     <color name="colorEditTextActivated">#009933</color>
     <color name="colorPrimary">#ffffff</color>
-    <color name="colorPrimaryDark">#56A36C</color>
-    <color name="colorAccent">#56A36C</color>
+    <color name="colorPrimaryDark">#529974</color>
+    <color name="colorAccent">#529974</color>
     <color name="colorIcon">#515151</color>
-    <color name="colorMain">#6ABD78</color>
+    <color name="colorMain">#529974</color>
     <color name="colorToolBar">#529974</color>
+    <color name="colorSignButton">#eeeeee</color>
+
+    <color name="colorFontColor">#aaaaaa</color>
 </resources>

@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     xmlns:toolbar="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF"
-    tools:context="com.example.chen1.uncom.relationship.person_detailed_information_fragment">
+    tools:context="com.example.chen1.uncom.relationship.PersonDetailedInformationFragment">
     <!-- TODO: Update blank fragment layout -->
     <android.support.design.widget.AppBarLayout
         app:elevation="0dp"

@@ -10,21 +10,21 @@ import android.widget.ListView;
  * Created by chen1 on 2017/6/21.
  */
 
-public class relation_ship_listview extends ListView {
-    public relation_ship_listview(Context context) {
+public class RelationShipListview extends ListView {
+    public RelationShipListview(Context context) {
         super(context);
     }
 
-    public relation_ship_listview(Context context, AttributeSet attrs) {
+    public RelationShipListview(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public relation_ship_listview(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RelationShipListview(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public relation_ship_listview(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public RelationShipListview(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
