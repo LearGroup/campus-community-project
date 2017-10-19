@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
 import com.example.chen1.uncom.R;
@@ -112,13 +113,25 @@ public class SetPageMainFragment extends Fragment {
 
             @Override
             public void onItemClick(View view, int position, RelationShipLevelBean relationShipLevelBean) {
-                PersonChatFragment person_chat_fragment = PersonChatFragment.getInstance();
-                person_chat_fragment.setFrendData(relationShipLevelBean);
-                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout,person_chat_fragment).commit();
-            }
+                PersonChatFragment person_chat_fragment= (PersonChatFragment) CoreApplication.newInstance().getTemperFragment();
+                if(person_chat_fragment!=null){
+                    Log.v("第一种","...............ok");
+                    person_chat_fragment.setFrendData(relationShipLevelBean);
+                    fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout,person_chat_fragment,"chatPage").setCustomAnimations(R.anim.default_fragment_switch_leave_translate, R.anim.default_leave_left, R.anim.default_open_right, R.anim.default_fragment_switch_translate_open).commit();
+
+                }else{
+                    Log.v("第二种","...............ok");
+                    person_chat_fragment = PersonChatFragment.getInstance();
+                    CoreApplication.newInstance().setTemperFragment(person_chat_fragment);
+                    fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout,person_chat_fragment,"chatPage").setCustomAnimations(R.anim.default_fragment_switch_leave_translate, R.anim.default_leave_left, R.anim.default_open_right, R.anim.default_fragment_switch_translate_open).commit();
+
+                }
+                person_chat_fragment.setFrendData(relationShipLevelBean);
+                CoreApplication.newInstance().getRoot().startAnimation(AnimationUtils.loadAnimation(view.getContext(),R.anim.default_leave_left));
+
+             }
         });
         return view;
     }

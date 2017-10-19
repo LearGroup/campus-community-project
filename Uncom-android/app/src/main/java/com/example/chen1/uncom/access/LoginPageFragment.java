@@ -190,7 +190,7 @@ public class LoginPageFragment extends Fragment {
             passwordTextView.findFocus();
             imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         } else {
-            final PopupWindow popwin= PopupWindowUtils.popupWindow(null,R.layout.access_popupwindow_loginwaiting_layout, LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT,-1,getContext(),rootView);
+            final PopupWindow popwin= PopupWindowUtils.popupWindow(null,R.layout.access_popupwindow_loginwaiting_layout, LinearLayout.LayoutParams.MATCH_PARENT,200,-1,getContext(),rootView);
             //传一个参数，user=zhangqi
             //为了保证popupWindow能有好的视觉体验，故延迟了600毫秒...
             CountDownTimer timer = new CountDownTimer(600, 10) {
@@ -206,8 +206,8 @@ public class LoginPageFragment extends Fragment {
                     map.put("password", user_password);
                     JSONObject params = new JSONObject(map);
                     Log.v("json", String.valueOf(params));
-                    /*http://10.0.2.2:8081 本地调试用IP地址，本地调试时不能使用127.0.0.1:8081*/
-                    SessionStoreJsonRequest sessionStoreJsonRequest = new SessionStoreJsonRequest("http://47.95.0.73:8081/login",
+                    /*http://10.0.2.2:8081 本地调试用IP地址，本地调试时不能使用127.0.0.1:8081 47.95.0.73*/
+                    SessionStoreJsonRequest sessionStoreJsonRequest = new SessionStoreJsonRequest("http://10.0.2.2:8081/login",
                             params, new Response.Listener<JSONObject>() {
 
                         @Override

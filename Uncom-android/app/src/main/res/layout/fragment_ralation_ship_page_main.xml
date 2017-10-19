@@ -3,11 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/colorPrimary"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.example.chen1.uncom.relationship.RalationShipPageMainFragment">
     <!-- TODO: Update blank fragment layout -->
   <ScrollView
+      android:scrollbars="none"
       android:background="@color/colorPrimary"
       app:layout_behavior="@string/appbar_scrolling_view_behavior"
       android:id="@+id/relation_ship_scroll_view"

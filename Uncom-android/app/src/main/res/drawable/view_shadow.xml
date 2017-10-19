@@ -7,7 +7,7 @@
     solid中的颜色是阴影的颜色，也可以设置角度等等 -->
     <item
 
-        android:bottom="2dp"
+        android:bottom="20dp"
         >
         <shape android:shape="rectangle" >
 
@@ -24,15 +24,15 @@
     right代表背景部分在左边超出阴影的宽度（相对应的offset） -->
     <item
 
-        android:top="5dp"
+        android:bottom="20dp"
 
      >
         <shape android:shape="rectangle" >
 
             <gradient
                 android:angle="270"
-                android:endColor="#eeeeee"
-                android:startColor="#eeeeee" />
+                android:endColor="@color/colorMain"
+                android:startColor="@color/colorMain" />
         </shape>
     </item>
 </layer-list>

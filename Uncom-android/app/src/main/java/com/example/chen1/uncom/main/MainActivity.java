@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ChatCoreBinder chatCoreBinder;
     private  CoreService coreService;
     private Handler coreHandler;
+    private View rootView;
     private BottomNavigationView bottomNavigationView;
     private ServiceConnection serviceConnection=new ServiceConnection() {
         @Override
@@ -121,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.v("MainActivityOnceate",".............ok");
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -129,18 +131,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             window.setStatusBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_main);
-/*
-        this.getWindow()
-                .getDecorView()
-                .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-*/
-
-      //  MIUISetStatusBarLightMode(this.getWindow(), true);
-      //  FlymeSetStatusBarLightMode(this.getWindow(), true);
-       // setPageMainFragment = SetPageMainFragment.getInstance();
-       /* fc.addFragment(ralationShipPageMainFragment,"ralationShipFragment");
-        fc.addFragment(findPageMainFragment,"findPageMainFragment");
-        fc.addFragment(mePageMainFragment,"mePageMainFragment");*/
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
@@ -158,6 +148,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         bottomNavigationView.setSelectedItemId(0);
         viewPager=(ViewPager) findViewById(R.id.container);
+        rootView=findViewById(R.id.rootview);
+        CoreApplication.newInstance().setRoot(rootView);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

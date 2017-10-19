@@ -2,6 +2,7 @@ package com.example.chen1.uncom.relationship;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,16 @@ public class NewRelationshipAdapter extends  RecyclerView.Adapter<RecyclerView.V
     private ArrayList<NewRelationShipBean> datalist=new ArrayList<>();
     private Context context;
     private LayoutInflater layoutInflater;
+    private OnItemClickListener onItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener=onItemClickListener;
+
+    }
+
+    public  interface  OnItemClickListener{
+          void onClick(View view,int positon,NewRelationShipBean newRelationShipBean);
+    }
+
     public NewRelationshipAdapter(Context context,ArrayList<NewRelationShipBean> list){
         this.context=context;
         this.datalist=list;
@@ -38,6 +49,7 @@ public class NewRelationshipAdapter extends  RecyclerView.Adapter<RecyclerView.V
         layoutInflater = LayoutInflater.from(context);
         if(viewType==0){
             view= layoutInflater.inflate(R.layout.search_new_relationship_item_layout,parent,false);
+            view.setOnClickListener(this);
             return new NewRelationshipAdapter.SearchViewHoler(view);
         }else if(viewType==1){
             view= layoutInflater.inflate(R.layout.search_results_item_layout,parent,false);
@@ -71,7 +83,10 @@ public class NewRelationshipAdapter extends  RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public void onClick(View v) {
-
+        Log.v("NewRelationshipAdapter","click ok");
+        if(onItemClickListener!=null){
+            onItemClickListener.onClick(v,(int)v.getTag(),datalist.get((int)v.getTag()));
+        }
     }
 
 
@@ -112,7 +127,7 @@ public class NewRelationshipAdapter extends  RecyclerView.Adapter<RecyclerView.V
 
 
     public static class  SearchViewHoler extends  RecyclerView.ViewHolder{
-        private TextView input_results;
+        TextView input_results;
         public SearchViewHoler(View itemView) {
             super(itemView);
             input_results= (TextView) itemView.findViewById(R.id.results);

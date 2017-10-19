@@ -25,7 +25,6 @@ public class NewRelationShipBean   implements Parcelable {
     private Integer result_type;  //添加的结果，(是否接受了 1已接受 2未接受)
     private String user_name;
     private Integer view_type;//视图需要展示的类型 0顶层搜索时弹出的搜索框 1进入新关系页面的默认布局(显示添加新关系的历史 2新关系搜索结果框)
-
     protected NewRelationShipBean(Parcel in) {
         header_pic = in.readString();
         results = in.readString();

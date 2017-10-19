@@ -10,13 +10,14 @@
     tools:context="com.example.chen1.uncom.relationship.PersonDetailedInformationFragment">
     <!-- TODO: Update blank fragment layout -->
     <android.support.design.widget.AppBarLayout
-        app:elevation="0dp"
-        android:layout_marginTop="-10dp"
+        android:background="@drawable/view_shadow"
+        android:layout_marginTop="-15dp"
         android:layout_width="match_parent"
         android:fitsSystemWindows="true"
         android:layout_height="wrap_content"
         android:id="@+id/peron_dtailed_information_appbar_layout">
         <android.support.design.widget.CollapsingToolbarLayout
+            android:background="@drawable/view_shadow"
             app:statusBarScrim="@android:color/transparent"
             app:contentScrim="@color/colorToolBar"
             android:id="@+id/collapsing_toolbar_layout"
@@ -97,6 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_collapseMode="pin"
+
                 app:popupTheme="@style/AppTheme"
                 >
 

@@ -3,6 +3,7 @@ package com.example.chen1.uncom.chat;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,8 +30,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -104,6 +107,8 @@ public class PersonChatFragment extends Fragment implements NavigationView.OnNav
     private  ArrayList<MessageHistoryBean> messgaeContents=null;
     private int ExpressionBtnStatus = 0;
     private LinearLayout ExpressionLinearLayout;
+    private TranslateAnimation mShowAction;
+    private TranslateAnimation mHiddenAction;
 
 
     public RelationShipLevelBean getFrendData() {
@@ -272,7 +277,19 @@ public class PersonChatFragment extends Fragment implements NavigationView.OnNav
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        quitFullScreen();
         user_id=SharedPreferencesUtil.getUserId(getContext());
+        KeyBoardHeight= SharedPreferencesUtil.getSoftInputHeight(getContext());
+        // Inflate the layout for this fragment
+       mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+        mShowAction.setDuration(150);
+        mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
+                0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                -1.0f);
+        mHiddenAction.setDuration(150);
         messageHistoryBeanDao = BeanDaoManager.getInstance().getDaoSession().getMessageHistoryBeanDao();
         QueryBuilder queryBuilder=messageHistoryBeanDao.queryBuilder();
 /*  queryBuilder.or(MessageHistoryBeanDao.Properties.OwnId.eq(frendData.getMinor_user()),
@@ -346,6 +363,7 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
     }
 
     private void quitFullScreen() {
+
         mInputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         final WindowManager.LayoutParams attrs = getActivity().getWindow().getAttributes();
         attrs.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -357,17 +375,6 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         Log.v("PersonChatFramgent:", "onCreateview: ");
-        KeyBoardHeight= SharedPreferencesUtil.getSoftInputHeight(getContext());
-        // Inflate the layout for this fragment
-        final TranslateAnimation mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-                -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-        mShowAction.setDuration(150);
-        final TranslateAnimation mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
-                0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-                -1.0f);
-        mHiddenAction.setDuration(150);
         quitFullScreen();
         isVisible = true;
         final View view = inflater.inflate(R.layout.fragment_person__chat_, container, false);
@@ -605,6 +612,11 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
 
     @Override
     public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if(!enter){
+            CoreApplication.newInstance().getRoot().startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.default_open_right));
+
+            //     CoreApplication.newInstance().getBottomNavigationView().setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.default_open_right));
+        }
         return Anim.defaultFragmentAnim(getActivity(),transit,enter,nextAnim);
     }
 

@@ -22,10 +22,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.chen1.uncom.R;
+import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.utils.Anim;
 import com.example.chen1.uncom.utils.LoadImageUtils;
@@ -98,8 +100,7 @@ public class PersonDetailedInformationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        Bundle bundle=getArguments();
-        frendData=bundle.getParcelable("frendData");
+
     }
     private void setFullScreen(){
         Window window = getActivity().getWindow();
@@ -195,9 +196,19 @@ public class PersonDetailedInformationFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    public RelationShipLevelBean getFrendData() {
+        return frendData;
+    }
+
+    public void setFrendData(RelationShipLevelBean frendData) {
+        this.frendData = frendData;
+    }
 
     @Override
     public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if(!enter){
+            CoreApplication.newInstance().getRoot().setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.default_open_right));
+        }
         return Anim.defaultFragmentAnim(getActivity(),transit,enter,nextAnim);
     }
 }

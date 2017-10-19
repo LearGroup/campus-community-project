@@ -18,9 +18,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.example.chen1.uncom.R;
+import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.NewRelationShipBean;
+import com.example.chen1.uncom.set.OnItemClickListener;
 import com.example.chen1.uncom.utils.Anim;
 
 import java.util.ArrayList;
@@ -80,6 +83,7 @@ public class NewRelationShipFragment extends Fragment {
         search_result_recycler_view.setLayoutManager(linearLayoutManager);
         search_result_recycler_view.setHasFixedSize(true);
         search_result_recycler_view.setItemAnimator(new DefaultItemAnimator());
+        newRelationshipAdapter.setOnItemClickListener(new GetNewRelationShipResultsButtonOnClickentener(getContext(),this));
         search_result_recycler_view.setAdapter(newRelationshipAdapter);
         searchView= (SearchView) view.findViewById(R.id.search_column);
         searchView.setIconifiedByDefault(true);
@@ -112,18 +116,42 @@ public class NewRelationShipFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+                fragmentTransaction.setCustomAnimations(R.anim.default_fragment_switch_translate_open,R.anim.default_leave_left);
                 fragmentManager.popBackStack();
             }
         });
         return view;
     }
 
-
     @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        return Anim.defaultFragmentAnim(getActivity(),transit,enter,nextAnim);
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(CoreApplication.newInstance().isDisPlayType()==false){
+            CoreApplication.newInstance().setDisPlayType(true);
+            CoreApplication.newInstance().getRoot().startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.default_open_right));
+        }
     }
 
 
+    /*    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if(CoreApplication.newInstance().isDisPlayType()==true){
+            CoreApplication.newInstance().setDisPlayType(false);
+            if(!enter){
+                CoreApplication.newInstance().getRoot().startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.default_open_right));
+            }
+            Log.v("第一种显示方式","ok");
+            return Anim.defaultFragmentAnim(getActivity(),transit,enter,nextAnim);
+        }
+        return null;
+}*/
+
+
+    public SearchView getSearchView() {
+        return searchView;
+    }
+
+    public void setSearchView(SearchView searchView) {
+        this.searchView = searchView;
+    }
 }

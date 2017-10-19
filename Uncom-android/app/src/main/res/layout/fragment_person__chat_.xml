@@ -7,175 +7,178 @@
     android:fitsSystemWindows="true"
     tools:context="com.example.chen1.uncom.chat.PersonChatFragment">
     <!-- TODO: Update blank fragment layout -->
-<LinearLayout
-    android:background="#eeeeee"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <android.support.design.widget.AppBarLayout
-        app:elevation="0dp"
-        android:background="@color/colorToolBar"
-        android:layout_marginTop="-10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/appBarLayout">
-        <android.support.v7.widget.Toolbar
-            android:layout_marginBottom="-5dp"
-            android:id="@+id/person_chat_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <android.support.v7.widget.AppCompatImageView
-                android:layout_width="25dp"
-                android:id="@+id/person_chat_back_icon"
-                android:layout_height="25dp"
-                android:clickable="true"
-                android:onClick="onClick"
-                tools:ignore="DuplicateIds"
-                app:srcCompat="@drawable/ic_vector_back_icon" />
-            <TextView
-                android:id="@+id/person_username"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="陈广不平"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20dp"
-                android:layout_marginLeft="35dp"
-                />
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:paddingTop="10dp"
-        android:id="@+id/person_chat_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/person_chat_bottomNavigationView"
-        android:layout_below="@+id/appBarLayout"
-        android:layout_weight="1"
-        android:background="#eeeeee" />
-
-    <LinearLayout
-        android:elevation="0dp"
-        android:background="@color/colorPrimary"
-        android:id="@+id/person_chat_bottomNavigationView"
-        android:layout_width="match_parent"
-        android:minHeight="45dp"
-        android:layout_height="wrap_content">
         <LinearLayout
-            android:elevation="0dp"
-            android:background="@color/colorPrimary"
-            android:gravity="bottom"
+            android:fitsSystemWindows="true"
+            android:background="#eeeeee"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-            <LinearLayout
+            <android.support.design.widget.AppBarLayout
+                android:fitsSystemWindows="true"
+                android:layout_marginTop="-15dp"
+                android:background="@color/colorToolBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/appBarLayout">
+                <android.support.v7.widget.Toolbar
+                    android:layout_marginBottom="-5dp"
+                    android:background="@drawable/view_shadow"
+                    android:id="@+id/person_chat_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="25dp"
+                        android:id="@+id/person_chat_back_icon"
+                        android:layout_height="25dp"
+                        android:clickable="true"
+                        android:onClick="onClick"
+                        tools:ignore="DuplicateIds"
+                        app:srcCompat="@drawable/ic_vector_back_icon" />
+                    <TextView
+                        android:id="@+id/person_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="陈广不平"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20dp"
+                        android:layout_marginLeft="35dp"
+                        />
+                </android.support.v7.widget.Toolbar>
+            </android.support.design.widget.AppBarLayout>
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/person_chat_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/person_chat_bottomNavigationView"
+                android:layout_below="@+id/appBarLayout"
                 android:layout_weight="1"
-                android:gravity="bottom"
-                android:layout_gravity="bottom"
-                android:orientation="horizontal"
-                android:paddingTop="3dp">
-
-                <android.support.v7.widget.AppCompatImageView
-                    android:clickable="true"
-                    android:id="@+id/appCompatImageView4"
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_gravity="bottom"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="12dp"
-                    app:srcCompat="@drawable/ic_vector_input_select_voice_icon" />
-
-                <EditText
-                    android:background="@null"
-                    android:drawableBottom="@drawable/edittext_bottom_line"
-                    android:id="@+id/person_chat_editText"
-                    android:layout_width="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:paddingBottom="8dp"
-                    android:minHeight="45dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginLeft="3dp"
-                    android:layout_weight="1"
-                    android:maxLines="3"
-                    android:lineSpacingExtra="2dp"
-                    android:textCursorDrawable="@drawable/access_cursor_active"
-                    android:theme="@style/ChatEditText" />
-                <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/appCompatImageView5"
-                    android:clickable="true"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginRight="5dp"
-                    app:srcCompat="@drawable/ic_vector_input_expression_icon" />
-
-                <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/appCompatImageView6"
-                    android:layout_width="43dp"
-                    android:layout_height="33dp"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginRight="10dp"
-                    android:visibility="visible"
-                    app:srcCompat="@drawable/ic_vector_chat_more_icon" />
-
+                android:background="#eeeeee" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-                <android.support.v7.widget.AppCompatButton
-                    android:layout_alignParentBottom="true"
-                    android:id="@+id/person_chat_send_button"
-                    android:background="@drawable/send_soild_shape"
-                    android:layout_gravity="bottom"
-                    android:gravity="center"
-                    android:layout_width="45dp"
-                    android:layout_height="30dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginRight="8dp"
-                    android:textSize="18dp"
-                    android:textColor="#ffffff"
-                    android:visibility="gone"
-                    android:text="发送"/>
-            </LinearLayout>
-                <!--   <ImageView
-                       android:id="@+id/person_chat_send_button"
-                       android:gravity="center"
-                       android:background="@drawable/person_chata_send_btn_shape"
-                       android:layout_width="45dp"
-                       android:layout_height="35dp"
-                       android:layout_gravity="bottom"
-                       android:layout_marginBottom="3dp"
-                       android:layout_marginRight="10dp"
-                       android:textSize="18dp"
-                       android:textColor="#FFFFFFFF"
-                       android:text="发送" />-->
+                android:elevation="0dp"
+                android:background="@color/colorPrimary"
+                android:id="@+id/person_chat_bottomNavigationView"
+                android:layout_width="match_parent"
+                android:minHeight="45dp"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:elevation="0dp"
+                    android:background="@color/colorPrimary"
+                    android:gravity="bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="bottom"
+                        android:layout_gravity="bottom"
+                        android:orientation="horizontal"
+                        android:paddingTop="3dp">
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:clickable="true"
+                            android:id="@+id/appCompatImageView4"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="12dp"
+                            app:srcCompat="@drawable/ic_vector_input_select_voice_icon" />
+
+                        <EditText
+                            android:background="@null"
+                            android:drawableBottom="@drawable/edittext_bottom_line"
+                            android:id="@+id/person_chat_editText"
+                            android:layout_width="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:paddingBottom="8dp"
+                            android:minHeight="45dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginLeft="3dp"
+                            android:layout_weight="1"
+                            android:maxLines="3"
+                            android:lineSpacingExtra="2dp"
+                            android:textCursorDrawable="@drawable/access_cursor_active"
+                            android:theme="@style/ChatEditText" />
+                        <android.support.v7.widget.AppCompatImageView
+                            android:id="@+id/appCompatImageView5"
+                            android:clickable="true"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="5dp"
+                            app:srcCompat="@drawable/ic_vector_input_expression_icon" />
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:id="@+id/appCompatImageView6"
+                            android:layout_width="43dp"
+                            android:layout_height="33dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="7dp"
+                            android:layout_marginRight="10dp"
+                            android:visibility="visible"
+                            app:srcCompat="@drawable/ic_vector_chat_more_icon" />
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent">
+                            <android.support.v7.widget.AppCompatButton
+                                android:layout_alignParentBottom="true"
+                                android:id="@+id/person_chat_send_button"
+                                android:background="@drawable/send_soild_shape"
+                                android:layout_gravity="bottom"
+                                android:gravity="center"
+                                android:layout_width="45dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="4dp"
+                                android:layout_marginRight="8dp"
+                                android:textSize="18dp"
+                                android:textColor="#ffffff"
+                                android:visibility="gone"
+                                android:text="发送"/>
+                        </LinearLayout>
+                        <!--   <ImageView
+                               android:id="@+id/person_chat_send_button"
+                               android:gravity="center"
+                               android:background="@drawable/person_chata_send_btn_shape"
+                               android:layout_width="45dp"
+                               android:layout_height="35dp"
+                               android:layout_gravity="bottom"
+                               android:layout_marginBottom="3dp"
+                               android:layout_marginRight="10dp"
+                               android:textSize="18dp"
+                               android:textColor="#FFFFFFFF"
+                               android:text="发送" />-->
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
+            <LinearLayout
+                android:elevation="0dp"
+                android:background="@color/colorPrimary"
+                android:layout_gravity="bottom"
+                android:id="@+id/Expression_LinearLayout"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include
+                    layout="@layout/chat_expression_layout"/>
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:elevation="0dp"
-        android:background="@color/colorPrimary"
-        android:layout_gravity="bottom"
-        android:id="@+id/Expression_LinearLayout"
-        android:visibility="gone"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include
-            layout="@layout/chat_expression_layout"/>
-    </LinearLayout>
-</LinearLayout>
 
 </LinearLayout>

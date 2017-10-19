@@ -87,7 +87,7 @@ public class SetPageMainFragmentAdapter extends RecyclerView.Adapter<SetPageMain
         }
         if(personMessageList!=null&&personMessageList.size()>0){
             Log.v("teimse","a"+personMessageList.size());
-            holder.messageDate.setText(TimeUtils.compareTimeChatDisplay(new Date(),personMessageList.get(position).getLast_active_time()));
+            holder.messageDate.setText(TimeUtils.compareTimeChatDisplay(personMessageList.get(position).getLast_active_time(),personMessageList.get(position).getLast_active_time()));
         }
      }
 

@@ -50,6 +50,7 @@ public class RalationShipPageMainFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.v("RalationShipPageMainFragmentOncreate",".............ok");
         personFrendList= CoreApplication.newInstance().getPersonFrendList();
         Log.v("freendlist", String.valueOf(personFrendList));
     }
@@ -76,8 +77,8 @@ public class RalationShipPageMainFragment extends Fragment {
         group_listView.setAdapter(group_baseAdapter);
         CoreApplication.newInstance().setPersonRelationShipAdapter(person_baseAdapter);
         person_listview.setAdapter(person_baseAdapter);
-        person_listview.setOnItemClickListener(new PersonItemOnClickListener(personFrendList));
-        new_relation_ship_button.setOnClickListener(new NewRelationShipButtonOnclickListener());
+        person_listview.setOnItemClickListener(new PersonItemOnClickListener(this,personFrendList));
+        new_relation_ship_button.setOnClickListener(new ToNewRelationShipButtonOnclickListener(this));
         return view;
     }
 
@@ -97,4 +98,5 @@ public class RalationShipPageMainFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

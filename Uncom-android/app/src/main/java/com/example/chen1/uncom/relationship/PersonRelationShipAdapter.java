@@ -7,11 +7,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.chen1.uncom.R;
+import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.utils.LoadImageUtils;
 
@@ -108,14 +110,12 @@ public class PersonRelationShipAdapter extends BaseAdapter {
         headImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getFragmentManager();
+                FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getActivity().getSupportFragmentManager();
                 PersonDetailedInformationFragment fragment = PersonDetailedInformationFragment.getInstance();
-                Bundle bundle=new Bundle();
-                bundle.putParcelable("frendData",data.get(position));
-                fragment.setArguments(bundle);
+                fragment.setFrendData(data.get(position));
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout,fragment).commit();
-
+                fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout,fragment).setCustomAnimations(R.anim.default_fragment_switch_leave_translate, R.anim.default_fragment_switch_leave_translate, R.anim.default_fragment_switch_leave_translate, R.anim.default_fragment_switch_translate_open).commit();
+                CoreApplication.newInstance().getRoot().startAnimation(AnimationUtils.loadAnimation(v.getContext(),R.anim.default_leave_left));
             }
         });
 

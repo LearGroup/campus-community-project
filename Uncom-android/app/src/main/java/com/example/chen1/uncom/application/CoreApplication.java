@@ -8,7 +8,11 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.View;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -41,6 +45,9 @@ import java.util.Map;
 
 public class CoreApplication extends Application {
 
+    private boolean disPlay=true;
+    private boolean disPlayType=true;//1 从RalationShipPageMainFragment到该fragment
+    //0 从NewRelationShipResultsFragment 到该fragment
     private static final String SET_COOKIE_KEY = "set-cookie";
     private static final String COOKIE_KEY = "Cookie";
     private static final String SESSION_COOKIE = "skey";
@@ -54,6 +61,7 @@ public class CoreApplication extends Application {
     private Handler getChatDataHandler;  //当用户在对应的聊天界面，将数据发送到聊天界面
     private  String user_id;
     private MessageHistoryBeanDao messageHistoryBeanDao;
+
     private MessageHistoryBean messageHistoryBean;
     private Handler coreAppGetChatDataHandler;//获取消息数据 用户不在对应的聊天界面
     private RelationShipLevelBeanDao relationShipLevelBeanDao;
@@ -61,6 +69,8 @@ public class CoreApplication extends Application {
     private ArrayList<RelationShipLevelBean>activePersonMessageList=new ArrayList<>();
     private SetPageMainFragmentAdapter setPageMainFragmentAdapter;
     private PersonRelationShipAdapter PersonRelationShipAdapter;
+    private Fragment temperFragment;
+    private View root;
     public static CoreApplication newInstance() {
         return instance;
     }
@@ -199,12 +209,13 @@ public class CoreApplication extends Application {
                     QueryBuilder queryBuilder=relationShipLevelBeanDao.queryBuilder();
                     Query query=queryBuilder.where(RelationShipLevelBeanDao.Properties.Level.eq(4)).build();
                     Message message=new Message();
-                    message.what=1;
+                    message.what=3;
                    setPersonFrendList((ArrayList<RelationShipLevelBean>) query.list());
                     coreAppGetChatDataHandler.sendMessage(message);
                     Log.v("CoreApplicationListSize", String.valueOf(getPersonFrendList().size()));
                     query=queryBuilder.where(queryBuilder.and(RelationShipLevelBeanDao.Properties.Level.eq(4),RelationShipLevelBeanDao.Properties.Active.eq(true))).orderDesc(RelationShipLevelBeanDao.Properties.Last_active_time).build();
                     ArrayList<RelationShipLevelBean> list= (ArrayList<RelationShipLevelBean>) query.list();
+                    Log.v("CoreApplicationActive", String.valueOf(list.size()));
                     for (int i = 0; i <list.size(); i++) {
                         Log.v("newtheard",list.get(i).getUsername());
                         if(list.get(i).getActive()==true){
@@ -213,7 +224,7 @@ public class CoreApplication extends Application {
                         }
                     }
                     Message message1=new Message();
-                    message1.what=3;
+                    message1.what=1;
                     coreAppGetChatDataHandler.sendMessage(message1);
                     Log.v("CoreApplicationActiveList", String.valueOf(CoreApplication.newInstance().getActivePersonMessageList().size()));
                 }
@@ -286,29 +297,6 @@ public class CoreApplication extends Application {
         }
         return "";
     }
-     /*   //当Set页面没有活动信息。则直接将其加入到头部
-     Log.v("updateMessage","ok2");
-        if(isRealChange==1 || isRealChange==3 ){
-            activePersonMessageList.add(0,relationShipLevelBean);
-            setPageMainFragmentAdapter.notifyDataSetChanged();
-        }*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public Handler getGetChatDataHandler() {
         return getChatDataHandler;
@@ -452,5 +440,29 @@ public class CoreApplication extends Application {
 
     public void setMessageHistoryBeanDao(MessageHistoryBeanDao messageHistoryBeanDao) {
         this.messageHistoryBeanDao = messageHistoryBeanDao;
+    }
+
+    public View getRoot() {
+        return root;
+    }
+
+    public void setRoot(View root) {
+        this.root = root;
+    }
+
+    public Fragment getTemperFragment() {
+        return temperFragment;
+    }
+
+    public void setTemperFragment(Fragment temperFragment) {
+        this.temperFragment = temperFragment;
+    }
+
+    public boolean isDisPlayType() {
+        return disPlayType;
+    }
+
+    public void setDisPlayType(boolean disPlayType) {
+        this.disPlayType = disPlayType;
     }
 }
