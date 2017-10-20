@@ -4,24 +4,18 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:background="@color/colorPrimary"
     tools:context="com.example.chen1.uncom.relationship.NewRelationShipFragment">
-
     <android.support.design.widget.AppBarLayout
         android:background="@color/colorToolBar"
-        android:layout_marginTop="-15dp"
         android:layout_width="match_parent"
-        android:fitsSystemWindows="true"
         android:layout_height="wrap_content"
         android:id="@+id/peron_dtailed_information_appbar_layout">
             <android.support.v7.widget.Toolbar
-                android:background="@drawable/view_shadow"
-                android:layout_marginBottom="-5dp"
+                android:paddingTop="5dp"
                 android:id="@+id/new_relationship_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme"
                 >
                 <android.support.v7.widget.AppCompatImageView
                     android:layout_width="25dp"

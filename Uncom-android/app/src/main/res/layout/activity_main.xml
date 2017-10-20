@@ -5,15 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
-
     tools:openDrawer="start"
-    android:fitsSystemWindows="true"
     tools:context="com.example.chen1.uncom.main.MainActivity"
    >
-
     <android.support.design.widget.AppBarLayout
         android:background="#529974"
-        android:paddingTop="15dp"
         app:elevation="2dp"
         android:layout_marginBottom="5dp"
         android:fitsSystemWindows="true"
@@ -28,18 +24,18 @@
             android:layout_height="wrap_content"
             />
     </android.support.design.widget.AppBarLayout>
-    <include
+        <include
 
-        layout="@layout/app_bar_main"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"/>
+            layout="@layout/app_bar_main"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"/>
 
-   <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/main_activity_drawer_layout"
-       />
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/nav_header_main"
+            app:menu="@menu/main_activity_drawer_layout"
+            />
 </android.support.v4.widget.DrawerLayout>

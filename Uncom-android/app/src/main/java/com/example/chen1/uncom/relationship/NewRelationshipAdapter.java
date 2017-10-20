@@ -30,7 +30,6 @@ public class NewRelationshipAdapter extends  RecyclerView.Adapter<RecyclerView.V
     private OnItemClickListener onItemClickListener;
     public void setOnItemClickListener(OnItemClickListener onItemClickListener){
         this.onItemClickListener=onItemClickListener;
-
     }
 
     public  interface  OnItemClickListener{

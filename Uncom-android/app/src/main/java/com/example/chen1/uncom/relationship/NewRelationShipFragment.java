@@ -147,6 +147,8 @@ public class NewRelationShipFragment extends Fragment {
 }*/
 
 
+
+
     public SearchView getSearchView() {
         return searchView;
     }

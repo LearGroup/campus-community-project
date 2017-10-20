@@ -114,7 +114,7 @@ public class PersonRelationShipAdapter extends BaseAdapter {
                 PersonDetailedInformationFragment fragment = PersonDetailedInformationFragment.getInstance();
                 fragment.setFrendData(data.get(position));
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout,fragment).setCustomAnimations(R.anim.default_fragment_switch_leave_translate, R.anim.default_fragment_switch_leave_translate, R.anim.default_fragment_switch_leave_translate, R.anim.default_fragment_switch_translate_open).commit();
+                fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout,fragment).setCustomAnimations(R.anim.default_fragment_switch_leave_translate, R.anim.default_leave_left, R.anim.default_open_right, R.anim.default_fragment_switch_translate_open).commit();
                 CoreApplication.newInstance().getRoot().startAnimation(AnimationUtils.loadAnimation(v.getContext(),R.anim.default_leave_left));
             }
         });

@@ -1,7 +1,6 @@
 package com.example.chen1.uncom.relationship;
 
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
@@ -18,47 +17,45 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.chen1.uncom.R;
-import com.example.chen1.uncom.application.CoreApplication;
-import com.example.chen1.uncom.bean.RelationShipLevelBean;
-import com.example.chen1.uncom.utils.Anim;
+import com.example.chen1.uncom.bean.NewRelationShipBean;
 import com.example.chen1.uncom.utils.LoadImageUtils;
 
 
+public class SearchResultPersonDetailFragment extends Fragment {
 
-public class PersonDetailedInformationFragment extends Fragment {
-
-
-    private static PersonDetailedInformationFragment fragment=null;
+    private NewRelationShipBean frendData;
     private AppBarLayout appBarLayout;
     private TextView username;
-    private RelationShipLevelBean frendData;
-
     private Menu menus=null;
     private AppCompatImageView person_back_icon;
     private TextView person_name;
+    private TextView customText;
     private ButtonBarLayout buttonBarLayout;
     private String mParam1;
     private String mParam2;
     private ImageView imageView;
+    private Button buildRelationship;
     private ImageView imageView2;
     private ConstraintLayout constraintLayout;
-    private OnFragmentInteractionListener mListener;
     private ImageView  person_iamgeview;
-    public PersonDetailedInformationFragment() {
-        // Required empty public constructor
+    private static SearchResultPersonDetailFragment searchResultPersonDetailFragment =null;
+
+
+
+    public static SearchResultPersonDetailFragment getInstance(){
+        if(searchResultPersonDetailFragment ==null){
+            searchResultPersonDetailFragment =new SearchResultPersonDetailFragment();
+        }
+        return searchResultPersonDetailFragment;
     }
 
-    public static PersonDetailedInformationFragment getInstance(){
-        if(fragment==null){
-            fragment=new PersonDetailedInformationFragment();
-        }
-        return fragment;
+    public SearchResultPersonDetailFragment() {
+        // Required empty public constructor
     }
 
 
@@ -73,7 +70,7 @@ public class PersonDetailedInformationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        final View view=inflater.inflate(R.layout.fragment_person_detailed_information_fragment, container, false);
+        final View view=inflater.inflate(R.layout.fragment_search_result_person_detail, container, false);
         final Toolbar toolbar=(Toolbar)view.findViewById(R.id.person_detailed_information_toolbar);
         setHasOptionsMenu(true);
         toolbar.inflateMenu(R.menu.person_detail_menu_layout);
@@ -87,13 +84,17 @@ public class PersonDetailedInformationFragment extends Fragment {
                 fragmentManager.popBackStack();
             }
         });
+        customText=(TextView)view.findViewById(R.id.custom_short_text);
         username=(TextView)view.findViewById(R.id.person_username);
-        username.setText(frendData.getUsername());
+        username.setText(frendData.getUser_name());
+        if(frendData.getShort_message()!=null){
+            customText.setText(frendData.getShort_message());
+        }
+        buildRelationship=(Button)view.findViewById(R.id.build_relationship);
         person_iamgeview=(ImageView)view.findViewById(R.id.person_detaild_information_circleImageView);
-        LoadImageUtils.getFirendHeaderImage(frendData.getHeader_pic(),getContext(),person_iamgeview);
         constraintLayout=(ConstraintLayout)view.findViewById(R.id.person_detaild_information_constraintlayout);
+        LoadImageUtils.getFirendHeaderImage(frendData.getHeader_pic(),getContext(),person_iamgeview);
         person_name=(TextView)view.findViewById(R.id.person_detaild_information_name);
-        person_name.setText(frendData.getUsername());
         person_back_icon=(AppCompatImageView)view.findViewById(R.id.person_detaild_information_back_icon);
         imageView=(ImageView)view.findViewById(R.id.person_detailed_information_background_img);
         imageView2=(ImageView)view.findViewById(R.id.person_detailed_information_background_img_two);
@@ -118,47 +119,29 @@ public class PersonDetailedInformationFragment extends Fragment {
                 }
             }
         });
+        buildRelationship.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         return view;
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-         menu.clear();
-         inflater.inflate(R.menu.person_detail_menu_layout,menu);
+        menu.clear();
+        inflater.inflate(R.menu.person_detail_menu_layout,menu);
         if(menus==null){
             menus=menu;
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-
-    public RelationShipLevelBean getFrendData() {
+    public NewRelationShipBean getFrendData() {
         return frendData;
     }
 
-    public void setFrendData(RelationShipLevelBean frendData) {
+    public void setFrendData(NewRelationShipBean frendData) {
         this.frendData = frendData;
-    }
-
-    @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        if(!enter){
-            CoreApplication.newInstance().getRoot().setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.default_open_right));
-        }
-        return Anim.defaultFragmentAnim(getActivity(),transit,enter,nextAnim);
     }
 }

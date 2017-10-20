@@ -25,16 +25,23 @@ public class NewRelationShipBean   implements Parcelable {
     private Integer result_type;  //添加的结果，(是否接受了 1已接受 2未接受)
     private String user_name;
     private Integer view_type;//视图需要展示的类型 0顶层搜索时弹出的搜索框 1进入新关系页面的默认布局(显示添加新关系的历史 2新关系搜索结果框)
+    private String sprovince;//省/直辖市
+    private String stown;//市
+    private Integer sex;//性别
+
     protected NewRelationShipBean(Parcel in) {
         header_pic = in.readString();
         results = in.readString();
         short_message = in.readString();
         user_name = in.readString();
+        sprovince = in.readString();
+        stown = in.readString();
     }
 
-    @Generated(hash = 1482345246)
+    @Generated(hash = 1989870486)
     public NewRelationShipBean(Long id, Integer type, String header_pic, String results, Date get_time,
-            String short_message, Integer result_type, String user_name, Integer view_type) {
+            String short_message, Integer result_type, String user_name, Integer view_type,
+            String sprovince, String stown, Integer sex) {
         this.id = id;
         this.type = type;
         this.header_pic = header_pic;
@@ -44,6 +51,9 @@ public class NewRelationShipBean   implements Parcelable {
         this.result_type = result_type;
         this.user_name = user_name;
         this.view_type = view_type;
+        this.sprovince = sprovince;
+        this.stown = stown;
+        this.sex = sex;
     }
 
     @Generated(hash = 1353939643)
@@ -56,6 +66,8 @@ public class NewRelationShipBean   implements Parcelable {
         dest.writeString(results);
         dest.writeString(short_message);
         dest.writeString(user_name);
+        dest.writeString(sprovince);
+        dest.writeString(stown);
     }
 
     @Override
@@ -133,6 +145,30 @@ public class NewRelationShipBean   implements Parcelable {
 
     public void setView_type(Integer view_type) {
         this.view_type = view_type;
+    }
+
+    public String getSprovince() {
+        return this.sprovince;
+    }
+
+    public void setSprovince(String sprovince) {
+        this.sprovince = sprovince;
+    }
+
+    public String getStown() {
+        return this.stown;
+    }
+
+    public void setStown(String stown) {
+        this.stown = stown;
+    }
+
+    public Integer getSex() {
+        return this.sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
     }
 
     public static final Creator<NewRelationShipBean> CREATOR = new Creator<NewRelationShipBean>() {

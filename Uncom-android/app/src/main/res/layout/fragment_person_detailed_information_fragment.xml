@@ -4,20 +4,15 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     xmlns:toolbar="http://schemas.android.com/apk/res-auto"
-    android:background="#FFFFFF"
+    android:background="@color/colorPrimary"
     tools:context="com.example.chen1.uncom.relationship.PersonDetailedInformationFragment">
     <!-- TODO: Update blank fragment layout -->
     <android.support.design.widget.AppBarLayout
-        android:background="@drawable/view_shadow"
-        android:layout_marginTop="-15dp"
         android:layout_width="match_parent"
-        android:fitsSystemWindows="true"
         android:layout_height="wrap_content"
         android:id="@+id/peron_dtailed_information_appbar_layout">
         <android.support.design.widget.CollapsingToolbarLayout
-            android:background="@drawable/view_shadow"
             app:statusBarScrim="@android:color/transparent"
             app:contentScrim="@color/colorToolBar"
             android:id="@+id/collapsing_toolbar_layout"
@@ -80,6 +75,7 @@
                     android:layout_marginRight="8dp"
                     app:layout_constraintRight_toRightOf="parent" />
                 <TextView
+                    android:id="@+id/custom_short_text"
                     android:textSize="15dp"
                     android:layout_width="150dp"
                     android:layout_height="20dp"
@@ -93,15 +89,14 @@
                     app:layout_constraintHorizontal_bias="0.502" />
             </android.support.constraint.ConstraintLayout>
             <android.support.v7.widget.Toolbar
+                android:paddingTop="5dp"
                 android:layout_marginBottom="-5dp"
                 android:id="@+id/person_detailed_information_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_collapseMode="pin"
-
                 app:popupTheme="@style/AppTheme"
                 >
-
                 <android.support.v7.widget.ButtonBarLayout
                     android:id="@+id/btn_Play"
                     android:layout_width="match_parent"

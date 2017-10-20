@@ -109,7 +109,7 @@ public class PersonChatFragment extends Fragment implements NavigationView.OnNav
     private LinearLayout ExpressionLinearLayout;
     private TranslateAnimation mShowAction;
     private TranslateAnimation mHiddenAction;
-
+    private LinearLayout softinputLinearLayout;
 
     public RelationShipLevelBean getFrendData() {
         return frendData;
@@ -375,7 +375,7 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         Log.v("PersonChatFramgent:", "onCreateview: ");
-        quitFullScreen();
+        KeyBoardHeight= SharedPreferencesUtil.getSoftInputHeight(getContext());
         isVisible = true;
         final View view = inflater.inflate(R.layout.fragment_person__chat_, container, false);
         username=(TextView) view.findViewById(R.id.person_username);
@@ -393,7 +393,7 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
         ContentView.setLayoutManager(contentViewLinearLayoutManager);
         ContentView.setHasFixedSize(true);
         ContentView.setAdapter(personChatRecyclerViewAdapter);
-
+        softinputLinearLayout= (LinearLayout) view.findViewById(R.id.person_chat_bottomNavigationView);
         final Toolbar toolbar = (Toolbar) view.findViewById(R.id.person_chat_toolbar);
         setHasOptionsMenu(true);
         send_btn = (AppCompatButton) view.findViewById(R.id.person_chat_send_button);
@@ -445,12 +445,17 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
                     lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
                     ExpressionLinearLayout.setVisibility(View.GONE);
                     unlockContentHeightDelayed();
+                }else{
+
                 }
             }
 
             @Override
             public void keyBoardHide(int height) {
             /*    KeyBoardHeight=height;*/
+                LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) softinputLinearLayout.getLayoutParams();
+                layoutParams.setMargins(0,0,0,0);//设置rlContent的marginBottom的值为软键盘占有的高度即可
+                softinputLinearLayout.requestLayout();
 
 
             }
@@ -473,7 +478,14 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
 
                         }
                     }, 200L);
-                }else{
+                }else if(event.getAction() == MotionEvent.ACTION_UP && ExpressionLinearLayout.isShown()==false){
+                    Log.v("软键盘弹出","表情布局影藏");
+                    Log.v("软键盘高度", String.valueOf(KeyBoardHeight));
+                    LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) softinputLinearLayout.getLayoutParams();
+                    layoutParams.setMargins(0,0,0,KeyBoardHeight);//设置rlContent的marginBottom的值为软键盘占有的高度即可
+                    softinputLinearLayout.requestLayout();
+                }
+                else{
                     input_text.postDelayed(new Runnable() {
                         @Override
                         public void run() {

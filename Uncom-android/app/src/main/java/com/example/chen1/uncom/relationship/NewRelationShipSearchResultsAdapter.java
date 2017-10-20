@@ -38,6 +38,7 @@ public class NewRelationShipSearchResultsAdapter extends RecyclerView.Adapter<Re
 
     public NewRelationShipSearchResultsAdapter(Context context){
         this.context=context;
+        data=new ArrayList<>();
     }
 
 
@@ -89,10 +90,39 @@ public class NewRelationShipSearchResultsAdapter extends RecyclerView.Adapter<Re
         }
     }
 
-    public void add(NewRelationShipBean newRelationShipBean){
-        data.add(newRelationShipBean);
-        notifyItemInserted(data.size());
+
+
+    public void add(NewRelationShipBean item){
+        if(item.getView_type()==0 ){
+            if(item.getResults().length()<=0){
+                data.remove(0);
+                notifyItemRemoved(0);
+                return ;
+            }
+            if(data.size()==0){
+                data.add(item);
+                notifyItemInserted(0);
+                return ;
+            }
+            data.set(0,item);
+        }else{
+            data.add(item);
+        }
+        notifyDataSetChanged();
     }
+
+    /**
+     * 只对应第一次搜索框加入
+     * @param item
+     * @param status
+     */
+    public void add(NewRelationShipBean item ,int status){
+        if(item.getView_type()==0 ) {
+            data.add(0, item);
+            notifyItemInserted(0);
+        }
+    }
+
 
 
     public static class  ViewHolder extends  RecyclerView.ViewHolder{

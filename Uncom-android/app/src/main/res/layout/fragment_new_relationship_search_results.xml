@@ -2,21 +2,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
+    android:background="@color/colorPrimary"
     android:layout_height="match_parent"
     tools:context="com.example.chen1.uncom.relationship.NewRelationshipSearchResultsFragment"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
         android:background="@color/colorToolBar"
-        android:layout_marginTop="-15dp"
         android:layout_width="match_parent"
-        android:fitsSystemWindows="true"
         android:layout_height="wrap_content"
         android:id="@+id/appbar_layout">
         <android.support.v7.widget.Toolbar
-            android:background="@drawable/view_shadow"
-            android:layout_marginBottom="-5dp"
+            android:paddingTop="5dp"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,6 +41,19 @@
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/results_none"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorFontColor"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="未找到该用户"/>
+
     <android.support.v7.widget.RecyclerView
         android:background="@color/colorPrimary"
         android:id="@+id/search_page_recyclerview"

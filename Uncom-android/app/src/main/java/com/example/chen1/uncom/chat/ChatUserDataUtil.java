@@ -2,20 +2,25 @@ package com.example.chen1.uncom.chat;
 
 import android.content.Context;
 import android.os.CountDownTimer;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.chen1.uncom.R;
+import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.BeanDaoManager;
 import com.example.chen1.uncom.bean.NewRelationShipBean;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
 import com.example.chen1.uncom.relationship.NewRelationShipSearchResultsAdapter;
+import com.example.chen1.uncom.relationship.NewRelationShipSearchResultsOnItenClickListener;
+import com.example.chen1.uncom.relationship.NewRelationshipSearchResultsFragment;
 import com.example.chen1.uncom.utils.UserBeanAndJsonUtils;
 import com.example.chen1.uncom.utils.PopupWindowUtils;
 import com.example.chen1.uncom.utils.SessionStoreJsonRequest;
@@ -23,6 +28,7 @@ import com.example.chen1.uncom.utils.SessionStoreJsonRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -93,33 +99,50 @@ public class ChatUserDataUtil {
 
 
 
-    public static void searchUser(final RequestQueue requestQueue, final Context context, final View rootView, JSONObject params, final PopupWindow popupWindow, final NewRelationShipSearchResultsAdapter newRelationShipSearchResultsAdapter){
+    public static void searchUser(final RequestQueue requestQueue, final Context context, final View rootView, JSONObject params, final PopupWindow popupWindow, final NewRelationShipSearchResultsAdapter newRelationShipSearchResultsAdapter, final TextView resultsNone, final NewRelationshipSearchResultsFragment fragment){
+
         final SessionStoreJsonRequest sessionStoreJsonRequest=new SessionStoreJsonRequest("http://10.0.2.2:8081/searchUser", params,
                 new Response.Listener<JSONObject>() {
                     @Override
                             public void onResponse(JSONObject response) {
+                            ArrayList<NewRelationShipBean> array=new ArrayList<>();
                                 Log.v("searchUserResponse", String.valueOf(response));
                                 try {
                                     if(response.getString("status").equals("1")){
-                                        ArrayList<NewRelationShipBean> array=UserBeanAndJsonUtils.getNewRelationShipBean(response.getJSONArray("results"));
-                                        if(array.size()>0){
+                                         array=UserBeanAndJsonUtils.getNewRelationShipBean(response.getJSONArray("results"));
+                                        if(array.size()==1 && array.get(0).getResults().equals(CoreApplication.newInstance().getUserBean().getEmail())){
+                                            resultsNone.setVisibility(View.VISIBLE);
+                                            array.clear();
+                                        }else if(array.size()==1 && array.get(0).getResults().equals(CoreApplication.newInstance().getUserBean().getPhone())){
+                                            resultsNone.setVisibility(View.VISIBLE);
+                                            array.clear();
+                                        }else if(array.size()>0){
                                             for (int i = 0; i <array.size() ; i++) {
                                                 array.get(i).setView_type(2);
                                             }
-                                            newRelationShipSearchResultsAdapter.setData(array);
-                                            newRelationShipSearchResultsAdapter.notifyDataSetChanged();
                                         }
+                                    }else if(response.getString("status").equals("0") ){
+                                        Log.v("显示为未搜索到","ok");
+                                        resultsNone.setVisibility(View.VISIBLE);
                                     }
+                                    newRelationShipSearchResultsAdapter.setData(array);
+                                    newRelationShipSearchResultsAdapter.notifyDataSetChanged();
+                                    newRelationShipSearchResultsAdapter.setOnItenClickListener(new NewRelationShipSearchResultsOnItenClickListener(context,fragment));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        popupWindow.dismiss();
+                        if(popupWindow.isShowing()==true){
+                            popupWindow.dismiss();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                popupWindow.dismiss();
-                PopupWindowUtils.popupWindow("网络错误", R.layout.access_popupwindow_statustag_layout, LinearLayout.LayoutParams.MATCH_PARENT,150,1500,context,rootView);
+                if(popupWindow.isShowing()==true){
+                    popupWindow.dismiss();
+                }
+                newRelationShipSearchResultsAdapter.setOnItenClickListener(new NewRelationShipSearchResultsOnItenClickListener(context,fragment));
+                PopupWindowUtils.popupWindowNormal("网络错误", R.layout.access_popupwindow_statustag_layout, LinearLayout.LayoutParams.MATCH_PARENT,150,1500,context,rootView);
                 Log.e("LOGIN-ERROR", error.getMessage(), error);
             }
         });

@@ -22,6 +22,8 @@ import com.example.chen1.uncom.bean.MessageHistoryBean;
 import com.example.chen1.uncom.bean.MessageHistoryBeanDao;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
+import com.example.chen1.uncom.bean.UserBean;
+import com.example.chen1.uncom.bean.UserBeanDao;
 import com.example.chen1.uncom.relationship.PersonRelationShipAdapter;
 import com.example.chen1.uncom.service.CoreService;
 import com.example.chen1.uncom.set.SetPageMainFragmentAdapter;
@@ -61,7 +63,7 @@ public class CoreApplication extends Application {
     private Handler getChatDataHandler;  //当用户在对应的聊天界面，将数据发送到聊天界面
     private  String user_id;
     private MessageHistoryBeanDao messageHistoryBeanDao;
-
+    private UserBean userBean;
     private MessageHistoryBean messageHistoryBean;
     private Handler coreAppGetChatDataHandler;//获取消息数据 用户不在对应的聊天界面
     private RelationShipLevelBeanDao relationShipLevelBeanDao;
@@ -205,6 +207,11 @@ public class CoreApplication extends Application {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    if(getUser_id()==null){
+                        setUser_id(SharedPreferencesUtil.getUserId(getBaseContext()));
+                    }
+                    UserBeanDao userBeanDao=BeanDaoManager.getInstance().getDaoSession().getUserBeanDao();
+                    setUserBean(userBeanDao.queryBuilder().where(UserBeanDao.Properties.Id.eq(getUser_id())).build().unique());
                     RelationShipLevelBeanDao relationShipLevelBeanDao= BeanDaoManager.getInstance().getDaoSession().getRelationShipLevelBeanDao();
                     QueryBuilder queryBuilder=relationShipLevelBeanDao.queryBuilder();
                     Query query=queryBuilder.where(RelationShipLevelBeanDao.Properties.Level.eq(4)).build();
@@ -464,5 +471,13 @@ public class CoreApplication extends Application {
 
     public void setDisPlayType(boolean disPlayType) {
         this.disPlayType = disPlayType;
+    }
+
+    public UserBean getUserBean() {
+        return userBean;
+    }
+
+    public void setUserBean(UserBean userBean) {
+        this.userBean = userBean;
     }
 }
