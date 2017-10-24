@@ -1,7 +1,5 @@
 package com.example.chen1.uncom.relationship;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,22 +11,18 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.example.chen1.uncom.FragmentBackHandler;
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.NewRelationShipBean;
-import com.example.chen1.uncom.chat.ChatUserDataUtil;
-import com.example.chen1.uncom.set.OnItemClickListener;
-import com.example.chen1.uncom.utils.Anim;
+import com.example.chen1.uncom.utils.ChatUserDataUtil;
 import com.example.chen1.uncom.utils.BackHandlerHelper;
 import com.example.chen1.uncom.utils.PopupWindowUtils;
 import com.example.chen1.uncom.utils.SpanStringUtils;
@@ -37,7 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class NewRelationshipSearchResultsFragment extends Fragment implements FragmentBackHandler {
+public class NewRelationshipSearchResultsFragment extends Fragment implements FragmentBackHandler,View.OnTouchListener{
 
     private NewRelationShipBean search_layout_view;
     private String searchResult;
@@ -173,6 +167,11 @@ public class NewRelationshipSearchResultsFragment extends Fragment implements Fr
             return true;
         }
         return BackHandlerHelper.handleBackPress(this);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return true;
     }
 
 /*  @Override

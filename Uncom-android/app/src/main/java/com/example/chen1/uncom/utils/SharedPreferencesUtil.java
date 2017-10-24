@@ -63,4 +63,21 @@ public class SharedPreferencesUtil {
     }
 
 
+    public static void  setNewRelationActive(Context context,Integer sum){
+        SharedPreferences sharedPreferences =context.getSharedPreferences("user_info", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor =sharedPreferences.edit();
+        editor.putInt("newRelationActive",sum);
+        editor.commit();
+    }
+
+
+
+    public static Integer  getNewRelationActive(Context context){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Integer newRelationActive =sharedPreferences.getInt("newRelationActive",0);
+        return newRelationActive;
+    }
+
+
+
 }

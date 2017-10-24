@@ -45,8 +45,8 @@
     <TextView
         android:visibility="gone"
         android:id="@+id/results_none"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:background="@color/colorPrimary"
         android:textColor="@color/colorFontColor"
         android:textAlignment="center"

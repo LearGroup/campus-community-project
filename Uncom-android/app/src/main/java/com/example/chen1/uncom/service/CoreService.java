@@ -22,6 +22,8 @@ import com.example.chen1.uncom.bean.BeanDaoManager;
 import com.example.chen1.uncom.bean.DaoSession;
 import com.example.chen1.uncom.bean.MessageHistoryBean;
 import com.example.chen1.uncom.bean.MessageHistoryBeanDao;
+import com.example.chen1.uncom.bean.NewRelationShipBean;
+import com.example.chen1.uncom.bean.NewRelationShipBeanDao;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
 import com.example.chen1.uncom.bean.UserBean;
@@ -29,6 +31,8 @@ import com.example.chen1.uncom.bean.UserBeanDao;
 import com.example.chen1.uncom.utils.CoreServiceCallBack;
 import com.example.chen1.uncom.utils.PopupWindowUtils;
 import com.example.chen1.uncom.utils.SharedPreferencesUtil;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,6 +58,7 @@ public class CoreService extends Service  {
     private Handler coreAppGetChatDataHandler;
     private ChatCoreBinder binder=new ChatCoreBinder(this);
     private Socket socket;
+    private NewRelationShipBeanDao newRelationShipBeanDao;
     private String user_id;
     private Thread thread;
     private Context context;
@@ -61,6 +66,7 @@ public class CoreService extends Service  {
     private JSONObject loginData;
     private Handler sendChatHandler;
     private MessageHistoryBeanDao messageHistoryBeanDao;
+    private Handler buildRelationHandler;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -91,7 +97,7 @@ public class CoreService extends Service  {
                         Log.v("createNewThread","ok");
                         /*http://47.95.0.73:8081*/
                         /*http://10.0.2.2:8081*/
-                        socket= IO.socket("http://47.95.0.73:8081");
+                        socket= IO.socket("http://10.0.2.2:8081");
                         socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
                             @Override
                             public void call(Object... args) {
@@ -173,12 +179,6 @@ public class CoreService extends Service  {
                                 }
 
                             }
-                        }).on("synchronization", new Emitter.Listener() {
-                            @Override
-                            public void call(Object... args) {
-                                JSONObject object=(JSONObject) args[0];
-                                Log.v("synchronization", String.valueOf(object));
-                            }
                         }).on("checkStatus", new Emitter.Listener() {
                             //获取服务端传来的状态码：1 同步信息   2 退出账户
                             @Override
@@ -201,6 +201,31 @@ public class CoreService extends Service  {
                                     e.printStackTrace();
                                 }
                             }
+                        }).on("requestBuildRelationShip", new Emitter.Listener() {
+                            @Override
+                            public void call(Object... args) {
+                                JSONObject  object= (JSONObject) args[0];
+                                try {
+                                    if(object.getString("status").equals("1")){
+                                        JSONArray jsonArray=object.getJSONArray("results");
+                                        for (int i=0;i<jsonArray.length();i++){
+                                            Log.v("relationshipRresponse", String.valueOf(jsonArray));
+                                            NewRelationShipBean bean=new Gson().fromJson(String.valueOf(jsonArray.getJSONObject(i)), NewRelationShipBean.class);
+                                            Message message =new Message();
+                                            message.what=4;
+                                            message.obj=bean;
+                                            coreAppGetChatDataHandler.sendMessage(message);
+                                            if(newRelationShipBeanDao==null){
+                                                newRelationShipBeanDao= BeanDaoManager.getInstance().getDaoSession().getNewRelationShipBeanDao();
+                                            }
+                                            newRelationShipBeanDao.insert(bean);
+                                        }
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
                         });
                         socket.connect();
                         Log.v("createNewThreaded","ok");
@@ -243,6 +268,12 @@ public class CoreService extends Service  {
                                     Log.v("ofline", String.valueOf(params));
                                     Log.v("oflined","ok");
                                     break;
+                                }
+                                //发送还有添加请求
+                                case 2:{
+                                    Log.v("CoreService","requestBuildRelationShip");
+                                    JsonObject jsonObject= (JsonObject) msg.obj;
+                                    socket.emit("requestBuildRelationShip",jsonObject);
                                 }
                             }
 

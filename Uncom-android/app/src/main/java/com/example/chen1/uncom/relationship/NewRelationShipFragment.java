@@ -15,6 +15,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public class NewRelationShipFragment extends Fragment {
+public class NewRelationShipFragment extends Fragment  implements View.OnTouchListener{
 
     private static NewRelationShipFragment newRelationShipFragment=null;
     private AppCompatImageView back_icon;
@@ -43,6 +44,7 @@ public class NewRelationShipFragment extends Fragment {
     private NewRelationShipBean search_layout_view;
     private NewRelationshipAdapter newRelationshipAdapter;
     private boolean search_display_type;
+    private ArrayList<NewRelationShipBean> newRelationShipList;
     public NewRelationShipFragment() {
         // Required empty public constructor
     }
@@ -70,6 +72,7 @@ public class NewRelationShipFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         search_display_type=false;
+        CoreApplication.newInstance().setNewRelationActive(0);
         View view=inflater.inflate(R.layout.fragment_new_relation_ship, container, false);
         Toolbar toolbar=(Toolbar) view.findViewById(R.id.new_relationship_toolbar);
         setHasOptionsMenu(true);
@@ -84,6 +87,14 @@ public class NewRelationShipFragment extends Fragment {
         search_result_recycler_view.setHasFixedSize(true);
         search_result_recycler_view.setItemAnimator(new DefaultItemAnimator());
         newRelationshipAdapter.setOnItemClickListener(new GetNewRelationShipResultsButtonOnClickentener(getContext(),this));
+        if(newRelationShipList==null){
+            newRelationShipList=CoreApplication.newInstance().getNewRelationShipList();
+        }
+        if(newRelationShipList!=null &&newRelationShipList.size()>0){
+            for (NewRelationShipBean item :newRelationShipList){
+                newRelationshipAdapter.add(item);
+            }
+        }
         search_result_recycler_view.setAdapter(newRelationshipAdapter);
         searchView= (SearchView) view.findViewById(R.id.search_column);
         searchView.setIconifiedByDefault(true);
@@ -155,5 +166,10 @@ public class NewRelationShipFragment extends Fragment {
 
     public void setSearchView(SearchView searchView) {
         this.searchView = searchView;
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return true;
     }
 }

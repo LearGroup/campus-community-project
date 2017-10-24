@@ -33,7 +33,7 @@ import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
 import com.example.chen1.uncom.bean.UserBean;
 import com.example.chen1.uncom.utils.UserBeanAndJsonUtils;
 import com.example.chen1.uncom.bean.UserBeanDao;
-import com.example.chen1.uncom.chat.ChatUserDataUtil;
+import com.example.chen1.uncom.utils.ChatUserDataUtil;
 import com.example.chen1.uncom.expression.SoftKeyBoardListener;
 import com.example.chen1.uncom.main.MainActivity;
 import com.example.chen1.uncom.utils.PopupWindowUtils;

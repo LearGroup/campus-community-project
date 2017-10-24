@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,11 +23,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.chen1.uncom.R;
+import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.NewRelationShipBean;
 import com.example.chen1.uncom.utils.LoadImageUtils;
 
 
-public class SearchResultPersonDetailFragment extends Fragment {
+public class SearchResultPersonDetailFragment extends Fragment  implements View.OnTouchListener{
 
     private NewRelationShipBean frendData;
     private AppBarLayout appBarLayout;
@@ -119,12 +121,7 @@ public class SearchResultPersonDetailFragment extends Fragment {
                 }
             }
         });
-        buildRelationship.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        buildRelationship.setOnClickListener(new ToRequestBuildRelationShipButtonOnClickListener(getContext(),this,frendData));
         return view;
     }
 
@@ -143,5 +140,10 @@ public class SearchResultPersonDetailFragment extends Fragment {
 
     public void setFrendData(NewRelationShipBean frendData) {
         this.frendData = frendData;
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return true;
     }
 }

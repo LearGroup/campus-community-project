@@ -1,0 +1,91 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/colorPrimary"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.chen1.uncom.relationship.RequestBuildRelationShipFragment">
+    <android.support.design.widget.AppBarLayout
+        android:background="@color/colorToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/request_pappbarlayout">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/request_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp">
+
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/request_back_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:clickable="true"
+                    android:onClick="onClick"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_vector_back_icon" />
+
+                <TextView
+                    android:id="@+id/person_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="验证申请"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18dp"
+                    android:layout_marginLeft="35dp" />
+
+                <android.support.v7.widget.AppCompatButton
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/request_send_button"
+                    android:background="@drawable/reqeust_relationship_complete_button"
+                    android:layout_gravity="right"
+                    android:layout_width="50dp"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="15dp"
+                    android:textSize="18dp"
+                    android:textColor="#ffffff"
+                    android:visibility="visible"
+                    android:text="完成"
+           />
+
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+<LinearLayout
+    android:layout_marginTop="-5dp"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+    <TextView
+        android:paddingTop="15dp"
+        android:textColor="@color/colorFontColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="你需要发送验证申请,等待对方通过"/>
+
+
+    <EditText
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:id="@+id/request_meessage"
+        android:background="@null"
+        android:paddingBottom="3dp"
+        android:textSize="18dp"
+        android:textColor="#666666"
+        android:textStyle="normal"
+        android:fontFamily="sans-serif"
+        android:textCursorDrawable="@drawable/access_cursor_active"
+        android:drawableBottom="@drawable/reqeust_relationship_edittext_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+</LinearLayout>

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
@@ -29,6 +30,7 @@ public class RalationShipPageMainFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String mParam1;
+    private TextView newRelationShipActive;
     private String mParam2;
     private AppCompatImageView headImage;
     private ArrayList<RelationShipLevelBean> personFrendList;
@@ -69,6 +71,13 @@ public class RalationShipPageMainFragment extends Fragment {
         if(personFrendList==null){
             personFrendList= CoreApplication.newInstance().getPersonFrendList();
         }
+        newRelationShipActive= (TextView) view.findViewById(R.id.unlook_newrelationship_sum);
+        if(CoreApplication.newInstance().getNewRelationActive()!=0){
+            if(newRelationShipActive.getVisibility()==View.GONE){
+                newRelationShipActive.setVisibility(View.VISIBLE);
+            }
+            newRelationShipActive.setText(CoreApplication.newInstance().getNewRelationActive().toString());
+        }
         new_relation_ship_button=(ConstraintLayout)view.findViewById(R.id.new_relationship_button);
         group_listView=(ListView) view.findViewById(R.id.group_list_view);
         person_listview=(ListView)view.findViewById(R.id.person_list_view);
@@ -76,6 +85,7 @@ public class RalationShipPageMainFragment extends Fragment {
         PersonRelationShipAdapter person_baseAdapter=new PersonRelationShipAdapter(getContext(),personFrendList);
         group_listView.setAdapter(group_baseAdapter);
         CoreApplication.newInstance().setPersonRelationShipAdapter(person_baseAdapter);
+        CoreApplication.newInstance().setRalationShipPageMainFragment(this);
         person_listview.setAdapter(person_baseAdapter);
         person_listview.setOnItemClickListener(new PersonItemOnClickListener(this,personFrendList));
         new_relation_ship_button.setOnClickListener(new ToNewRelationShipButtonOnclickListener(this));
@@ -97,6 +107,17 @@ public class RalationShipPageMainFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    public void updateNewRelaionShipActive(){
+        Log.v("更新fragment","ok");
+        if(CoreApplication.newInstance().getNewRelationActive()!=0){
+            if(newRelationShipActive.getVisibility()==View.GONE){
+                newRelationShipActive.setVisibility(View.VISIBLE);
+            }
+            newRelationShipActive.setText(CoreApplication.newInstance().getNewRelationActive().toString());
+        }
     }
 
 }

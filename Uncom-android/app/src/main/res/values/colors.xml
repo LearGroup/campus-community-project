@@ -9,6 +9,6 @@
     <color name="colorMain">#529974</color>
     <color name="colorToolBar">#529974</color>
     <color name="colorSignButton">#eeeeee</color>
-
+    <color name="colorComplate">#68CC93</color>
     <color name="colorFontColor">#aaaaaa</color>
 </resources>

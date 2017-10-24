@@ -20,11 +20,14 @@ import com.example.chen1.uncom.access.AccessActivity;
 import com.example.chen1.uncom.bean.BeanDaoManager;
 import com.example.chen1.uncom.bean.MessageHistoryBean;
 import com.example.chen1.uncom.bean.MessageHistoryBeanDao;
+import com.example.chen1.uncom.bean.NewRelationShipBean;
+import com.example.chen1.uncom.bean.NewRelationShipBeanDao;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
 import com.example.chen1.uncom.bean.UserBean;
 import com.example.chen1.uncom.bean.UserBeanDao;
 import com.example.chen1.uncom.relationship.PersonRelationShipAdapter;
+import com.example.chen1.uncom.relationship.RalationShipPageMainFragment;
 import com.example.chen1.uncom.service.CoreService;
 import com.example.chen1.uncom.set.SetPageMainFragmentAdapter;
 import com.example.chen1.uncom.utils.SharedPreferencesUtil;
@@ -54,12 +57,15 @@ public class CoreApplication extends Application {
     private static final String COOKIE_KEY = "Cookie";
     private static final String SESSION_COOKIE = "skey";
     private CoreService coreService;
+    private RalationShipPageMainFragment ralationShipPageMainFragment;//关系页面的引用
     private static CoreApplication instance;
     private ServiceConnection serviceConnection=null;//用户退出登陆时，通过该变量关闭Coreservice
     private Intent startIntent =null;
     private Activity activity;
     private RequestQueue requestQueue;
     private SharedPreferences preferences;
+    private ArrayList<NewRelationShipBean> newRelationShipList;//新关系列表
+    private Integer NewRelationActive;//新增的新关系数量（未查看）
     private Handler getChatDataHandler;  //当用户在对应的聊天界面，将数据发送到聊天界面
     private  String user_id;
     private MessageHistoryBeanDao messageHistoryBeanDao;
@@ -167,8 +173,13 @@ public class CoreApplication extends Application {
                         if(PersonRelationShipAdapter !=null){
                             PersonRelationShipAdapter.notifyDataSetChanged();
                         }
-
-
+                        break;
+                    case 4:
+                        //执行新关系请求页面更新
+                        Log.v("执行新关系请求页面更新","ok");
+                        NewRelationShipBean newRelationShipBean=(NewRelationShipBean) msg.obj;
+                        addNewRelationShip(newRelationShipBean);
+                        break;
                 }
             }
         };
@@ -187,6 +198,28 @@ public class CoreApplication extends Application {
         }
         return null;
     }
+
+    /**
+     * 添加新关系请求列表
+     * @param newRelationShipBean
+     */
+    public void addNewRelationShip(NewRelationShipBean newRelationShipBean){
+        Log.v("开始更新新关系","ok");
+        if(newRelationShipList!=null){
+            for (int i = 0; i <newRelationShipList.size() ; i++) {
+                if(newRelationShipBean.getUser_id().equals(newRelationShipList.get(i))){
+                    Log.v("开始更新新关系","failed");
+                    return ;
+                }
+            }
+        }else{
+            newRelationShipList=new ArrayList<>();
+            newRelationShipList.add(newRelationShipBean);
+            setNewRelationActive(getNewRelationActive()+1);
+        }
+
+    }
+
 
     /**
      *从SQLlite数据库中同步数据到UI，由于数据比较多，所以新开线程进行数据同步处理
@@ -210,14 +243,16 @@ public class CoreApplication extends Application {
                     if(getUser_id()==null){
                         setUser_id(SharedPreferencesUtil.getUserId(getBaseContext()));
                     }
+                    NewRelationShipBeanDao newRelationShipBeanDao=BeanDaoManager.getInstance().getDaoSession().getNewRelationShipBeanDao();
                     UserBeanDao userBeanDao=BeanDaoManager.getInstance().getDaoSession().getUserBeanDao();
                     setUserBean(userBeanDao.queryBuilder().where(UserBeanDao.Properties.Id.eq(getUser_id())).build().unique());
                     RelationShipLevelBeanDao relationShipLevelBeanDao= BeanDaoManager.getInstance().getDaoSession().getRelationShipLevelBeanDao();
                     QueryBuilder queryBuilder=relationShipLevelBeanDao.queryBuilder();
                     Query query=queryBuilder.where(RelationShipLevelBeanDao.Properties.Level.eq(4)).build();
+                    ArrayList<NewRelationShipBean> newRelationShipList= (ArrayList<NewRelationShipBean>) newRelationShipBeanDao.queryBuilder().list();
                     Message message=new Message();
                     message.what=3;
-                   setPersonFrendList((ArrayList<RelationShipLevelBean>) query.list());
+                    setPersonFrendList((ArrayList<RelationShipLevelBean>) query.list());
                     coreAppGetChatDataHandler.sendMessage(message);
                     Log.v("CoreApplicationListSize", String.valueOf(getPersonFrendList().size()));
                     query=queryBuilder.where(queryBuilder.and(RelationShipLevelBeanDao.Properties.Level.eq(4),RelationShipLevelBeanDao.Properties.Active.eq(true))).orderDesc(RelationShipLevelBeanDao.Properties.Last_active_time).build();
@@ -233,7 +268,16 @@ public class CoreApplication extends Application {
                     Message message1=new Message();
                     message1.what=1;
                     coreAppGetChatDataHandler.sendMessage(message1);
-                    Log.v("CoreApplicationActiveList", String.valueOf(CoreApplication.newInstance().getActivePersonMessageList().size()));
+                    Log.v("NewRelationshipSize", String.valueOf(newRelationShipList.size()));
+                    for (int i=0;i<newRelationShipList.size();i++){
+                        Log.v("NewRelationshipSize", String.valueOf(newRelationShipList.get(i)));
+                        Message message2=new Message();
+                        message2.what=4;
+                        message2.obj=newRelationShipList.get(i);
+                        coreAppGetChatDataHandler.sendMessage(message2);
+                    }
+
+
                 }
             }).start();
         }
@@ -479,5 +523,36 @@ public class CoreApplication extends Application {
 
     public void setUserBean(UserBean userBean) {
         this.userBean = userBean;
+    }
+
+    public ArrayList<NewRelationShipBean> getNewRelationShipList() {
+        return newRelationShipList;
+    }
+
+    public void setNewRelationShipList(ArrayList<NewRelationShipBean> newRelationShipList) {
+        this.newRelationShipList = newRelationShipList;
+    }
+
+    public Integer getNewRelationActive() {
+        if(NewRelationActive==null){
+            NewRelationActive=SharedPreferencesUtil.getNewRelationActive(getBaseContext());
+        }
+        return NewRelationActive;
+    }
+
+    public void setNewRelationActive(Integer newRelationActive) {
+        NewRelationActive = newRelationActive;
+        if(ralationShipPageMainFragment!=null){
+            ralationShipPageMainFragment.updateNewRelaionShipActive();
+        }
+        SharedPreferencesUtil.setNewRelationActive(getBaseContext(),newRelationActive);
+    }
+
+    public RalationShipPageMainFragment getRalationShipPageMainFragment() {
+        return ralationShipPageMainFragment;
+    }
+
+    public void setRalationShipPageMainFragment(RalationShipPageMainFragment ralationShipPageMainFragment) {
+        this.ralationShipPageMainFragment = ralationShipPageMainFragment;
     }
 }

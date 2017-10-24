@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.bean.NewRelationShipBean;
 import com.example.chen1.uncom.set.SetPageMainFragmentAdapter;
+import com.example.chen1.uncom.utils.LoadImageUtils;
 
 import org.w3c.dom.Text;
 
@@ -52,7 +54,7 @@ public class NewRelationshipAdapter extends  RecyclerView.Adapter<RecyclerView.V
             return new NewRelationshipAdapter.SearchViewHoler(view);
         }else if(viewType==1){
             view= layoutInflater.inflate(R.layout.search_results_item_layout,parent,false);
-            return new NewRelationshipAdapter.SearchViewHoler(view);
+            return new NewRelationshipAdapter.HistoryViewHolder(view);
         }else{
 
         }
@@ -65,6 +67,14 @@ public class NewRelationshipAdapter extends  RecyclerView.Adapter<RecyclerView.V
         if(holder instanceof SearchViewHoler){
             ((SearchViewHoler) holder).input_results.setText(datalist.get(0).getResults());
         }else if(holder instanceof  HistoryViewHolder){
+            if(datalist.get(position).getShort_message()!=null){
+                ((HistoryViewHolder) holder).short_message.setText(datalist.get(position).getShort_message());
+
+            }else{
+                ((HistoryViewHolder) holder).short_message.setText("");
+            }
+            ((HistoryViewHolder) holder).username.setText(datalist.get(position).getUser_name());
+            LoadImageUtils.getFirendHeaderImage(datalist.get(position).getHeader_pic(),context, ((HistoryViewHolder) holder).header_pic);
 
         }
     }
@@ -134,9 +144,14 @@ public class NewRelationshipAdapter extends  RecyclerView.Adapter<RecyclerView.V
     }
 
     public static class HistoryViewHolder extends  RecyclerView.ViewHolder{
-
+        private TextView username;
+        private TextView short_message;
+        private ImageView header_pic;
         public HistoryViewHolder(View itemView) {
             super(itemView);
+            username= (TextView) itemView.findViewById(R.id.person_username);
+            short_message= (TextView) itemView.findViewById(R.id.short_message);
+            header_pic= (ImageView) itemView.findViewById(R.id.appCompatImageView);
         }
     }
 
