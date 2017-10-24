@@ -27,137 +27,241 @@
 
 	<body>
 
-		<div id="slider" class="mui-slider">
-			<div class="mui-slider-group mui-slider-loop">
-				<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
-				<div class="mui-slider-item mui-slider-item-duplicate">
-					<a href="#">
-						<img class="imgSize" src="img/duoyun.png">
-					</a>
+		<div id="app">
+			<div id="slider" class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<div class="mui-card">
+							<!--页眉，放置标题-->
+							<div class="mui-card-header mui-card-media">
+								<img src="images/travel_guid.png" style="width:11vw;padding-right: 5px;" />
+								<div class="mui-media-body">梦中草原
+									<p style="float: right;display: block;">攻略</p>
+									<p>发表于 2016-06-30 15:30</p>
+								</div>
+							</div>
+							<!--内容区-->
+							<div class="mui-card-content">
+								<img class="imgSize" src="img/shuang-013.jpg" />
+							</div>
+
+						</div>
+					</div>
+					<!-- 第一张 -->
+					<div v-for="item in headerData" class="mui-slider-item">
+						<div class="mui-card">
+							<!--页眉，放置标题-->
+							<div class="mui-card-header mui-card-media">
+								<img src="images/travel_guid.png" style="width:11vw;padding-right: 5px;" />
+								<div class="mui-media-body">{{item[0].tripAttractionName}}
+									<p style="float: right;display: block;">攻略</p>
+									<p>位置:{{item[0].position}}</p>
+								</div>
+							</div>
+							<!--内容区-->
+							<div class="mui-card-content">
+								<img :src="item[1]" class="imgSize" />
+							</div>
+
+						</div>
+					</div>
+
+					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<div class="mui-card">
+							<!--页眉，放置标题-->
+							<div class="mui-card-header mui-card-media">
+								<img src="images/travel_guid.png" style="width:11vw;padding-right: 5px;" />
+								<div class="mui-media-body">梦中草原
+									<p style="float: right;display: block;">攻略</p>
+									<p>发表于 2016-06-30 15:30</p>
+								</div>
+							</div>
+							<!--内容区-->
+							<div class="mui-card-content">
+								<img class="imgSize" src="img/shuang-013.jpg" />
+							</div>
+
+						</div>
+					</div>
 				</div>
-				<!-- 第一张 -->
-				<div class="mui-slider-item">
-					<a href="#">
-						<img class="imgSize" src="img/qingtian.png">
-					</a>
-				</div>
-				<!-- 第二张 -->
-				<div class="mui-slider-item">
-					<a href="#">
-						<img class="imgSize" src="img/shuang-013.jpg">
-					</a>
-				</div>
-				<!-- 第三张 -->
-				<div class="mui-slider-item">
-					<a href="#">
-						<img class="imgSize" src="img/storm-011.jpg">
-					</a>
-				</div>
-				<!-- 第四张 -->
-				<div class="mui-slider-item">
-					<a href="#">
-						<img class="imgSize" src="img/duoyun.png">
-					</a>
-				</div>
-				<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
-				<div class="mui-slider-item mui-slider-item-duplicate">
-					<a href="#">
-						<img class="imgSize" src="img/qingtian.png">
-					</a>
+				<div class="mui-slider-indicator">
+					<div class="mui-indicator mui-active"></div>
+					<div class="mui-indicator"></div>
+					<div class="mui-indicator"></div>
+					<div class="mui-indicator"></div>
 				</div>
 			</div>
-			<div class="mui-slider-indicator">
-				<div class="mui-indicator mui-active"></div>
-				<div class="mui-indicator"></div>
-				<div class="mui-indicator"></div>
-				<div class="mui-indicator"></div>
-			</div>
+			<ul class="mui-table-view mui-grid-view mui-grid-9">
+				<li v-for="" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#" id="distination">
+						<img src="img/sun_137px_1174803_easyicon.net.png" class="icon_img" />
+						<div class="mui-media-body">周边游</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a id=1>
+						<img src="img/bag_92px_1174791_easyicon.net.png" class="icon_img" />
+						<div class="mui-media-body">穷游</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<img src="img/map_133.10487444609px_1208686_easyicon.net.png" class="icon_img" />
+						<div class="mui-media-body">地图</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<img src="img/check_list_91.818181818182px_1208743_easyicon.net.png" class="icon_img" />
+						<div class="mui-media-body">攻略</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<img src="img/1174805.png" class="icon_img" />
+						<div class="mui-media-body">景点门票</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<img src="img/plate_117px_1174802_easyicon.net.png" class="icon_img" />
+						<div class="mui-media-body">酒店客栈</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<img src="img/plane_137px_1174801_easyicon.net.png" class="icon_img" />
+						<div class="mui-media-body">机票</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<img src="img/1174804.png" class="icon_img" />
+						<div class="mui-media-body">自驾游</div>
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view bottomView">
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-right" src="../images/shuijiao.jpg">
+						<div class="mui-media-body">
+							幸福
+							<p class='mui-ellipsis'>能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+						</div>
+					</a>
+				</li>
+			</ul>
 		</div>
-		<ul class="mui-table-view mui-grid-view mui-grid-9">
-			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-				<a href="#" id="distination">
-					<img src="img/sun_137px_1174803_easyicon.net.png" class="icon_img" />
-					<div class="mui-media-body">周边游</div>
-				</a>
-			</li>
-			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-				<a id=1>
-					<img src="img/bag_92px_1174791_easyicon.net.png" class="icon_img" />
-					<div class="mui-media-body">穷游</div>
-				</a>
-			</li>
-			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-				<a href="#">
-					<img src="img/map_133.10487444609px_1208686_easyicon.net.png" class="icon_img" />
-					<div class="mui-media-body">地图</div>
-				</a>
-			</li>
-			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-				<a href="#">
-					<img src="img/check_list_91.818181818182px_1208743_easyicon.net.png" class="icon_img" />
-					<div class="mui-media-body">攻略</div>
-				</a>
-			</li>
-			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-				<a href="#">
-					<img src="img/1174805.png" class="icon_img" />
-					<div class="mui-media-body">景点门票</div>
-				</a>
-			</li>
-			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-				<a href="#">
-					<img src="img/plate_117px_1174802_easyicon.net.png" class="icon_img" />
-					<div class="mui-media-body">酒店客栈</div>
-				</a>
-			</li>
-			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-				<a href="#">
-					<img src="img/plane_137px_1174801_easyicon.net.png" class="icon_img" />
-					<div class="mui-media-body">机票</div>
-				</a>
-			</li>
-			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-				<a href="#">
-					<img src="img/1174804.png" class="icon_img" />
-					<div class="mui-media-body">自驾游</div>
-				</a>
-			</li>
-		</ul>
-		<ul class="mui-table-view bottomView">
-			<div></div>
-		</ul>
 
 	</body>
 	<script src="js/mui.min.js"></script>
+	<script type="text/javascript" src="js/vue.min.js"></script>
 	<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
 	<script>
-		mui.init({
+		var app = new Vue({
+			el: "#app",
+			data: {
+				message: "nmb",
+				headerData: []
 
-			swipeBack: true, //启用右滑关闭功能
-			keyEventBind: {
-				backbutton: false
+			},
+			beforeCreate: function() {
+
+			},
+			mounted: function() {
+				var _self = this;
+				$.ajax({
+					type: 'post',
+					dataType: 'json',
+					async: true,
+					url: "http://47.95.0.73:8080/Uncom/appFront/getTripList.action",
+					xhrFields: {
+						withCredentials: true
+					},
+					data: {},
+					crossDomain: true,
+					success: function(results) {
+						console.log(JSON.stringify(results))
+						for(var i = 0; i < 4; i++) {
+							this.$set(this.headerData, i, results[i]);
+						}
+
+					}.bind(this)
+				})
+				mui.init({
+					swipeBack: true, //启用右滑关闭功能
+					keyEventBind: {
+						backbutton: false
+					}
+				});
+				mui.plusReady(function() {
+					var grelly = mui('.mui-slider');
+					grelly.slider({
+						interval: '2000'
+					})
+				})
+
+			},
+			methods: {
+
 			}
-		});
-		mui.plusReady(function() {
+
+		})
+
+		function getData(thi) {
+			var datas
+			thi.message = datas
+
+			$.ajax({
+				type: 'post',
+				dataType: 'json',
+				async: true,
+				url: "http://47.95.0.73:8080/Uncom/appFront/getTripList.action",
+				xhrFields: {
+					withCredentials: true
+				},
+				data: {},
+				crossDomain: true,
+				success: function(results) {
+					console.log(results)
+					this.message = "message"
+				}
+			})
+
+			/*$.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {},
+						function(data) {
+							console.log(data)
+							var table = document.body.querySelector('.bottomView');
+							var viewName = eval(data)
+							datas="data"
+							for(var i = 0; i < 4; i++) {
+								var li = document.createElement('li');
+								li.className = 'mui-table-view-cell mui-media';
+								li.innerHTML = '<a class="mui-navigate-right" ></a>';
+								li.innerHTML = '<a href="javascript:;" name="' + viewName[i][0].id + '"> <img class = "mui-media-object mui-pull-right"src = "' + viewName[i][1] + '" ><div class = "mui-media-body" >' + viewName[i][0].tripAttractionName + '<p class = "mui-ellipsis" > ' + viewName[i][0].position + ' </p> </div> </a>'
+								console.log(li + '  ' + table.firstChild)
+								table.insertBefore(li, table.firstChild);
+
+							}
+						
+
+						}
+					)
+*/
+		}
+
+		function ready(thi) {
+			thi.message = "gag"
 			var grelly = mui('.mui-slider');
 			grelly.slider({
 				interval: '2000'
 			})
-			mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {},
-				function(data) {
-					var table = document.body.querySelector('.bottomView');
-					var viewName = eval(data)
-					for(var i = 0; i < 5; i++) {
-						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell mui-media';
-						li.innerHTML = '<a class="mui-navigate-right" ></a>';
-						li.innerHTML = '<a href="javascript:;" name="' + viewName[i][0].id + '"> <img class = "mui-media-object mui-pull-right"src = "' + viewName[i][1] + '" ><div class = "mui-media-body" >'+viewName[i][0].tripAttractionName+'<p class = "mui-ellipsis" > ' + viewName[i][0].position + ' </p> </div> </a>'
-						console.log(li+'  '+table.firstChild)
-						table.insertBefore(li, table.firstChild);
-					}
-					$('.mui-table-view-cell').on('tap', function(e) {
+			/*$('.mui-table-view-cell').on('tap', function(e) {
 						var id = $(this).children().attr('name')
-						if(id == undefined){
+						if(id == undefined) {
 							console.log('0')
 							return;
 						}
@@ -168,12 +272,9 @@
 								dataId: id,
 							}
 						})
-					})
+					})*/
 
-				}
-			)
-
-		})
+		}
 	</script>
 
 </html>

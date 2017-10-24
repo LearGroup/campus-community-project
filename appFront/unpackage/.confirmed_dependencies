@@ -4,7 +4,8 @@
       "tab-webview-subpage-about.html",
       "js/mui.min.js",
       "fonts/mui.ttf",
-      "css/mui.min.css"
+      "css/mui.min.css",
+      "js/vue.min.js"
     ],
     "refer": [
       "tab-webview-subpage-about.html",
@@ -44,7 +45,9 @@
       "img/map_133.10487444609px_1208686_easyicon.net.png",
       "js/inDistination.js",
       "nav_transparent.html",
-      "js/jquery-2.1.0.js"
+      "js/jquery-2.1.0.js",
+      "images/travel_guid.png",
+      "js/vue.min.js"
     ],
     "refer": [
       "destinationIndex.html",
@@ -127,7 +130,8 @@
   "forget_password.html": {
     "resources": [
       "css/style.css"
-    ]
+    ],
+    "refer": []
   },
   "destinationIndex.html": {
     "resources": [
@@ -158,7 +162,8 @@
       "img/train_374px_1186128_easyicon.net.png",
       "img/team_545px_1208217_easyicon.net.png",
       "img/wifi_663px_1206463_easyicon.net.png"
-    ]
+    ],
+    "refer": []
   },
   "disDemo.html": {
     "resources": [
@@ -175,7 +180,8 @@
       "img/yd2.png",
       "img/yd1.PNG",
       "images/qq.png"
-    ]
+    ],
+    "refer": []
   },
   "distinationIndex.html": {
     "resources": [

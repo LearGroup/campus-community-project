@@ -250,10 +250,10 @@
 							use: "email",
 							user: loginInfo.account,
 							password: loginInfo.password
-						}, function(data) {
-							console.log(data)
-							data = parseInt(data);
-							if(data == 1){
+						}, function(result) {
+							console.log(result)
+							var data = JSON.parse(result);
+							if(data.status == 1){
 								toMain();
 							}
 						})
