@@ -66,17 +66,8 @@
 					message: "nmb",
 					headerData: [
 						[{
-							"tripAttractionName": "null"
-						}, "null", "null"],
-						[{
-							"tripAttractionName": "null"
-						}, "null", "null"],
-						[{
-							"tripAttractionName": "null"
-						}, "null", "null"],
-						[{
-							"tripAttractionName": "null"
-						}, "null", "null"],
+							"tripAttractionName": ""
+						}, "", ""]
 
 					],
 					cityType: ""
@@ -98,6 +89,11 @@
 						pullRefresh: {
 							container: '#pullrefresh',
 							down: {
+								style: 'circle', //必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+								color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+								height: '50px', //可选,默认50px.下拉刷新控件的高度,
+								range: '100px', //可选 默认100px,控件可下拉拖拽的范围
+								offset: '0px', //可选 默认0px,下拉刷新控件的起始位置
 								contentrefresh: '正在加载...',
 								callback: pulldownRefresh
 							},
@@ -144,10 +140,52 @@
 							}
 						)
 					}
-					
-					
-				function pulldownRefresh(){
-					mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {
+
+					function pulldownRefresh() {
+						mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {
+								type: localStorage.getItem("cityType")
+							},
+							function(data) {
+								var results = JSON.parse(data)
+								console.log("data:" + results[0])
+								for(var i = 0; i < 4; i++) {
+									that.$set(that.headerData, i, results[i]);
+								}
+								 
+							
+								
+								
+								/*	var table = document.body.querySelector('.mui-table-view');
+									var viewName = eval(data)
+									for(var i = 0; i < 15; i++) {
+										var li = document.createElement('li');
+										li.className = 'mui-table-view-cell';
+
+										li.innerHTML = '<a class="mui-navigate-right" name="' + viewName[i][0].id + '">' + viewName[i][0].tripAttractionName + '</a>';
+										table.insertBefore(li, table.firstChild);
+									}
+									$('.mui-table-view-cell').on('tap', function(e) {
+										var id = $(this).children().attr('name')
+										mui.openWindowWithTitle({
+											url: 'distination.html',
+											id: 'distination',
+											extras: {
+												dataId: id,
+											}
+										})
+										
+									})*/
+
+							}
+						)
+						 
+						 setTimeout("mui('#pullrefresh').pullRefresh().endPulldown();",1000);
+
+					}
+
+					function pullupRefresh() {
+
+						mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {
 								type: localStorage.getItem("cityType")
 							},
 							function(data) {
@@ -178,44 +216,7 @@
 
 							}
 						)
-				
-			}	function pullupRefresh() {
-
-				mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {
-								type: localStorage.getItem("cityType")
-							},
-							function(data) {
-								var results = JSON.parse(data)
-								console.log("data:" + results[0])
-								for(var i = 0; i < 4; i++) {
-									that.$set(that.headerData, i, results[i]);
-								}
-								/*	var table = document.body.querySelector('.mui-table-view');
-									var viewName = eval(data)
-									for(var i = 0; i < 15; i++) {
-										var li = document.createElement('li');
-										li.className = 'mui-table-view-cell';
-
-										li.innerHTML = '<a class="mui-navigate-right" name="' + viewName[i][0].id + '">' + viewName[i][0].tripAttractionName + '</a>';
-										table.insertBefore(li, table.firstChild);
-									}
-									$('.mui-table-view-cell').on('tap', function(e) {
-										var id = $(this).children().attr('name')
-										mui.openWindowWithTitle({
-											url: 'distination.html',
-											id: 'distination',
-											extras: {
-												dataId: id,
-											}
-										})
-									})*/
-
-							}
-						)
-			}
- 			
-					
-					
+					}
 
 					$('.mui-table-view-cell').on('tap', function(e) {
 						var id = $(this).attr('id')
@@ -241,13 +242,11 @@
 			/**
 			 * 下拉刷新具体业务实现
 			 */
-		
-		
+
 			var count = 0;
 			/**
 			 * 上拉加载具体业务实现
 			 */
-
 		</script>
 	</body>
 

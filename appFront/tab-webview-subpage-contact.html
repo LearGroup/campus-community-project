@@ -56,29 +56,35 @@
 
 	<body>
 		<div id="app">
-			<div class="mui-content" style="margin-top: -20px;">
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+						<div class="mui-scroll">
+								<div class="mui-content" style="margin-top: -20px;">
 
-				<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-					<li v-for="item in headerData" class="mui-table-view-cell" :id="item[0].id" :name="item[0].tripAttractionName">
-						<a class="mui-navigate-right" :name="item[0].id">
-							<div class="mui-slider-cell">
-								<div class="oa-contact-cell mui-table">
-									<div class="oa-contact-avatar mui-table-cell">
-										<img width="60px" height="60px" :src="item[1]" />
-									</div>
-									<div class="oa-contact-content mui-table-cell">
-										<div class="mui-clearfix">
-											<h4 class="oa-contact-name">{{item[0].tripAttractionName}}</h4>
-											<span class="oa-contact-position mui-h6">{{item[0].position}}</span>
+					<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+						<li v-for="item in headerData" class="mui-table-view-cell" :id="item[0].id" :name="item[0].tripAttractionName">
+							<a class="mui-navigate-right" :name="item[0].id">
+								<div class="mui-slider-cell">
+									<div class="oa-contact-cell mui-table">
+										<div class="oa-contact-avatar mui-table-cell">
+											<img width="60px" height="60px" :src="item[1]" />
+										</div>
+										<div class="oa-contact-content mui-table-cell">
+											<div class="mui-clearfix">
+												<h4 class="oa-contact-name">{{item[0].tripAttractionName}}</h4>
+												<span class="oa-contact-position mui-h6">{{item[0].position}}</span>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</a>
-					</li>
+							</a>
+						</li>
 
-				</ul>
+					</ul>
+				</div>
+						</div>
+			
 			</div>
+
 		</div>
 
 	</body>
@@ -92,33 +98,95 @@
 				message: "nmb",
 				headerData: [
 					[{
-						"tripAttractionName": "null"
-					}, "null", "null"],
-					[{
-						"tripAttractionName": "null"
-					}, "null", "null"],
-					[{
-						"tripAttractionName": "null"
-					}, "null", "null"],
-					[{
-						"tripAttractionName": "null"
-					}, "null", "null"],
+						"tripAttractionName": ""
+					}, "", ""]
 
-				]
+]
 
-			},
-			beforeCreate: function() {
+},
+beforeCreate: function() {
 
-			},
-			mounted: function() {
-				mui.init({
+	},
+	mounted: function() {
+		mui.init({
 					swipeBack: false,
 
 					keyEventBind: {
 						backbutton: false
-					}
+					},
+
+					pullRefresh: {
+						container:'#pullrefresh',
+							down: {
+								style: 'circle', //必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+								color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+								height: '50px', //可选,默认50px.下拉刷新控件的高度,
+								range: '100px', //可选 默认100px,控件可下拉拖拽的范围
+								offset: '0px', //可选 默认0px,下拉刷新控件的起始位置
+								contentrefresh: '正在加载...',
+								callback: pulldownRefresh
+							
+							}
+						}
 				});
 				var _self = this;
+
+				function pulldownRefresh() {
+					mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {
+							type: localStorage.getItem("cityType")
+						},
+						function(data) {
+							var results = JSON.parse(data)
+							
+						if(results.length > 0) {
+							if(results.length>7){
+								len=7;
+							}else{
+								len=results.length
+							}
+							
+								 _self.$data.headerData = Object.assign(_self.$data.headerData, _self.defaultData);
+						
+							
+							for(var i = 0; i < len; i++) {
+								_self.$set(_self.headerData, i, results[i]);
+							}
+							console.log(_self.headerData.length)
+						/*	if(_self.headerData.length>len){
+								for (var i = len; i < _self.headerData.length; i++) {
+									_self.headerData[i]="null"
+								}
+							}*/
+							}
+					
+
+							/*	var table = document.body.querySelector('.mui-table-view');
+								var viewName = eval(data)
+								for(var i = 0; i < 15; i++) {
+									var li = document.createElement('li');
+									li.className = 'mui-table-view-cell';
+
+									li.innerHTML = '<a class="mui-navigate-right" name="' + viewName[i][0].id + '">' + viewName[i][0].tripAttractionName + '</a>';
+									table.insertBefore(li, table.firstChild);
+								}
+								$('.mui-table-view-cell').on('tap', function(e) {
+									var id = $(this).children().attr('name')
+									mui.openWindowWithTitle({
+										url: 'distination.html',
+										id: 'distination',
+										extras: {
+											dataId: id,
+										}
+									})
+									
+								})*/
+
+						}
+					)
+
+					setTimeout("mui('#pullrefresh').pullRefresh().endPulldown();", 1000);
+
+				}
 
 				$.ajax({
 					type: 'post',
@@ -133,24 +201,33 @@
 					},
 					crossDomain: true,
 					success: function(results) {
+						console.log("............")
 						console.log(JSON.stringify(results))
-						for(var i = 0; i < 7; i++) {
-							this.$set(this.headerData, i, results[i]);
-						}
+						var len=0;
+						if(results.length > 0) {
+							if(results.length>7){
+								len=7;
+							}else{
+								len=results.length
+							}
+							for(var i = 0; i < len; i++) {
+								this.$set(this.headerData, i, results[i]);
+							}
 
-						$('.mui-table-view ').on('tap', 'li', function(e) {
-							var id = $(this).children().attr('name')
-							var id = $(this).attr('id')
-							var tripAttractionName = $(this).attr('name')
-							mui.openWindowWithTitle({
-								url: 'article.html',
-								id: 'article',
-								extras: {
-									dataId: id,
-									trapname: tripAttractionName
-								}
+							$('.mui-table-view ').on('tap', 'li', function(e) {
+								var id = $(this).children().attr('name')
+								var id = $(this).attr('id')
+								var tripAttractionName = $(this).attr('name')
+								mui.openWindowWithTitle({
+									url: 'article.html',
+									id: 'article',
+									extras: {
+										dataId: id,
+										trapname: tripAttractionName
+									}
+								})
 							})
-						})
+						}
 
 					}.bind(this)
 				})

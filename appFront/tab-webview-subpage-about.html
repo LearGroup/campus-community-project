@@ -166,7 +166,7 @@
 				<a href="javascript:;">
 					<img class="mui-media-object mui-pull-left" src="img/hotpoint.png" style="height: 20px;padding-bottom: 1px;margin-right: 5px;">
 
-					<p>热点景区</p>
+					<p>本地热点景区</p>
 
 				</a>
 			</div>
@@ -304,10 +304,9 @@
 				$(".mui-slider-item").on('tap', function(e) {
 					console.log("ocncli")
 					var id = $(this).attr('id')
+				     console.log("ids:"+id)
 					var tripAttractionName = $(this).attr('name')
-					var thePriceOfTicket =$(this).data("thePriceOfTicket")
-					console.log("thePriceOfTicket"+thePriceOfTicket)
-					mui.openWindowWithTitle({
+						mui.openWindowWithTitle({
 						url: 'article.html',
 						id: 'article',
 						extras: {
