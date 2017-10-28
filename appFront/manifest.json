@@ -260,7 +260,12 @@
 					"css/mui.min.css",
 					"js/jquery-2.1.0.js",
 					"fonts/mui.ttf",
-					"js/vue.min.js"
+					"js/vue.min.js",
+					"fonts/glyphicons-halflings-regular.svg",
+					"img/hsh.jpg",
+					"css/font-awesome.min.css",
+					"fonts/fontawesome-webfont.woff2",
+					"img/xltz2.png"
 				],
 				"refer": [
 					"distination.html",
@@ -291,7 +296,8 @@
 					"js/jquery-2.1.0.js",
 					"images/travel_guid.png",
 					"js/vue.min.js",
-					"img/hotpoint.png"
+					"img/hotpoint.png",
+					"img/spin.png"
 				],
 				"refer": [
 					"destinationIndex.html",

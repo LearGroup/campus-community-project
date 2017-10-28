@@ -27,7 +27,7 @@ p{
 }
 .article .avatar{
 	background-size: cover;
-	background-image: url(../img/article_img.jpg);
+	background-image: url(http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_1.jpg);
 	width: 45px;
 	height: 45px;
 	border-radius: 50%;

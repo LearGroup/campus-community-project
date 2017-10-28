@@ -21,23 +21,39 @@
 		<title></title>
 	</head>
 	<style>
+		
 		body {
 			background: #ffffff;
 		}
 		
 		.title {
 			margin-top: 0px;
-			background-color: #56A36C ;
+			background-color: #ffffff;
+		}
+		
+		img {
+			margin-bottom: 10px;
+			width: 98%;
+			margin-left: 1%;
+		}
+		
+		p {
+			text-indent: 2em;
+			color: #555555;
+			font-size: 18px;
+			margin: 0 0 10px;
+			font-weight: 550;
+			margin: 0 0 10px;
+			line-height: 2.0;
 		}
 	</style>
 
 	<body>
 		<div id="app">
-			
-		
+
 			<header id="header" class="mui-bar title " data-top='0'>
-				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #ffffff;"></a>
-				<h1 id="title" class="mui-title" style="color: #ffffff;">{{trapname}}</h1>
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #56A36C;"></a>
+				<h1 id="title" class="mui-title" style="color: #56A36C;">攻略</h1>
 			</header>
 			<div class="container">
 				<div class="row">
@@ -61,7 +77,7 @@
 						<!-- /.modal -->
 					</div>
 				</div>
-				<div class="row article" style="margin-top: 20px;">
+				<div class="row article" style="margin-top: 30px;">
 					<div class="hidden-xs col-lg-2"></div>
 					<div class="col-xs-12 col-lg-8">
 						<div class="row">
@@ -78,7 +94,7 @@
 								<div class="row author">
 									<div class="info col-xs-10 ">
 										<small class="authortag">作者</small>
-										<span class="author_name">陈广平</span>
+										<span class="author_name">劳谦君子</span>
 										<small class="forktag">
 					     	<span class="fa fa-plus"></span>
 						    <span style="font-size: 13px;">关注</span>
@@ -103,8 +119,8 @@
 						<!--文章内容-->
 
 						<div class="row article-content">
-							<div class="articleContent col-xs-12">
-								<p style="text-indent: 2em;font-size: 18px;line-height: 40px;color: #555555;">{{descript.theStrategy}}</p>
+							<div v-html="descript.theStrategy" class="articleContent col-xs-12">
+
 								<!--<p>记得当年参加高考的前一晚，我整整一宿都没睡着觉。</p>
 				<p>准确地说，在高考来临的前一周，我没有一天晚上能睡好。</p>
 				<p>但同样记得有另一只国家队，身体素质各方面条件与前者别无二致，但几乎每到奥运会必进决赛圈，队员们把接棒技术以及团队协作的能力发挥到了极限，小伙子们愣是凭借着身体素质以外的面面俱到，跑赢了其他国家天赋爆表的黑人运动员。</p>
@@ -124,7 +140,7 @@
 
 						<div class="row write-comment-area " style="margin-bottom: 5px;">
 							<div class="col-xs-2 col-sm-1 col-md-1">
-								<img class="avatar" src="img/article_img.jpg" />
+								<img class="avatar" src="http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_1.jpg" />
 							</div>
 							<div class="col-xs-10 col-sm-11 col-md-11 col-lg-11  write-area-box " id="writeAreaBox">
 								<textarea class="input-group write-area"></textarea>
@@ -134,7 +150,7 @@
 						<div class="row " style="margin-bottom: 20px;" id="commentHandleBox">
 							<div class="col-xs-2 col-md-1"></div>
 							<div class="col-xs-1 col-md-1 col-sm-pull-1	 col-md-pull-0 col-lg-pull-0 ">
-								<span class="comment-expression-tag fa fa-smile-o"></span>
+								<span class="comment-expression-tag fa fa-smile-o" style="color: #333333;"></span>
 
 							</div>
 							<div class=" col-md-4 col-md-pull-1 col-sm-4 col-sm-pull-2  hidden-xs" id="commentPromptBox">
@@ -143,8 +159,8 @@
 
 							<div class="col-xs-8 col-sm-5 col-md-6">
 								<div class="row sort-select" style="float: right;">
-									<button class="btn sort-time comment-cancel" id="commentCancel">取消</button>
-									<button class="btn sort-heat comment-send" onclick="commentSend(this)">发送</button>
+									<button class="btn sort-time comment-cancel" id="commentCancel" style="background: #eeeeee;">取消</button>
+									<button class="btn sort-heat comment-send" onclick="commentSend(this)" style="background: #eeeeee;">发送</button>
 								</div>
 							</div>
 
@@ -153,25 +169,46 @@
 						<div class="row">
 
 							<div class="col-xs-6  " style="padding: 0px;">
-								<p style="float: left;font-size: 14px;margin-left: 14px;margin-top: -5px;" class="commet-count">1条评论</p>
-								<a style="float: left;margin-left: 10px;">只看作者</a>
+								<p style="float: left;font-size: 14px;margin-left: -4px;margin-top: -5px;" class="commet-count">1条评论</p>
+								<a style="float: left;margin-left: 10px;color: #56A36C;">只看作者</a>
 							</div>
 
 							<div class="col-xs-6 col-sm-5 col-md-5 col-sm-push-1  col-md-push-1  sort-select sort-addr" style="padding-left: 0px;">
-								<a style="float: right;margin-left: 10px;" class="sort-time">按时间排序</a>
-								<a style="float: right;" class="sort-heat">按热度排序</a>
+								<a style="float: right;margin-left: 10px;color: #56A36C;" class="sort-time">按时间排序</a>
+								<a style="float: right;color: #56A36C;" class="sort-heat">按热度排序</a>
 							</div>
 
 						</div>
 
 					</div>
 
-					<div class="row comment-list ">
-
-					</div>
-					<!--comment-list-->
-
 				</div>
+				<!--comment-list-->
+
+			</div>
+			<div class="mui-content">
+
+				<div class="mui-row">
+					<ul class="mui-table-view">
+						<li v-for="item in comment" class="mui-table-view-cell" style="margin-left: -15px;margin-top: -11px;">
+							<div style="height: 80px;background: #ffffff;padding-top: 5px;padding-left: 10px;padding-right: 15px;">
+
+								<img :src="item.src" style=" float:left;height: 35px;width: 35px;display: inline;border-radius: 50%;border: solid 0.5px #cccccc;margin-left: 15px;" />
+								<i class="fa fa-thumbs-o-up" style="margin-top: 5px;float: right;color: #666666;display: inline;font-size: 18px;margin-left: -1px;margin-right: -5px;" aria-hidden="true"></i>
+
+								<p style="margin-top: -2px;display: inline;float: right;margin-right: 5px;">{{item.zan}}</p>
+								<p style="margin-left: -20px;font-size: 14px; float:left;display: block;padding-top: -1px;color: #333333;">{{item.name}}</p>
+
+								<p style="padding-left: 45px;display: block;position: absolute;margin-top: 17px;font-size: 8px;">{{item.time}}</p>
+								<div style="clear: both;"></div>
+								<p style="margin-bottom: 8px; margin-left:20px;color: #666666;word-break:break-word; ">{{item.comment}}</p>
+								<p style="margin-left: -15px;margin-right: -20px;background: #eeeeee;display: block;height: 0.5px;"></p>
+							</div>
+						</li>
+
+					</ul>
+				</div>
+
 			</div>
 
 	</body>
@@ -181,6 +218,37 @@
 		var app = new Vue({
 			el: "#app",
 			data: {
+				comment: [{
+					name: "囿于兮",
+					comment: "是个好地方",
+					time: "昨天",
+					src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_0.jpg",
+					zan: "11"
+				}, {
+					name: "dalao",
+					comment: "第一次去玩儿，嘿嘿。",
+					time: "刚刚",
+					src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_1.jpg",
+					zan: "3"
+				}, {
+					name: "阿苗的~",
+					comment: "辛亏有这个软件，景点找起来炒鸡简单嘎嘎",
+					time: "两小时前",
+					src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_2.jpg",
+					zan: "10"
+				}, {
+					name: "banfoevr",
+					comment: "玩儿的好累啊，只想倒头睡觉ZZ",
+					time: "下午 3:21",
+					src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_3.jpg",
+					zan: "6"
+				}, {
+					name: "MelOn",
+					comment: "最近有打算去的吗？组个队喽",
+					time: "昨天",
+					src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_4.jpg",
+					zan: "4"
+				}],
 				message: "nmb",
 
 				descript: {
@@ -210,19 +278,25 @@
 					var self = plus.webview.currentWebview();
 					id = self.dataId;
 					that.trapname = self.trapname
-					console.log("id"+id)
+					console.log("id" + id)
 					mui.post('http://47.95.0.73:8080/Uncom/appFront/getStrategy.action', {
 						id: id
-					}, function(data) {
+					}, function(results) {
 						console.log(data)
-						var src = JSON.parse(data)[0]
-						that.descript = src
+						var data = JSON.parse(results)
+						for(var i = 0; i < data.length; i++) {
+							console.log(data[i].authorName)
+							if(data[i].authorName != "李业林") {
+								var src = data[i]
+								that.descript = src
+								return
+							}
+						}
 
 					});
-					
-					
+
 				})
-				
+
 			}
 		})
 	</script>
