@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+	</head>
+<style>
+	
+</style>
+	<body>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			
+			(function($, doc){
+				mui.init()
+			mui.plusReady(function() {
+				console.log("awd")
+				/**
+				 * 获取本地存储中launchFlag的值
+				 * http://www.html5plus.org/doc/zh_cn/storage.html#plus.storage.getItem
+				 * 若存在，说明不是首次启动，直接进入首页；
+				 * 若不存在，说明是首次启动，进入引导页；
+				 */
+				var launchFlag = plus.storage.getItem("launchFlag");
+				if(launchFlag) {
+					
+					
+								var toMain = function() {
+						$.fire(mainPage, 'show', null);
+						setTimeout(function() {
+							$.openWindow({
+								id: 'index',
+								show: {
+									aniShow: 'pop-in'
+								},
+								waiting: {
+									autoShow: false
+								}
+							});
+						}, 0);
+					}
+
+					if(localStorage.getItem("user") != null) {
+						var mainPage = $.preload({
+							"id": 'index',
+							"url": 'index.html'
+						});
+						toMain();
+
+					} else {
+						mui.openWindow({
+							url: "login.html",
+							id: "login",
+							extras: {
+								mark: "index" //额外的参数，仅仅是个标识，实际开发中不用；
+							}
+						});
+					}
+
+		
+				} else {
+					mui.openWindow({
+						url: "guid.html",
+						id: "guid"
+					});
+				}
+			});
+			})(mui, document);
+			
+		</script>
+	</body>
+
+</html>

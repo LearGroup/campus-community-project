@@ -42,11 +42,11 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">注册</h1>
+		<header class="mui-bar mui-bar-nav" style="background: #ffffff;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"  style="color: #56A36C;"></a>
+			<h1 class="mui-title"  style="color: #56A36C;">注册</h1>
 		</header>
-		<div class="mui-content">
+		<div class="mui-content" style="background: #ffffff;">
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label>昵称</label>
@@ -66,7 +66,7 @@
 				</div>
 			</form>
 			<div class="mui-content-padded">
-				<button id='reg' class="mui-btn mui-btn-block mui-btn-primary">注册</button>
+				<button id='reg' class="mui-btn mui-btn-block "  style="color: #56A36C;">注册</button>
 			</div>
 			<div class="mui-content-padded">
 				<p>注册真实可用，注册成功后的用户可用于登录，但是示例程序并未和服务端交互，用户相关数据仅存储于本地。</p>
@@ -107,7 +107,8 @@
 							 * 2 邮箱重复
 							 * 
 							 */
-
+							console.log("response:")
+							console.log("response:"+date)
 							if(date == 1) {
 
 							} else if(date == 2) {

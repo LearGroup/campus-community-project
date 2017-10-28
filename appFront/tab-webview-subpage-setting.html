@@ -7,13 +7,33 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=a2r4XoRjGfAyA8x0vabBDOfYRYuEdPQ9"></script>
+	
 		<link rel="stylesheet" href="css/mui.min.css">
 		<style>
-			html,body {
-				background-color: #efeff4;
+			@font-face {
+				font-family: Youyuan;
+				font-weight: normal;
+				font-style: normal;
+				src: url(fonts/yahei.ttf);
+				format('truetype');
+			}	
+			.mui-segmented-control.mui-segmented-control-inverted~.mui-slider-progress-bar {
+				background-color: #56A36C;
 			}
-			.title{
+			
+			* {
+				margin: 0;
+				padding: 0;
+				font-family: Youyuan;
+				color: black
+			}
+			
+			body {
+				background-color: #ffffff;
+			}
+			
+			.title {
 				margin: 20px 15px 10px;
 				color: #6d6d72;
 				font-size: 15px;
@@ -26,62 +46,246 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">设置</h1>
 		</header>-->
-		<div class="mui-content">
+		<div id="app">
+			<div class="mui-content">
+				<div class="mui-card" style="margin: 0px;">
+					<!--页眉，放置标题-->
+					<!--内容区-->
+					<div class="mui-card-content" style="background: url(img/head_back.jpg);height: 200px;padding-top: 30px;">
+						<img style="height: 80px;width: 80px;margin:auto;display: block;border-radius: 50%;border: 1px solid #aaaaaa;" src="http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_1.jpg" />
+						<p style="margin-top:10px;color:#eeeeee;font-size: 20px;display: block;margin-left: 143px;">劳谦君子</p>
+						<p style="color: #eeeeee;font-size: 12px;margin-left: 130px;margin-top: -5px;">人来人往，总是寻常</p>
+					</div>
+					<!--页脚，放置补充信息或支持的操作-->
+					<div class="mui-card-footer" style="padding: 0px ;">
+						<div id="slider" class="mui-slider" style="background: #FFFFFF;color: #56A36C;margin-top: -10px;">
+							<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+								<a class="mui-control-item" href="#item1mobile">
+									足迹
+								</a>
+								<a class="mui-control-item" href="#item2mobile">
+									文章
+								</a>
+								<a class="mui-control-item" href="#item3mobile">
+									消息
+								</a>
+							</div>
+							<div class="mui-content">
 
-			<ul class="mui-table-view">
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right">
-						新消息通知
-					</a>
-				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right">
-						隐私
-					</a>
-				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right">
-						通用
-					</a>
-				</li>
-			</ul>
-			<ul class="mui-table-view" style="margin-top: 25px;">
-				<li class="mui-table-view-cell">
-					<a id="about" class="mui-navigate-right">
-						关于
-					</a>
-				</li>
-			</ul>
-			<ul id="logOff" class="mui-table-view" style="margin-top: 25px;">
-				<li class="mui-table-view-cell">
-					<a style="text-align: center;color: #FF3B30;">
-						退出登录
-					</a>
-				</li>
-			</ul>
-		</div>
-		</style>
+							</div>
+							<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+							<div class="mui-slider-group" style="height: 1800px;">
+								<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+									<div id="scroll1" class="mui-scroll-wrapper">
+										<div class="mui-scroll">
+											<ul class="mui-table-view">
+												<li v-for="item in translist" class="mui-table-view-cell" style="margin-left: -15px;margin-right: -15px;margin-top: -11px;">
+													<div style="max-height: 380px;background: #ffffff;padding-top: 5px;padding-left: 10px;padding-right: 15px;">
+
+														<p style="font-size: 24px; float:left;padding-left: 10px;display: block;padding-top: 5px;color: #333333;">{{item.time}}</p>
+
+														<div style="clear: both;"></div>
+														<!--	translist:[{
+					time:"2017年 7月",
+					name:"将军衙署",
+					add:"内蒙古 呼和浩特 将军衙署",
+					images:["img/jjys.jpg","img/jjys1.jpg","img/jjys2.jpg","img/jjys3.jpg"]
+				}
+				]-->
+														<p style="color: #666666;font-size: 16px;margin-left: 10px;margin-top: 10px;margin-bottom: 5px;">{{item.add}}</p>
+														<ul class="mui-table-view mui-grid-view mui-grid-9" style="padding: 0px;margin-left: 5px;">
+															<li v-for="lis in item.images" class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-3" style="padding: 0px;">
+																<img :src="lis" style="height: 100%;width: 100%;" />
+															</li>
+
+														</ul>
+													</div>
+												</li>
+
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div id="item2mobile" class="mui-slider-item mui-control-content">
+									<div id="scroll2" class="mui-scroll-wrapper" style="margin: 0px;">
+
+										<!--<div class="mui-loading">
+											<div class="mui-spinner">
+											</div>
+										</div>-->
+										<!--		<p class="article" style="text-indent: 2em;line-height: 1.5;color: #333333;font-size: 16px;"></p>
+							-->
+										<ul class="mui-table-view">
+
+											<li class="mui-table-view-cell mui-media">
+												<a href="javascript:;">
+													<img class="mui-media-object mui-pull-left" src="img/back-img2.jpg">
+													<div class="mui-media-body">
+														幸福
+														<p class='mui-ellipsis'>能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+													</div>
+												</a>
+											</li>
+
+										</ul>
+									</div>
+
+								</div>
+								<div id="item3mobile" class="mui-slider-item mui-control-content">
+									<div id="scroll3" class="mui-scroll-wrapper">
+										<ul class="mui-table-view">
+											<li v-for="item in comment" class="mui-table-view-cell" style="margin-left: -15px;margin-right: -15px;margin-top: -11px;">
+												<div style="height: 80px;background: #ffffff;padding-top: 5px;padding-left: 10px;padding-right: 15px;">
+
+													<img :src="item.src" style=" float:left;height: 35px;width: 35px;display: inline;border-radius: 50%;border: solid 0.5px #cccccc;" />
+													<i class="fa fa-thumbs-o-up" style="margin-top: 5px;float: right;color: #666666;display: inline;font-size: 18px;margin-left: -1px;margin-right: 5px;" aria-hidden="true"></i>
+
+													<p style="margin-right: 5px;font-size: 14px; float:left;padding-left: 10px;display: block;padding-top: -1px;color: #333333;">{{item.name}}</p>
+													<p style="display: inline;font-size: 12px;margin-top: 2px;"> 回复你</p>
+
+													<p style="padding-left: 45px;display: block;position: absolute;margin-top: -7px;font-size: 8px;">{{item.time}}</p>
+													<div style="clear: both;"></div>
+													<p style="margin-bottom: 8px; margin-left: 45px;color: #333333;word-break:break-word; ">{{item.comment}}</p>
+													<p style="float: right;">回复</p>
+
+												</div>
+											</li>
+
+										</ul>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			</style>
 	</body>
+	<script type="text/javascript" src="js/vue.min.js"></script>
 	<script src="js/mui.min.js"></script>
 	<script>
-		mui.init({
-			swipeBack:true //启用右滑关闭功能
-		});
-		mui.preload({
-			url:'login.html',
-			id:'login'
-		})
-		document.getElementById("about").addEventListener('tap',function () {
-			//获得主页面的webview
-			var main = plus.webview.currentWebview().parent();
-			//触发主页面的gohome事件
-			mui.fire(main,'gohome');
-		});
-		document.getElementById("logOff").addEventListener('tap',function(e){
-			mui.openWindow({
-				url:'login.html',
-				id:'login'
-			})
+		/*comment: [{
+										name: "囿于兮",
+										comment: "是个好地方",
+										time:"昨天",
+										src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_0.jpg",
+										zan:"11"
+									},{
+										name: "dalao",
+										comment: "第一次去玩儿，嘿嘿。",
+										time:"刚刚",
+										src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_1.jpg",
+										zan:"3"
+									},{
+										name: "阿苗的~",
+										comment: "辛亏有这个软件，景点找起来炒鸡简单嘎嘎",
+										time:"两小时前",
+										src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_2.jpg",
+									    zan:"10"
+									}
+									,{
+										name: "banfoevr",
+										comment: "玩儿的好累啊，只想倒头睡觉ZZ",
+										time:"下午 3:21",
+										src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_3.jpg",
+									    zan:"6"
+									}
+									,{
+										name: "MelOn",
+										comment: "最近有打算去的吗？组个队喽",
+										time:"昨天",
+										src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_4.jpg",
+									    zan:"4"
+									}]*/
+
+		var app = new Vue({
+			el: "#app",
+			data: {
+				message: "nmb",
+				headerData: [
+					[{
+						"tripAttractionName": "null"
+					}, "null", "null"],
+					[{
+						"tripAttractionName": "null"
+					}, "null", "null"],
+					[{
+						"tripAttractionName": "null"
+					}, "null", "null"],
+					[{
+						"tripAttractionName": "null"
+					}, "null", "null"],
+
+				],
+				translist: [{
+					time: "2017年 7月",
+					name: "将军衙署",
+					add: "内蒙古 呼和浩特 将军衙署",
+					images: ["img/jjys.jpg", "img/jjys1.jpg", "img/jjys2.jpg", "img/jjys3.jpg"]
+				}],
+				comment: [{
+					name: "囿于兮",
+					comment: "最近在忙吗？有时间一起去玩儿吧",
+					time: "昨天",
+					src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_0.jpg",
+					zan: "11"
+				}, {
+					name: "dalao",
+					comment: "那地方还没去过呢。",
+					time: "刚刚",
+					src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_1.jpg",
+					zan: "3"
+				}, {
+					name: "阿苗的~",
+					comment: "搞软件还有时间？不信",
+					time: "两小时前",
+					src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_2.jpg",
+					zan: "10"
+				}, {
+					name: "banfoevr",
+					comment: "玩儿的好累啊，只想倒头睡觉ZZ",
+					time: "下午 3:21",
+					src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_3.jpg",
+					zan: "6"
+				}, {
+					name: "MelOn",
+					comment: "最近有打算去哈素海吗？组个队喽",
+					time: "昨天",
+					src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_4.jpg",
+					zan: "4"
+				}],
+				descript: {},
+				position: "",
+				trapname: "",
+				map: "",
+				point: "",
+				geoc: "",
+				currentLon: "",
+				currentLat: "",
+				addComp: "",
+				addr: "",
+				clickname: ""
+
+			},
+			beforeCreate: function() {
+
+			},
+			mounted: function() {
+				var that = this
+
+				mui.init({
+					statusBarBackground: "#56A36C",
+					swipeBack: true //启用右滑关闭功能
+				});
+				var slider = document.getElementById("slider");
+
+				mui.ready(function() {
+
+				})
+			}
 		})
 	</script>
+
 </html>

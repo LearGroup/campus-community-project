@@ -89,21 +89,21 @@
 			}
 			
 			.oauth-area .oauth-btn:active {
-				border: solid 1px #aaa;
+				border: solid 1px #ffffff;
 			}
 			
 			.oauth-area .oauth-btn.disabled {
-				background-color: #ddd;
+				background-color: #ffffff;
 			}
 		</style>
 
 	</head>
 
-	<body>
-		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">登录</h1>
+	<body >
+		<header class="mui-bar mui-bar-nav " style="background: #ffffff;">
+			<h1 class="mui-title" style="color: #56A36C;">登录</h1>
 		</header>
-		<div class="mui-content">
+		<div class="mui-content" style="background: #ffffff;">
 			<form id='login-form' class="mui-input-group">
 				<div class="mui-input-row">
 					<label>账号</label>
@@ -125,10 +125,10 @@
 				</ul>
 			</form>
 			<div class="mui-content-padded">
-				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+				<button id='login' class="mui-btn mui-btn-block " style="background: #ffffff;color: #56A36C;">登录</button>
 				<div class="link-area">
-					<a id='reg'>注册账号</a> <span class="spliter">|</span>
-					<a id='forgetPassword'>忘记密码</a>
+					<a id='reg' style="color: #56A36C;">注册账号</a> <span class="spliter">|</span>
+					<a id='forgetPassword' style="color: #56A36C;">忘记密码</a>
 				</div>
 			</div>
 			<div class="mui-content-padded oauth-area">
@@ -139,6 +139,11 @@
 		<script src="js/mui.enterfocus.js"></script>
 		<script src="js/app.js"></script>
 		<script>
+			
+			
+			
+			
+			
 			(function($, doc) {
 				$.init({
 					statusBarBackground: '#f7f7f7'
@@ -240,12 +245,14 @@
 					var autoLoginButton = doc.getElementById("autoLogin");
 					var regButton = doc.getElementById('reg');
 					var forgetButton = doc.getElementById('forgetPassword');
-					loginButton.addEventListener('tap', function(event) {
+					if(localStorage.getItem("user")!=null){
+						toMain()
+					}else{
+							loginButton.addEventListener('tap', function(event) {
 						var loginInfo = {
 							account: accountBox.value,
 							password: passwordBox.value
 						};
-
 						mui.post("http://47.95.0.73:8080/Uncom/login_Login.action", {
 							use: "email",
 							user: loginInfo.account,
@@ -254,6 +261,7 @@
 							console.log(result)
 							var data = JSON.parse(result);
 							if(data.status == 1){
+								localStorage.setItem("user",result)
 								toMain();
 							}
 						})
@@ -266,6 +274,9 @@
 //							toMain();
 //						});
 					});
+					}
+				
+				
 					$.enterfocus('#login-form input', function() {
 						$.trigger(loginButton, 'tap');
 					});

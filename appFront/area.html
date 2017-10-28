@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+	</head>
+<style>
+		.title {
+				background-color: #56A36C !important;
+			}
+</style>
+	<body>
+
+		<div id="app">
+		
+			<header id="header" class="mui-bar title " data-top='0' style="margin-bottom: 30px;">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #ffffff;"></a>
+				<h1 id="title" class="mui-title" style="color: #ffffff;">周边景点</h1>
+			</header>
+
+			<ul class="mui-table-view " style="padding-top: 50px;">
+
+				<li v-for="item in headerData " :id="item[0].id" :data-trapname="item[0].tripAttractionName" :name="item[0].position" class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-right" :src="item[1]">
+						<div class="mui-media-body" style="padding: 0px;">
+							<p style="color: #333333;font-size: 17px;">{{item[0].tripAttractionName}}</p>
+							<p style="margin-top: 5px;" class='mui-ellipsis'>{{item[0].position}}</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+		<script type="text/javascript" src="js/vue.min.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			var app = new Vue({
+				el: "#app",
+				data: {
+					message: "nmb",
+					headerData: [
+						[{
+							"tripAttractionName": "null"
+						}, "null", "null"],
+						[{
+							"tripAttractionName": "null"
+						}, "null", "null"],
+						[{
+							"tripAttractionName": "null"
+						}, "null", "null"],
+						[{
+							"tripAttractionName": "null"
+						}, "null", "null"],
+
+					]
+
+				},
+				beforeCreate: function() {
+
+				},
+				mounted: function() {
+					$.ajax({
+						type: 'post',
+						dataType: 'json',
+						async: true,
+						url: "http://47.95.0.73:8080/Uncom/appFront/getTripList.action",
+						xhrFields: {
+							withCredentials: true
+						},
+						data: {
+							type:localStorage.getItem("cityType")
+						},
+						crossDomain: true,
+						success: function(results) {
+							console.log(JSON.stringify(results))
+							for(var i = 0; i < results.length; i++) {
+								this.$set(this.headerData, i, results[i]);
+							}
+
+						}.bind(this)
+					})
+					mui.init({
+						swipeBack: true//启用右滑关闭功能
+					
+					});
+					
+						$('.mui-table-view ').on('tap','li', function(e) {
+					var id = $(this).attr('id')
+					var position = $(this).attr("name")
+					var trapname = $(this).data("trapname")
+					console.log("id:" + id)
+					console.log("position:" + position)
+					console.log("trapname:" + trapname)
+					if(id == undefined) {
+						console.log('0')
+						return;
+					}
+					mui.openWindowWithTitle({
+						url: 'distination.html',
+						id: 'distination',
+						extras: {
+							dataId: id,
+							position: position,
+							trapname: trapname
+						}
+					})
+				})
+				}
+			})
+		</script>
+	</body>
+
+</html>

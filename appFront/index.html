@@ -14,69 +14,121 @@
 		<style>
 			html,
 			body {
-				background-color: #efeff4;
+				background-color: #ffffff;
 			}
 			
 			.title {
-				background-color: #49bdcc !important;
+				background-color: #ffffff !important;
+			}
+			
+			.color-active {
+				color: #666666;
+			}
+			
+			.color-normal {
+				color: #ffffff;
+			}
+			
+			.mui-bar-tab .mui-tab-item.mui-active {
+				color: #56A36C;
+				/* 这里放你想要的颜色 */
+			}
+			
+			.mui-bar .mui-icon:active {
+				opacity: 1;
 			}
 		</style>
 	</head>
 
 	<body>
 		<div id="app">
+
 			<header class="mui-bar mui-bar-nav title">
-			<h1 id="title" class="mui-title">{{message}}</h1>
-		</header>
-		<nav class="mui-bar mui-bar-tab">
-			<a id="defaultTab" class="mui-tab-item mui-active" href="tab-webview-subpage-about.html">
-				<span class="mui-icon mui-icon-home"></span>
-				<span class="mui-tab-label">首页</span>
-			</a>
-			<a class="mui-tab-item" href="tab-webview-subpage-chat.html">
-				<span class="mui-icon mui-icon-flag"></span>
-				<span class="mui-tab-label">景区</span>
-			</a>
-			<a class="mui-tab-item" href="myself.html">
-				<span class="mui-icon mui-icon-map"></span>
-				<span class="mui-tab-label">定制</span>
-			</a>
-			<a class="mui-tab-item" href="tab-webview-subpage-contact.html">
-				<span class="mui-icon mui-icon-map"></span>
-				<span class="mui-tab-label">攻略</span>
-			</a>
-			<a class="mui-tab-item" href="tab-webview-subpage-setting.html">
-				<span class="mui-icon mui-icon-contact"></span>
-				<span class="mui-tab-label">我的</span>
-			</a>
-		</nav>
+				<a class="mui-action-menu mui-icon mui-icon-bars mui-pull-left" style="color:#56A36C ;"></a>
+				<a class="mui-action-back mui-btn mui-btn-link mui-pull-right" style="color:#56A36C ;">关闭</a>
+
+				<h1 href="#popover" id="title" class="selectaddr mui-title color-normal" style="color:#56A36C ;">{{message}}</h1>
+			</header>
+			<nav class="mui-bar mui-bar-tab">
+				<a id="defaultTab" class="mui-tab-item mui-active" href="tab-webview-subpage-about.html">
+					<span class="mui-icon mui-icon-home"></span>
+					<span class="mui-tab-label ">首页</span>
+				</a>
+				<a class="mui-tab-item" href="tab-webview-subpage-chat.html">
+					<span class="mui-icon mui-icon-flag"></span>
+					<span class="mui-tab-label">景区</span>
+				</a>
+				<a class="mui-tab-item" href="myself.html">
+					<span class="mui-icon mui-icon-map"></span>
+					<span class="mui-tab-label">定制</span>
+				</a>
+				<a class="mui-tab-item" href="tab-webview-subpage-contact.html">
+					<span class="mui-icon mui-icon-map"></span>
+					<span class="mui-tab-label">攻略</span>
+				</a>
+				<a class="mui-tab-item" href="tab-webview-subpage-setting.html">
+					<span class="mui-icon mui-icon-contact"></span>
+					<span class="mui-tab-label">我的</span>
+				</a>
+			</nav>
 		</div>
-		
+
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			var app = new Vue({
 				el: "#app",
 				data: {
-					message: 'Hello Vue!'
+					message: '点击选择地区'
 				},
 				mounted: function() {
-
+					localStorage.setItem("firstName","请选择城市")
 					//mui初始化
 					mui.init({
 						keyEventBind: {
 							backbutton: false
 						}
 					});
+
+					var main, menu, mask = mui.createMask(_closeMenu);
+					var showMenu = false,
+						mode = 'main-move';
 					var subpages = ['tab-webview-subpage-about.html', 'tab-webview-subpage-chat.html', 'myself.html', 'tab-webview-subpage-contact.html', 'tab-webview-subpage-setting.html'];
 					var subpage_style = {
 						top: '45px',
 						bottom: '51px'
 					};
+					var main, menu, mask = mui.createMask(_closeMenu);
+					var showMenu = false,
+						mode = 'main-move';
+
+					if(!mui.os.android) {
+						//整体滑动暂不支持android手机，因为两个页面的移动动画，无法保证同步性；
+						document.getElementById("move-togger").classList.remove('mui-hidden');
+						var spans = document.querySelectorAll('.android-only');
+						for(var i = 0, len = spans.length; i < len; i++) {
+							spans[i].style.display = "none";
+						}
+					}
 
 					var aniShow = {};
 
 					//创建子页面，首个选项卡页面显示，其它均隐藏；
 					mui.plusReady(function() {
+
+						main = plus.webview.currentWebview();
+						//setTimeout的目的是等待窗体动画结束后，再执行create webview操作，避免资源竞争，导致窗口动画不流畅；
+						setTimeout(function() {
+							//侧滑菜单默认隐藏，这样可以节省内存；
+							menu = mui.preload({
+								id: 'offcanvas-drag-right-plus-menu',
+								url: 'offcanvas-drag-right-plus-menu.html',
+								styles: {
+									left: 0,
+									width: '70%',
+									zindex: 9997
+								}
+							});
+						}, 300);
 
 						var self = plus.webview.currentWebview();
 						for(var i = 0; i < 5; i++) {
@@ -91,6 +143,17 @@
 							self.append(sub);
 						}
 					});
+					var detailPage = null;
+					document.querySelector(".selectaddr").addEventListener('click', function() {
+
+						if(!detailPage) {
+							detailPage = plus.webview.getWebviewById('tab-webview-subpage-about.html');
+						}
+						mui.fire(detailPage, 'toogle', {
+
+						});
+					})
+
 					//当前激活选项
 					var activeTab = subpages[0];
 					var title = document.getElementById("title");
@@ -101,7 +164,14 @@
 							return;
 						}
 						//更换标题
-						title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
+						if(this.querySelector('.mui-tab-label').innerHTML == "首页") {
+							title.innerHTML = localStorage.getItem("firstName")
+						} else {
+
+
+							title.innerHTML = this.querySelector('.mui-tab-label').innerHTML
+						}
+
 						//显示目标选项卡
 						//若为iOS平台或非首次显示，则直接显示
 						if(mui.os.ios || aniShow[targetTab]) {
@@ -130,6 +200,205 @@
 							defaultTab.classList.add('mui-active');
 						}
 					});
+
+					function back() {
+						if(showMenu) {
+							//菜单处于显示状态，返回键应该先关闭菜单,阻止主窗口执行mui.back逻辑；
+							closeMenu();
+							return false;
+						} else {
+							//菜单处于隐藏状态，执行返回时，要先close菜单页面，然后继续执行mui.back逻辑关闭主窗口；
+							menu.close('none');
+							return true;
+						}
+					}
+					/**
+					 * 显示菜单菜单
+					 */
+					function openMenu() {
+						if(!showMenu) {
+							//侧滑菜单处于隐藏状态，则立即显示出来；
+							//显示完毕后，根据不同动画效果移动窗体；
+							menu.show('none', 0, function() {
+								switch(mode) {
+									case 'main-move':
+										//主窗体开始侧滑；
+										main.setStyle({
+											left: '70%',
+											transition: {
+												duration: 150
+											}
+										});
+										break;
+									case 'menu-move':
+										menu.setStyle({
+											left: '0%',
+											transition: {
+												duration: 150
+											}
+										});
+										break;
+									case 'all-move':
+										main.setStyle({
+											left: '70%',
+											transition: {
+												duration: 150
+											}
+										});
+										menu.setStyle({
+											left: '0%',
+											transition: {
+												duration: 150
+											}
+										});
+										break;
+								}
+							});
+							//显示遮罩
+
+							showMenu = true;
+						}
+					}
+					/**
+					 * 关闭侧滑菜单
+					 */
+					function closeMenu() {
+						_closeMenu();
+						//关闭遮罩
+						mask.close();
+					}
+
+					/**
+					 * 关闭侧滑菜单（业务部分）
+					 */
+					function _closeMenu() {
+						if(showMenu) {
+							//关闭遮罩；
+							switch(mode) {
+								case 'main-move':
+									//主窗体开始侧滑；
+									main.setStyle({
+										left: '0',
+										transition: {
+											duration: 150
+										}
+									});
+									break;
+								case 'menu-move':
+									//主窗体开始侧滑；
+									menu.setStyle({
+										left: '-70%',
+										transition: {
+											duration: 150
+										}
+									});
+									break;
+								case 'all-move':
+									//主窗体开始侧滑；
+									main.setStyle({
+										left: '0',
+										transition: {
+											duration: 150
+										}
+									});
+									//menu页面同时移动
+									menu.setStyle({
+										left: '-70%',
+										transition: {
+											duration: 150
+										}
+									});
+
+									break;
+							}
+
+							//等窗体动画结束后，隐藏菜单webview，节省资源；
+							setTimeout(function() {
+								menu.hide();
+							}, 200);
+							//改变标志位
+							showMenu = false;
+						}
+					}
+
+					//变换侧滑动画移动效果；
+					mui('.mui-input-group').on('change', 'input', function() {
+						if(this.checked) {
+							switch(this.value) {
+								case 'main-move':
+									//仅主窗口移动的时候，menu页面的zindex值要低一点；
+									menu.setStyle({
+										left: '0',
+										zindex: 9997
+									});
+									if(mode == 'all-move') {
+										menu.setStyle({
+											left: '0%'
+										});
+									}
+									mode = 'main-move';
+									break;
+								case 'menu-move':
+									menu.setStyle({
+										left: '-70%',
+										zindex: 9999
+									});
+									if(mode == 'all-move') {
+										menu.setStyle({
+											left: '0%'
+										});
+									}
+									mode = 'menu-move';
+									break;
+								case 'all-move':
+									//切换为整体移动
+									//首先改变移动标志
+									slideTogether = true;
+									//变换menu界面初始化位置，整体移动时，Menu界面left需要在-70%的地方；
+									menu.setStyle({
+										left: '-70%'
+									});
+									mode = 'all-move';
+									break;
+							}
+						}
+					});
+
+					document.addEventListener("city", function(event) {
+						title.innerHTML = event.detail.city;
+						
+						localStorage.setItem("firstName", event.detail.city)
+						if( event.detail.city=="呼和浩特市"){
+							localStorage.setItem("cityType", "0")
+						}else if(event.detail.city=="呼伦贝尔市"){
+							localStorage.setItem("cityType", "1")
+						}
+
+					})
+
+					//点击左上角图标，打开侧滑菜单；
+					document.querySelector('.mui-icon-bars').addEventListener('tap', openMenu);
+					window.addEventListener('dragright', function(e) {
+						e.detail.gesture.preventDefault();
+					});
+					window.addEventListener('dragleft', function(e) {
+						e.detail.gesture.preventDefault();
+					});
+					//主界面向右滑动，若菜单未显示，则显示菜单；否则不做任何操作；
+					window.addEventListener("swiperight", openMenu);
+					//主界面向左滑动，若菜单已显示，则关闭菜单；否则，不做任何操作；
+					window.addEventListener("swipeleft", closeMenu);
+					//menu页面向左滑动，关闭菜单；
+					window.addEventListener("menu:swipeleft", closeMenu);
+
+					//重写mui.menu方法，Android版本menu按键按下可自动打开、关闭侧滑菜单；
+					mui.menu = function() {
+						if(showMenu) {
+							closeMenu();
+						} else {
+							openMenu();
+						}
+					}
 				}
 			})
 		</script>

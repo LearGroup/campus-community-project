@@ -13,6 +13,11 @@
 				background-color: #efeff4;
 			}
 			
+			.imgSize {
+				height: 240px !important;
+				width: 100% !important;
+			}
+			
 			.title {
 				padding: 20px 15px 10px;
 				color: #6d6d72;
@@ -25,134 +30,224 @@
 	</head>
 
 	<body>
-		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
-			<div class="mui-scroll">
-				<div class="title">
-					景区
-				</div>
-				<ul class="mui-table-view mui-table-view-chevron">
-					<div style="height: 0px; margin: 0px;padding: 0px;">
+		<div id="app">
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				<div class="mui-scroll">
 
-					</div>
-				</ul>
+					<ul class="mui-table-view mui-table-view-chevron" style="padding: 0px;">
+						<li v-for="item in headerData" :id="item[0].id" :data-trapname="item[0].tripAttractionName" :name="item[0].position" class="mui-table-view-cell mui-media" style="padding-left: 0px;padding-right: 0px;padding-top: 0px;padding-bottom: 0px;">
+							<div class="mui-card" style="margin: 0px;">
+								<!--页眉，放置标题-->
+
+								<!--内容区-->
+								<div class="mui-card-content">
+									<div class="mui-slider-item">
+										<a href="#">
+											<a class="mui-slider-title" style="color: #ffffff;">{{item[0].tripAttractionName}}</a>
+
+											<img class="imgSize" :src="item[1]" />
+										</a>
+									</div>
+
+								</div>
+
+							</div>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
+		<script type="text/javascript" src="js/vue.min.js"></script>
 		<script src="js/mui.min.js"></script>
 		<script>
-			mui.init({
-				swipeBack: false,
+			var app = new Vue({
+				el: "#app",
+				data: {
+					message: "nmb",
+					headerData: [
+						[{
+							"tripAttractionName": "null"
+						}, "null", "null"],
+						[{
+							"tripAttractionName": "null"
+						}, "null", "null"],
+						[{
+							"tripAttractionName": "null"
+						}, "null", "null"],
+						[{
+							"tripAttractionName": "null"
+						}, "null", "null"],
 
-				keyEventBind: {
-					backbutton: false
+					],
+					cityType: ""
+
 				},
+				beforeCreate: function() {
 
-				pullRefresh: {
-					container: '#pullrefresh',
-					down: {
-						callback: pulldownRefresh
-					},
-					up: {
-						contentrefresh: '正在加载...',
-						callback: pullupRefresh
-					}
-				}
-			});
-			//数据接收
-			mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {},
-				function(data) {
-					var table = document.body.querySelector('.mui-table-view');
-					var viewName = eval(data)
-					for(var i = 0; i < 15; i++) {
-						var li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
+				},
+				mounted: function() {
 
-						li.innerHTML = '<a class="mui-navigate-right" name="' + viewName[i][0].id + '">' + viewName[i][0].tripAttractionName + '</a>';
-						table.insertBefore(li, table.firstChild);
+					var that = this
+					mui.init({
+						swipeBack: false,
+
+						keyEventBind: {
+							backbutton: false
+						},
+
+						pullRefresh: {
+							container: '#pullrefresh',
+							down: {
+								contentrefresh: '正在加载...',
+								callback: pulldownRefresh
+							},
+							up: {
+								contentrefresh: '正在加载...',
+								callback: pullupRefresh
+							}
+						}
+					});
+
+					var cityType = localStorage.getItem("cityType")
+					if(cityType != that.cityType) {
+						that.cityType = cityType
+						//数据接收
+						mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {
+								type: localStorage.getItem("cityType")
+							},
+							function(data) {
+								var results = JSON.parse(data)
+								console.log("data:" + results[0])
+								for(var i = 0; i < 4; i++) {
+									that.$set(that.headerData, i, results[i]);
+								}
+								/*	var table = document.body.querySelector('.mui-table-view');
+									var viewName = eval(data)
+									for(var i = 0; i < 15; i++) {
+										var li = document.createElement('li');
+										li.className = 'mui-table-view-cell';
+
+										li.innerHTML = '<a class="mui-navigate-right" name="' + viewName[i][0].id + '">' + viewName[i][0].tripAttractionName + '</a>';
+										table.insertBefore(li, table.firstChild);
+									}
+									$('.mui-table-view-cell').on('tap', function(e) {
+										var id = $(this).children().attr('name')
+										mui.openWindowWithTitle({
+											url: 'distination.html',
+											id: 'distination',
+											extras: {
+												dataId: id,
+											}
+										})
+									})*/
+
+							}
+						)
 					}
+					
+					
+				function pulldownRefresh(){
+					mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {
+								type: localStorage.getItem("cityType")
+							},
+							function(data) {
+								var results = JSON.parse(data)
+								console.log("data:" + results[0])
+								for(var i = 0; i < 4; i++) {
+									that.$set(that.headerData, i, results[i]);
+								}
+								/*	var table = document.body.querySelector('.mui-table-view');
+									var viewName = eval(data)
+									for(var i = 0; i < 15; i++) {
+										var li = document.createElement('li');
+										li.className = 'mui-table-view-cell';
+
+										li.innerHTML = '<a class="mui-navigate-right" name="' + viewName[i][0].id + '">' + viewName[i][0].tripAttractionName + '</a>';
+										table.insertBefore(li, table.firstChild);
+									}
+									$('.mui-table-view-cell').on('tap', function(e) {
+										var id = $(this).children().attr('name')
+										mui.openWindowWithTitle({
+											url: 'distination.html',
+											id: 'distination',
+											extras: {
+												dataId: id,
+											}
+										})
+									})*/
+
+							}
+						)
+				
+			}	function pullupRefresh() {
+
+				mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {
+								type: localStorage.getItem("cityType")
+							},
+							function(data) {
+								var results = JSON.parse(data)
+								console.log("data:" + results[0])
+								for(var i = 0; i < 4; i++) {
+									that.$set(that.headerData, i, results[i]);
+								}
+								/*	var table = document.body.querySelector('.mui-table-view');
+									var viewName = eval(data)
+									for(var i = 0; i < 15; i++) {
+										var li = document.createElement('li');
+										li.className = 'mui-table-view-cell';
+
+										li.innerHTML = '<a class="mui-navigate-right" name="' + viewName[i][0].id + '">' + viewName[i][0].tripAttractionName + '</a>';
+										table.insertBefore(li, table.firstChild);
+									}
+									$('.mui-table-view-cell').on('tap', function(e) {
+										var id = $(this).children().attr('name')
+										mui.openWindowWithTitle({
+											url: 'distination.html',
+											id: 'distination',
+											extras: {
+												dataId: id,
+											}
+										})
+									})*/
+
+							}
+						)
+			}
+ 			
+					
+					
+
 					$('.mui-table-view-cell').on('tap', function(e) {
-						var id = $(this).children().attr('name')
+						var id = $(this).attr('id')
+						var position = $(this).attr("name")
+						var trapname = $(this).data("trapname")
+						console.log("id:" + id)
+						console.log("position:" + position)
+						console.log("trapname:" + trapname)
 						mui.openWindowWithTitle({
 							url: 'distination.html',
 							id: 'distination',
 							extras: {
 								dataId: id,
+								position: position,
+								trapname: trapname
 							}
 						})
 					})
 
 				}
-			)
+			})
 
 			/**
 			 * 下拉刷新具体业务实现
 			 */
-			function pulldownRefresh() {
-
-				setTimeout(function() {
-					var table = document.body.querySelector('.mui-table-view');
-					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {}, function(data) {
-						for(var i = cells.length, len = i + 3; i < len; i++) {
-							var viewName = eval(data)
-							var li = document.createElement('li');
-							li.className = 'mui-table-view-cell';
-							li.innerHTML = '<a class="mui-navigate-right" name="' + viewName[i][0].id + '">' + viewName[i][0].tripAttractionName + '</a>';
-							//下拉刷新，新纪录插到最前面；
-							table.insertBefore(li, table.firstChild);
-							if(len == 20) {
-								return;
-							}
-							$('.mui-table-view-cell').on('tap', function(e) {
-								var id = $(this).children().attr('name')
-								mui.openWindowWithTitle({
-									url: 'distination.html',
-									id: 'distination',
-									extras: {
-										dataId: id,
-									}
-								})
-							})
-						}
-						mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
-					})
-					//refresh completed
-				}, 1000);
-			}
+		
+		
 			var count = 0;
 			/**
 			 * 上拉加载具体业务实现
 			 */
-			function pullupRefresh() {
 
-				setTimeout(function() {
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
-					var table = document.body.querySelector('.mui-table-view');
-					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {}, function(data) {
-						var viewName = eval(data)
-						for(var i = cells.length, len = i + 5; i < len; i++) {
-							var li = document.createElement('li');
-							li.className = 'mui-table-view-cell';
-							li.innerHTML = '<a class="mui-navigate-right" name="' + viewName[i][0].id + '">' + viewName[i][0].tripAttractionName + '</a>';
-							table.appendChild(li);
-							if(len == 20) {
-								return;
-							}
-							$('.mui-table-view-cell').on('tap', function(e) {
-								var id = $(this).children().attr('name')
-								mui.openWindowWithTitle({
-									url: 'distination.html',
-									id: 'distination',
-									extras: {
-										dataId: id,
-									}
-								})
-							})
-
-						}
-					})
-				}, 1000);
-			}
 		</script>
 	</body>
 

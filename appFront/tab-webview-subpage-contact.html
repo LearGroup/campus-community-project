@@ -55,48 +55,108 @@
 	</head>
 
 	<body>
-		<div class="mui-content">
+		<div id="app">
+			<div class="mui-content" style="margin-top: -20px;">
 
-			<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-				<div></div>
-			</ul>
+				<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+					<li v-for="item in headerData" class="mui-table-view-cell" :id="item[0].id" :name="item[0].tripAttractionName">
+						<a class="mui-navigate-right" :name="item[0].id">
+							<div class="mui-slider-cell">
+								<div class="oa-contact-cell mui-table">
+									<div class="oa-contact-avatar mui-table-cell">
+										<img width="60px" height="60px" :src="item[1]" />
+									</div>
+									<div class="oa-contact-content mui-table-cell">
+										<div class="mui-clearfix">
+											<h4 class="oa-contact-name">{{item[0].tripAttractionName}}</h4>
+											<span class="oa-contact-position mui-h6">{{item[0].position}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+					</li>
+
+				</ul>
+			</div>
 		</div>
+
 	</body>
+	<script type="text/javascript" src="js/vue.min.js"></script>
 	<script src="js/mui.min.js"></script>
-	<script type="text/javascript" src="js/jquery-2.1.0.js" ></script>
+	<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
 	<script>
-		mui.init({
-							swipeBack: false,
+		var app = new Vue({
+			el: "#app",
+			data: {
+				message: "nmb",
+				headerData: [
+					[{
+						"tripAttractionName": "null"
+					}, "null", "null"],
+					[{
+						"tripAttractionName": "null"
+					}, "null", "null"],
+					[{
+						"tripAttractionName": "null"
+					}, "null", "null"],
+					[{
+						"tripAttractionName": "null"
+					}, "null", "null"],
 
-				keyEventBind: {
-					backbutton: false
-				}
-		});
-		mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {},
-			function(data) {
-				var table = document.body.querySelector('.mui-table-view');
-				var viewName = eval(data)
-				for(var i = 0; i < 10; i++) {
-					var li = document.createElement('li');
-					li.className = 'mui-table-view-cell';
+				]
 
-					li.innerHTML = '<a class="mui-navigate-right" name="' + viewName[i][0].id + '"><div class="mui-slider-cell"><div class="oa-contact-cell mui-table"><div class="oa-contact-avatar mui-table-cell"><img width="60px" height="60px" src="' + viewName[i][1] + '" /></div><div class="oa-contact-content mui-table-cell"><div class="mui-clearfix"><h4 class="oa-contact-name">' + viewName[i][0].tripAttractionName + '</h4><span class="oa-contact-position mui-h6">' + viewName[i][0].position + '</span></div></div></div></div></a>';
-						
-					table.insertBefore(li, table.firstChild);
-				}
-				$('.mui-table-view-cell').on('tap', function(e) {
-					var id = $(this).children().attr('name')
-					mui.openWindowWithTitle({
-						url: 'distination.html',
-						id: 'distination',
-						extras: {
-							dataId: id,
+			},
+			beforeCreate: function() {
+
+			},
+			mounted: function() {
+				mui.init({
+					swipeBack: false,
+
+					keyEventBind: {
+						backbutton: false
+					}
+				});
+				var _self = this;
+
+				$.ajax({
+					type: 'post',
+					dataType: 'json',
+					async: true,
+					url: "http://47.95.0.73:8080/Uncom/appFront/getTripList.action",
+					xhrFields: {
+						withCredentials: true
+					},
+					data: {
+						type: localStorage.getItem("cityType")
+					},
+					crossDomain: true,
+					success: function(results) {
+						console.log(JSON.stringify(results))
+						for(var i = 0; i < 7; i++) {
+							this.$set(this.headerData, i, results[i]);
 						}
-					})
+
+						$('.mui-table-view ').on('tap', 'li', function(e) {
+							var id = $(this).children().attr('name')
+							var id = $(this).attr('id')
+							var tripAttractionName = $(this).attr('name')
+							mui.openWindowWithTitle({
+								url: 'article.html',
+								id: 'article',
+								extras: {
+									dataId: id,
+									trapname: tripAttractionName
+								}
+							})
+						})
+
+					}.bind(this)
 				})
 
 			}
-		)
+		})
 	</script>
 
 </html>

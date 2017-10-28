@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+
+		</style>
+	</head>
+
+	<body>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right">
+					新消息通知
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right">
+					隐私
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right">
+					通用
+				</a>
+			</li>
+		</ul>
+		<ul class="mui-table-view" style="margin-top: 25px;">
+			<li class="mui-table-view-cell">
+				<a id="about" class="mui-navigate-right">
+					关于
+				</a>
+			</li>
+		</ul>
+		<ul id="logOff" class="mui-table-view" style="margin-top: 25px;">
+			<li class="mui-table-view-cell">
+				<a style="text-align: center;color: #FF3B30;">
+					退出登录
+				</a>
+			</li>
+		</ul>
+		</div>
+
+		<script src="js/mui.min.js" </script>
+			<script type="text/javascript" charset="utf-8">
+				mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		mui.preload({
+			url: 'login.html',
+			id: 'login'
+		})
+		document.getElementById("about").addEventListener('tap', function() {
+			//获得主页面的webview
+			var main = plus.webview.currentWebview().parent();
+			//触发主页面的gohome事件
+			mui.fire(main, 'gohome');
+		});
+		document.getElementById("logOff").addEventListener('tap', function(e) {
+			mui.openWindow({
+				url: 'login.html',
+				id: 'login'
+			})
+		})
+			//优化显示出来的侧滑菜单，只需监听该菜单的左滑事件，然后将其关闭即可；在菜单上右滑，不做任何操作；
+		</script>
+	</body>
+
+</html>

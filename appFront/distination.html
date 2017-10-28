@@ -1,8 +1,3 @@
-<!--
-	作者：1249164452@qq.com
-	时间：2017-08-04
-	描述：用于展示景点详情的页面
--->
 <html>
 
 	<head>
@@ -11,12 +6,45 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
 		<link rel="stylesheet" href="css/mui.min.css">
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=a2r4XoRjGfAyA8x0vabBDOfYRYuEdPQ9"></script>
+		<link rel="stylesheet" href="css/font-awesome.min.css" />
 		<style>
-			html,
+			@font-face {
+				font-family: Youyuan;
+				font-weight: normal;
+				font-style: normal;
+				src: url(fonts/yahei.ttf);
+				format('truetype');
+			}
+			
+			* {
+				margin: 0;
+				padding: 0;
+				font-family: Youyuan;
+				color: black
+			}
+			
 			body {
 				background-color: #efeff4;
+				font: "微软雅黑";
+				font-family: "微软雅黑";
+			}
+			
+			.mui-table-view-cell:after {
+				height: 0;
+			}
+			
+			.mui-table-view:after {
+				height: 0;
+			}
+			
+			.mui-navigate-right:after {
+				height: 0;
+			}
+			
+			.mui-card-media:after {
+				height: 0;
 			}
 			
 			.mui-bar .mui-pull-left .mui-icon {
@@ -47,17 +75,21 @@
 			}
 			
 			.title {
-				background-color: #49bdcc !important;
+				background-color: #56A36C !important;
 			}
 			
 			.imgSize {
-				height: 200px !important;
+				height: 210px !important;
 				width: 100% !important;
+			}
+			
+			.p-color {
+				color: #333333;
 			}
 			
 			#title {
 				font-family: "微软雅黑" !important;
-				color: #555555 !important;
+				color: #56A36C !important;
 			}
 			
 			.mui-bar-transparent {}
@@ -65,125 +97,198 @@
 			.kuang {
 				background-color: #F9F9F9;
 			}
+			/*<div id="slider" class="mui-slider" style="background: #FFFFFF;color: #56A36C;">
+							<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+								<a class="mui-control-item" href="#item1mobile">
+									待办公文
+								</a>*/
+			
+			.mui-input-row .mui-radio .mui-left:after {
+				height: 0px;
+			}
+			
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				color: #000000;
+				/* 这里放你想要的颜色 */
+			}
+			
+			.mui-segmented-control.mui-segmented-control-inverted~.mui-slider-progress-bar {
+				background-color: #56A36C;
+			}
+			
+			.mui-slider .mui-control-item:active {
+				opacity: 1;
+			}
 		</style>
 	</head>
 
 	<body>
 
-		<header id="header" class="mui-bar mui-bar-transparent " data-top='0'>
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 id="title" class="mui-title">景点详情</h1>
-		</header>
+		<div id="app">
+			<header id="header" class="mui-bar  mui-bar-transparent " data-top='0'>
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #56A36C;"></a>
+				<h1 id="title" class="mui-title">{{trapname}}</h1>
+			</header>
 
-		<div class="mui-content">
-			<!--静态图片-->
-			<img id="img1" height="195px" width="100%" href="#">
-			<!--轮播图片-->
-			<div id="slider" class="mui-slider mui-hidden">
-				<div class="mui-slider-group">
-					<!-- 第一张 -->
-					<div class="mui-slider-item">
-						<a href="#">
-							<img src="img/nh6 (1).jpg" class=imgSize>
-						</a>
-					</div>
-					<!-- 第二张 -->
-					<div class="mui-slider-item">
-						<a href="#">
-							<img src="img/nh2.jpeg" class=imgSize>
-						</a>
-					</div>
-					<!-- 第三张 -->
-					<div class="mui-slider-item">
-						<a href="#">
-							<img src="img/nh3.jpeg" class=imgSize>
-						</a>
-					</div>
-					<!-- 第四张 -->
-					<div class="mui-slider-item">
-						<a href="#">
-							<img src="img/nh4.jpeg" class=imgSize>
-						</a>
+			<div class="mui-content">
+				<!--静态图片-->
+
+				
+
+				<div class="mui-slider" style="height: 220px;">
+					<div class="mui-slider-group mui-slider-loop">
+						<!--支持循环，需要重复图片节点-->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a href="#"><img :src="headerData[-1]" style="height: 100%;" /></a>
+						</div>
+						<div v-for="item in headerData" class="mui-slider-item">
+							<a href="#"><img :src="item.url" style="height: 100%;" /></a>
+						</div>
+
+						<!--支持循环，需要重复图片节点-->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a href="#"><img :src="headerData[0]" style="height: 100%;" /></a>
+						</div>
 					</div>
 				</div>
+				<!--<img id="img1" height="195px" width="100%" href="#">-->
+				<!--轮播图片-->
+				<!--
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right" href="#">
+							<p style="color: #333333;">地点景色</p>
+						</a>
+						<div class="mui-collapse-content">
+							<form class="mui-input-group">
+								<div class="mui-input-row mui-radio mui-left">
+									<label><p class="p-color"> {{trapname}}</p></label>
+									<input name="style" type="radio" checked value="static">
+								</div>
+								<div class="mui-input-row mui-radio mui-left">
+									<label><p class="p-color">景点图片</p></label>
+									<input name="style" type="radio" value="slider">
+								</div>
+							</form>
+						</div>
 
-				<div class="mui-slider-indicator">
-					<div class="mui-indicator mui-active"></div>
-					<div class="mui-indicator"></div>
-				</div>
-			</div>
-			<ul class="mui-table-view">
-				<li class="mui-table-view-cell mui-collapse">
-					<a class="mui-navigate-right" href="#">图片显示</a>
-					<div class="mui-collapse-content">
-						<form class="mui-input-group">
-							<div class="mui-input-row mui-radio mui-left">
-								<label>南湖湿地公园</label>
-								<input name="style" type="radio" checked value="static">
+					</li>
+				</ul>
+-->
+				<div class="mui-content kuang">
+					<div class="mui-row">
+						<div class="mui-card" style="margin-left: 0px;margin-right: 0px;margin-top: -10px;">
+							<!--页眉，放置标题-->
+
+							<div class="mui-card-header mui-card-media">
+								<i class="fa fa-map-signs" style="color: #56A36C;display: inline;margin-right: 5px;" aria-hidden="true"></i>
+
+								<p style="display: block;display: inline;color: #333333;font-size: 16px;"> {{position}} </p>
 							</div>
-							<div class="mui-input-row mui-radio mui-left">
-								<label>园内风光</label>
-								<input name="style" type="radio" value="slider">
+
+							<ul class="mui-table-view">
+								<!--<li class="mui-table-view-cell mui-collapse">
+									<a class="mui-navigate-right" href="#">简介:</a>
+									<div class="mui-collapse-content">
+										<p style="text-indent: 2em;font-size: 16px;line-height: 24px;color: #333333;">{{descript.theStrategy}}</p>
+									</div>
+								</li>-->
+								<li class="mui-table-view-cell mui-collapse">
+									<a class="mui-navigate-right" href="#">
+										<i class="fa fa-flag" style="color: #FFA53D;display: inline;font-size: 18px;margin-left: -4px;margin-right: 5px;" aria-hidden="true"></i>
+										<p style="display: block;display: inline;color: #333333;font-size: 16px;">门票 </p>
+									</a>
+									<div id="ticket" class="mui-collapse-content">
+										成人 {{thePriceOfTicket}}元&nbsp;&nbsp;&nbsp;&nbsp;儿童 {{thePriceOfTicket}} 元
+									</div>
+									<div class="mui-collapse-content">
+										<button type="button" class="mui-btn mui-btn-warning">立即订票</button>
+									</div>
+								</li>
+								<li class="trans-cell  " style="margin-left: 15px;">
+
+									<p class="trans-p p-color" style="color: #333333;font-size: 16px;margin-left: -5px;display: inline;margin-right: 15px;">到达方式：</p>
+
+									<i class="fa fa-bus" style="color: #56A36C;display: inline;font-size: 18px;margin-left: -1px;margin-right: 5px;" aria-hidden="true"></i>
+									<i class="fa fa-cab" style="color: #56A36C;display: inline;font-size: 18px;margin-left: 25px;margin-right: 5px;" aria-hidden="true"></i>
+									<i class="fa fa-bicycle" style="color: #56A36C;display: inline;font-size: 18px;margin-left: 25px;margin-right: 5px;" aria-hidden="true"></i>
+									<div id="r-result" style="background: #ffffff;max-height: 400px;width: 360px; margin-left: -15px;overflow-y: auto;">
+
+									</div>
+
+								</li>
+							</ul>
+
+						</div>
+
+						<div id="slider" class="mui-slider" style="background: #FFFFFF;color: #56A36C;margin-top: -10px;">
+							<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+								<a class="mui-control-item" href="#item1mobile">
+									评论
+								</a>
+								<a class="mui-control-item" href="#item2mobile">
+									攻略
+								</a>
+								<a class="mui-control-item" href="#item3mobile">
+									地图
+								</a>
 							</div>
-						</form>
+							<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+							<div class="mui-slider-group" style="height: 400px;">
+								<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+									<div id="scroll1" class="mui-scroll-wrapper">
+										<div class="mui-scroll">
+											<ul class="mui-table-view">
+												<li v-for="item in comment" class="mui-table-view-cell" style="margin-left: -15px;margin-right: -15px;margin-top: -11px;">
+													<div style="height: 80px;background: #ffffff;padding-top: 5px;padding-left: 10px;padding-right: 15px;">
+
+														<img :src="item.src" style=" float:left;height: 35px;width: 35px;display: inline;border-radius: 50%;border: solid 0.5px #cccccc;" />
+														<i class="fa fa-thumbs-o-up" style="margin-top: 5px;float: right;color: #666666;display: inline;font-size: 18px;margin-left: -1px;margin-right: 5px;" aria-hidden="true"></i>
+
+														<p style="margin-top: 4px;display: inline;float: right;margin-right: 5px;">{{item.zan}}</p>
+														<p style="font-size: 14px; float:left;padding-left: 10px;display: block;padding-top: -1px;color: #333333;">{{item.name}}</p>
+
+														<p style="padding-left: 45px;display: block;position: absolute;margin-top: 17px;font-size: 8px;">{{item.time}}</p>
+														<div style="clear: both;"></div>
+														<p style="margin-bottom: 8px; margin-left: 45px;color: #333333;word-break:break-word; ">{{item.comment}}</p>
+														<p style="margin-left: -15px;margin-right: -20px;background: #eeeeee;display: block;height: 0.5px;"></p>
+													</div>
+												</li>
+
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div id="item2mobile" class="mui-slider-item mui-control-content">
+									<div id="scroll2" class="mui-scroll-wrapper">
+										<div class="mui-scroll" style="padding-top: 10px;padding-left: 15px;padding-right: 15px;padding-bottom: 10px;">
+											<div class="mui-loading">
+												<div class="mui-spinner">
+												</div>
+											</div>
+											<p class="article" style="text-indent: 2em;line-height: 1.5;color: #333333;font-size: 16px;"></p>
+										</div>
+									</div>
+
+								</div>
+								<div id="item3mobile" class="mui-slider-item mui-control-content">
+									<div id="scroll3" class="mui-scroll-wrapper">
+										<ul class="mui-table-view">
+											<li style="margin-left: -15px;margin-right: -15px;margin-top: -11px;" class="mui-table-view-cell">
+												<div id="l-map" style="background:#000000;height: 398px;"></div>
+											</li>
+										</ul>
+									</div>
+
+								</div>
+							</div>
+						</div>
 					</div>
 
-				</li>
-			</ul>
-
-			<div class="mui-content kuang">
-				<div class="mui-row">
-					<div class="mui-col-sm-8">
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right">
-								地点简介
-							</a>
-						</li>
-					</div>
-					<p id="introduction" style="margin: 30px 15px 20px;">
-					</p>
-
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell mui-collapse">
-							<a class="mui-navigate-right" href="#">
-								<span class="mui-icon mui-icon-flag"></span> 门票
-							</a>
-							<div id="ticket" class="mui-collapse-content">
-								成人 0 元&nbsp;&nbsp;&nbsp;&nbsp;儿童 0 元
-							</div>
-							<div class="mui-collapse-content">
-								<button type="button" class="mui-btn mui-btn-warning">立即订票</button>
-							</div>
-						</li>
-					</ul>
-
-					<div class="mui-col-sm-6">
-						<li class="mui-table-view-cell">
-							<a class="mui-navigate-right">
-								到达方式
-							</a>
-						</li>
-					</div>
 					<!--<p style="margin: 30px 15px 20px;"> <br>乘车路线：呼和浩特市内可以乘坐1、6、27、55、62公交车到南湖湿地公园下车
 
 					</p>-->
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell mui-collapse">
-							<a class="mui-navigate-right" href="#">
-								<span class="mui-icon mui-icon-map"></span> 地图
-							</a>
-							<div class="mui-collapse-content">
-								<a id='baidumap'>
-									<p id=title>百度地图</p>
-								</a>
-							</div>
-							<!--div class="mui-collapse-content">
-                					<a href="">
-                						<p id=title>园内地图</p>
-                					</a>
-            					</div-->
-						</li>
-					</ul>
+
 				</div>
 			</div>
 
@@ -193,174 +298,380 @@
 				<li>导航栏字体颜色和图片颜色协调</li>
 			</ul>-->
 
-			<div style="background-color:#FFFFFF;" onclick="submit()">
-				<p style="margin: 5px 10px 10px; font-family: '微软雅黑'; font-size: large;color:#EC971F;">
-					<span class="mui-icon mui-icon mui-icon-paperclip"></span> 入园须知
-				</p>
-				<p id="Prompt" style="margin: 10px 10px 10px; font-family: '微软雅黑'; font-size:14px;color: #EC971F;">
+		</div>
+		<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+		<script type="text/javascript" src="js/vue.min.js"></script>
+		<script src="js/mui.min.js"></script>
 
-				</p>
-			</div>
+		<script type="text/javascript">
+			var app = new Vue({
+				el: "#app",
+				data: {
+					message: "nmb",
+					headerData: [],
+					comment: [{
+						name: "囿于兮",
+						comment: "是个好地方",
+						time: "昨天",
+						src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_0.jpg",
+						zan: "11"
+					}, {
+						name: "dalao",
+						comment: "第一次去玩儿，嘿嘿。",
+						time: "刚刚",
+						src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_1.jpg",
+						zan: "3"
+					}, {
+						name: "阿苗的~",
+						comment: "辛亏有这个软件，景点找起来炒鸡简单嘎嘎",
+						time: "两小时前",
+						src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_2.jpg",
+						zan: "10"
+					}, {
+						name: "banfoevr",
+						comment: "玩儿的好累啊，只想倒头睡觉ZZ",
+						time: "下午 3:21",
+						src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_3.jpg",
+						zan: "6"
+					}, {
+						name: "MelOn",
+						comment: "最近有打算去的吗？组个队喽",
+						time: "昨天",
+						src: "http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/head_4.jpg",
+						zan: "4"
+					}],
+					descript: {},
+					position: "",
+					trapname: "",
+					map: "",
+					point: "",
+					geoc: "",
+					currentLon: "",
+					currentLat: "",
+					addComp: "",
+					addr: "",
+					clickname: "",
+					thePriceOfTicket:"0"
 
-			<!--<div style="background-color:#FFFFFF;">
-				<ul class="mui-table-view">
-					<li class="mui-table-view-cell mui-collapse">
-						<a class="mui-navigate-right" href="#">
-							<span class="mui-icon mui-icon-chat"></span> 游客评论
-						</a>
-						<div class="mui-collapse-content">
-							<ul class="mui-table-view">
-								<li class="mui-table-view-cell">
-									
-									<div class="mui-card">
-										
-										<div class="mui-card-header">
-											<img src="images/user-photo.png" />
-											<div class="mui-media-body">
-												小M
-												<p>发表于 2017-07-2 15:30</p>
-											</div>
-										</div>
-										
-										<div class="mui-card-content">
-											<img src="img/nh6 (3).jpg" height="250px" width="100%">
-										</div>
-										
-										<div class="mui-card-footer">页脚</div>
-									</div>
-								</li>
-								<li class="mui-table-view-cell">
-									
-									<div class="mui-card">
-										
-										<div class="mui-card-header">
-											<img src="images/qq.png" />
-											<div class="mui-media-body">
-												小Q
-												<p>发表于 2017-06-30 15:30</p>
-											</div>
-										</div>
-										
-										<div class="mui-card-content">
-											<img src="img/nh6 (3).jpg" height="250px" width="100%">
-										</div>
-										
-										<div class="mui-card-footer">页脚</div>
-									</div>
-								</li>
-								<li class="mui-table-view-cell">Item 3</li>
-							</ul>
+				},
+				beforeCreate: function() {
 
-							
-						</div>
+				},
+				mounted: function() {
+					var that = this
 
-					</li>
-				</ul>
+					mui.init({
+						statusBarBackground: "#56A36C",
+						swipeBack: true //启用右滑关闭功能
+					});
+					var slider = document.getElementById("slider");
 
-			</div>-->
+					mui.ready(function() {
 
-			<script src="js/mui.min.js"></script>
-			<script type="text/javascript">
-				mui.init({
-					swipeBack: true //启用右滑关闭功能
-				});
-				var slider = document.getElementById("slider");
-
-				mui.ready(function() {
-					document.querySelector('#baidumap').addEventListener('click', function() {
-						mui.openWindowWithTitle({
-							url: 'distinationIndex.html',
-							id: 'distinationIndex.html'
-						})
 					})
 
-				})
+					var position;
+					var id;
+					var trapname;
+					var thePriceOfTicket
+					mui.plusReady(function() {
 
-				function submit() {
-					console.log('12345678');
-					//					mui.post(, {
-					//
-					//					}, function(data) {
-					//						console.log(data[0]);
-					//						console.log('1234');
-					//					})
-					mui.ajax("http://47.95.0.73:8080/Uncom/getCustomResultTripList.action", {
-						data: {
-							money: 50
-						},
-						dataType: 'json', //服务器返回json格式数据
-						type: 'post', //HTTP请求类型
-						timeout: 10000, //超时时间设置为10秒；
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						success: function(data) {
-							//服务器返回响应，根据响应结果，分析是否登录成功；
-							
-						},
-						error: function(xhr, type, errorThrown) {
-							//异常处理；
-							console.log(type);
-							console.log(xhr);
-							console.log(errorThrown);
-						},
-					})
-				}
-				mui('.mui-input-group').on('change', 'input', function() {
-					if(this.checked) {
-						switch(this.value) {
-							case 'static':
-								document.getElementById("img1").className = "";
-								document.getElementById("slider").classList.add("mui-hidden");
-								break;
-							case 'slider':
-								document.getElementById("img1").className = "mui-hidden";
-								if(slider.classList.contains("mui-hidden")) {
-									document.getElementById("slider").classList.remove("mui-hidden");
+						plus.geolocation.getCurrentPosition(function(position) {
+							that.currentLon = position.coords.longitude;
+							that.currentLat = position.coords.latitude;
+							console.log(that.currentLon);
+
+							//书写自己的逻辑
+
+						}, function(e) {
+							mui.toast("异常:" + e.message);
+						});
+
+						var self = plus.webview.currentWebview();
+						id = self.dataId;
+						position = self.position
+						trapname = self.trapname
+						id = parseInt(id);
+						that.position = position
+						that.trapname = trapname
+						that.thePriceOfTicket=self.thePriceOfTicket
+
+						that.map.clearOverlays(); //清除地图上所有覆盖物
+						function myFun() {
+							var pp = local.getResults().getPoi(0).point; //获取第一个智能搜索的结果
+							that.map.centerAndZoom(pp, 18);
+							that.map.addOverlay(new BMap.Marker(pp)); //添加标注
+						}
+						var local = new BMap.LocalSearch(that.map, { //智能搜索
+							onSearchComplete: myFun
+						});
+						local.search(that.trapname);
+
+						mui('.mui-input-group').on('change', 'input', function() {
+							if(this.checked) {
+								switch(this.value) {
+									case 'static':
+										document.getElementById("img1").className = "";
+										document.getElementById("slider").classList.add("mui-hidden");
+										break;
+									case 'slider':
+
+										mui.openWindowWithTitle({
+											url: 'distination.html',
+											id: 'distination',
+											extras: {
+												dataId: id,
+												position: position
+											}
+										})
+										break;
 								}
-								break;
+							}
+						});
+						var view;
+
+						mui.post('http://47.95.0.73:8080/Uncom/appFront/getImgList.action', {
+							id: id
+						}, function(result) {
+							var data = JSON.stringify(result)
+							that.headerData = JSON.parse(result)
+
+						}.bind(this));
+
+						mui.post('http://47.95.0.73:8080/Uncom/appFront/getStrategy.action', {
+							id: id
+						}, function(data) {
+							console.log("results:" + JSON.parse(data)[0])
+							var src = JSON.parse(data)[0]
+							src.theStrategy = src.theStrategy
+							that.descript = src
+
+						});
+					})
+					mui(".trans-cell").on('tap', 'i', function(e) {
+
+						document.getElementById("r-result").innerHTML = '<div class="mui - loading " style="margin-left: 170px;margin-top: 20px;"> <div class = "mui-spinner"  ></div> </div>'
+
+						that.addr = "土默特左旗";
+						that.clickname = $(this).attr("class")
+						var ggPoint = new BMap.Point(that.currentLon, that.currentLat);
+						var addComp
+						that.geoc.getLocation(ggPoint, function(rs) {
+							var addComp = rs.addressComponents;
+
+							if(addComp.district == "土默特左旗") {
+								that.addr = "工业大学电力学院"
+							}
+
+							if(that.clickname == "fa fa-cab") {
+								var output = "从" + that.addr + "到" + that.trapname + "驾车需要";
+
+								var searchComplete = function(results) {
+									if(transit.getStatus() != BMAP_STATUS_SUCCESS) {
+										return;
+									}
+									var plan = results.getPlan(0);
+									output += plan.getDuration(true) + "\n"; //获取时间
+									output += "总路程为：";
+									output += plan.getDistance(true) + "\n"; //获取距离
+								}
+								var transit = new BMap.DrivingRoute(that.map, {
+									renderOptions: {
+										map: that.map
+									},
+									onSearchComplete: searchComplete,
+									onPolylinesSet: function() {
+										setTimeout(function() {
+											$("#r-result").html('<p style="padding-top: 10px;padding-left: 10px;padding-right: 10px;color: #333333;font-size: 18px;line-height: 1.5;">' + output + '</p>')
+
+										}, "1000");
+									}
+								});
+								transit.search(that.addr, that.trapname);
+								return
+							} else if(that.clickname == "fa fa-bicycle") {
+								var driving = new BMap.DrivingRoute(that.map, {
+									renderOptions: {
+										map: that.map,
+										panel: "r-result",
+										autoViewport: true
+									}
+								});
+								driving.search(that.addr, that.trapname);
+								return;
+							}
+							var transit = new BMap.TransitRoute(that.map, {
+								renderOptions: {
+									map: that.map,
+									panel: "r-result"
+								}
+							});
+							transit.search(that.addr, that.trapname);
+						});
+
+					})
+
+					mui('.mui-table-view-cell').on('change', 'input', function(e) {
+
+						if(this.checked) {
+							switch(this.value) {
+								case 'static':
+									document.getElementById("img1").className = "";
+									document.getElementById("slider").classList.add("mui-hidden");
+									break;
+								case 'slider':
+									mui.openWindowWithTitle({
+										url: 'trap-results.html',
+										id: 'trap-results',
+										extras: {
+											dataId: id,
+											position: position
+										}
+									})
+
+									break;
+							}
+						}
+
+					})
+
+					Pagerinit(mui, this)
+					getMap(that)
+
+				}
+			})
+
+			function Pagerinit($, that) {
+				$('.mui-scroll-wrapper').scroll({
+					indicators: true //是否显示滚动条
+				});
+				var html2 = '<ul class="mui-table-view"><li class="mui-table-view-cell">第二个选项卡子项-1</li><li class="mui-table-view-cell">第二个选项卡子项-2</li><li class="mui-table-view-cell">第二个选项卡子项-3</li><li class="mui-table-view-cell">第二个选项卡子项-4</li><li class="mui-table-view-cell">第二个选项卡子项-5</li></ul>';
+				var html3 = '<ul class="mui-table-view"><li  style="margin-left: -15px;margin-right: -15px;margin-top: -11px;" class="mui-table-view-cell"><div id="l-map" style="background:#000000;height: 398px;"></div></li></ul>';
+				var item2 = document.getElementById('item2mobile');
+				var item3 = document.getElementById('item3mobile');
+				document.getElementById('slider').addEventListener('slide', function(e) {
+					if(e.detail.slideNumber === 1) {
+						if(item2.querySelector('.mui-loading')) {
+							setTimeout(function() {
+								item2.querySelector('.mui-loading').innerHTML = "";
+								item2.querySelector('.article').innerHTML = that.descript.theStrategy
+							}, 500);
+						}
+					} else if(e.detail.slideNumber === 2) {
+						if(item3.querySelector('.mui-loading')) {
+							setTimeout(function() {
+								//item3.querySelector('.mui-scroll').innerHTML = html3;
+								//getMap(that)
+							}, 500);
 						}
 					}
 				});
-				var id;
-				mui.plusReady(function() {
-					var self = plus.webview.currentWebview();
-					id = self.dataId;
+				var sliderSegmentedControl = document.getElementById('sliderSegmentedControl');
+				$('.mui-input-group').on('change', 'input', function() {
+					if(this.checked) {
+						sliderSegmentedControl.className = 'mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-' + this.value;
+						//force repaint
+						console.log("value:" + this.value)
+						sliderProgressBar.setAttribute('style', sliderProgressBar.getAttribute('style'));
+					}
+				});
+			}
 
-					id = parseInt(id);
-					var view;
-					mui.post('http://47.95.0.73:8080/Uncom/appFront/getImgList.action', {
-						id: id
-					}, function(data) {
-						var da = eval(data)
-						console.log(da)
-						document.getElementById('img1').src = da[0].url;
-					});
-					mui.post('http://47.95.0.73:8080/Uncom/appFront/getTripList.action', {
-						id: id
-					}, function(data) {
-						var da = eval(data)
-						for(var i = 0; i < da.length; i++) {
-							if(id == da[i][0].id) {
-								view = da[i][0];
-								break;
-							}
-						}
-						document.getElementById('ticket').innerHTML = '成人' + view.thePriceOfTicket + '元     ' + '儿童' + view.thePriceOfTicket + '元'
-						if(view.thePriceOfTicket != 0) {
-							document.getElementById('Prompt').innerHTML = '需购买' + view.thePriceOfTicket + '元门票，进入后购买单独项目票'
-						} else {
-							document.getElementById('Prompt').innerHTML = '无需购买门票，进入后购买单独项目票'
-						}
-					});
-					mui.post('http://47.95.0.73:8080/Uncom/appFront/getStrategy.action', {
-						id: '1'
-					}, function(data) {
-						var da = eval(data)
-						document.getElementById('introduction').innerHTML = da[0].introduction
-					});
+			function submit() {
+				console.log('12345678');
+				//					mui.post(, {
+				//
+				//					}, function(data) {
+				//						console.log(data[0]);
+				//						console.log('1234');
+				//					})
+				mui.ajax("http://47.95.0.73:8080/Uncom/getCustomResultTripList.action", {
+					data: {
+						money: 50
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					success: function(data) {
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						console.log(type);
+						console.log(xhr);
+						console.log(errorThrown);
+					},
 				})
-			</script>
+			}
+
+			function getMap(that) {
+				var top_left_control = new BMap.ScaleControl({
+					anchor: BMAP_ANCHOR_TOP_LEFT
+				}); // 左上角，添加比例尺
+				var top_left_navigation = new BMap.NavigationControl(); //左上角，添加默认缩放平移控件
+				var top_right_navigation = new BMap.NavigationControl({
+					anchor: BMAP_ANCHOR_TOP_RIGHT,
+					type: BMAP_NAVIGATION_CONTROL_SMALL
+				}); //右上角，仅包含平移和缩放按钮
+
+				that.map = new BMap.Map("l-map");
+				that.map.centerAndZoom(localStorage.getItem("firstName"), 12); // 初始化地图,设置城市和地图级别。
+
+				that.point = new BMap.Point(116.331398, 39.897445);
+				var map = that.map
+				that.geoc = new BMap.Geocoder();
+				that.map.addControl(top_left_navigation);
+
+				/*缩放控件type有四种类型:
+				BMAP_NAVIGATION_CONTROL_SMALL：仅包含平移和缩放按钮；BMAP_NAVIGATION_CONTROL_PAN:仅包含平移按钮；BMAP_NAVIGATION_CONTROL_ZOOM：仅包含缩放按钮*/
+
+			}
+		</script>
+
+		<script>
+			function G(id) {
+				return document.getElementById(id);
+			}
+
+			function setPlace() {
+				map.clearOverlays(); //清除地图上所有覆盖物
+				function myFun() {
+					var pp = local.getResults().getPoi(0).point; //获取第一个智能搜索的结果
+					map.centerAndZoom(pp, 18);
+					map.addOverlay(new BMap.Marker(pp)); //添加标注
+				}
+				var local = new BMap.LocalSearch(map, { //智能搜索
+					onSearchComplete: myFun
+				});
+				local.search(myValue);
+			}
+
+			//添加控件和比例尺
+			function add_control(map) {
+
+				map.addControl(top_left_navigation);
+
+			}
+			//移除控件和比例尺
+			function delete_control() {
+				map.removeControl(top_left_control);
+				map.removeControl(top_left_navigation);
+				map.removeControl(top_right_navigation);
+			}
+
+			function translatePoint(position, that) {
+				x.currentLon = position.coords.longitude;
+				y.currentLat = position.coords.latitude;
+				console.log();
+
+				//书写自己的逻辑
+
+			}
+		</script>
 
 	</body>
 

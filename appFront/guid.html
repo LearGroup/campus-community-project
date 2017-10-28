@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/font-awesome.min.css" />
+	</head>
+	<style>
+		@font-face {
+			font-family: Youyuan;
+			font-weight: normal;
+			font-style: normal;
+			src: url(fonts/yahei.ttf);
+			format('truetype');
+		}
+		
+		* {
+			margin: 0;
+			padding: 0;
+			font-family: Youyuan;
+			color: black
+		}
+		
+		body {}
+		
+		.guide-img {
+			height: 100%;
+		}
+	</style>
+
+	<body>
+		<div class="mui-content">
+			<div class="mui-slider mui-fullscreen">
+				<div class="mui-slider-group">
+					<div class="mui-slider-item" style="background: url(img/hle.png);">
+
+						<p style="float: left;color: #ffffff;font-size: 30px;margin-top: 330px;height: 100px;width: 100px;line-height: 1.0;margin-left: 20px;">海拉尔</p>
+						<p style="float: left;color: #ffffff;font-size: 30px;margin-top: 360px;height: 100px;width: 180px;line-height: 1.0;margin-left: -100px;">国家森林公园</p>
+						<i class="fa fa-dot-circle-o" style="float: left;color: #ffffff;font-size: 20px;margin-top: 400px;height: 100px;width: 180px;line-height: 1.0;margin-left: -100px;"></i>
+						<p style="float: left;color: #56A36C;font-size: 20px;margin-top: 400px;height: 100px;width: 180px;line-height: 1.0;margin-left: -160px;">呼伦贝尔</p>
+
+					</div>
+					<div class="mui-slider-item" style="background: url(img/lmdz.png);">
+
+						<p style="float: left;color: #ffffff;font-size: 30px;margin-top: 360px;height: 100px;width: 100px;line-height: 1.0;margin-left: 20px;"></p>
+						<p style="float: left;color: #ffffff;font-size: 30px;margin-top: 390px;height: 100px;width: 180px;line-height: 1.0;margin-left: -100px;">喇嘛洞召</p>
+						<i class="fa fa-dot-circle-o" style="float: left;color: #ffffff;font-size: 20px;margin-top: 430px;height: 100px;width: 180px;line-height: 1.0;margin-left: -100px;"></i>
+						<p style="float: left;color: #56A36C;font-size: 20px;margin-top: 430px;height: 100px;width: 180px;line-height: 1.0;margin-left: -160px;">呼和浩特</p>
+
+					</div>
+					<div class="mui-slider-item" style="background: url(img/nhsd1.png);">
+
+						<p style="float: left;color: #ffffff;font-size: 30px;margin-top: 360px;height: 100px;width: 100px;line-height: 1.0;margin-left: 20px;"></p>
+						<p style="float: left;color: #ffffff;font-size: 30px;margin-top: 390px;height: 100px;width: 180px;line-height: 1.0;margin-left: -100px;">南海湿地</p>
+						<i class="fa fa-dot-circle-o" style="float: left;color: #ffffff;font-size: 20px;margin-top: 430px;height: 100px;width: 180px;line-height: 1.0;margin-left: -100px;"></i>
+						<p style="float: left;color: #56A36C;font-size: 20px;margin-top: 430px;height: 100px;width: 180px;line-height: 1.0;margin-left: -160px;">包头</p>
+
+					</div>
+					<div class="mui-slider-item" style="background: url(img/banner_end.png);">
+					
+						<button class="mui-btn mui-btn-outlined" type="button" id="start" style="margin-top: 500px;margin-left: -130px;border: 1px solid #56A36C;color: #ffffff;">开始体验</button>
+					<p style="float: left;color: #ffffff;font-size: 30px;margin-top: 160px;height: 100px;width: 100px;line-height: 1.0;margin-left: 20px;">Keeplive</p>
+						<p style="float: left;color: #ffffff;font-size: 30px;margin-top: 200px;height: 100px;width: 240px;line-height: 1.0;margin-left: -100px;">探寻不一样的景色</p>
+						
+					
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				/**
+				 * 获取系统状态栏高度
+				 * http://www.html5plus.org/doc/zh_cn/navigator.html#plus.navigator.getStatusbarHeight
+				 */
+				var sh = plus.navigator.getStatusbarHeight();
+				/**
+				 * 获取设备屏幕高度分辨率以及宽度分辨率
+				 * http://www.html5plus.org/doc/zh_cn/device.html#plus.screen.resolutionHeight
+				 * http://www.html5plus.org/doc/zh_cn/device.html#plus.screen.resolutionWidth
+				 */
+				var h = plus.screen.resolutionHeight;
+				var w = plus.screen.resolutionWidth;
+				/**
+				 * 设置图片高度，这里图片并不规范；
+				 * 实际开发中，建议大家制作iphone6plus规格的图片；
+				 */
+				var imgs = document.querySelectorAll(".guide-img");
+				for(var i = 0, len = imgs.length; i < len; i++) {
+					imgs[i].style.height = (h - sh) + "px";
+					imgs[i].style.width = w + "px";
+				}
+				/**
+				 * 手动关闭启动页
+				 * http://www.html5plus.org/doc/zh_cn/navigator.html#plus.navigator.closeSplashscreen
+				 */
+				plus.navigator.closeSplashscreen();
+				document.getElementById("start").addEventListener("tap", function() {
+					/**
+					 * 向本地存储中设置launchFlag的值，即启动标识；
+					 * http://www.html5plus.org/doc/zh_cn/storage.html#plus.storage.setItem
+					 */
+					plus.storage.setItem("launchFlag", "true");
+					mui.openWindow({
+						url: "login.html",
+						id: "login",
+						extras: {
+							mark: "gudie" //同样，这里也只是个标识，实际开发中并不用；
+						}
+					});
+				});
+			});
+			/**
+			 * 重写mui.back()，什么都不执行，反之用户返回到入口页；
+			 */
+			mui.back = function() {};
+		</script>
+	</body>
+
+</html>
