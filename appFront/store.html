@@ -133,7 +133,7 @@
 					xhrFields: {
 						withCredentials: true
 					},
-					data: {},
+					data: {type:localStorage.getItem("cityType")},
 					crossDomain: true,
 					success: function(results) {
 						console.log(JSON.stringify(results))

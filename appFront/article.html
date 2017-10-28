@@ -210,6 +210,7 @@
 					var self = plus.webview.currentWebview();
 					id = self.dataId;
 					that.trapname = self.trapname
+					console.log("id"+id)
 					mui.post('http://47.95.0.73:8080/Uncom/appFront/getStrategy.action', {
 						id: id
 					}, function(data) {
