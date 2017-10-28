@@ -172,7 +172,7 @@
 			</div>
 			<ul class="mui-table-view ">
 
-				<li v-for="item in headerData " :id="item[0].id"  :data-thePriceOfTicket="item[0].thePriceOfTicket"  :data-trapname="item[0].tripAttractionName" :name="item[0].position" class="mui-table-view-cell mui-media">
+				<li v-for="item in headerData " v-on:click="bannerClick(item)"  v-bind:id="item[0].id"  :name="item[0].position" class="mui-table-view-cell mui-media">
 					<a href="javascript:;">
 						<img class="mui-media-object mui-pull-right" :src="item[1]">
 						<div class="mui-media-body" style="padding: 0px;">
@@ -383,7 +383,7 @@
 								success: function(results) {
 									console.log(JSON.stringify(results))
 									for(var i = 0; i < 4; i++) {
-										this.$set(this.headerData, i, results[i]);
+										that.$set(that.headerData, i, results[i]);
 										console.log(results[i])
 									}
 
@@ -396,9 +396,7 @@
 						that.city = "呼和浩特市"
 						that.cityType = "0"
 						localStorage.setItem("cityType","0")
-						mui.fire(that.detailPage, 'city', {
-							city: that.city
-						});
+					
 
 						$.ajax({
 							type: 'post',
@@ -421,10 +419,14 @@
 
 							}.bind(this)
 						})
+							mui.fire(that.detailPage, 'city', {
+							city: that.city
+						});
 
 					} else if(name == 'hlbe') {
 						that.city = "呼伦贝尔市"
 						that.cityType = "1"
+						localStorage.setItem("cityType","1")
 							$.ajax({
 							type: 'post',
 							dataType: 'json',
@@ -460,15 +462,16 @@
 						});
 					}
 				})
-
+/*
 				$('.mui-table-view-cell').on('tap', function(e) {
 					var id = $(this).attr('id')
 					var position = $(this).attr("name")
 					var trapname = $(this).data("trapname")
-					var thePriceOfTicket=$(this).data("thePriceOfTicket")
+				
 					console.log("id:" + id)
 					console.log("position:" + position)
-					console.log("thePriceOfTicket:" + thePriceOfTicket)
+					console.log("trapname:" + trapname)
+				
 					if(id == undefined) {
 						console.log('0')
 						return;
@@ -479,29 +482,34 @@
 						extras: {
 							dataId: id,
 							position: position,
-							trapname: trapname,
-							thePriceOfTicket:thePriceOfTicket
+							trapname: trapname
 						}
 					})
-				})
+				})*/
 
 			},
 			methods: {
 				bannerClick: function(item) {
 					var data = JSON.stringify(item)
-					var id = data[0].id
-					var tripAttractionName = data[0].tripAttractionName
+					var id = item[0].id
 					console.log("item" + data)
-					console.log("item" + item[0].id)
+					console.log("itemid   " + item[0].id)
 					console.log("item" + item[0].tripAttractionName)
 					localStorage.setItem("article_id", id)
-					localStorage.setItem("article_tripAttractionName", tripAttractionName)
+					localStorage.setItem("article_tripAttractionName", item[0].tripAttractionName)
+					
+					if(id == undefined) {
+						console.log('zzz0')
+						return;
+					}
 					mui.openWindowWithTitle({
-						url: 'article.html',
-						id: 'article',
+						url: 'distination.html',
+						id: 'distination',
 						extras: {
-							dataId: id,
-							trapname: tripAttractionName
+							dataId: item[0].id,
+							position: item[0].position,
+							trapname: item[0].tripAttractionName,
+							thePriceOfTicket:item[0].thePriceOfTicket
 						}
 					})
 

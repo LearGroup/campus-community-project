@@ -395,7 +395,8 @@
 						that.position = position
 						that.trapname = trapname
 						that.thePriceOfTicket=self.thePriceOfTicket
-
+						console.log("position:"+position)
+						console.log("trapname:"+trapname)
 						that.map.clearOverlays(); //清除地图上所有覆盖物
 						function myFun() {
 							var pp = local.getResults().getPoi(0).point; //获取第一个智能搜索的结果
