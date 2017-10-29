@@ -133,8 +133,6 @@
 			<div class="mui-content">
 				<!--静态图片-->
 
-				
-
 				<div class="mui-slider" style="height: 220px;">
 					<div class="mui-slider-group mui-slider-loop">
 						<!--支持循环，需要重复图片节点-->
@@ -186,7 +184,7 @@
 								<p style="display: block;display: inline;color: #333333;font-size: 16px;"> {{position}} </p>
 							</div>
 
-							<ul class="mui-table-view">
+							<ul class="mui-table-view" style="margin-top: -15px;">
 								<!--<li class="mui-table-view-cell mui-collapse">
 									<a class="mui-navigate-right" href="#">简介:</a>
 									<div class="mui-collapse-content">
@@ -205,6 +203,28 @@
 										<button type="button" class="mui-btn mui-btn-warning">立即订票</button>
 									</div>
 								</li>
+								<li class="trans-cells  " style="margin-left: 15px;margin-top: -5px;">
+
+									<div class="icons">
+										<p style="font-size: 16px;display: inline;color: #000000;margin-left: -4px;margin-right: 5px;">星级</p>
+										<i data-index="1" class="fa fa-star" style="color: #FFA53D;margin-right: 3px;"></i>
+										<i data-index="1" class="fa fa-star" style="color: #FFA53D;margin-right: 3px;"></i>
+										<i data-index="1" class="fa fa-star" style="color: #FFA53D;margin-right: 3px;"></i>
+
+									</div>
+
+								</li>
+
+								<li class="trans-cells  " style="margin-left: 15px;margin-top: 5px;margin-bottom: 5px;">
+
+									<div class="icons">
+										<p style="font-size: 20px;display: inline;color: #000000;margin-left: -4px;margin-right: 5px;">7.2</p>
+										<p style="display: inline;">113人评分</p>
+
+									</div>
+
+								</li>
+
 								<li class="trans-cell  " style="margin-left: 15px;">
 
 									<p class="trans-p p-color" style="color: #333333;font-size: 16px;margin-left: -5px;display: inline;margin-right: 15px;">到达方式：</p>
@@ -351,7 +371,7 @@
 					addComp: "",
 					addr: "",
 					clickname: "",
-					thePriceOfTicket:"0"
+					thePriceOfTicket: "0"
 
 				},
 				beforeCreate: function() {
@@ -394,9 +414,9 @@
 						id = parseInt(id);
 						that.position = position
 						that.trapname = trapname
-						that.thePriceOfTicket=self.thePriceOfTicket
-						console.log("position:"+position)
-						console.log("trapname:"+trapname)
+						that.thePriceOfTicket = self.thePriceOfTicket
+						console.log("position:" + position)
+						console.log("trapname:" + trapname)
 						that.map.clearOverlays(); //清除地图上所有覆盖物
 						function myFun() {
 							var pp = local.getResults().getPoi(0).point; //获取第一个智能搜索的结果
@@ -453,7 +473,7 @@
 
 						document.getElementById("r-result").innerHTML = '<div class="mui - loading " style="margin-left: 170px;margin-top: 20px;"> <div class = "mui-spinner"  ></div> </div>'
 
-						that.addr = "土默特左旗";
+						that.addr = "内蒙师范大学盛乐校区";
 						that.clickname = $(this).attr("class")
 						var ggPoint = new BMap.Point(that.currentLon, that.currentLat);
 						var addComp
@@ -462,6 +482,8 @@
 
 							if(addComp.district == "土默特左旗") {
 								that.addr = "工业大学电力学院"
+							}else{
+								that.addr="内蒙古师范大学盛乐校区"
 							}
 
 							if(that.clickname == "fa fa-cab") {
