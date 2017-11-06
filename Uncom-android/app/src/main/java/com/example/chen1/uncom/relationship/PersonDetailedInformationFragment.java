@@ -2,7 +2,6 @@ package com.example.chen1.uncom.relationship;
 
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
@@ -19,42 +18,27 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.chen1.uncom.R;
+import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.utils.Anim;
 import com.example.chen1.uncom.utils.LoadImageUtils;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PersonDetailedInformationFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link PersonDetailedInformationFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class PersonDetailedInformationFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+
+
     private static PersonDetailedInformationFragment fragment=null;
-    // TODO: Rename and change types of parameters
-    private CollapsingToolbarLayoutState state;
     private AppBarLayout appBarLayout;
     private TextView username;
     private RelationShipLevelBean frendData;
-    private enum CollapsingToolbarLayoutState {
-        EXPANDED,
-        COLLAPSED,
-        INTERNEDIATE
-    }
+
     private Menu menus=null;
     private AppCompatImageView person_back_icon;
     private TextView person_name;
@@ -76,46 +60,14 @@ public class PersonDetailedInformationFragment extends Fragment {
         }
         return fragment;
     }
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PersonDetailedInformationFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PersonDetailedInformationFragment newInstance(String param1, String param2) {
-        PersonDetailedInformationFragment fragment = new PersonDetailedInformationFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-        Bundle bundle=getArguments();
-        frendData=bundle.getParcelable("frendData");
-    }
-    private void setFullScreen(){
-        Window window = getActivity().getWindow();
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS|WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        }else{
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS|WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }
-
-        ViewGroup rootView=(ViewGroup) ((ViewGroup) getActivity().findViewById(R.id.drawer_layout)).getChildAt(0);
-        rootView.setFitsSystemWindows(true);
-        rootView.setClipToPadding(true);
-
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -147,7 +99,6 @@ public class PersonDetailedInformationFragment extends Fragment {
         imageView2=(ImageView)view.findViewById(R.id.person_detailed_information_background_img_two);
         buttonBarLayout=(ButtonBarLayout)view.findViewById(R.id.btn_Play);
         appBarLayout=(AppBarLayout) view.findViewById(R.id.peron_dtailed_information_appbar_layout);
-        state = CollapsingToolbarLayoutState.EXPANDED;
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -159,7 +110,6 @@ public class PersonDetailedInformationFragment extends Fragment {
                 Log.v("Tag", "appBarLayoutHeight:" + appBarLayout.getHeight() + " getTotalScrollRange:" + appBarLayout.getTotalScrollRange() + " offSet:" + verticalOffset);
                 if(Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()){
                     toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimary));
-                    collapsing_toolbar_layout.setTitle("keep");
                     person_name.setVisibility(View.VISIBLE);
                 }else{
                     person_name.setVisibility(View.GONE);
@@ -195,9 +145,19 @@ public class PersonDetailedInformationFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    public RelationShipLevelBean getFrendData() {
+        return frendData;
+    }
+
+    public void setFrendData(RelationShipLevelBean frendData) {
+        this.frendData = frendData;
+    }
 
     @Override
     public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if(!enter){
+            CoreApplication.newInstance().getRoot().setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.default_open_right));
+        }
         return Anim.defaultFragmentAnim(getActivity(),transit,enter,nextAnim);
     }
 }

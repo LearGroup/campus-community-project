@@ -31,6 +31,10 @@ public class NewRelationShipBeanDao extends AbstractDao<NewRelationShipBean, Lon
         public final static Property Result_type = new Property(6, Integer.class, "result_type", false, "RESULT_TYPE");
         public final static Property User_name = new Property(7, String.class, "user_name", false, "USER_NAME");
         public final static Property View_type = new Property(8, Integer.class, "view_type", false, "VIEW_TYPE");
+        public final static Property Sprovince = new Property(9, String.class, "sprovince", false, "SPROVINCE");
+        public final static Property Stown = new Property(10, String.class, "stown", false, "STOWN");
+        public final static Property Sex = new Property(11, Integer.class, "sex", false, "SEX");
+        public final static Property User_id = new Property(12, String.class, "user_id", false, "USER_ID");
     }
 
 
@@ -54,7 +58,11 @@ public class NewRelationShipBeanDao extends AbstractDao<NewRelationShipBean, Lon
                 "\"SHORT_MESSAGE\" TEXT," + // 5: short_message
                 "\"RESULT_TYPE\" INTEGER," + // 6: result_type
                 "\"USER_NAME\" TEXT," + // 7: user_name
-                "\"VIEW_TYPE\" INTEGER);"); // 8: view_type
+                "\"VIEW_TYPE\" INTEGER," + // 8: view_type
+                "\"SPROVINCE\" TEXT," + // 9: sprovince
+                "\"STOWN\" TEXT," + // 10: stown
+                "\"SEX\" INTEGER," + // 11: sex
+                "\"USER_ID\" TEXT);"); // 12: user_id
     }
 
     /** Drops the underlying database table. */
@@ -111,6 +119,26 @@ public class NewRelationShipBeanDao extends AbstractDao<NewRelationShipBean, Lon
         if (view_type != null) {
             stmt.bindLong(9, view_type);
         }
+ 
+        String sprovince = entity.getSprovince();
+        if (sprovince != null) {
+            stmt.bindString(10, sprovince);
+        }
+ 
+        String stown = entity.getStown();
+        if (stown != null) {
+            stmt.bindString(11, stown);
+        }
+ 
+        Integer sex = entity.getSex();
+        if (sex != null) {
+            stmt.bindLong(12, sex);
+        }
+ 
+        String user_id = entity.getUser_id();
+        if (user_id != null) {
+            stmt.bindString(13, user_id);
+        }
     }
 
     @Override
@@ -161,6 +189,26 @@ public class NewRelationShipBeanDao extends AbstractDao<NewRelationShipBean, Lon
         if (view_type != null) {
             stmt.bindLong(9, view_type);
         }
+ 
+        String sprovince = entity.getSprovince();
+        if (sprovince != null) {
+            stmt.bindString(10, sprovince);
+        }
+ 
+        String stown = entity.getStown();
+        if (stown != null) {
+            stmt.bindString(11, stown);
+        }
+ 
+        Integer sex = entity.getSex();
+        if (sex != null) {
+            stmt.bindLong(12, sex);
+        }
+ 
+        String user_id = entity.getUser_id();
+        if (user_id != null) {
+            stmt.bindString(13, user_id);
+        }
     }
 
     @Override
@@ -179,7 +227,11 @@ public class NewRelationShipBeanDao extends AbstractDao<NewRelationShipBean, Lon
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // short_message
             cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // result_type
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // user_name
-            cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8) // view_type
+            cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8), // view_type
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // sprovince
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // stown
+            cursor.isNull(offset + 11) ? null : cursor.getInt(offset + 11), // sex
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // user_id
         );
         return entity;
     }
@@ -195,6 +247,10 @@ public class NewRelationShipBeanDao extends AbstractDao<NewRelationShipBean, Lon
         entity.setResult_type(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
         entity.setUser_name(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setView_type(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
+        entity.setSprovince(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setStown(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setSex(cursor.isNull(offset + 11) ? null : cursor.getInt(offset + 11));
+        entity.setUser_id(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
      }
     
     @Override

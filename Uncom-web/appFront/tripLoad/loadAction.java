@@ -45,7 +45,7 @@ public class loadAction extends ActionSupport {
 		SessionFactory sessionFactory = hibernateStartPrepare.getSessionFactory();
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "select trip, td.url from tripAttractionData trip ,tripImgData td where trip.id=td.tripAttractionId and td.id=(select max(td.id) from td where trip.id=td.tripAttractionId )";
+		String hql = "select trip, td.url as header_pic ,sd.introduction as introduction from tripAttractionData trip ,tripImgData td,strategyData sd where trip.id=td.tripAttractionId and td.id=(select max(td.id) from td where trip.id=td.tripAttractionId ) and sd.tripAttractionId=trip.id";
 		Query query = session.createQuery(hql);
 		JSONArray json = JSONArray.fromObject(query.list());
 		session.close();

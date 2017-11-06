@@ -25,17 +25,16 @@ public class NewRelationShipBean   implements Parcelable {
     private Integer result_type;  //添加的结果，(是否接受了 1已接受 2未接受)
     private String user_name;
     private Integer view_type;//视图需要展示的类型 0顶层搜索时弹出的搜索框 1进入新关系页面的默认布局(显示添加新关系的历史 2新关系搜索结果框)
+    private String sprovince;//省/直辖市
+    private String stown;//市
+    private Integer sex;//性别
+    private String user_id;//用户id
 
-    protected NewRelationShipBean(Parcel in) {
-        header_pic = in.readString();
-        results = in.readString();
-        short_message = in.readString();
-        user_name = in.readString();
-    }
 
-    @Generated(hash = 1482345246)
-    public NewRelationShipBean(Long id, Integer type, String header_pic, String results, Date get_time,
-            String short_message, Integer result_type, String user_name, Integer view_type) {
+    @Generated(hash = 486409517)
+    public NewRelationShipBean(Long id, Integer type, String header_pic, String results,
+            Date get_time, String short_message, Integer result_type, String user_name,
+            Integer view_type, String sprovince, String stown, Integer sex, String user_id) {
         this.id = id;
         this.type = type;
         this.header_pic = header_pic;
@@ -45,10 +44,42 @@ public class NewRelationShipBean   implements Parcelable {
         this.result_type = result_type;
         this.user_name = user_name;
         this.view_type = view_type;
+        this.sprovince = sprovince;
+        this.stown = stown;
+        this.sex = sex;
+        this.user_id = user_id;
     }
 
     @Generated(hash = 1353939643)
     public NewRelationShipBean() {
+    }
+
+
+    protected NewRelationShipBean(Parcel in) {
+        header_pic = in.readString();
+        results = in.readString();
+        short_message = in.readString();
+        user_name = in.readString();
+        sprovince = in.readString();
+        stown = in.readString();
+        user_id = in.readString();
+    }
+
+    public static final Creator<NewRelationShipBean> CREATOR = new Creator<NewRelationShipBean>() {
+        @Override
+        public NewRelationShipBean createFromParcel(Parcel in) {
+            return new NewRelationShipBean(in);
+        }
+
+        @Override
+        public NewRelationShipBean[] newArray(int size) {
+            return new NewRelationShipBean[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
@@ -57,11 +88,9 @@ public class NewRelationShipBean   implements Parcelable {
         dest.writeString(results);
         dest.writeString(short_message);
         dest.writeString(user_name);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+        dest.writeString(sprovince);
+        dest.writeString(stown);
+        dest.writeString(user_id);
     }
 
     public Long getId() {
@@ -136,15 +165,35 @@ public class NewRelationShipBean   implements Parcelable {
         this.view_type = view_type;
     }
 
-    public static final Creator<NewRelationShipBean> CREATOR = new Creator<NewRelationShipBean>() {
-        @Override
-        public NewRelationShipBean createFromParcel(Parcel in) {
-            return new NewRelationShipBean(in);
-        }
+    public String getSprovince() {
+        return this.sprovince;
+    }
 
-        @Override
-        public NewRelationShipBean[] newArray(int size) {
-            return new NewRelationShipBean[size];
-        }
-    };
+    public void setSprovince(String sprovince) {
+        this.sprovince = sprovince;
+    }
+
+    public String getStown() {
+        return this.stown;
+    }
+
+    public void setStown(String stown) {
+        this.stown = stown;
+    }
+
+    public Integer getSex() {
+        return this.sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public String getUser_id() {
+        return this.user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
 }

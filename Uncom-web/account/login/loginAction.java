@@ -134,11 +134,12 @@ public class loginAction extends ActionSupport {
 		request = ServletActionContext.getRequest();
 		PrintWriter out = getPrintWriter();
 		session = ServletActionContext.getRequest().getSession();
-        userContent=JSONObject.fromObject(request.getReader().readLine());
+       /* userContent=JSONObject.fromObject(request.getReader().readLine());*/
 		System.out.println(userContent);
 		use=(String)request.getParameter("use");
 		username=(String)request.getParameter("user");
 		password=(String)request.getParameter("password");
+		System.out.println(username+password);
 		userData user = getUser(use, username);
 		if (user == null) {
 			out.print(JSONObject.fromObject("{status:0}"));

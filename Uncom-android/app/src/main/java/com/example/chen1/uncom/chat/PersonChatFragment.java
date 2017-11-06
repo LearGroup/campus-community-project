@@ -3,6 +3,7 @@ package com.example.chen1.uncom.chat;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,8 +30,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -104,7 +107,9 @@ public class PersonChatFragment extends Fragment implements NavigationView.OnNav
     private  ArrayList<MessageHistoryBean> messgaeContents=null;
     private int ExpressionBtnStatus = 0;
     private LinearLayout ExpressionLinearLayout;
-
+    private TranslateAnimation mShowAction;
+    private TranslateAnimation mHiddenAction;
+    private LinearLayout softinputLinearLayout;
 
     public RelationShipLevelBean getFrendData() {
         return frendData;
@@ -272,7 +277,19 @@ public class PersonChatFragment extends Fragment implements NavigationView.OnNav
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        quitFullScreen();
         user_id=SharedPreferencesUtil.getUserId(getContext());
+        KeyBoardHeight= SharedPreferencesUtil.getSoftInputHeight(getContext());
+        // Inflate the layout for this fragment
+       mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+        mShowAction.setDuration(150);
+        mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
+                0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                -1.0f);
+        mHiddenAction.setDuration(150);
         messageHistoryBeanDao = BeanDaoManager.getInstance().getDaoSession().getMessageHistoryBeanDao();
         QueryBuilder queryBuilder=messageHistoryBeanDao.queryBuilder();
 /*  queryBuilder.or(MessageHistoryBeanDao.Properties.OwnId.eq(frendData.getMinor_user()),
@@ -326,7 +343,9 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
                                 Log.v("time", String.valueOf(date));
 
                                 personChatRecyclerViewAdapter.add(isVisible,new MessageHistoryBean(null,object.getString("ownId"),user_id,object.getString("content"),date,false,false),1,messageHistoryBeanDao);
-                                ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
+                                if((personChatRecyclerViewAdapter.getItemCount()-1)>2){
+                                    ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
+                                }
 
                             }
                             //MessageHistoryBean item2= new MessageHistoryBean(frendData.getId(),str,new Date().toString(),true);
@@ -346,6 +365,7 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
     }
 
     private void quitFullScreen() {
+
         mInputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         final WindowManager.LayoutParams attrs = getActivity().getWindow().getAttributes();
         attrs.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -358,17 +378,6 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
                              Bundle savedInstanceState) {
         Log.v("PersonChatFramgent:", "onCreateview: ");
         KeyBoardHeight= SharedPreferencesUtil.getSoftInputHeight(getContext());
-        // Inflate the layout for this fragment
-        final TranslateAnimation mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-                -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-        mShowAction.setDuration(150);
-        final TranslateAnimation mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
-                0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-                -1.0f);
-        mHiddenAction.setDuration(150);
-        quitFullScreen();
         isVisible = true;
         final View view = inflater.inflate(R.layout.fragment_person__chat_, container, false);
         username=(TextView) view.findViewById(R.id.person_username);
@@ -386,7 +395,7 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
         ContentView.setLayoutManager(contentViewLinearLayoutManager);
         ContentView.setHasFixedSize(true);
         ContentView.setAdapter(personChatRecyclerViewAdapter);
-
+        softinputLinearLayout= (LinearLayout) view.findViewById(R.id.person_chat_bottomNavigationView);
         final Toolbar toolbar = (Toolbar) view.findViewById(R.id.person_chat_toolbar);
         setHasOptionsMenu(true);
         send_btn = (AppCompatButton) view.findViewById(R.id.person_chat_send_button);
@@ -418,6 +427,7 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
         back_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.v("setFragment ","show");
                 InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 //得到InputMethodManager的实例
                 KeybordUtil.closeKeybord(input_text,getContext());
@@ -432,18 +442,23 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
             public void keyBoardShow(int height) {
                 if(KeyBoardHeight !=height){
                     KeyBoardHeight = height;
-                    SharedPreferencesUtil.setSoftInputHeight(KeyBoardHeight,getContext());
+                    SharedPreferencesUtil.setSoftInputHeight(KeyBoardHeight,CoreApplication.newInstance().getBaseContext());
                 }
                 if (ExpressionLinearLayout.isShown()) {
                     lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
                     ExpressionLinearLayout.setVisibility(View.GONE);
                     unlockContentHeightDelayed();
+                }else{
+
                 }
             }
 
             @Override
             public void keyBoardHide(int height) {
             /*    KeyBoardHeight=height;*/
+                LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) softinputLinearLayout.getLayoutParams();
+                layoutParams.setMargins(0,0,0,0);//设置rlContent的marginBottom的值为软键盘占有的高度即可
+                softinputLinearLayout.requestLayout();
 
 
             }
@@ -466,7 +481,14 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
 
                         }
                     }, 200L);
-                }else{
+                }else if(event.getAction() == MotionEvent.ACTION_UP && ExpressionLinearLayout.isShown()==false){
+                    Log.v("软键盘弹出","表情布局影藏");
+                    Log.v("软键盘高度", String.valueOf(KeyBoardHeight));
+                    LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) softinputLinearLayout.getLayoutParams();
+                    layoutParams.setMargins(0,0,0,KeyBoardHeight);//设置rlContent的marginBottom的值为软键盘占有的高度即可
+                    softinputLinearLayout.requestLayout();
+                }
+                else{
                     input_text.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -575,6 +597,7 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
             ExpressionLinearLayout.setVisibility(View.GONE);
             return true;
         }
+        Log.v("setFragment ","show");
         return BackHandlerHelper.handleBackPress(this);
     }
 
@@ -605,6 +628,11 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
 
     @Override
     public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if(!enter){
+            CoreApplication.newInstance().getRoot().startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.default_open_right));
+
+            //     CoreApplication.newInstance().getBottomNavigationView().setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.default_open_right));
+        }
         return Anim.defaultFragmentAnim(getActivity(),transit,enter,nextAnim);
     }
 

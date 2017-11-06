@@ -53,7 +53,7 @@
 	
 	
 
-	 <package name="user" namespace="/" extends="json-default">
+	 <package name="user" namespace="/" extends="struts-default">
 	 	
     
  	 <global-allowed-methods>regex:.*</global-allowed-methods>  
@@ -67,7 +67,7 @@
 	</package> 
 
 	
-	<package name="articleTake" namespace="/article" extends="json-default">
+	<package name="articleTake" namespace="/article" extends="struts-default">
 	
 	
 	 <global-allowed-methods>regex:.*</global-allowed-methods>
@@ -81,7 +81,7 @@
 	</package>
 	
 	
-	<package name="articleSave" namespace="/saveArticle" extends="json-default">
+	<package name="articleSave" namespace="/saveArticle" extends="struts-default">
 	     <global-allowed-methods>regex:.*</global-allowed-methods>
 	     <action name="saveArticle" class="save.saveAction" method="saveArticle"></action>
 	     <action name="getcollactionTag" class="save.saveAction" method="getcollactionTag"></action>
@@ -91,7 +91,7 @@
 
 
 
-    <package name="appFrontLoad" namespace="/appFront" extends="json-default">
+    <package name="appFrontLoad" namespace="/appFront" extends="struts-default">
           <global-allowed-methods>regex:.*</global-allowed-methods>
           <action name="getTripList" class="tripLoad.loadAction" method="getTripList"></action>
           <action name="getCustomResultTripList" class="tripLoad.loadAction" method="getCustomResultTripList"></action>
@@ -100,7 +100,7 @@
         
     </package>
     
-    <package name="healthy" namespace="/healthy" extends="json-default">
+    <package name="healthy" namespace="/healthy" extends="struts-default">
           <global-allowed-methods>regex:.*</global-allowed-methods>
           <action name="getSportList" class="healthyLoad.sportAction" method="getSportList"></action>
           <action name="getFoodList" class="healthyLoad.sportAction" method="getFoodList"></action>

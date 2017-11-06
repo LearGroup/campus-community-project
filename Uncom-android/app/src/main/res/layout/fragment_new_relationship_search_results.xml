@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
+    android:layout_height="match_parent"
+    tools:context="com.example.chen1.uncom.relationship.NewRelationshipSearchResultsFragment"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:background="@drawable/default_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/appbar_layout">
+        <android.support.v7.widget.Toolbar
+            android:paddingTop="5dp"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/AppTheme"
+            >
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="25dp"
+                android:id="@+id/back_icon"
+                android:layout_height="25dp"
+                android:clickable="true"
+                android:onClick="onClick"
+                tools:ignore="DuplicateIds"
+                app:srcCompat="@drawable/ic_vector_back_icon" />
+
+            <android.support.v7.widget.SearchView
+
+                android:id="@+id/search_column"
+                app:defaultQueryHint="手机号/邮箱号/用户名"
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+            </android.support.v7.widget.SearchView>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/results_none"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorFontColor"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="未找到该用户"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:background="@color/colorPrimary"
+        android:id="@+id/search_page_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
+
+
+</LinearLayout>

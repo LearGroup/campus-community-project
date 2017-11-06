@@ -9,6 +9,10 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,5 +45,25 @@ public class SpanStringUtils {
             }
         }
         return spannableString;
+    }
+
+
+
+    public static JSONObject checkSearchMode(String str){
+        String use = "null";
+        if(str.split("@").length==2 &&str.indexOf(".com")==-1){
+            //该str为邮箱号
+            use="email";
+        }else if(str.length()==11){
+            //该str为手机号
+            use="phone";
+        }else{
+            use="username";
+        }
+        HashMap<String,String >data=new HashMap<>();
+        data.put("use",use);
+        data.put("result",str);
+        JSONObject parms=new JSONObject(data);
+        return parms;
     }
 }

@@ -3,6 +3,7 @@ package com.example.chen1.uncom.utils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.example.chen1.uncom.bean.NewRelationShipBean;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.bean.UserBean;
 
@@ -23,17 +24,8 @@ public class UserBeanAndJsonUtils {
 
 
     public static UserBean getUserBean(JSONObject response) throws JSONException {
-       userBean=new UserBean(response.getString("id"),response.getString("username"),
-               response.getString("password"), response.getString("header_pic"),
-               response.getString("province"), response.getString("town"),
-               response.getString("area"), response.getString("sprovince"),
-               response.getString("stown"), response.getString("sarea"),
-               response.getString("email"), response.getString("phone"),
-               response.getInt("sex"), response.getString("create_time"),
-               response.getString("update_time"), response.getInt("is_delete"),
-               response.getString("qq_number"), response.getString("wexin_number"),
-               response.getString("weibo"),  response.getString("student_id"),
-               response.getString("student_id_password"), response.getInt("age"));
+       userBean=new UserBean();
+        userBean=JSON.parseObject(response.toString(),userBean.getClass());
         return userBean;
     }
 
@@ -57,15 +49,28 @@ public class UserBeanAndJsonUtils {
                 Log.v("getRelationShipLevelBeanfor", String.valueOf(relationShipLevelBean.getId()));
             }
             return list;
-
-
         }
-
-
         return list;
     }
 
 
+    public  static ArrayList<NewRelationShipBean> getNewRelationShipBean(JSONArray response) throws JSONException {
+        ArrayList<NewRelationShipBean> list=new ArrayList<>();
+        NewRelationShipBean newRelationShipBean;
+        Log.v("relationship", String.valueOf(response));
+        if(response.length()>0){
+            for (int i = 0; i <response.length() ; i++) {
+                JSONObject item =response.getJSONObject(i);
+                Log.v("item", String.valueOf(item));
+                newRelationShipBean=new NewRelationShipBean();
+                newRelationShipBean=JSON.parseObject(item.toString(),newRelationShipBean.getClass());
+                list.add(newRelationShipBean);
+                Log.v("getRelationShipLevelBeanfor", String.valueOf(newRelationShipBean.getId()));
+            }
+            return list;
+        }
+        return list;
+    }
 
 
 }

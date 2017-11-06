@@ -2,6 +2,7 @@ package com.example.chen1.uncom.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -33,6 +34,12 @@ public class KeybordUtil {
 
      */
     public static void closeKeybord(EditText mEditText, Context mContext) {
+        InputMethodManager imm = (InputMethodManager) mContext
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
+    }
+
+    public static void closeKeybordSearch(SearchView mEditText, Context mContext) {
         InputMethodManager imm = (InputMethodManager) mContext
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);

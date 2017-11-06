@@ -95,8 +95,8 @@ public class LoadImageUtils {
         ImageLoader imageLoader=new ImageLoader(CoreApplication.newInstance().getRequestQueue(), new BitMapCache());
         if(CoreApplication.newInstance().getRequestQueue().getCache().get(url)!=null){
             byte[] data=CoreApplication.newInstance().getRequestQueue().getCache().get(url).data;
-            imageView.setImageBitmap(BitmapFactory.decodeByteArray(data,0, data.length));
             Log.v("imageCache", String.valueOf(data));
+            imageView.setImageBitmap(BitmapFactory.decodeByteArray(data,0, data.length));
         }else{
 
             ImageLoader.ImageListener listener= ImageLoader.getImageListener(imageView,R.mipmap.zhiwu,R.mipmap.ic_launcher);

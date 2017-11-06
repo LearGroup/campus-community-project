@@ -26,6 +26,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:textColor="@color/colorPrimary"
             android:clickable="true"
             android:id="@+id/person_chat_own_content_textview"
             android:layout_width="wrap_content"
@@ -33,7 +34,7 @@
             android:layout_marginLeft="90dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/chat_border_solid"
+            android:background="@drawable/chat_border_solid_own"
             android:text="MySQL是一种关系数据库管理系统,关系数据库将数据保存在不同的表中，而不是将所有数据放在一个大仓库内，这样就增加了速度并提高了灵活性。
 MySQL所使用的 SQL 语言是用于访问数据库的最常用标准化语言。MyS
 QL 软件采用了双授权政策，分为社区版和商业版，由于其体积小、速度快、

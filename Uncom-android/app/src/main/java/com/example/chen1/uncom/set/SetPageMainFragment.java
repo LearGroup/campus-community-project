@@ -2,6 +2,7 @@ package com.example.chen1.uncom.set;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,12 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.chat.PersonChatFragment;
+import com.example.chen1.uncom.utils.BadgeMessageUtil;
 
 
 /**
@@ -33,6 +36,7 @@ public class SetPageMainFragment extends Fragment {
     private int RECONNECTION =0;
     private  View rootView;
     private int CONNECTION_STATUS=1;
+    private static boolean isVisiable;
     private LinearLayout popupWindow;
     private  SetPageMainFragmentAdapter setPageMainFragmentAdapter;
     // TODO: Rename and change types of parameters
@@ -112,15 +116,60 @@ public class SetPageMainFragment extends Fragment {
 
             @Override
             public void onItemClick(View view, int position, RelationShipLevelBean relationShipLevelBean) {
-                PersonChatFragment person_chat_fragment = PersonChatFragment.getInstance();
-                person_chat_fragment.setFrendData(relationShipLevelBean);
-                FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+                Log.v("setFragment","hide");
+                BadgeMessageUtil.setSetPageIsVisible(false);
+                FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout,person_chat_fragment).commit();
-            }
+                PersonChatFragment person_chat_fragment= (PersonChatFragment) CoreApplication.newInstance().getTemperFragment();
+                if(person_chat_fragment!=null){
+                    Log.v("第一种","...............ok");
+                    person_chat_fragment.setFrendData(relationShipLevelBean);
+                    fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout,person_chat_fragment,"chatPage").setCustomAnimations(R.anim.default_fragment_switch_leave_translate, R.anim.default_leave_left, R.anim.default_open_right, R.anim.default_fragment_switch_translate_open).commit();
+
+                }else{
+                    Log.v("第二种","...............ok");
+                    person_chat_fragment = PersonChatFragment.getInstance();
+                    CoreApplication.newInstance().setTemperFragment(person_chat_fragment);
+                    fragmentTransaction.addToBackStack(null).replace(R.id.drawer_layout,person_chat_fragment,"chatPage").setCustomAnimations(R.anim.default_fragment_switch_leave_translate, R.anim.default_leave_left, R.anim.default_open_right, R.anim.default_fragment_switch_translate_open).commit();
+
+                }
+                person_chat_fragment.setFrendData(relationShipLevelBean);
+                CoreApplication.newInstance().getRoot().startAnimation(AnimationUtils.loadAnimation(view.getContext(),R.anim.default_leave_left));
+
+             }
         });
         return view;
     }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            BadgeMessageUtil.setSetPageIsVisible(true);
+            //TODO now it's visible to user
+        } else {
+            Log.v("SetFragment ","hide");
+            BadgeMessageUtil.setSetPageIsVisible(false);
+            //TODO now it's invisible to user
+        }
+    }
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden){
+            Log.v("SetFragment ","hide");
+            BadgeMessageUtil.setSetPageIsVisible(false);
+            //TODO now visible to user
+        } else {
+            Log.v("SetFragment ","show");
+            BadgeMessageUtil.setSetPageIsVisible(true);
+            //TODO now invisible to user
+        }
+    }
+
+
+
+
 
 }

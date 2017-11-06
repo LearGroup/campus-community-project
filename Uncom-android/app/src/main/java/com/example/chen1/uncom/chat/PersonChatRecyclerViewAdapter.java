@@ -19,6 +19,7 @@ import com.example.chen1.uncom.bean.MessageHistoryBeanDao;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
 import com.example.chen1.uncom.bean.UserBeanDao;
+import com.example.chen1.uncom.utils.BadgeMessageUtil;
 import com.example.chen1.uncom.utils.LoadImageUtils;
 import com.example.chen1.uncom.utils.SpanStringUtils;
 import com.example.chen1.uncom.utils.TimeUtils;
@@ -78,7 +79,7 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
         //如果该条信息与上一条信息时间差大于3分钟 则显示这条数据发送的时间
         if((position-1)>=0&&((listItem.get(position).getTime().getTime()-listItem.get(position-1).getTime().getTime())/1000>180)){
             holder.messageTime.setVisibility(View.VISIBLE);
-            holder.messageTime.setText(TimeUtils.compareTimeChatDisplay(listItem.get(position).getTime(),listItem.get(position-1).getTime()));
+            holder.messageTime.setText(TimeUtils.compareTimeChatDisplay(new Date(),listItem.get(position).getTime()));
 
         }else{
             holder.messageTime.setVisibility(View.GONE);
@@ -125,6 +126,8 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
             }
             //该判断为真，则说明用户目前不在与该消息发送者的聊天视图中
             if(isVisible==false){
+                Log.v("BadgeCount:", String.valueOf(BadgeMessageUtil.getItem_1()+1));
+                BadgeMessageUtil.setItem_1(BadgeMessageUtil.getItem_1()+1);
                 Integer temp=frendData.getUn_look();
                 Log.v("sendTmper", String.valueOf(isVisible));
                 if(temp!=null){
@@ -152,6 +155,8 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
                 relationShipLevelBean.setActive(true);
             }
             //设置该消息未阅读
+            Log.v("BadgeCount:", String.valueOf(BadgeMessageUtil.getItem_1()+1));
+            BadgeMessageUtil.setItem_1(BadgeMessageUtil.getItem_1()+1);
             Integer temp=relationShipLevelBean.getUn_look();
             Log.v("sendTmper", String.valueOf(temp));
             if(temp!=null){

@@ -33,7 +33,7 @@ import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
 import com.example.chen1.uncom.bean.UserBean;
 import com.example.chen1.uncom.utils.UserBeanAndJsonUtils;
 import com.example.chen1.uncom.bean.UserBeanDao;
-import com.example.chen1.uncom.chat.ChatUserDataUtil;
+import com.example.chen1.uncom.utils.ChatUserDataUtil;
 import com.example.chen1.uncom.expression.SoftKeyBoardListener;
 import com.example.chen1.uncom.main.MainActivity;
 import com.example.chen1.uncom.utils.PopupWindowUtils;
@@ -190,7 +190,7 @@ public class LoginPageFragment extends Fragment {
             passwordTextView.findFocus();
             imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         } else {
-            final PopupWindow popwin= PopupWindowUtils.popupWindow(null,R.layout.access_popupwindow_loginwaiting_layout, LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT,-1,getContext(),rootView);
+            final PopupWindow popwin= PopupWindowUtils.popupWindow(null,R.layout.access_popupwindow_loginwaiting_layout, LinearLayout.LayoutParams.MATCH_PARENT,200,-1,getContext(),rootView);
             //传一个参数，user=zhangqi
             //为了保证popupWindow能有好的视觉体验，故延迟了600毫秒...
             CountDownTimer timer = new CountDownTimer(600, 10) {
@@ -201,12 +201,22 @@ public class LoginPageFragment extends Fragment {
                 @Override
                 public void onFinish() {
                     Map<String, String> map = new HashMap<String, String>();
-                    map.put("use", "phone");
+                    String use=null;
+                    Log.v("@", String.valueOf(user_name.split("@").length));
+                    Log.v(",com", String.valueOf(user_name.indexOf(".com")));
+                    if(user_name.split("@").length==2 &&user_name.indexOf(".com")==-1){
+                        //该str为邮箱号
+                        use="email";
+                    }else if(user_name.length()==11){
+                        //该str为手机号
+                        use="phone";
+                    }
+                    map.put("use", use);
                     map.put("username", user_name);
                     map.put("password", user_password);
                     JSONObject params = new JSONObject(map);
                     Log.v("json", String.valueOf(params));
-                    /*http://10.0.2.2:8081 本地调试用IP地址，本地调试时不能使用127.0.0.1:8081*/
+                    /*http://10.0.2.2:8081 本地调试用IP地址，本地调试时不能使用127.0.0.1:8081 47.95.0.73*/
                     SessionStoreJsonRequest sessionStoreJsonRequest = new SessionStoreJsonRequest("http://47.95.0.73:8081/login",
                             params, new Response.Listener<JSONObject>() {
 
