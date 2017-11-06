@@ -3,9 +3,13 @@ package com.example.chen1.uncom.relationship;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -45,6 +49,7 @@ public class RequestBuildRelationShipFragment extends Fragment implements View.O
 
     private AppCompatButton senButton;
     private UserBean userBean;
+    private AppCompatImageView back_icon;
     private TextView requestMessgae;
     private NewRelationShipBean data;
     private NewRelationShipBean frendData;
@@ -78,6 +83,18 @@ public class RequestBuildRelationShipFragment extends Fragment implements View.O
         requestMessgae.requestFocus();
         senButton= (AppCompatButton) view.findViewById(R.id.request_send_button);
         userBean=CoreApplication.newInstance().getUserBean();
+        back_icon= (AppCompatImageView) view.findViewById(R.id.request_back_icon);
+        back_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.default_fragment_switch_translate_open,R.anim.default_leave_left);
+                fragmentManager.popBackStack();
+            }
+        });
+
+
         senButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +117,27 @@ public class RequestBuildRelationShipFragment extends Fragment implements View.O
                 message.what=2;
                 message.obj=jsonObject;
                 CoreApplication.newInstance().getCoreService().getSendChatHandler().sendMessage(message);
+                PopupWindowUtils.popupWindow("请求已发送",R.layout.access_popupwindow_statustag_layout, LinearLayout.LayoutParams.MATCH_PARENT,150,1500,getContext(),getView());
+                 CountDownTimer countDownTimer=new CountDownTimer(1000,10) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                        fragmentTransaction.setCustomAnimations(R.anim.default_fragment_switch_translate_open,R.anim.default_leave_left);
+                        fragmentManager.popBackStack();
+
+                    }
+                };
+
+                countDownTimer.start();
+
+
+
             }
         });
        view.setOnTouchListener(this);

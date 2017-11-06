@@ -8,9 +8,9 @@
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
-        android:background="@color/colorToolBar"
+        android:background="@drawable/default_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:id="@+id/appbar_layout">
         <android.support.v7.widget.Toolbar
             android:paddingTop="5dp"
@@ -30,7 +30,7 @@
                 app:srcCompat="@drawable/ic_vector_back_icon" />
 
             <android.support.v7.widget.SearchView
-                android:background="@color/colorMain"
+
                 android:id="@+id/search_column"
                 app:defaultQueryHint="手机号/邮箱号/用户名"
                 android:layout_width="match_parent"

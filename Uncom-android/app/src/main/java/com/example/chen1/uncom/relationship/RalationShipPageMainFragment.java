@@ -111,12 +111,16 @@ public class RalationShipPageMainFragment extends Fragment {
 
 
     public void updateNewRelaionShipActive(){
-        Log.v("更新fragment","ok");
+        Log.v("更新fragment","ok" );
         if(CoreApplication.newInstance().getNewRelationActive()!=0){
             if(newRelationShipActive.getVisibility()==View.GONE){
                 newRelationShipActive.setVisibility(View.VISIBLE);
             }
             newRelationShipActive.setText(CoreApplication.newInstance().getNewRelationActive().toString());
+        }else if(CoreApplication.newInstance().getNewRelationActive()==0){
+            if(newRelationShipActive.getVisibility()==View.VISIBLE){
+                newRelationShipActive.setVisibility(View.GONE);
+            }
         }
     }
 

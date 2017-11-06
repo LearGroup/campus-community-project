@@ -201,13 +201,23 @@ public class LoginPageFragment extends Fragment {
                 @Override
                 public void onFinish() {
                     Map<String, String> map = new HashMap<String, String>();
-                    map.put("use", "phone");
+                    String use=null;
+                    Log.v("@", String.valueOf(user_name.split("@").length));
+                    Log.v(",com", String.valueOf(user_name.indexOf(".com")));
+                    if(user_name.split("@").length==2 &&user_name.indexOf(".com")==-1){
+                        //该str为邮箱号
+                        use="email";
+                    }else if(user_name.length()==11){
+                        //该str为手机号
+                        use="phone";
+                    }
+                    map.put("use", use);
                     map.put("username", user_name);
                     map.put("password", user_password);
                     JSONObject params = new JSONObject(map);
                     Log.v("json", String.valueOf(params));
                     /*http://10.0.2.2:8081 本地调试用IP地址，本地调试时不能使用127.0.0.1:8081 47.95.0.73*/
-                    SessionStoreJsonRequest sessionStoreJsonRequest = new SessionStoreJsonRequest("http://10.0.2.2:8081/login",
+                    SessionStoreJsonRequest sessionStoreJsonRequest = new SessionStoreJsonRequest("http://47.95.0.73:8081/login",
                             params, new Response.Listener<JSONObject>() {
 
                         @Override

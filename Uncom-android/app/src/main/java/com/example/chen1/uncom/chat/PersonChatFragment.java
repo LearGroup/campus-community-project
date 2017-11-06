@@ -343,7 +343,9 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
                                 Log.v("time", String.valueOf(date));
 
                                 personChatRecyclerViewAdapter.add(isVisible,new MessageHistoryBean(null,object.getString("ownId"),user_id,object.getString("content"),date,false,false),1,messageHistoryBeanDao);
-                                ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
+                                if((personChatRecyclerViewAdapter.getItemCount()-1)>2){
+                                    ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
+                                }
 
                             }
                             //MessageHistoryBean item2= new MessageHistoryBean(frendData.getId(),str,new Date().toString(),true);
@@ -425,6 +427,7 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
         back_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.v("setFragment ","show");
                 InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 //得到InputMethodManager的实例
                 KeybordUtil.closeKeybord(input_text,getContext());
@@ -439,7 +442,7 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
             public void keyBoardShow(int height) {
                 if(KeyBoardHeight !=height){
                     KeyBoardHeight = height;
-                    SharedPreferencesUtil.setSoftInputHeight(KeyBoardHeight,getContext());
+                    SharedPreferencesUtil.setSoftInputHeight(KeyBoardHeight,CoreApplication.newInstance().getBaseContext());
                 }
                 if (ExpressionLinearLayout.isShown()) {
                     lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
@@ -594,6 +597,7 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
             ExpressionLinearLayout.setVisibility(View.GONE);
             return true;
         }
+        Log.v("setFragment ","show");
         return BackHandlerHelper.handleBackPress(this);
     }
 

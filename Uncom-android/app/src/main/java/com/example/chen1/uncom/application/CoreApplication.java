@@ -30,6 +30,7 @@ import com.example.chen1.uncom.relationship.PersonRelationShipAdapter;
 import com.example.chen1.uncom.relationship.RalationShipPageMainFragment;
 import com.example.chen1.uncom.service.CoreService;
 import com.example.chen1.uncom.set.SetPageMainFragmentAdapter;
+import com.example.chen1.uncom.utils.BadgeMessageUtil;
 import com.example.chen1.uncom.utils.SharedPreferencesUtil;
 
 import org.greenrobot.greendao.query.Query;
@@ -93,6 +94,8 @@ public class CoreApplication extends Application {
         coreAppGetChatDataHandler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
+                NewRelationShipBean newRelationShipBean;
+                RelationShipLevelBean shipLevelBean;
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 0:
@@ -113,6 +116,7 @@ public class CoreApplication extends Application {
                             for (int i = 0; i <jsonArray.length() ; i++) {
 
                                 JSONObject object=jsonArray.getJSONObject(i);
+                                Log.v("mseeageObject", String.valueOf(object));
                                 //MessageHistoryBean item2= new MessageHistoryBean(frendData.getId(),str,new Date().toString(),true);
                                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 String str=  object.getString("time");
@@ -124,6 +128,7 @@ public class CoreApplication extends Application {
                                 messageHistoryBean=new MessageHistoryBean(null,object.getString("ownId"),user_id,object.getString("content"),date,true,false);
                                 RelationShipLevelBean relationShipLevelBean= getRelationShipBean(messageHistoryBean.getOwnId());
                                 relationShipLevelBean.setLast_message(messageHistoryBean.getContent());
+                                Log.v("mseeage",messageHistoryBean.getContent());
                                 relationShipLevelBean.setLast_active_time(messageHistoryBean.getTime());
                                 if(relationShipLevelBean.getActive()==false){
                                     relationShipLevelBean.setActive(true);
@@ -135,9 +140,13 @@ public class CoreApplication extends Application {
                                 }else{
                                     relationShipLevelBean.setUn_look(1);
                                 }
+
                                 updateActivePersonMessageList(relationShipLevelBean,1);
                                 relationShipLevelBeanDao.update(relationShipLevelBean);
                                 messageHistoryBeanDao.insert(messageHistoryBean);
+                                Log.v("BadgeCount:", String.valueOf(BadgeMessageUtil.getItem_1()+1));
+                                BadgeMessageUtil.setItem_1(BadgeMessageUtil.getItem_1()+1);
+
                             }
 
 
@@ -177,9 +186,23 @@ public class CoreApplication extends Application {
                     case 4:
                         //执行新关系请求页面更新
                         Log.v("执行新关系请求页面更新","ok");
-                        NewRelationShipBean newRelationShipBean=(NewRelationShipBean) msg.obj;
-                        addNewRelationShip(newRelationShipBean);
+                         newRelationShipBean=(NewRelationShipBean) msg.obj;
+                         setNewRelationActive(getNewRelationActive()+1);
+                         addNewRelationShip(newRelationShipBean,1);
+
                         break;
+                    case 5:
+                        //同步信息时之行新关系请求页面更新
+                         newRelationShipBean=(NewRelationShipBean) msg.obj;
+                         addNewRelationShip(newRelationShipBean,0);
+                        break;
+                    case 6:
+                        //好友请求发送后 同意时，本地添加新好友
+                        shipLevelBean=(RelationShipLevelBean)msg.obj;
+                        addRelationShipLevelBean(shipLevelBean);
+                        break;
+
+
                 }
             }
         };
@@ -202,20 +225,22 @@ public class CoreApplication extends Application {
     /**
      * 添加新关系请求列表
      * @param newRelationShipBean
+     * @param status  1 更新NewRelationActive 0不更新该值（对应同步数据的操作）
      */
-    public void addNewRelationShip(NewRelationShipBean newRelationShipBean){
+    public void addNewRelationShip(NewRelationShipBean newRelationShipBean ,int status){
         Log.v("开始更新新关系","ok");
         if(newRelationShipList!=null){
             for (int i = 0; i <newRelationShipList.size() ; i++) {
-                if(newRelationShipBean.getUser_id().equals(newRelationShipList.get(i))){
+                if(newRelationShipBean.getUser_id().equals(newRelationShipList.get(i).getUser_id())){
                     Log.v("开始更新新关系","failed");
                     return ;
                 }
             }
+            newRelationShipList.add(newRelationShipBean);
         }else{
             newRelationShipList=new ArrayList<>();
             newRelationShipList.add(newRelationShipBean);
-            setNewRelationActive(getNewRelationActive()+1);
+            setNewRelationActive(getNewRelationActive());
         }
 
     }
@@ -230,6 +255,9 @@ public class CoreApplication extends Application {
         if(CoreApplication.newInstance().getPersonFrendList()==null || status==1){
             if(status==1 && CoreApplication.newInstance().getPersonFrendList()!=null){
                 personFrendList.clear();
+               if(newRelationShipList!=null){
+                   newRelationShipList.clear();
+               }
                 Log.v("清除personFrendList", String.valueOf(personFrendList.size()));
             }
             if(status==1 && CoreApplication.newInstance().getPersonFrendList()!=null){
@@ -243,6 +271,7 @@ public class CoreApplication extends Application {
                     if(getUser_id()==null){
                         setUser_id(SharedPreferencesUtil.getUserId(getBaseContext()));
                     }
+                    //同步新关系请求，联系人，活动联系人
                     NewRelationShipBeanDao newRelationShipBeanDao=BeanDaoManager.getInstance().getDaoSession().getNewRelationShipBeanDao();
                     UserBeanDao userBeanDao=BeanDaoManager.getInstance().getDaoSession().getUserBeanDao();
                     setUserBean(userBeanDao.queryBuilder().where(UserBeanDao.Properties.Id.eq(getUser_id())).build().unique());
@@ -272,12 +301,10 @@ public class CoreApplication extends Application {
                     for (int i=0;i<newRelationShipList.size();i++){
                         Log.v("NewRelationshipSize", String.valueOf(newRelationShipList.get(i)));
                         Message message2=new Message();
-                        message2.what=4;
+                        message2.what=5;
                         message2.obj=newRelationShipList.get(i);
                         coreAppGetChatDataHandler.sendMessage(message2);
                     }
-
-
                 }
             }).start();
         }
@@ -555,4 +582,15 @@ public class CoreApplication extends Application {
     public void setRalationShipPageMainFragment(RalationShipPageMainFragment ralationShipPageMainFragment) {
         this.ralationShipPageMainFragment = ralationShipPageMainFragment;
     }
+
+    public void addRelationShipLevelBean(  RelationShipLevelBean bean){
+        Log.v("CoreApplication","addRelationShipLevelBean");
+        if(relationShipLevelBeanDao==null) {
+            relationShipLevelBeanDao = BeanDaoManager.getInstance().getDaoSession().getRelationShipLevelBeanDao();
+        }
+        relationShipLevelBeanDao.insert(bean);
+        personFrendList.add(bean);
+        getPersonRelationShipAdapter().notifyDataSetChanged();
+    }
+
 }

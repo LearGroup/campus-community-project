@@ -16,14 +16,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <android.support.design.widget.AppBarLayout
-                android:background="@color/colorToolBar"
+                android:background="@drawable/default_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:id="@+id/appBarLayout">
                 <android.support.v7.widget.Toolbar
                     android:paddingTop="5dp"
                     android:layout_marginBottom="-5dp"
-                    android:background="@drawable/view_shadow"
                     android:id="@+id/person_chat_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -41,7 +40,7 @@
                         android:layout_height="match_parent"
                         android:text="陈广不平"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="20dp"
+                        android:textSize="18dp"
                         android:layout_marginLeft="35dp"
                         />
                 </android.support.v7.widget.Toolbar>

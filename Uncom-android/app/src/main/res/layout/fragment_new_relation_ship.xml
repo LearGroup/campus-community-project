@@ -7,9 +7,9 @@
     android:background="@color/colorPrimary"
     tools:context="com.example.chen1.uncom.relationship.NewRelationShipFragment">
     <android.support.design.widget.AppBarLayout
-        android:background="@color/colorToolBar"
+        android:background="@drawable/default_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:id="@+id/peron_dtailed_information_appbar_layout">
             <android.support.v7.widget.Toolbar
                 android:paddingTop="5dp"
@@ -31,7 +31,7 @@
                     android:layout_height="match_parent"
                     android:text="新关系"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="20dp"
+                    android:textSize="18dp"
                     android:layout_marginLeft="35dp"
                     />
 

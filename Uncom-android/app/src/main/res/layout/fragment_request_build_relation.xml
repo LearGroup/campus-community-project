@@ -1,11 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context="com.example.chen1.uncom.relationship.SearchResultPersonDetailFragment">
+    android:orientation="vertical"
+    tools:context="com.example.chen1.uncom.relationship.RequestBuildRelationFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -33,7 +32,7 @@
                     android:id="@+id/person_detailed_information_background_img"
                     android:layout_width="match_parent"
                     android:layout_height="260dp"
-                    android:background="@drawable/default_backimg"
+                    android:background="@mipmap/zhiwu"
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.7"
@@ -83,7 +82,6 @@
                         android:layout_marginRight="8dp"
                         app:layout_constraintRight_toRightOf="parent" />
                     <TextView
-                        android:id="@+id/custom_short_text"
                         android:textSize="15dp"
                         android:layout_width="150dp"
                         android:layout_height="20dp"
@@ -157,13 +155,13 @@
             android:layout_height="50dp"
             android:layout_gravity="bottom"
             android:padding="5dp"
-           >
+            >
             <Button
                 android:textSize="18dp"
                 android:textColor="@color/colorToolBar"
                 android:background="@drawable/send_button_ripple"
                 android:id="@+id/build_relationship"
-                android:text="加好友"
+                android:text="添加为加好友"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </android.support.design.widget.BottomNavigationView>

@@ -23,6 +23,7 @@ public class GetNewRelationShipResultsButtonOnClickentener implements  NewRelati
     private NewRelationShipFragment fragment;
     private Context context;
     private NewRelationshipSearchResultsFragment newRelationshipSearchResultsFragment;
+    private SearchResultPersonDetailFragment searchResultPersonDetailFragment;
 
     public GetNewRelationShipResultsButtonOnClickentener(Context context,NewRelationShipFragment fragment){
         this.fragment=fragment;
@@ -32,7 +33,7 @@ public class GetNewRelationShipResultsButtonOnClickentener implements  NewRelati
 
     @Override
     public void onClick(View view, int positon, final NewRelationShipBean newRelationShipBean) {
-        Log.v("GetNewRelationShipResultsButtonOnClickentener","ok");
+        Log.v("GetNewRelationShipResultsButtonOnClickentener", String.valueOf(newRelationShipBean.getView_type()));
         if(positon==0&& newRelationShipBean.getView_type()==0){
             CoreApplication.newInstance().setDisPlayType(true);
             KeybordUtil.closeKeybordSearch(fragment.getSearchView(),fragment.getContext());
@@ -69,6 +70,27 @@ public class GetNewRelationShipResultsButtonOnClickentener implements  NewRelati
             };
             timer.start();
         }else{
+            FragmentManager fragmentManager= fragment.getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+            searchResultPersonDetailFragment= (SearchResultPersonDetailFragment) fragmentManager.findFragmentByTag("newRelationshipSearchResultsFragment");
+            if(searchResultPersonDetailFragment!=null){
+                searchResultPersonDetailFragment.setFrendData(newRelationShipBean);
+                fragmentTransaction.addToBackStack(null).setCustomAnimations(R.anim.default_fragment_switch_translate_open,
+                        R.anim.default_fragment_switch_translate_open,
+                        R.anim.default_fragment_switch_translate_open,
+                        R.anim.default_fragment_switch_leave_translate).show(searchResultPersonDetailFragment);
+            }else{
+                searchResultPersonDetailFragment =SearchResultPersonDetailFragment.getInstance();
+                searchResultPersonDetailFragment.setFrendData(newRelationShipBean);
+                fragmentTransaction.addToBackStack(null).setCustomAnimations(R.anim.default_fragment_switch_translate_open,
+                        R.anim.default_fragment_switch_translate_open,
+                        R.anim.default_fragment_switch_translate_open,
+                        R.anim.default_fragment_switch_leave_translate).add(R.id.drawer_layout,searchResultPersonDetailFragment,"newRelationshipSearchResultsFragment");
+
+            }
+            fragmentTransaction.setCustomAnimations(R.anim.default_fragment_switch_leave_translate,R.anim.default_leave_left,
+                    R.anim.default_open_right,R.anim.default_open_right).hide(fragment)
+                    .commit();
 
         }
 

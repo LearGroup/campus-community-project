@@ -19,6 +19,7 @@ import com.example.chen1.uncom.bean.MessageHistoryBeanDao;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
 import com.example.chen1.uncom.bean.UserBeanDao;
+import com.example.chen1.uncom.utils.BadgeMessageUtil;
 import com.example.chen1.uncom.utils.LoadImageUtils;
 import com.example.chen1.uncom.utils.SpanStringUtils;
 import com.example.chen1.uncom.utils.TimeUtils;
@@ -125,6 +126,8 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
             }
             //该判断为真，则说明用户目前不在与该消息发送者的聊天视图中
             if(isVisible==false){
+                Log.v("BadgeCount:", String.valueOf(BadgeMessageUtil.getItem_1()+1));
+                BadgeMessageUtil.setItem_1(BadgeMessageUtil.getItem_1()+1);
                 Integer temp=frendData.getUn_look();
                 Log.v("sendTmper", String.valueOf(isVisible));
                 if(temp!=null){
@@ -152,6 +155,8 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
                 relationShipLevelBean.setActive(true);
             }
             //设置该消息未阅读
+            Log.v("BadgeCount:", String.valueOf(BadgeMessageUtil.getItem_1()+1));
+            BadgeMessageUtil.setItem_1(BadgeMessageUtil.getItem_1()+1);
             Integer temp=relationShipLevelBean.getUn_look();
             Log.v("sendTmper", String.valueOf(temp));
             if(temp!=null){

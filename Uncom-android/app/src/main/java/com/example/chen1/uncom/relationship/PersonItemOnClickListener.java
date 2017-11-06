@@ -13,6 +13,7 @@ import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.chat.PersonChatFragment;
+import com.example.chen1.uncom.utils.BadgeMessageUtil;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,7 @@ public class PersonItemOnClickListener implements AdapterView.OnItemClickListene
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        BadgeMessageUtil.setSetPageIsVisible(false);
         FragmentManager fragmentManager= fragment.getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         PersonChatFragment person_chat_fragment= (PersonChatFragment) CoreApplication.newInstance().getTemperFragment();

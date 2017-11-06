@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils;
 
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
+import com.example.chen1.uncom.utils.BadgeMessageUtil;
 
 /**
  * Created by chen1 on 2017/10/13.
@@ -22,6 +23,7 @@ public class ToNewRelationShipButtonOnclickListener implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        BadgeMessageUtil.setSetPageIsVisible(false);
         NewRelationShipFragment newRelationShipFragment =NewRelationShipFragment.getInstance();
         CoreApplication.newInstance().setDisPlayType(false);
         FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getActivity().getSupportFragmentManager();

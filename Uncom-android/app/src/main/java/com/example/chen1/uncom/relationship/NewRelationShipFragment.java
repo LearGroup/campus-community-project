@@ -76,6 +76,8 @@ public class NewRelationShipFragment extends Fragment  implements View.OnTouchLi
         View view=inflater.inflate(R.layout.fragment_new_relation_ship, container, false);
         Toolbar toolbar=(Toolbar) view.findViewById(R.id.new_relationship_toolbar);
         setHasOptionsMenu(true);
+        //表示已读取新关系信息
+        CoreApplication.newInstance().setNewRelationActive(0);
         search_layout_view=new NewRelationShipBean();
         search_layout_view.setView_type(0);
         search_result_recycler_view= (RecyclerView) view.findViewById(R.id.search_page_recyclerview);
@@ -103,6 +105,7 @@ public class NewRelationShipFragment extends Fragment  implements View.OnTouchLi
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+      //          Log.v("NewRelationFragment","onQueryTextSubmit");
                 newRelationshipAdapter.notifyItemRemoved(0);
                 search_display_type=false;
                 return false;
@@ -110,13 +113,17 @@ public class NewRelationShipFragment extends Fragment  implements View.OnTouchLi
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Log.v("NewRelationFragment","onQueryTextChange");
+               // Log.v("NewRelationFragment","onQueryTextChange");
                 search_layout_view.setResults(newText);
                 if(search_display_type ==false){
                     newRelationshipAdapter.add(search_layout_view,1);
                     search_display_type=true;
                 }else{
+
                     newRelationshipAdapter.add(search_layout_view);
+                    if(search_layout_view.getResults().length()<=0){
+                        search_display_type=false;
+                    }
                 }
                 return false;
             }

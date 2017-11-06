@@ -30,6 +30,8 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.chen1.uncom.FindPageMainFragment;
 import com.example.chen1.uncom.MePageMainFragment;
 import com.example.chen1.uncom.R;
@@ -43,6 +45,7 @@ import com.example.chen1.uncom.set.SetPageMainFragment;
 import com.example.chen1.uncom.service.ChatCoreBinder;
 import com.example.chen1.uncom.service.CoreService;
 import com.example.chen1.uncom.utils.BackHandlerHelper;
+import com.example.chen1.uncom.utils.BadgeMessageUtil;
 import com.example.chen1.uncom.utils.BottomNavigationViewHelper;
 import com.example.chen1.uncom.utils.SharedPreferencesUtil;
 
@@ -54,7 +57,7 @@ import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationBar.OnTabSelectedListener{
 
     private View ll_root;
     /**
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private  CoreService coreService;
     private Handler coreHandler;
     private View rootView;
+    private BottomNavigationBar bottomNavigationBar;
     private BottomNavigationView bottomNavigationView;
     private ServiceConnection serviceConnection=new ServiceConnection() {
         @Override
@@ -96,32 +100,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     };
     private SectionsAdapter sectionsAdapter;
-    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener=
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.navigation_home:
-                            viewPager.setCurrentItem(0);
-                            return true;
-                        case R.id.navigation_dashboard:
-                            viewPager.setCurrentItem(1);
-                            return true;
-                        case R.id.navigation_notifications:
-                            viewPager.setCurrentItem(2);
-                            return true;
-                        case R.id.navigation_mypage:
-                            viewPager.setCurrentItem(3);
-                            return true;
-                    }
-                    return false;
-                }
-            };
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Log.v("MainActivityOnceate",".............ok");
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -134,8 +118,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        bottomNavigationBar=(BottomNavigationBar)findViewById(R.id.bottom_navigation);
+        bottomNavigationBar.setTabSelectedListener(this);
+        bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
+        bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
+        bottomNavigationBar.setBarBackgroundColor(R.color.colorPrimary);
+        bottomNavigationBar.setInActiveColor(R.color.colorIcon);
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_dashboard_black_24dp, "聚合").setActiveColorResource(R.color.colorMain).setBadgeItem(BadgeMessageUtil.getBadgeItemByPosition(0).setText("1")))
+                .addItem(new BottomNavigationItem(R.drawable.ic_vector_menu_relationship02, "关系").setActiveColorResource(R.color.colorMain).setBadgeItem(BadgeMessageUtil.getBadgeItemByPosition(1)))
+                .addItem(new BottomNavigationItem(R.drawable.ic_vector_menu_find, "发现").setActiveColorResource(R.color.colorMain).setBadgeItem(BadgeMessageUtil.getBadgeItemByPosition(2)))
+                .addItem(new BottomNavigationItem(R.drawable.ic_vector_my, "我").setActiveColorResource(R.color.colorMain).setBadgeItem(BadgeMessageUtil.getBadgeItemByPosition(3)))
+                .setFirstSelectedPosition(0)
+                .initialise(); //所有的设置需在调用该方法前完成
+
+
+
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        bottomNavigationView =(BottomNavigationView) findViewById(R.id.navigation);
+       // bottomNavigationView =(BottomNavigationView) findViewById(R.id.navigation);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -145,8 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         sectionsAdapter=new SectionsAdapter(getSupportFragmentManager());
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
-        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
-        bottomNavigationView.setSelectedItemId(0);
+
         viewPager=(ViewPager) findViewById(R.id.container);
         rootView=findViewById(R.id.rootview);
         CoreApplication.newInstance().setRoot(rootView);
@@ -158,13 +157,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onPageSelected(int position) {
-                if (menuItem!=null){
+                bottomNavigationBar.selectTab(position);
+             /*   if (menuItem!=null){
                     menuItem.setChecked(false);
                 }else{
                     bottomNavigationView.getMenu().getItem(0).setChecked(false);
                 }
                 menuItem=bottomNavigationView.getMenu().getItem(position);
-                menuItem.setChecked(true);
+                menuItem.setChecked(true);*/
             }
 
             @Override
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         viewPager.setAdapter(sectionsAdapter);
-        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+      //  BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         Intent startIntent =new Intent(this, CoreService.class);
         getApplicationContext().startService(startIntent);
         CoreApplication.newInstance().setServiceConnection(serviceConnection);
@@ -250,6 +250,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return result;
     }
 
+    @Override
+    public void onTabSelected(int position) {
+        switch (position) {
+            case 0:
+                viewPager.setCurrentItem(0);
+                break;
+
+            case 1:
+                viewPager.setCurrentItem(1);
+                break;
+            case 2:
+                viewPager.setCurrentItem(2);
+                break;
+            case 3:
+                viewPager.setCurrentItem(3);
+                break;
+        }
+    }
+
+    @Override
+    public void onTabUnselected(int position) {
+
+    }
+
+    @Override
+    public void onTabReselected(int position) {
+
+    }
 
 
     public class SectionsAdapter extends FragmentPagerAdapter{

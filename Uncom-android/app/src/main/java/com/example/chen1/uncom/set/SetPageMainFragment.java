@@ -2,6 +2,7 @@ package com.example.chen1.uncom.set;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +19,7 @@ import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.chat.PersonChatFragment;
+import com.example.chen1.uncom.utils.BadgeMessageUtil;
 
 
 /**
@@ -34,6 +36,7 @@ public class SetPageMainFragment extends Fragment {
     private int RECONNECTION =0;
     private  View rootView;
     private int CONNECTION_STATUS=1;
+    private static boolean isVisiable;
     private LinearLayout popupWindow;
     private  SetPageMainFragmentAdapter setPageMainFragmentAdapter;
     // TODO: Rename and change types of parameters
@@ -113,6 +116,8 @@ public class SetPageMainFragment extends Fragment {
 
             @Override
             public void onItemClick(View view, int position, RelationShipLevelBean relationShipLevelBean) {
+                Log.v("setFragment","hide");
+                BadgeMessageUtil.setSetPageIsVisible(false);
                 FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
                 PersonChatFragment person_chat_fragment= (PersonChatFragment) CoreApplication.newInstance().getTemperFragment();
@@ -135,5 +140,36 @@ public class SetPageMainFragment extends Fragment {
         });
         return view;
     }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            BadgeMessageUtil.setSetPageIsVisible(true);
+            //TODO now it's visible to user
+        } else {
+            Log.v("SetFragment ","hide");
+            BadgeMessageUtil.setSetPageIsVisible(false);
+            //TODO now it's invisible to user
+        }
+    }
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden){
+            Log.v("SetFragment ","hide");
+            BadgeMessageUtil.setSetPageIsVisible(false);
+            //TODO now visible to user
+        } else {
+            Log.v("SetFragment ","show");
+            BadgeMessageUtil.setSetPageIsVisible(true);
+            //TODO now invisible to user
+        }
+    }
+
+
+
+
 
 }

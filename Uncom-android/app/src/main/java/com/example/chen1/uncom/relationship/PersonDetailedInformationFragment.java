@@ -110,7 +110,6 @@ public class PersonDetailedInformationFragment extends Fragment {
                 Log.v("Tag", "appBarLayoutHeight:" + appBarLayout.getHeight() + " getTotalScrollRange:" + appBarLayout.getTotalScrollRange() + " offSet:" + verticalOffset);
                 if(Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()){
                     toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimary));
-                    collapsing_toolbar_layout.setTitle("keep");
                     person_name.setVisibility(View.VISIBLE);
                 }else{
                     person_name.setVisibility(View.GONE);

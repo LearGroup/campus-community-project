@@ -31,6 +31,7 @@ import com.example.chen1.uncom.bean.UserBeanDao;
 import com.example.chen1.uncom.utils.CoreServiceCallBack;
 import com.example.chen1.uncom.utils.PopupWindowUtils;
 import com.example.chen1.uncom.utils.SharedPreferencesUtil;
+import com.example.chen1.uncom.utils.UserBeanAndJsonUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -41,6 +42,7 @@ import org.json.JSONObject;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -59,9 +61,11 @@ public class CoreService extends Service  {
     private ChatCoreBinder binder=new ChatCoreBinder(this);
     private Socket socket;
     private NewRelationShipBeanDao newRelationShipBeanDao;
+    private RelationShipLevelBeanDao relationShipLevelBeanDao;
     private String user_id;
     private Thread thread;
     private Context context;
+    private NewRelationShipBean newRelationShipBean;
     private UserBean userBean;
     private JSONObject loginData;
     private Handler sendChatHandler;
@@ -84,9 +88,12 @@ public class CoreService extends Service  {
         userBean=userBeanDao.queryBuilder().where(UserBeanDao.Properties.Id.eq(user_id)).build().unique();
         Log.v("CoreServiceUser_id",user_id);
         HashMap<String ,String > login=new HashMap<>();
-        login.put("userName",userBean.getUsername());
-        login.put("userId",userBean.getId());
-        loginData=new JSONObject(login);
+        if(userBean!=null){
+            login.put("userName",userBean.getUsername());
+            login.put("userId",userBean.getId());
+            loginData=new JSONObject(login);
+        }
+
         Log.v("createCoreService","ok");
         Log.v("CoreService_user_id", "ss"+user_id);
         if(thread==null){
@@ -97,12 +104,14 @@ public class CoreService extends Service  {
                         Log.v("createNewThread","ok");
                         /*http://47.95.0.73:8081*/
                         /*http://10.0.2.2:8081*/
-                        socket= IO.socket("http://10.0.2.2:8081");
+                        socket= IO.socket("http://47.95.0.73:8081");
                         socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
                             @Override
                             public void call(Object... args) {
                                 Log.v("CONNECT","ok");
-                                socket.emit("login",loginData);
+                                if(loginData!=null) {
+                                    socket.emit("login",loginData);
+                                }
                                 if(handler!=null){
                                     Message message=new Message();
                                     message.what=1;
@@ -202,6 +211,7 @@ public class CoreService extends Service  {
                                 }
                             }
                         }).on("requestBuildRelationShip", new Emitter.Listener() {
+                            //接收新关系请求
                             @Override
                             public void call(Object... args) {
                                 JSONObject  object= (JSONObject) args[0];
@@ -211,6 +221,8 @@ public class CoreService extends Service  {
                                         for (int i=0;i<jsonArray.length();i++){
                                             Log.v("relationshipRresponse", String.valueOf(jsonArray));
                                             NewRelationShipBean bean=new Gson().fromJson(String.valueOf(jsonArray.getJSONObject(i)), NewRelationShipBean.class);
+                                            bean.setView_type(1);
+                                            bean.setResult_type(2);
                                             Message message =new Message();
                                             message.what=4;
                                             message.obj=bean;
@@ -218,14 +230,73 @@ public class CoreService extends Service  {
                                             if(newRelationShipBeanDao==null){
                                                 newRelationShipBeanDao= BeanDaoManager.getInstance().getDaoSession().getNewRelationShipBeanDao();
                                             }
+
                                             newRelationShipBeanDao.insert(bean);
                                         }
+                                        HashMap<String,String>data=new HashMap<String, String>();
+                                        data.put("status","1");
+                                        JSONObject params = new JSONObject(data);
+                                        socket.emit("requestBuildRelationShipResponse",params);
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
 
+                        }).on("registerPersonRelationShip", new Emitter.Listener() {
+                            @Override
+                            public void call(Object... args) {
+                                //好友请求接受 添加新好友
+                                Log.v("registerPersonRelationShip", String.valueOf(args[0]));
+                                JSONObject  object= (JSONObject) args[0];
+                                try {
+                                    if(object.getString("status").equals("1")){
+                                        JSONArray jsonArray=object.getJSONArray("results");
+                                        ArrayList<RelationShipLevelBean> Array= UserBeanAndJsonUtils.getRelationShipLevelBean(object.getJSONArray("results"));
+                                        for (int i=0;i<jsonArray.length();i++){
+                                            Log.v("registerPersonRelationShip", String.valueOf(jsonArray.getJSONObject(i)));
+                                            Log.v("registerPersonRelationShip", String.valueOf(jsonArray.length()));
+                                            Message message =new Message();
+                                            message.what=6;
+                                            message.obj=Array.get(i);
+                                            coreAppGetChatDataHandler.sendMessage(message);
+                                            if(newRelationShipBeanDao==null){
+                                                newRelationShipBeanDao= BeanDaoManager.getInstance().getDaoSession().getNewRelationShipBeanDao();
+                                               newRelationShipBean= newRelationShipBeanDao.queryBuilder().where(NewRelationShipBeanDao.Properties.User_id.eq(Array.get(i).getMinor_user())).build().unique();
+                                                if(newRelationShipBean!=null){
+                                                    newRelationShipBean.setResult_type(1);
+                                                    newRelationShipBeanDao.update(newRelationShipBean);
+                                                }
+                                            }
+                                            HashMap<String,String>data=new HashMap<String, String>();
+                                            data.put("status","1");
+                                            JSONObject params = new JSONObject(data);
+                                            socket.emit("registerPersonRelationShipResponse",params);
+                                            JSONArray jsonArray1=new JSONArray();
+                                            JSONObject json=new JSONObject();
+                                            json.put("ownId",Array.get(i).getMinor_user());
+                                            json.put("targetId",CoreApplication.newInstance().getUser_id());
+                                            json.put("content","我们已经是好友了，开始聊天吧！");
+                                            Long time=new Date().getTime();
+                                            json.put("time", String.valueOf(time));
+                                            jsonArray1.put(json);
+                                            Message messages=new Message();
+                                            messages.what=0;
+                                            messages.obj=jsonArray1;
+                                  //          Log.v("接受好友Message", String.valueOf(jsonArray1));
+                                            coreAppGetChatDataHandler.sendMessage(messages);
+
+
+
+
+
+                                        }
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
                         });
                         socket.connect();
                         Log.v("createNewThreaded","ok");
@@ -271,6 +342,7 @@ public class CoreService extends Service  {
                                 }
                                 //发送还有添加请求
                                 case 2:{
+                                    //发送新关系请求
                                     Log.v("CoreService","requestBuildRelationShip");
                                     JsonObject jsonObject= (JsonObject) msg.obj;
                                     socket.emit("requestBuildRelationShip",jsonObject);

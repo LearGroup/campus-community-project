@@ -8,6 +8,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.Toolbar;
@@ -38,8 +39,7 @@ public class SearchResultPersonDetailFragment extends Fragment  implements View.
     private TextView person_name;
     private TextView customText;
     private ButtonBarLayout buttonBarLayout;
-    private String mParam1;
-    private String mParam2;
+    private AppCompatImageView back_icon;
     private ImageView imageView;
     private Button buildRelationship;
     private ImageView imageView2;
@@ -76,22 +76,24 @@ public class SearchResultPersonDetailFragment extends Fragment  implements View.
         final Toolbar toolbar=(Toolbar)view.findViewById(R.id.person_detailed_information_toolbar);
         setHasOptionsMenu(true);
         toolbar.inflateMenu(R.menu.person_detail_menu_layout);
-        AppCompatImageView appCompatImageView=(AppCompatImageView) view.findViewById(R.id.person_detaild_information_back_icon);
-        appCompatImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-                fragmentManager.popBackStack();
-            }
-        });
+
+        Log.v("SearchResultDetailFragmentData", String.valueOf(frendData));
         customText=(TextView)view.findViewById(R.id.custom_short_text);
         username=(TextView)view.findViewById(R.id.person_username);
         username.setText(frendData.getUser_name());
         if(frendData.getShort_message()!=null){
             customText.setText(frendData.getShort_message());
         }
+        back_icon= (AppCompatImageView) view.findViewById(R.id.person_detaild_information_back_icon);
+        back_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.default_fragment_switch_translate_open,R.anim.default_leave_left);
+                fragmentManager.popBackStack();
+            }
+        });
         buildRelationship=(Button)view.findViewById(R.id.build_relationship);
         person_iamgeview=(ImageView)view.findViewById(R.id.person_detaild_information_circleImageView);
         constraintLayout=(ConstraintLayout)view.findViewById(R.id.person_detaild_information_constraintlayout);
@@ -121,8 +123,16 @@ public class SearchResultPersonDetailFragment extends Fragment  implements View.
                 }
             }
         });
-        buildRelationship.setOnClickListener(new ToRequestBuildRelationShipButtonOnClickListener(getContext(),this,frendData));
-        return view;
+        if(frendData.getResult_type()!=null){
+            if(frendData.getResult_type()==1){
+                buildRelationship.setVisibility(View.GONE);
+            }
+        }else{
+            buildRelationship.setVisibility(View.VISIBLE);
+            buildRelationship.setOnClickListener(new ToRequestBuildRelationShipButtonOnClickListener(getContext(),this,frendData));
+
+        }
+          return view;
     }
 
     @Override
