@@ -2,46 +2,47 @@
   * Module dependencies.
   */
 
- var express = require('express'),
-   routes = require('./server/routes'),
-   opn = require('opn'),
-   errorHandler = require('errorhandler'),
-   multer = require('multer'),
-   serveFavicon = require('serve-favicon'),
-   morgan = require('morgan'),
-   userCache = require('./server/public/js/userCache'),
-   webpack = require('webpack'),
-   proxyMiddleware = require('http-proxy-middleware'),
-   user = require('./server/routes/user'),
-   http = require('http'),
-   socket = require('socket.io'),
-   config = require('./config'),
-   ejs = require('ejs'),
-   session = require('express-session'),
-   mysql = require('mysql'),
-   redis = require('redis')
- cookieParser = require('cookie-parser'),
-   methodOverride = require('method-override'),
-   _ = require('underscore'),
-   bodyParser = require('body-parser'),
-   redisStore = require('connect-redis')(session),
-   bodyParser = require('body-parser'),
-   path = require('path');
- var router = express.Router()
- var redisClient = redis.createClient(6379, 'localhost', {
+  var express = require('express'),
+  routes = require('./server/routes'),
+  opn = require('opn'),
+  errorHandler = require('errorhandler'),
+  multer = require('multer'),
+  serveFavicon = require('serve-favicon'),
+  morgan = require('morgan'),
+  userCache = require('./server/public/js/userCache'),
+  webpack = require('webpack'),
+  proxyMiddleware = require('http-proxy-middleware'),
+  user = require('./server/routes/user'),
+  http = require('http'),
+  socket = require('socket.io'),
+  config = require('./config'),
+  uuid=require('node-uuid'),
+  ejs = require('ejs'),
+  session = require('express-session'),
+  mysql = require('mysql'),
+  redis = require('redis')
+  cookieParser = require('cookie-parser'),
+  methodOverride = require('method-override'),
+  _ = require('underscore'),
+  bodyParser = require('body-parser'),
+  redisStore = require('connect-redis')(session),
+  bodyParser = require('body-parser'),
+  path = require('path');
+  var router = express.Router()
+  var redisClient = redis.createClient(6379, 'localhost', {
    auth_pass: 18247352203
  })
- redisClient.on('ready', function() {
+  redisClient.on('ready', function() {
    console.log('redis is ready');
    redisClient.del('sess:NiuDfXNHOOo7ZVtL96cgjo9_cUf-yLB8')
  })
- var uri = "localhost:8081"
- if (!process.env.NODE_ENV) {
+  var uri = "localhost:8081"
+  if (!process.env.NODE_ENV) {
    process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
  }
  var webpackConfig = process.env.NODE_ENV === 'testing' ?
-   require('./build/webpack.prod.conf') :
-   require('./build/webpack.dev.conf')
+ require('./build/webpack.prod.conf') :
+ require('./build/webpack.dev.conf')
 
 
  // default port where dev server listens for incoming traffic
@@ -147,16 +148,35 @@
 
    socket.on('synchronization',function(data){
     console.log("synchronization ID",socket.userId)
-     redisClient.lrange('historyMessage:' + socket.userId, 0, -1, function(err, res) {
+    //历史私人聊天信息
+    redisClient.lrange('historyMessage:' + socket.userId, 0, -1, function(err, res) {
      if (res.length!=0) {
-        console.log("有历史信息",res)
-         socket.emit('message',JSON.parse('{"status":"1","results":['+res+']}'))
-         redisClient.del('historyMessage:' + socket.userId)
-       } else {
-        socket.emit('message',JSON.parse('{"status":"null"}'))
-       }
-     })
+      console.log("有历史信息",res)
+      socket.emit('message',JSON.parse('{"status":"1","results":['+res+']}'))
+      redisClient.del('historyMessage:' + socket.userId)
+    } else {
+      socket.emit('message',JSON.parse('{"status":"null"}'))
+    }
+  })
+
+    //历史好友请求消息
+    redisClient.lrange('requestBuildRelationShip:' + socket.userId, 0, -1, function(err, res) {
+     if (res.length!=0) {
+       socket.emit('requestBuildRelationShip',JSON.parse('{"status":"1","results":['+res+']}'))
+     } 
    })
+
+    //历史好友请求接受信息 historyRelation
+
+    redisClient.lrange('historyRelation:' + socket.userId, 0, -1, function(err, res) {
+     if (res.length!=0) {
+       socket.emit('registerPersonRelationShip',JSON.parse('{"status":"1","results":['+res+']}'))
+     } 
+   })
+
+
+
+  })
 
 
    socket.on("ofline",function(obj){
@@ -171,7 +191,7 @@
       socket.disconnect(true)
     })
 
-   })
+  })
 
 
    console.log('一个用户上线了')
@@ -195,6 +215,79 @@
      })*/
    })
 
+
+
+   socket.on('registerPersonRelationShipResponse',function(result){
+    console.log('registerPersonRelationShipResponse')
+     console.log(result)
+     console.log(result.status)
+  //  let data=JSON.parse(result)
+    if(result.status=="1"){
+
+     redisClient.del('historyRelation:' + socket.userId)
+    }
+
+  })
+
+   socket.on('requestBuildRelationShipResponse',function(result){
+   console.log('requestBuildRelationShipResponse')
+   console.log(result)
+   console.log(result.status)
+   // let data=JSON.parse(result)
+    if(result.status=="1"){
+
+     redisClient.del('requestBuildRelationShip:' + socket.userId)
+    }
+   })
+
+
+
+   socket.on('requestBuildRelationShip',function(result){
+    console.log('requestBuildRelationShip')
+    let data=JSON.parse(result)
+    data["sex"]=data["sex"]+""
+    data["view_type"]=data["view_type"]+""
+
+    console.log(result)
+    let targetId = data.target_id//发送目标id
+    console.log(data.target_id)
+    if(io.sockets.connected[socketList[targetId]]){
+      console.log("send")
+      delete data['target_id']
+      console.log(data.target_id)
+
+      io.sockets.connected[socketList[targetId]].emit('requestBuildRelationShip',
+        JSON.parse('{"status":"1","results":'+'['+JSON.stringify(data)+']}'))
+    }else {
+      //首先验证该请求信息是否已存在
+      redisClient.lrange('requestBuildRelationShip:' + targetId, 0, -1, function(err, res) {
+       if (res.length!=0) {
+        let rs=JSON.parse('['+res+']')
+        for(let i=0 ;i<rs.length;i++){
+          if(rs[i].user_id==data.user_id){
+            console.log("信息已存在")
+            return ;   
+          }
+          
+        }
+      } else {
+        console.log('用户不在线');
+        redisClient.select('0', function(err) {
+         if (!err) {
+           console.log('userCache:' + targetId);
+           redisClient.rpush('requestBuildRelationShip:' +  targetId, JSON.stringify(data), function(err, res) {
+             console.log(err);
+             console.log(res);
+           })
+         }
+       })
+      }
+    })
+
+    }
+
+    
+  })
 
 
    socket.on("message", function(data) {
@@ -259,18 +352,177 @@
    console.log('getFrendList');
    console.log(req.sessionID);
    if (req.session.user) {
-      console.log("userId",req.session.user.id)
-     let id = req.session.user.id
-     connection.query('select us.header_pic,us.username,us.sex,us.age,us.email,us.self_abstract,us.sprovince,us.sarea,us.town,us.phone,rs.minor_user ,rs.level ,rs.id   from relation_ship rs,user us where rs.main_user=' + '"' + id + '"' + ' and rs.level =4 and rs.minor_user=us.id', function(err, results, xfields) {
-       console.log(err)
-       console.log(results);
-       res.send(JSON.parse(JSON.stringify('{"status":"1","results":'+JSON.stringify(results)+'}')))
-     })
-   }else{
-     res.send(JSON.parse(JSON.stringify('{"status":"0"}')));
-   }
- })
+    console.log("userId",req.session.user.id)
+    let id = req.session.user.id
+    connection.query('select us.header_pic,us.username,us.sex,us.age,us.email,us.self_abstract,us.sprovince,us.sarea,us.town,us.phone,rs.minor_user ,rs.level ,rs.id   from relation_ship rs,user us where rs.main_user=' + '"' + id + '"' + ' and rs.level =4 and rs.minor_user=us.id', function(err, results, xfields) {
+     console.log(err)
+     console.log(results);
+     res.send(JSON.parse(JSON.stringify('{"status":"1","results":'+JSON.stringify(results)+'}')))
+   })
+  }else{
+   res.send(JSON.parse(JSON.stringify('{"status":"0"}')));
+ }
+})
 
+
+
+ //注册新关系
+ router.post("/registerPersonRelationShip",urlencodedParser,function(req,response){
+   console.log('registerPersonRelationShip')
+   let main_id=req.body.min_id;//接受请求者
+   let req_id=req.body.req_id
+   let parid1=uuid.v1();
+   let parid2=uuid.v1();
+   console.log(main_id)
+
+   console.log( req_id)
+   let querySql ='select rs.id from relation_ship rs where (rs.main_user='+"'"+main_id+"'"+' and rs.minor_user='+"'"+req_id+"'"+')  and(rs.level=4)'
+
+   let sql='insert into relation_ship(id,main_user,minor_user,level) values(?,?,?,?)'
+   let params =[parid1,req.body.min_id,req.body.req_id,'4']
+   let params2=[parid2,req.body.req_id,req.body.min_id,'4']
+
+   //首先查询该关系是否存在
+   connection.query(querySql, function(err, results, xfields){
+    if(err){
+      console.log(err)
+    }
+    if(results){
+
+      //若不存在 则插入新关系
+      if(results.length==0){
+        connection.query(sql,params,function(err,res){  
+          if(err){
+            console.log(err)
+          }
+          if(res){
+            connection.query(sql,params2,function(err,res){
+              if(err){
+                console.log(err)
+              }
+              if(res){
+                //插入成功 向终端发送好友增加信息
+
+                connection.query('select us.header_pic,us.username,us.sex,us.age,us.email,us.self_abstract,us.sprovince,us.sarea,us.stown,us.phone from user us where id='+"'"+req_id+"'",function(err,result){
+                  if(err) console.log(err)
+                    if(result){
+                      let parm=result
+                      parm[0].level='4';
+                      parm[0]['id']=parid1;
+                      parm[0]['minor_user']=req_id
+                      parm[0]['self_abstract']= parm[0]['self_abstract']+""
+                      parm[0]['age']= parm[0]['age']+""
+                      parm[0]['town']= parm[0]['town']+""
+                      parm=JSON.stringify(result)
+                      response.send(JSON.parse(JSON.stringify('{"status":"1","results":'+parm+'}')));
+                      console.log(result)
+
+                      connection.query('select us.header_pic,us.username,us.sex,us.age,us.email,us.self_abstract,us.sprovince,us.sarea,us.stown,us.phone from user us where id='+"'"+main_id+"'",function(err,result){
+
+                        if(result){
+                         let parm=result
+                         parm[0].level='4';
+                         parm[0]['id']=parid2;
+                         parm[0]['minor_user']=main_id
+                         parm[0]['self_abstract']= parm[0]['self_abstract']+""
+                         parm[0]['age']= parm[0]['age']+""
+                         parm[0]['stown']= parm[0]['stown']+""
+
+
+                         if (io.sockets.connected[socketList[req_id]]) {
+                           console.log('向' + socketList[req_id] + '发送好友注册信息');
+                           console.log(parm[0])
+                           io.sockets.connected[socketList[req_id]].emit('registerPersonRelationShip',     JSON.parse('{"status":"1","results":'+JSON.stringify(result)+'}'));
+                         } else { 
+                      //若用户不在线 将信息缓存到redis
+                      console.log('用户不在线 redis');
+                      redisClient.select('0', function(err) {
+                       if (!err) {
+                         console.log('userCache:' + req_id);
+                         redisClient.rpush('historyRelation:' +req_id , parm, function(err, res) {
+                           console.log(err);
+                           console.log(res);
+                         })
+                       }
+                     })
+                    }                  
+
+
+
+                  }
+                })
+
+
+
+                    }
+                  })
+
+
+              }
+            })
+          }
+        })
+      }else{
+        console.log('关系已存在')
+        response.send(JSON.parse(JSON.stringify('{"status":"0"}')));
+      }
+    }
+  })
+
+    /*    connection.query(sql,params,function(err,res){
+          if(err){
+            console.log(err)
+          }
+          if(res){
+            connection.query(sql,params2,function(err,res){
+              if(err){
+                console.log(err)
+              }
+              if(res){
+                response.send(JSON.parse(JSON.stringify('{"status":"1"}')));
+              }
+            })
+          }
+        })*/
+      })
+
+ router.post('/searchUser',urlencodedParser,function(req,res){
+  console.log('searchUser')
+  let use=req.body.use
+  let result=req.body.result
+  console.log(use+":"+result)
+  console.log(req.session.user)
+  let sql
+  if(req.session.user){
+    if(use=='phone'){
+      sql='select us.id user_id ,us.sprovince,us.sex,us.town, us.phone results,us.header_pic header_pic, us.username username  from user us where us.phone='+'"'+result+'"'
+    }else if(use=='email'){
+
+      sql='select us.id user_id ,us.sprovince,us.sex,us.town,  us.email results,us.header_pic header_pic, us.username username  from user us where us.email='+'"'+result+'"'
+
+    }else if(use=='username'){
+
+      sql='select us.id user_id ,us.sprovince,us.sex,us.town,  us.username results,us.header_pic header_pic,us.username username from user us where us.username='+'"'+result+'"'
+
+    }
+
+    connection.query(sql,function(err, results, xfields) {
+      if(err){
+        console.log(err)
+      }
+      console.log(results);
+      if(results.length>0){
+       res.send(JSON.parse(JSON.stringify('{"status":"1","results":'+JSON.stringify(results)+'}')))
+     }else{
+       res.send(JSON.parse(JSON.stringify('{"status":"0"}')));
+     }
+   })
+  }else{
+    res.send(JSON.parse(JSON.stringify('{"status":"-1"}')));
+  }
+
+
+})
 
  router.post("/checkStatus", urlencodedParser, function(req, res) {
    console.log('checkStatus');
@@ -310,7 +562,7 @@
    if (use == 'phone') {
      sql = 'select * from user us where us.phone="' + username + '" and us.password="' + password + '"'
    } else {
-     sql = 'select * from user us where us.email="' + username + '" and us.password="' + password + '"'
+     sql = 'select * from user us where <us class="emai"></us>l="' + username + '" and us.password="' + password + '"'
    }
    //访问用户数据库信息
    connection.query(sql, function(err, results, xfields) {
@@ -350,3 +602,4 @@
      server.close()
    }
  }
+
