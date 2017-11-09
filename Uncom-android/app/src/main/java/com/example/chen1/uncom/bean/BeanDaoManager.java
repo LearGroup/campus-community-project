@@ -14,7 +14,7 @@ import java.security.AccessControlContext;
  * Created by chen1 on 2017/10/2.
  */
 
-public class BeanDaoManager {
+public class  BeanDaoManager {
 
     private static BeanDaoManager mGreenDaoManager=null;
     private DaoMaster mMaster;

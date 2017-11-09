@@ -11,5 +11,6 @@
     <color name="colorSignButton">#eeeeee</color>
     <color name="colorComplate">#68CC93</color>
     <color name="colorFontColor">#aaaaaa</color>
+    <color name="colorFontColor2">#999999</color>
     <color name="colorTranslate">#00000000</color>
 </resources>

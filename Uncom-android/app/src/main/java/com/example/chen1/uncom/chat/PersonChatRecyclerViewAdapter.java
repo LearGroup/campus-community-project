@@ -70,7 +70,11 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.itemView.setTag(position);
-        LoadImageUtils.getFirendHeaderImage(frendData.getHeader_pic(),context,holder.header_image);
+        if(listItem.get(position).getOwnId().equals(frendData.getMinor_user())){
+            LoadImageUtils.getFirendHeaderImage(frendData.getHeader_pic(),context,holder.header_image);
+        }else{
+            LoadImageUtils.getFirendHeaderImage(CoreApplication.newInstance().getUserBean().getHeader_pic(),context,holder.header_image);
+        }
         if(!listItem.get(position).getContent().equals(null)){
             String str =listItem.get(position).getContent();
              SpannableString spannableString= SpanStringUtils.getEmotionContent(1,context, holder.textView,str);
