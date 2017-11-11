@@ -1,13 +1,12 @@
-package com.example.chen1.uncom;
+package com.example.chen1.uncom.find;
 
 import android.animation.ObjectAnimator;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatButton;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
-import android.telecom.PhoneAccount;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.design.widget.TabLayout;
 
-import com.example.chen1.uncom.application.CoreApplication;
+import com.example.chen1.uncom.R;
 
 public class FindPageMainFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -33,7 +31,7 @@ public class FindPageMainFragment extends Fragment {
     private TranslateAnimation mHiddenAction;
     private ObjectAnimator animator;
     private TabLayout tableLayout;
-
+    private ViewPager viewPager;
 
     public static FindPageMainFragment getInstance(){
         if(findPageMainFragment==null){
@@ -67,8 +65,6 @@ public class FindPageMainFragment extends Fragment {
         AppCompatImageView moreBtn= (AppCompatImageView) view.findViewById(R.id.more_activity_info);
         final Animation anim =new RotateAnimation(0f, 90f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         final Animation anim2 =new RotateAnimation(90f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-
-
         anim.setDuration(300);
         anim2.setDuration(300);
         moreBtn.setOnClickListener(new View.OnClickListener() {
@@ -89,9 +85,16 @@ public class FindPageMainFragment extends Fragment {
                         linearLayout.setVisibility(View.VISIBLE);
                         View views= inflater.inflate(R.layout.find_activity_cardview_extend_layout,null);
                         tableLayout= (TabLayout) views.findViewById(R.id.extend_tabLayout);
-                        tableLayout.addTab(tableLayout.newTab().setText("简述"));
+                        viewPager= (ViewPager) views.findViewById(R.id.viewpager);
+                        viewPager.setAdapter(new TabPagerAdapter(getFragmentManager()));
+                        tableLayout.setupWithViewPager(viewPager);
+                        tableLayout.getTabAt(0).setText("简述");
+                        tableLayout.getTabAt(1).setText("详细信息");
+                        tableLayout.getTabAt(2).setText("活动数据");
+
+                       /* tableLayout.addTab(tableLayout.newTab().setText("简述"));
                         tableLayout.addTab(tableLayout.newTab().setText("详细信息"));
-                        tableLayout.addTab(tableLayout.newTab().setText("活动数据"));
+                        tableLayout.addTab(tableLayout.newTab().setText("活动数据"));*/
                         linearLayout.addView(views);
                     }else{
                         rootView.findViewById(R.id.find_activity_extend_linearlayout).startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.card_extend_show));

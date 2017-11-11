@@ -217,7 +217,7 @@ public class LoginPageFragment extends Fragment {
                     JSONObject params = new JSONObject(map);
                     Log.v("json", String.valueOf(params));
                     /*http://10.0.2.2:8081 本地调试用IP地址，本地调试时不能使用127.0.0.1:8081 47.95.0.73*/
-                    SessionStoreJsonRequest sessionStoreJsonRequest = new SessionStoreJsonRequest("http://47.95.0.73:8081/login",
+                    SessionStoreJsonRequest sessionStoreJsonRequest = new SessionStoreJsonRequest("http://"+CoreApplication.newInstance().IP_ADDR+":8081/login",
                             params, new Response.Listener<JSONObject>() {
 
                         @Override

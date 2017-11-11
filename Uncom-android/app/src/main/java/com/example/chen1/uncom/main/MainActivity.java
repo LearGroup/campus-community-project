@@ -32,30 +32,20 @@ import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.example.chen1.uncom.FindPageMainFragment;
+import com.example.chen1.uncom.find.FindPageMainFragment;
 import com.example.chen1.uncom.MePageMainFragment;
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
-import com.example.chen1.uncom.bean.BeanDaoManager;
-import com.example.chen1.uncom.bean.MessageHistoryBeanDao;
-import com.example.chen1.uncom.bean.RelationShipLevelBean;
-import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
 import com.example.chen1.uncom.relationship.RalationShipPageMainFragment;
 import com.example.chen1.uncom.set.SetPageMainFragment;
 import com.example.chen1.uncom.service.ChatCoreBinder;
 import com.example.chen1.uncom.service.CoreService;
 import com.example.chen1.uncom.utils.BackHandlerHelper;
 import com.example.chen1.uncom.utils.BadgeMessageUtil;
-import com.example.chen1.uncom.utils.BottomNavigationViewHelper;
-import com.example.chen1.uncom.utils.SharedPreferencesUtil;
-
-import org.greenrobot.greendao.query.Query;
-import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationBar.OnTabSelectedListener{
 

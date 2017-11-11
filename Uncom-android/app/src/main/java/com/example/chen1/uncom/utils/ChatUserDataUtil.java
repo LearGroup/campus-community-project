@@ -60,7 +60,7 @@ public class ChatUserDataUtil {
             JSONObject params = new JSONObject(map);
             final JSONArray jsonArray;
              /*http://10.0.2.2:8081 47.95.0.73*/
-            SessionStoreJsonRequest sessionStoreJsonRequest =new SessionStoreJsonRequest("http://47.95.0.73:8081/getFrendList",
+            SessionStoreJsonRequest sessionStoreJsonRequest =new SessionStoreJsonRequest("http://"+CoreApplication.newInstance().IP_ADDR+":8081/getFrendList",
                     params, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -79,7 +79,6 @@ public class ChatUserDataUtil {
                                         }else{
                                             relationShipLevelBeanDao.update(Array.get(i));
                                         }
-
                                     }
                                 }
                             } catch (JSONException e) {
@@ -126,7 +125,7 @@ public class ChatUserDataUtil {
         }
 
 
-        final SessionStoreJsonRequest sessionStoreJsonRequest=new SessionStoreJsonRequest("http://47.95.0.73:8081/searchUser", params,
+        final SessionStoreJsonRequest sessionStoreJsonRequest=new SessionStoreJsonRequest("http://"+CoreApplication.newInstance().IP_ADDR+":8081/searchUser", params,
                 new Response.Listener<JSONObject>() {
                     @Override
                             public void onResponse(JSONObject response) {
@@ -201,7 +200,7 @@ public class ChatUserDataUtil {
         map.put("min_id",min_id);
         map.put("req_id",req_id);
         JSONObject params = new JSONObject(map);
-        final SessionStoreJsonRequest sessionStoreJsonRequest=new SessionStoreJsonRequest("http://47.95.0.73:8081/registerPersonRelationShip", params,new Response.Listener<JSONObject>() {
+        final SessionStoreJsonRequest sessionStoreJsonRequest=new SessionStoreJsonRequest("http://"+CoreApplication.newInstance().IP_ADDR+":8081/registerPersonRelationShip", params,new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 RelationShipLevelBeanDao relationShipLevelBeanDao=BeanDaoManager.getInstance().getDaoSession().getRelationShipLevelBeanDao();
@@ -232,7 +231,7 @@ public class ChatUserDataUtil {
                                           Message messages=new Message();
                                           messages.what=0;
                                           messages.obj=jsonArray1;
-                                          //Log.v("接受好友Message", String.valueOf(jsonArray1));
+                                          //Log.v("接受好友Message", String.valueOf(jsonArray1 ));
                                           CoreApplication.newInstance().getCoreAppGetChatDataHandler().sendMessage(messages);
                                           BeanDaoManager.getInstance().getDaoSession().getNewRelationShipBeanDao().update(CoreApplication.newInstance().getNewRelationShipList().get(i));
                                       }
