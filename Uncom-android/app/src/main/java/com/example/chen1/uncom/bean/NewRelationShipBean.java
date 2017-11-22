@@ -27,14 +27,51 @@ public class NewRelationShipBean   implements Parcelable {
     private Integer view_type;//视图需要展示的类型 0顶层搜索时弹出的搜索框 1进入新关系页面的默认布局(显示添加新关系的历史 2新关系搜索结果框)
     private String sprovince;//省/直辖市
     private String stown;//市
+    private String sarea;//区
     private Integer sex;//性别
     private String user_id;//用户id
 
 
-    @Generated(hash = 486409517)
-    public NewRelationShipBean(Long id, Integer type, String header_pic, String results,
-            Date get_time, String short_message, Integer result_type, String user_name,
-            Integer view_type, String sprovince, String stown, Integer sex, String user_id) {
+    protected NewRelationShipBean(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            type = null;
+        } else {
+            type = in.readInt();
+        }
+        header_pic = in.readString();
+        results = in.readString();
+        short_message = in.readString();
+        if (in.readByte() == 0) {
+            result_type = null;
+        } else {
+            result_type = in.readInt();
+        }
+        user_name = in.readString();
+        if (in.readByte() == 0) {
+            view_type = null;
+        } else {
+            view_type = in.readInt();
+        }
+        sprovince = in.readString();
+        stown = in.readString();
+        sarea = in.readString();
+        if (in.readByte() == 0) {
+            sex = null;
+        } else {
+            sex = in.readInt();
+        }
+        user_id = in.readString();
+    }
+
+    @Generated(hash = 972698163)
+    public NewRelationShipBean(Long id, Integer type, String header_pic, String results, Date get_time,
+            String short_message, Integer result_type, String user_name, Integer view_type,
+            String sprovince, String stown, String sarea, Integer sex, String user_id) {
         this.id = id;
         this.type = type;
         this.header_pic = header_pic;
@@ -46,23 +83,13 @@ public class NewRelationShipBean   implements Parcelable {
         this.view_type = view_type;
         this.sprovince = sprovince;
         this.stown = stown;
+        this.sarea = sarea;
         this.sex = sex;
         this.user_id = user_id;
     }
 
     @Generated(hash = 1353939643)
     public NewRelationShipBean() {
-    }
-
-
-    protected NewRelationShipBean(Parcel in) {
-        header_pic = in.readString();
-        results = in.readString();
-        short_message = in.readString();
-        user_name = in.readString();
-        sprovince = in.readString();
-        stown = in.readString();
-        user_id = in.readString();
     }
 
     public static final Creator<NewRelationShipBean> CREATOR = new Creator<NewRelationShipBean>() {
@@ -84,12 +111,43 @@ public class NewRelationShipBean   implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
+        }
+        if (type == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(type);
+        }
         dest.writeString(header_pic);
         dest.writeString(results);
         dest.writeString(short_message);
+        if (result_type == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(result_type);
+        }
         dest.writeString(user_name);
+        if (view_type == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(view_type);
+        }
         dest.writeString(sprovince);
         dest.writeString(stown);
+        dest.writeString(sarea);
+        if (sex == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(sex);
+        }
         dest.writeString(user_id);
     }
 
@@ -179,6 +237,14 @@ public class NewRelationShipBean   implements Parcelable {
 
     public void setStown(String stown) {
         this.stown = stown;
+    }
+
+    public String getSarea() {
+        return this.sarea;
+    }
+
+    public void setSarea(String sarea) {
+        this.sarea = sarea;
     }
 
     public Integer getSex() {

@@ -4,7 +4,6 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -18,10 +17,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +30,7 @@ import android.widget.Toast;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.chen1.uncom.find.FindPageMainFragment;
-import com.example.chen1.uncom.MePageMainFragment;
+import com.example.chen1.uncom.me.MePageMainFragment;
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.relationship.RalationShipPageMainFragment;
@@ -95,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Log.v("MainActivityOnceate",".............ok");
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -104,10 +100,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+
+
+
+
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar)this.findViewById(R.id.toolbar);
+        MIUISetStatusBarLightMode(getWindow(),true);
+        FlymeSetStatusBarLightMode(getWindow(),true);
+       // StatusBarColorUtil.setTranslateStatusBar(this);
+       // StatusBarColorUtil.setStatusBarMode(this,false);
+     /*   Toolbar toolbar = (Toolbar)this.findViewById(R.id.toolbar);
         toolbar.setTitle("");
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);*/
         bottomNavigationBar=(BottomNavigationBar)findViewById(R.id.bottom_navigation);
         bottomNavigationBar.setTabSelectedListener(this);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
@@ -127,12 +134,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
        // bottomNavigationView =(BottomNavigationView) findViewById(R.id.navigation);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+    /*    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
        drawer.setDrawerListener(toggle);
         toggle.syncState();
-        toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
-        sectionsAdapter=new SectionsAdapter(getSupportFragmentManager());
+        toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.colorIcon), PorterDuff.Mode.SRC_ATOP);
+*/        sectionsAdapter=new SectionsAdapter(getSupportFragmentManager());
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 

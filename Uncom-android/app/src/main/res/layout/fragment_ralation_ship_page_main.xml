@@ -2,14 +2,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.example.chen1.uncom.relationship.RalationShipPageMainFragment">
     <!-- TODO: Update blank fragment layout -->
+    <android.support.design.widget.AppBarLayout
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        >
+        <!-- app:layout_scrollFlags="scroll|enterAlways"-->
+        <android.support.v7.widget.Toolbar
+            android:paddingTop="25dp"
+            android:layout_marginBottom="-10dp"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        <TextView
+            android:textColor="#ff222222"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关系"
+            android:textSize="22dp"/>
+            <TextView
+                android:layout_marginRight="15dp"
+                android:textSize="17dp"
+                android:textColor="#FF444444"
+                android:layout_gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="添加"/>
+            <TextView
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="right"
+                android:layout_width="1.5dp"
+                android:layout_height="18dp"
+                android:textSize="20dp"
+                android:background="#ff888888"
+                />
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_marginTop="2dp"
+                android:layout_gravity="right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/ic_vector_search_icon"/>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
   <ScrollView
+      android:paddingLeft="15dp"
+      android:paddingRight="15dp"
       android:scrollbars="none"
-      android:background="@color/colorPrimary"
       app:layout_behavior="@string/appbar_scrolling_view_behavior"
       android:id="@+id/relation_ship_scroll_view"
       android:layout_width="match_parent"
@@ -22,8 +67,6 @@
               android:id="@+id/new_relationship_button"
               android:clickable="true"
               android:background="?android:attr/selectableItemBackground"
-              android:paddingLeft="15dp"
-              android:paddingRight="15dp"
               android:layout_width="match_parent"
               android:layout_height="50dp"
               >
@@ -42,6 +85,7 @@
                   android:layout_height="34dp"
                   android:text="新关系"
                   android:textSize="24dp"
+                  android:textColor="#FF555555"
                   app:layout_constraintLeft_toRightOf="@+id/appCompatImageView"
                   android:layout_marginLeft="10dp"
                   android:layout_marginStart="10dp"
@@ -66,16 +110,12 @@
 
           </android.support.constraint.ConstraintLayout>
           <TextView
-              android:layout_marginLeft="15dp"
-              android:layout_marginRight="15dp"
               android:layout_width="match_parent"
               android:layout_height="0.5dp"
               android:background="#eeeeee"
               android:id="@+id/textView2"
               />
           <TextView
-              android:paddingLeft="15dp"
-              android:paddingRight="15dp"
               android:layout_marginTop="10dp"
               android:layout_marginBottom="2dp"
               android:layout_width="match_parent"
@@ -92,8 +132,6 @@
           </com.example.chen1.uncom.relationship.RelationShipListview>
 
           <TextView
-              android:paddingLeft="15dp"
-              android:paddingRight="15dp"
               android:layout_marginTop="10dp"
               android:layout_marginBottom="2dp"
               android:layout_width="match_parent"

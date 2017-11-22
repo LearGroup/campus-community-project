@@ -52,7 +52,9 @@ import java.util.Map;
 public class CoreApplication extends Application {
 
 
-
+/*
+   10.0.2.2
+  47.95.0.73*/
     public String IP_ADDR="47.95.0.73";
     private boolean disPlay=true;
     private boolean disPlayType=true;//1 从RalationShipPageMainFragment到该fragment

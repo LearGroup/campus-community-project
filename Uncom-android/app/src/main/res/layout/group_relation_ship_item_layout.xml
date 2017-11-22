@@ -2,10 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
     android:descendantFocusability="blocksDescendants"
-    android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent">
@@ -30,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="旅行小组"
+            android:textColor="#FF555555"
             android:textSize="20dp"
             app:layout_constraintLeft_toRightOf="@+id/appCompatImageView2"
             android:layout_marginLeft="8dp"

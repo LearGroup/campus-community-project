@@ -25,7 +25,6 @@
                 android:id="@+id/back_icon"
                 android:layout_height="25dp"
                 android:clickable="true"
-                android:onClick="onClick"
                 tools:ignore="DuplicateIds"
                 app:srcCompat="@drawable/ic_vector_back_icon" />
 

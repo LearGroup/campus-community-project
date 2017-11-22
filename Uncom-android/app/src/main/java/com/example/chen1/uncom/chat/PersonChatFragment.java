@@ -145,27 +145,25 @@ public class PersonChatFragment extends Fragment implements NavigationView.OnNav
     }
 
 
-    public static PersonChatFragment newInstance(String param1, String param2) {
-        PersonChatFragment fragment = new PersonChatFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     /**
      * 隐藏软件盘
      */
     private void hideSoftInput() {
+        Log.v("hideSoftInput","true");
         mInputManager.hideSoftInputFromWindow(input_text.getWindowToken(), 0);
     }
 
     private void showEmotionLayout() {
+        Log.v("showEmotionLayout","true");
         int softInputHeight = KeyBoardHeight;
-        ExpressionLinearLayout.getLayoutParams().height = KeyBoardHeight;
-        ExpressionLinearLayout.setVisibility(View.VISIBLE);
-        hideSoftInput();
+        if(softInputHeight>0){
+            ExpressionLinearLayout.getLayoutParams().height = KeyBoardHeight;
+            ExpressionLinearLayout.setVisibility(View.VISIBLE);
+            hideSoftInput();
+        }
+
     }
 
 
@@ -173,7 +171,11 @@ public class PersonChatFragment extends Fragment implements NavigationView.OnNav
      * 编辑框获取焦点，并显示软件盘
      */
     private void showSoftInput() {
+        Log.v("showSoftInput","true");
         input_text.requestFocus();
+        LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.bottomMargin=KeyBoardHeight;
+        softinputLinearLayout.setLayoutParams(lp);
         input_text.post(new Runnable() {
             @Override
             public void run() {
@@ -188,6 +190,7 @@ public class PersonChatFragment extends Fragment implements NavigationView.OnNav
      * @param showSoftInput 是否显示软件盘
      */
     private void hideEmotionLayout(boolean showSoftInput) {
+        Log.v("hideEmotionLayout","true");
         if (ExpressionLinearLayout.isShown()) {
             ExpressionLinearLayout.setVisibility(View.GONE);
             if (showSoftInput) {
@@ -271,7 +274,7 @@ public class PersonChatFragment extends Fragment implements NavigationView.OnNav
             public void run() {
                 ((LinearLayout.LayoutParams) ContentView.getLayoutParams()).weight = 1.0F;
             }
-        }, 500L);
+        }, 200L);
     }
 
     @Override
@@ -322,7 +325,6 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
                 }
             }
             }
-
         getChatDataHandler=new Handler(){
             //接收消息
             @Override
@@ -440,7 +442,7 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
         SoftKeyBoardListener.setListener(getActivity(), new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
             @Override
             public void keyBoardShow(int height) {
-                if(KeyBoardHeight !=height){
+                if(KeyBoardHeight !=height && height>KeyBoardHeight){
                     KeyBoardHeight = height;
                     SharedPreferencesUtil.setSoftInputHeight(KeyBoardHeight,CoreApplication.newInstance().getBaseContext());
                 }
@@ -462,31 +464,36 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
 
 
             }
-        });
+    });
         input_text.setOnTouchListener(new View.OnTouchListener() {
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
+                Log.v("input_text","onTouchListener");
                 if (event.getAction() == MotionEvent.ACTION_UP && ExpressionLinearLayout.isShown()) {
                     if(personChatRecyclerViewAdapter.getItemCount()>=2){
                         ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
                     }
                     lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
+                    hideEmotionLayout(true);//隐藏表情布局，显示软件盘
                     ExpressionLinearLayout.setVisibility(View.GONE);//隐藏表情布局，显示软件盘
                     //软件盘显示后，释放内容高度
                     input_text.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             unlockContentHeightDelayed();
-
                         }
                     }, 200L);
                 }else if(event.getAction() == MotionEvent.ACTION_UP && ExpressionLinearLayout.isShown()==false){
                     Log.v("软键盘弹出","表情布局影藏");
                     Log.v("软键盘高度", String.valueOf(KeyBoardHeight));
                     LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) softinputLinearLayout.getLayoutParams();
-                    layoutParams.setMargins(0,0,0,KeyBoardHeight);//设置rlContent的marginBottom的值为软键盘占有的高度即可
-                    softinputLinearLayout.requestLayout();
+                    if(KeyBoardHeight>0){
+                        layoutParams.setMargins(0,0,0,KeyBoardHeight);//设置rlContent的marginBottom的值为软键盘占有的高度即可
+                        softinputLinearLayout.requestLayout();
+                    }
+
                 }
                 else{
                     input_text.postDelayed(new Runnable() {
@@ -499,16 +506,12 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
                         }
                     }, 200L);
                 }
-
-
-
                 return false;
             }
         });
         input_text.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -518,6 +521,7 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
 
             @Override
             public void afterTextChanged(Editable s) {
+                Log.v("input_text changed", String.valueOf(KeyBoardHeight));
                 if (input_text.getText().length() != 0 && send_btn.getVisibility() == View.GONE) {
                     chat_more_icon.startAnimation(mHiddenAction);
                     chat_more_icon.setVisibility(View.GONE);
@@ -539,6 +543,10 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
                     ContentView.smoothScrollToPosition(personChatRecyclerViewAdapter.getItemCount()-1);
                 }
                 if (ExpressionLinearLayout.isShown()) {
+    /*                LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                    lp.bottomMargin=KeyBoardHeight*2;
+                    softinputLinearLayout.setLayoutParams(lp);
+*/
                     Log.v("softInput", "true ");
                     lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
                     hideEmotionLayout(true);//隐藏表情布局，显示软件盘
@@ -555,7 +563,6 @@ queryBuilder.or(queryBuilder.and(MessageHistoryBeanDao.Properties.OwnId.eq(user_
                     } else {
                         showEmotionLayout();//两者都没显示，直接显示表情布局
                     }
-
                 }
             }
         });

@@ -13,7 +13,7 @@
         android:label="Tests for de.hdodenhof.circleimageview.test"
         android:targetPackage="de.hdodenhof.circleimageview.test" />
 
-    <application>
+    <application android:debuggable="true" >
         <uses-library android:name="android.test.runner" />
     </application>
 

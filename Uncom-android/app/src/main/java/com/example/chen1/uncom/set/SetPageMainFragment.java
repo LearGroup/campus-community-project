@@ -1,13 +1,17 @@
 package com.example.chen1.uncom.set;
 
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +40,7 @@ public class SetPageMainFragment extends Fragment {
     private int RECONNECTION =0;
     private  View rootView;
     private int CONNECTION_STATUS=1;
+    private DrawerLayout drawer;
     private static boolean isVisiable;
     private LinearLayout popupWindow;
     private  SetPageMainFragmentAdapter setPageMainFragmentAdapter;
@@ -92,6 +97,7 @@ public class SetPageMainFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+         drawer = (DrawerLayout)getActivity().findViewById(R.id.drawer_layout);
         Log.v("SetPageMainFramgent:", "onCreate: ");
     }
 
@@ -102,6 +108,16 @@ public class SetPageMainFragment extends Fragment {
         Log.v("SetPageMainFramgent:", "onCreateView: ");
         View view=inflater.inflate(R.layout.fragment_set_page_main, container, false);
         rootView=view;
+
+        Toolbar toolbar = (Toolbar)view.findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setHasOptionsMenu(true);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+        toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.colorIcon), PorterDuff.Mode.SRC_ATOP);
+
         popupWindow=(LinearLayout) view.findViewById(R.id.popupwindow);
         RecyclerView recyclerView= (RecyclerView) view.findViewById(R.id.set_page_main_recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());

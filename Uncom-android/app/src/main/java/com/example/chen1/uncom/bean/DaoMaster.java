@@ -24,6 +24,7 @@ public class DaoMaster extends AbstractDaoMaster {
         MessageHistoryBeanDao.createTable(db, ifNotExists);
         NewRelationShipBeanDao.createTable(db, ifNotExists);
         RelationShipLevelBeanDao.createTable(db, ifNotExists);
+        RoutineBeanDao.createTable(db, ifNotExists);
         UserBeanDao.createTable(db, ifNotExists);
     }
 
@@ -32,6 +33,7 @@ public class DaoMaster extends AbstractDaoMaster {
         MessageHistoryBeanDao.dropTable(db, ifExists);
         NewRelationShipBeanDao.dropTable(db, ifExists);
         RelationShipLevelBeanDao.dropTable(db, ifExists);
+        RoutineBeanDao.dropTable(db, ifExists);
         UserBeanDao.dropTable(db, ifExists);
     }
 
@@ -54,6 +56,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(MessageHistoryBeanDao.class);
         registerDaoClass(NewRelationShipBeanDao.class);
         registerDaoClass(RelationShipLevelBeanDao.class);
+        registerDaoClass(RoutineBeanDao.class);
         registerDaoClass(UserBeanDao.class);
     }
 

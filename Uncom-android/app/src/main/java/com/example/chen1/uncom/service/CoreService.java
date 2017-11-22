@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.BeanDaoManager;
@@ -32,14 +33,23 @@ import com.example.chen1.uncom.utils.CoreServiceCallBack;
 import com.example.chen1.uncom.utils.PopupWindowUtils;
 import com.example.chen1.uncom.utils.SharedPreferencesUtil;
 import com.example.chen1.uncom.utils.UserBeanAndJsonUtils;
-import com.google.gson.Gson;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.net.URISyntaxException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -104,7 +114,7 @@ public class CoreService extends Service  {
                         Log.v("createNewThread","ok");
                         /*http://47.95.0.73:8081*/
                         /*http://10.0.2.2:8081*/
-                        socket= IO.socket("http://47.95.0.73:8081");
+                        socket= IO.socket("http://"+CoreApplication.newInstance().IP_ADDR+":8081");
                         socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
                             @Override
                             public void call(Object... args) {
@@ -219,8 +229,9 @@ public class CoreService extends Service  {
                                     if(object.getString("status").equals("1")){
                                         JSONArray jsonArray=object.getJSONArray("results");
                                         for (int i=0;i<jsonArray.length();i++){
-                                            Log.v("relationshipRresponse", String.valueOf(jsonArray));
-                                            NewRelationShipBean bean=new Gson().fromJson(String.valueOf(jsonArray.getJSONObject(i)), NewRelationShipBean.class);
+                                            Log.v("relationshipRresponse", String.valueOf(jsonArray.getJSONObject(i))+"awd");
+                                            NewRelationShipBean bean=new NewRelationShipBean();
+                                            bean= JSON.parseObject(String.valueOf(jsonArray.getJSONObject(i)),bean.getClass());
                                             bean.setView_type(1);
                                             bean.setResult_type(2);
                                             Message message =new Message();
@@ -344,8 +355,24 @@ public class CoreService extends Service  {
                                 case 2:{
                                     //发送新关系请求
                                     Log.v("CoreService","requestBuildRelationShip");
-                                    JsonObject jsonObject= (JsonObject) msg.obj;
-                                    socket.emit("requestBuildRelationShip",jsonObject);
+                                    NewRelationShipBean bean= (NewRelationShipBean) msg.obj;
+                                    HashMap<String,String> data=new HashMap<String, String>();
+                                    Long time=bean.getGet_time().getTime();
+                                    data.put("time", String.valueOf(time));
+                                    data.put("header_pic", bean.getHeader_pic());
+                                    data.put("sex", String.valueOf(bean.getSex()));
+                                    data.put("short_message",bean.getShort_message());
+                                    data.put("sprovince",bean.getSprovince());
+                                    data.put("stown",bean.getStown());
+                                    data.put("user_id",userBean.getId());
+                                    data.put("user_name",bean.getUser_name());
+                                    data.put("view_type", String.valueOf(bean.getView_type()));
+                                    data.put("sarea",bean.getShort_message());
+                                    data.put("target_id",bean.getUser_id());
+                                    data.put("short_message",bean.getShort_message());
+                                    JSONObject params = new JSONObject(data);
+                                    Log.v("发送好友请求", String.valueOf(params));
+                                    socket.emit("requestBuildRelationShip",params);
                                 }
                             }
 
@@ -408,7 +435,48 @@ public class CoreService extends Service  {
         super.onDestroy();
     }
 
+    /**
+     * gson使用toJson时处理数据库中的datetime类型的时间数据
+     *
+     * @author jinjinwang <br>
+     *         created on Jun 9, 2013 11:47:05 AM
+     */
+    private class TimestampTypeAdapter implements JsonSerializer<Timestamp>, JsonDeserializer<Timestamp> {
+        private final DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+        public JsonElement serialize(Timestamp src, Type arg1, JsonSerializationContext arg2) {
+            String dateFormatAsString = format.format(new Date(src.getTime()));
+            return new JsonPrimitive(dateFormatAsString);
+        }
+
+        public Timestamp deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            if (!(json instanceof JsonPrimitive)) {
+                throw new JsonParseException("The date should be a string value");
+            }
+            try {
+                Date date = format.parse(json.getAsString());
+                return new Timestamp(date.getTime());
+            } catch (ParseException e) {
+                throw new JsonParseException(e);
+            }
+        }
+    }
+
+    /**
+     * gson使用toJson时处理数据库中的date类型的时间数据
+     *
+     * @author jinjinwang <br>
+     *         created on Jun 9, 2013 11:48:29 AM
+     */
+    private class SQLDateTypeAdapter implements JsonSerializer<java.sql.Date> {
+        private final DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        @Override
+        public JsonElement serialize(java.sql.Date src, Type arg1, JsonSerializationContext arg2) {
+            String dateFormatAsString = format.format(new java.sql.Date(src.getTime()));
+            return new JsonPrimitive(dateFormatAsString);
+        }
+    }
 
 
 }

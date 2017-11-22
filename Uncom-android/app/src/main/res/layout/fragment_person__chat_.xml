@@ -16,9 +16,9 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <android.support.design.widget.AppBarLayout
-                android:background="@drawable/default_toolbar"
+                android:background="@color/colorMain"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/appBarLayout">
                 <android.support.v7.widget.Toolbar
                     android:paddingTop="5dp"
@@ -31,7 +31,6 @@
                         android:id="@+id/person_chat_back_icon"
                         android:layout_height="25dp"
                         android:clickable="true"
-                        android:onClick="onClick"
                         tools:ignore="DuplicateIds"
                         app:srcCompat="@drawable/ic_vector_back_icon" />
                     <TextView
@@ -56,27 +55,20 @@
                 android:background="#eeeeee" />
 
             <LinearLayout
-
-                android:elevation="0dp"
                 android:background="@color/colorPrimary"
                 android:id="@+id/person_chat_bottomNavigationView"
                 android:layout_width="match_parent"
-                android:minHeight="45dp"
                 android:layout_height="wrap_content">
                 <LinearLayout
                     android:elevation="0dp"
                     android:background="@color/colorPrimary"
-                    android:gravity="bottom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <LinearLayout
-
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="bottom"
-                        android:layout_gravity="bottom"
                         android:orientation="horizontal"
                         android:paddingTop="3dp">
 
@@ -100,7 +92,6 @@
                             android:paddingBottom="8dp"
                             android:minHeight="45dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
                             android:layout_marginLeft="3dp"
                             android:layout_weight="1"
                             android:maxLines="3"

@@ -14,7 +14,7 @@ greendao {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.example.chen1.uncom"
         minSdkVersion 19
@@ -42,10 +42,11 @@ dependencies {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }
-    compile 'org.jetbrains:annotations-java5:15.0'
+    compile 'com.githang:status-bar-compat:latest.integration'
     compile 'org.jetbrains:annotations-java5:15.0'
     compile 'com.ashokvarma.android:bottom-navigation-bar:2.0.3'
     compile 'com.jakewharton:disklrucache:2.0.2'
+    compile 'net.zetetic:android-database-sqlcipher:3.5.2'
     compile 'com.alibaba:fastjson:1.2.38'
     compile 'com.android.support:multidex:1.0.0'
     compile 'org.greenrobot:greendao:3.2.0'

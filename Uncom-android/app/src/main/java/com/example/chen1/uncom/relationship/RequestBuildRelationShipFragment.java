@@ -100,7 +100,7 @@ public class RequestBuildRelationShipFragment extends Fragment implements View.O
             public void onClick(View v) {
                 Log.v("发送加好友请求","ok");
                 data=new NewRelationShipBean();
-                data.setUser_id(userBean.getId());
+                data.setUser_id(frendData.getUser_id());
                 data.setView_type(1);
                 data.setType(frendData.getType());
                 data.setHeader_pic(userBean.getHeader_pic());
@@ -109,13 +109,12 @@ public class RequestBuildRelationShipFragment extends Fragment implements View.O
                 data.setSex(userBean.getSex());
                 data.setSprovince(userBean.getSprovince());
                 data.setStown(userBean.getStown());
+                data.setSarea(userBean.getSarea());
                 data.setUser_name(userBean.getUsername());
                 Log.v("RequesBuildRelation", String.valueOf(data));
-                JsonObject jsonObject = new Gson().toJsonTree(data).getAsJsonObject();
-                jsonObject.addProperty("target_id",frendData.getUser_id());
                 Message message=new Message();
                 message.what=2;
-                message.obj=jsonObject;
+                message.obj=data;
                 CoreApplication.newInstance().getCoreService().getSendChatHandler().sendMessage(message);
                 PopupWindowUtils.popupWindow("请求已发送",R.layout.access_popupwindow_statustag_layout, LinearLayout.LayoutParams.MATCH_PARENT,150,1500,getContext(),getView());
                  CountDownTimer countDownTimer=new CountDownTimer(1000,10) {

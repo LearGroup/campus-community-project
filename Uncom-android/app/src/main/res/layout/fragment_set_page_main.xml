@@ -2,10 +2,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/colorPrimary"
     tools:context="com.example.chen1.uncom.set.SetPageMainFragment"
     android:orientation="vertical">
+    <android.support.design.widget.AppBarLayout
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        >
+        <!-- app:layout_scrollFlags="scroll|enterAlways"-->
+        <android.support.v7.widget.Toolbar
+            android:paddingTop="15dp"
+            android:layout_marginBottom="-5dp"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_gravity="center"
+                android:textColor="#ff222222"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="聚合"
+                android:textSize="22dp"/>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
     <LinearLayout
         android:background="@color/colorMain"
         android:id="@+id/popupwindow"
