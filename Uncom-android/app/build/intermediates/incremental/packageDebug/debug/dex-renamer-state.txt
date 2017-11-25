@@ -1,0 +1,19 @@
+#Mon Nov 20 10:48:04 CST 2017
+renamed.5=classes6.dex
+renamed.4=classes5.dex
+renamed.3=classes4.dex
+renamed.2=classes3.dex
+renamed.1=classes2.dex
+renamed.0=classes.dex
+base.5=C\:\\Users\\chen1\\Desktop\\work\\campus-community-project\\Uncom-android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\89
+base.4=C\:\\Users\\chen1\\Desktop\\work\\campus-community-project\\Uncom-android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\93
+base.3=C\:\\Users\\chen1\\Desktop\\work\\campus-community-project\\Uncom-android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\88
+base.2=C\:\\Users\\chen1\\Desktop\\work\\campus-community-project\\Uncom-android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\92
+base.1=C\:\\Users\\chen1\\Desktop\\work\\campus-community-project\\Uncom-android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\91
+base.0=C\:\\Users\\chen1\\Desktop\\work\\campus-community-project\\Uncom-android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\90
+file.5=C\:\\Users\\chen1\\Desktop\\work\\campus-community-project\\Uncom-android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\89\\classes.dex
+file.4=C\:\\Users\\chen1\\Desktop\\work\\campus-community-project\\Uncom-android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\93\\classes.dex
+file.3=C\:\\Users\\chen1\\Desktop\\work\\campus-community-project\\Uncom-android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\88\\classes.dex
+file.2=C\:\\Users\\chen1\\Desktop\\work\\campus-community-project\\Uncom-android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\92\\classes.dex
+file.1=C\:\\Users\\chen1\\Desktop\\work\\campus-community-project\\Uncom-android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\91\\classes.dex
+file.0=C\:\\Users\\chen1\\Desktop\\work\\campus-community-project\\Uncom-android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\90\\classes.dex
