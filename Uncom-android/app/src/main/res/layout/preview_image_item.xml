@@ -1,0 +1,11 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/colorWhite"
+    android:layout_height="match_parent">
+<com.github.chrisbanes.photoview.PhotoView
+    android:scaleType="fitCenter"
+    android:id="@+id/zoom_image_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+</RelativeLayout>

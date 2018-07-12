@@ -1,0 +1,117 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000"
+    tools:context="com.example.chen1.uncom.find.TabPageForData">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="77dp">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="77dp">
+                <TextView
+                    android:textSize="12dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="2dp"
+                    android:text="最近六周期活动图"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <lecho.lib.hellocharts.view.LineChartView
+                    android:layout_marginTop="3dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="18dp"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/chart"
+                    android:layout_marginRight="5dp"
+                    android:layout_width="200dp"
+                    android:layout_height="75dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:textSize="12dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorMain"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="2dp"
+                    android:text="数值单位 : 次数/周"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="#a0037D66"/>
+                <TextView
+                    android:textSize="13dp"
+                    android:textColor="@color/colorMain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="平均 : 3.2"/>
+            </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="#a0FF8547"/>
+                    <TextView
+                        android:textSize="13dp"
+                        android:textColor="@color/colorMain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="最高 : 3.2"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="#a08EB9F5"/>
+
+                    <TextView
+                        android:textSize="13dp"
+                        android:textColor="@color/colorMain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="最低 : 3.2"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- TODO: Update blank fragment layout -->
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,208 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootview"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:elevation="4dp"
+    android:background="@color/colorWhite"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.chen1.uncom.thinker.WriteThinkFragment">
+    <ImageView
+        android:id="@+id/back_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+     />
+    <LinearLayout
+        android:id="@+id/container_view"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.design.widget.AppBarLayout
+            app:elevation="0dp"
+            android:background="#00000000"
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            >
+            <android.support.v7.widget.Toolbar
+                app:elevation="0dp"
+                android:background="#00000000"
+                android:paddingTop="30dp"
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="30dp"
+                    android:id="@+id/back_btn"
+                    android:layout_height="30dp"
+                    android:clickable="true"
+                    tools:ignore="DuplicateIds"
+                    app:srcCompat="@drawable/ic_vector_back_icon" />
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/remind_btn"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="right"
+                    app:srcCompat="@drawable/ic_vector_remind_null_2_icon"/>
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/nail_btn"
+                    android:layout_marginRight="20dp"
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="right"
+                    app:srcCompat="@drawable/ic_vector_nail_null_icon"/>
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/contentView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ScrollView
+                android:padding="0dp"
+                android:layout_marginBottom="56dp"
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:padding="0dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:background="#00000000"
+                        android:padding="0dp"
+                        android:id="@+id/photo_container"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </android.support.v7.widget.RecyclerView>
+                    <LinearLayout
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:id="@+id/titleLinearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:id="@+id/title"
+                            android:textColorHint="#8A000000 "
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="20dp"
+                            android:textCursorDrawable="@drawable/access_cursor_active"
+                            android:background="@null"
+                            android:hint="标题"/>
+                    </LinearLayout>
+
+                        <EditText
+                            android:textCursorDrawable="@drawable/access_cursor_active"
+                            android:gravity="top"
+                            android:minHeight="60dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="45dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="15dp"
+                            android:lineSpacingExtra="4dp"
+                            android:textSize="16dp"
+                            android:id="@+id/content"
+                            android:textColorHint="@color/colorFontColor2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:hint="记事"/>
+                </LinearLayout>
+            </ScrollView>
+
+
+            <LinearLayout
+                android:background="@color/colorWhite"
+                android:elevation="3dp"
+
+                android:clickable="false"
+                android:id="@+id/bottom_linearlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
+                android:orientation="vertical"
+                android:layout_gravity="bottom">
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/tools_container"
+                    android:clickable="false"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                </LinearLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/bottom_img_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                      />
+                    <android.support.design.widget.BottomNavigationView
+
+                        android:id="@+id/bottom_navigation"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="bottom"
+                        android:background="#00000000">
+
+                        <LinearLayout
+                            android:id="@+id/left_more"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:background="#00000000">
+
+                            <android.support.v7.widget.AppCompatImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="10dp"
+                                app:srcCompat="@drawable/ic_vector_add_black_icon" />
+
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/changeTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="修改时间 :  半夜 00:19"
+                            android:textSize="12dp" />
+
+                        <LinearLayout
+                            android:id="@+id/rightBtn"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="right">
+
+                            <android.support.v7.widget.AppCompatImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_marginLeft="7dp"
+                                android:layout_marginTop="10dp"
+                                app:srcCompat="@drawable/ic_vector_more_2_icon" />
+                        </LinearLayout>
+
+                    </android.support.design.widget.BottomNavigationView>
+                </FrameLayout>
+
+            </LinearLayout>
+        </android.support.design.widget.CoordinatorLayout>
+    </LinearLayout>
+</FrameLayout>

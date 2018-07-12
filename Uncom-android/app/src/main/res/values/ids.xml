@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="imageid" type="id"/>
+    <item name="beanid" type="id"/>
+    <item name="typeid" type="id"/>
+    <item name="imagelis" type="id"/>
+    <item name="appimageid" type="id"/>
+</resources>

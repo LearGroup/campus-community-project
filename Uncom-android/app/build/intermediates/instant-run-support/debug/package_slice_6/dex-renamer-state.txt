@@ -1,4 +1,4 @@
-#Mon Nov 20 10:47:57 CST 2017
-base.0=C\:\\Users\\chen1\\Desktop\\work\\campus-community-project\\Uncom-android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\83
+#Wed Mar 21 22:59:38 CST 2018
+base.0=C\:\\Users\\chen1\\Desktop\\work\\campus-community-project\\Uncom-android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\7
 renamed.0=classes.dex
-file.0=C\:\\Users\\chen1\\Desktop\\work\\campus-community-project\\Uncom-android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\83\\classes.dex
+file.0=C\:\\Users\\chen1\\Desktop\\work\\campus-community-project\\Uncom-android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\7\\classes.dex

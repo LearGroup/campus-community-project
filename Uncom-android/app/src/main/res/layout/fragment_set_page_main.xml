@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.chen1.uncom.set.SetPageMainFragment"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:background="@color/colorMain"
+        android:id="@+id/popupwindow"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       >
+        <TextView
+            android:id="@+id/popup_win_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="网络错误"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimary"
+             />
+    </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:background="@color/colorWhite"
+            android:id="@+id/set_page_main_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+         >
+
+        </android.support.v7.widget.RecyclerView>
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+</LinearLayout>
