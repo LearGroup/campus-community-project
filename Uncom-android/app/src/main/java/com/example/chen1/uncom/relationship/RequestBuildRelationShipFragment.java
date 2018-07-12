@@ -1,7 +1,5 @@
 package com.example.chen1.uncom.relationship;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Message;
@@ -19,33 +17,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
+import com.example.chen1.uncom.FragmentBackHandler;
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
-import com.example.chen1.uncom.bean.BeanDaoManager;
 import com.example.chen1.uncom.bean.NewRelationShipBean;
-import com.example.chen1.uncom.bean.RelationShipLevelBean;
-import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
 import com.example.chen1.uncom.bean.UserBean;
 import com.example.chen1.uncom.utils.PopupWindowUtils;
-import com.example.chen1.uncom.utils.SessionStoreGsonRequest;
-import com.example.chen1.uncom.utils.SessionStoreJsonRequest;
-import com.example.chen1.uncom.utils.UserBeanAndJsonUtils;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 
-public class RequestBuildRelationShipFragment extends Fragment implements View.OnTouchListener{
+public class RequestBuildRelationShipFragment extends Fragment implements FragmentBackHandler,View.OnTouchListener{
 
     private AppCompatButton senButton;
     private UserBean userBean;
@@ -100,22 +83,21 @@ public class RequestBuildRelationShipFragment extends Fragment implements View.O
             public void onClick(View v) {
                 Log.v("发送加好友请求","ok");
                 data=new NewRelationShipBean();
-                data.setUser_id(userBean.getId());
+                data.setUser_id(frendData.getUser_id());
                 data.setView_type(1);
                 data.setType(frendData.getType());
                 data.setHeader_pic(userBean.getHeader_pic());
                 data.setGet_time(new Date());
-                data.setShort_message(requestMessgae.getText().toString());
+                data.setSelf_abstract(requestMessgae.getText().toString());
                 data.setSex(userBean.getSex());
                 data.setSprovince(userBean.getSprovince());
                 data.setStown(userBean.getStown());
+                data.setSarea(userBean.getSarea());
                 data.setUser_name(userBean.getUsername());
                 Log.v("RequesBuildRelation", String.valueOf(data));
-                JsonObject jsonObject = new Gson().toJsonTree(data).getAsJsonObject();
-                jsonObject.addProperty("target_id",frendData.getUser_id());
                 Message message=new Message();
                 message.what=2;
-                message.obj=jsonObject;
+                message.obj=data;
                 CoreApplication.newInstance().getCoreService().getSendChatHandler().sendMessage(message);
                 PopupWindowUtils.popupWindow("请求已发送",R.layout.access_popupwindow_statustag_layout, LinearLayout.LayoutParams.MATCH_PARENT,150,1500,getContext(),getView());
                  CountDownTimer countDownTimer=new CountDownTimer(1000,10) {
@@ -160,4 +142,9 @@ public class RequestBuildRelationShipFragment extends Fragment implements View.O
         return true;
     }
 
+    @Override
+    public boolean onBackPressed() {
+        getFragmentManager().popBackStack();
+        return  true;
+    }
 }

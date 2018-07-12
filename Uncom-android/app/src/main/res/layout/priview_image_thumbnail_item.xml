@@ -1,0 +1,29 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="78dp"
+    android:layout_height="81.5dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginBottom="15dp"
+    android:descendantFocusability="blocksDescendants"
+    android:background="@color/colorWhite"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:alpha="0.5"
+        android:background="@color/colorMain"
+        android:clickable="true"
+        android:gravity="center"
+        android:layout_gravity="bottom|left"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/zhiwu"
+        android:id="@+id/select"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
+    <android.support.v7.widget.AppCompatImageView
+        android:clickable="true"
+        android:id="@+id/delete"
+        android:layout_gravity="right|top"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        app:srcCompat="@drawable/ic_delete"/>
+</FrameLayout>

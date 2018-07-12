@@ -24,10 +24,11 @@ public class GetNewRelationShipResultsButtonOnClickentener implements  NewRelati
     private Context context;
     private NewRelationshipSearchResultsFragment newRelationshipSearchResultsFragment;
     private SearchResultPersonDetailFragment searchResultPersonDetailFragment;
-
+    private KeybordUtil keybordUtil;
     public GetNewRelationShipResultsButtonOnClickentener(Context context,NewRelationShipFragment fragment){
         this.fragment=fragment;
         this.context=context;
+        keybordUtil=new KeybordUtil();
     }
 
 
@@ -36,7 +37,7 @@ public class GetNewRelationShipResultsButtonOnClickentener implements  NewRelati
         Log.v("GetNewRelationShipResultsButtonOnClickentener", String.valueOf(newRelationShipBean.getView_type()));
         if(positon==0&& newRelationShipBean.getView_type()==0){
             CoreApplication.newInstance().setDisPlayType(true);
-            KeybordUtil.closeKeybordSearch(fragment.getSearchView(),fragment.getContext());
+            keybordUtil.closeKeybordSearch(fragment.getSearchView(),fragment.getContext());
             CountDownTimer timer=new CountDownTimer(400,10) {
                 @Override
                 public void onTick(long millisUntilFinished) {

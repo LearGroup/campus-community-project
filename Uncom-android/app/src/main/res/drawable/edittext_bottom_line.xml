@@ -5,7 +5,8 @@
     <solid android:color="@color/colorEditTextActivated" />
 
     <size
-        android:height="0.5dp"
+        android:height="1.5dp"
         android:width="100000dp"
          />
+
 </shape>

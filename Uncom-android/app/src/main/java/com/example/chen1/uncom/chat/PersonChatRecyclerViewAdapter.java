@@ -2,6 +2,8 @@ package com.example.chen1.uncom.chat;
 
 import android.content.Context;
 import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.chen1.uncom.R;
@@ -35,14 +38,22 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonChatRecyclerViewAdapter.ViewHolder> implements  View.OnClickListener{
     private boolean ITEM_TYPE;
+    private SpanStringUtils spanStringUtils;
     private Context context;
+    private TimeUtils timeUtils;
     private RelationShipLevelBean minor_data;
     private RelationShipLevelBean frendData;
     private LayoutInflater layoutInflater;
+    private LoadImageUtils loadImageUtils;
+    private Fragment fragment;
     private ArrayList<MessageHistoryBean> listItem =new ArrayList<MessageHistoryBean>();
-   public PersonChatRecyclerViewAdapter(Context context,RelationShipLevelBean data){
+   public PersonChatRecyclerViewAdapter(Context context, RelationShipLevelBean data, Fragment fragment){
        this.context=context;
+       this.fragment=fragment;
        frendData=data;
+       this.spanStringUtils=new SpanStringUtils();
+       timeUtils=new TimeUtils();
+       loadImageUtils=new LoadImageUtils();
    }
 
     @Override
@@ -56,34 +67,49 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        layoutInflater =LayoutInflater.from(context);
+        layoutInflater =LayoutInflater.from(parent.getContext());
         View view =null;
         if(viewType==1){
             view= layoutInflater.inflate(R.layout.person_chat_item_own,parent,false);
         }else{
             view= layoutInflater.inflate(R.layout.person_chat_item_opposite,parent,false);
         }
+
         ViewHolder viewholder =new ViewHolder(view);
         return viewholder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.itemView.setTag(position);
-        LoadImageUtils.getFirendHeaderImage(frendData.getHeader_pic(),context,holder.header_image);
+       holder.itemview.setTag(position);
+        RecyclerView.LayoutParams lps = (RecyclerView.LayoutParams) holder.itemview.getLayoutParams();
+        lps.topMargin = 0;
+        holder.itemview.setLayoutParams(lps);
+       if(position==0||(listItem.get(position-1).getTargetId().equals(listItem.get(position).getTargetId())==false)){
+           RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) holder.itemview.getLayoutParams();
+           lp.topMargin = 25;
+           holder.itemview.setLayoutParams(lp);
+       }
+        if(listItem.get(position).getOwnId().equals(frendData.getMinor_user())){
+             holder.header_image.setVisibility(View.VISIBLE);
+            loadImageUtils.getFirendHeaderImage(frendData.getHeader_pic(),holder.header_image,fragment);
+        }else{
+            holder.header_image.setVisibility(View.GONE);
+        }
         if(!listItem.get(position).getContent().equals(null)){
             String str =listItem.get(position).getContent();
-             SpannableString spannableString= SpanStringUtils.getEmotionContent(1,context, holder.textView,str);
+             SpannableString spannableString= spanStringUtils.getEmotionContent(1,context, holder.textView,str);
              holder.textView.setText(spannableString);
         }
         //如果该条信息与上一条信息时间差大于3分钟 则显示这条数据发送的时间
         if((position-1)>=0&&((listItem.get(position).getTime().getTime()-listItem.get(position-1).getTime().getTime())/1000>180)){
             holder.messageTime.setVisibility(View.VISIBLE);
-            holder.messageTime.setText(TimeUtils.compareTimeChatDisplay(new Date(),listItem.get(position).getTime()));
+            holder.messageTime.setText(timeUtils.compareTimeChatDisplay(new Date(),listItem.get(position).getTime()));
 
         }else{
             holder.messageTime.setVisibility(View.GONE);
         }
+
         //holder.textView.setText(listItem.get(position));
 
     }
@@ -98,14 +124,16 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
     }
 
     public static class   ViewHolder extends  RecyclerView.ViewHolder {
+       private LinearLayout itemview;
         private TextView textView=null;
-        private CircleImageView header_image=null;
+        private ImageView header_image=null;
         private  TextView messageTime;
         public ViewHolder(View itemView) {
             super(itemView);
-            header_image=(CircleImageView)itemView.findViewById(R.id.person_chat_own_header_circleImageView);
+            header_image=(ImageView)itemView.findViewById(R.id.person_chat_own_header_circleImageView);
             textView=(TextView)itemView.findViewById(R.id.person_chat_own_content_textview);
             messageTime=(TextView)itemView.findViewById(R.id.message_time);
+            itemview= (LinearLayout) itemView;
         }
     }
 
@@ -136,18 +164,20 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
                     frendData.setUn_look(1);
                 }
                 if(frendData.getUn_look()>1){
-                    CoreApplication.newInstance().updateActivePersonMessageList(frendData,2);
+                    CoreApplication.newInstance().getSetPageMainFragmentAdapter().updateActivePersonMessageList(frendData,2);
                 }else{
-                    CoreApplication.newInstance().updateActivePersonMessageList(frendData,1);
+                    CoreApplication.newInstance().getSetPageMainFragmentAdapter().updateActivePersonMessageList(frendData,1);
                 }
             }else{
                 frendData.setUn_look(0);
-                CoreApplication.newInstance().updateActivePersonMessageList(frendData,3);
+                CoreApplication.newInstance().getSetPageMainFragmentAdapter().updateActivePersonMessageList(frendData,3);
             }
             relationShipLevelBeanDao.update(frendData);
             notifyItemInserted(listItem.size());
+
         }else{
-            RelationShipLevelBean relationShipLevelBean=CoreApplication.newInstance().getRelationShipBean(messageHistoryBean.getOwnId());
+            Log.v("send User id: ",messageHistoryBean.getOwnId());
+            RelationShipLevelBean relationShipLevelBean=CoreApplication.newInstance().getRelationShipBean(messageHistoryBean.getOwnId(),relationShipLevelBeanDao);
             relationShipLevelBean.setLast_message(messageHistoryBean.getContent());
             Log.v("active2",relationShipLevelBean.getUsername());
             relationShipLevelBean.setLast_active_time(messageHistoryBean.getTime());
@@ -164,10 +194,16 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
             }else{
                 relationShipLevelBean.setUn_look(1);
             }
-            CoreApplication.newInstance().updateActivePersonMessageList(relationShipLevelBean,1);
+            CoreApplication.newInstance().getSetPageMainFragmentAdapter().updateActivePersonMessageList(relationShipLevelBean,1);
             relationShipLevelBeanDao.update(relationShipLevelBean);
         }
-        messageHistoryBeanDao.insert(messageHistoryBean);
+        if(messageHistoryBean.getId()!=null){
+            //对应发送消息
+            messageHistoryBeanDao.update(messageHistoryBean);
+        }else{
+            //对应接受聊天消息
+            messageHistoryBeanDao.insert(messageHistoryBean);
+        }
     }
 
     public ArrayList<MessageHistoryBean> getListItem() {
@@ -176,6 +212,15 @@ public class PersonChatRecyclerViewAdapter extends RecyclerView.Adapter<PersonCh
 
     public void setListItem(ArrayList<MessageHistoryBean> listItem) {
         this.listItem = listItem;
-        notifyItemInserted(listItem.size());
+        notifyDataSetChanged();
+    }
+
+
+    public RelationShipLevelBean getFrendData() {
+        return frendData;
+    }
+
+    public void setFrendData(RelationShipLevelBean frendData) {
+        this.frendData = frendData;
     }
 }

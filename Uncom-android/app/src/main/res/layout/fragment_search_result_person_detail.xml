@@ -19,17 +19,18 @@
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="65dp"
             android:id="@+id/peron_dtailed_information_appbar_layout">
             <android.support.design.widget.CollapsingToolbarLayout
                 app:statusBarScrim="@android:color/transparent"
-                app:contentScrim="@color/colorToolBar"
+                app:contentScrim="@color/colorWhite"
                 android:id="@+id/collapsing_toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
                 <ImageView
                     android:fitsSystemWindows="true"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:id="@+id/person_detailed_information_background_img"
                     android:layout_width="match_parent"
                     android:layout_height="260dp"
@@ -56,8 +57,7 @@
                     android:id="@+id/person_detaild_information_constraintlayout"
                     >
                     <de.hdodenhof.circleimageview.CircleImageView
-                        app:civ_border_width="2dp"
-                        app:civ_border_color="#cdcdcd"
+
                         android:layout_width="110dp"
                         android:layout_height="110dp"
                         app:layout_collapseParallaxMultiplier="0.7"
@@ -97,8 +97,7 @@
                         app:layout_constraintHorizontal_bias="0.502" />
                 </android.support.constraint.ConstraintLayout>
                 <android.support.v7.widget.Toolbar
-                    android:paddingTop="5dp"
-                    android:layout_marginBottom="-5dp"
+                    android:paddingTop="15dp"
                     android:id="@+id/person_detailed_information_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -117,7 +116,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:clickable="true"
-                        android:onClick="onClick"
+
                         toolbar:srcCompat="@drawable/ic_vector_back_icon"
                         tools:ignore="DuplicateIds" />
 
@@ -137,16 +136,19 @@
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.NestedScrollView
+            android:background="@color/colorWhite"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
             <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
-                android:text="Toolbar 是在 Android 5.0 开始推出的一个 Material Design 风格的导航控件 ，Google 非常推荐大家使用 Toolbar 来作为Android客户端的导航栏，以此来取代之前的 Actionbar 。与 Actionbar 相比，Toolbar 明显要灵活的多。它不像 Actionbar 一样，一定要固定在Activity的顶部，而是可以放到界面的任意位置。除此之外，在设计 Toolbar 的时候，Google也留给了开发者很多可定制修改的余地，这些可定制修改的属性在API文档中都有详细介绍，如：Google 非常推荐大家使用 Toolbar 来作为Android客户端的导航栏，以此来取代之前的 Actionbar 。与 Actionbar 相比，Toolbar 明显要灵活的多。它不像 Actionbar 一样，一定要固定在Activity的顶部，而是可以放到界面的任意位置。除此之外，在设计 Toolbar 的时候，Google也留给了开发者很多可定制修改的余地，这些可定制修改的属性在API文档中都有详细介绍，如"
+                android:text=""
                 android:textSize="25dp" />
         </android.support.v4.widget.NestedScrollView>
         <android.support.design.widget.BottomNavigationView
@@ -160,8 +162,8 @@
            >
             <Button
                 android:textSize="18dp"
-                android:textColor="@color/colorToolBar"
-                android:background="@drawable/send_button_ripple"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/button_background_primary"
                 android:id="@+id/build_relationship"
                 android:text="加好友"
                 android:layout_width="match_parent"

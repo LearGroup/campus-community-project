@@ -1,0 +1,48 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="选择头像"
+            android:textSize="22dp"
+            android:textColor="@color/colorFontColor"/>
+        <TextView
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+
+            android:paddingTop="4dp"
+            android:paddingBottom="8dp"
+            android:id="@+id/camera"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorFontColor"
+            android:text="相机"
+            android:textSize="18dp"
+            tools:targetApi="lollipop" />
+
+        <TextView
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:id="@+id/photo"
+            android:paddingTop="8dp"
+            android:paddingBottom="4dp"
+            android:layout_gravity="center"
+            android:textColor="@color/colorFontColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="相册"
+            android:textSize="18dp"
+            tools:targetApi="lollipop" />
+    </LinearLayout>
+</LinearLayout>

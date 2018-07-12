@@ -15,10 +15,10 @@ import static android.R.attr.value;
 
 public class TimeUtils {
 
-    private static  String[]date={"六","日","一","二","三","四","五"};
+    private   String[]date={"日","一","二","三","四","五","六"};
 
 
-    public static String compareTime(Date currentTime, Date messageTime) {
+    public  String compareTime(Date currentTime, Date messageTime) {
 
 
 
@@ -40,17 +40,12 @@ public class TimeUtils {
     }
 
 
-    public static String compareTimeChatDisplay(Date currentTime, Date messageTime) {
-        String results;
+    public  String compareTimeChatDisplay(Date currentTime, Date messageTime) {
+        String results="";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String temp = format.format(messageTime);
         String temp2=format.format(currentTime);
-        Log.v("temp",temp);
-        Log.v("temp2",temp2);
-        Log.v("temp3", String.valueOf(messageTime.getTime()));
-        Log.v("temp4", String.valueOf(currentTime.getTime()));
         String temp1[] = temp.split("-");
-        Log.v("time...............", String.valueOf(((currentTime.getTime()-messageTime.getTime())/1000)));
         if (( currentTime.getTime()-messageTime.getTime() ) / 1000 > 604800) {
             //若时间超出了一个星期，则显示该消息发送的日期+具体时间
             String month = temp1[1];
@@ -61,48 +56,135 @@ public class TimeUtils {
             //时间超出了一天 但小于一星期
         } else if (((currentTime.getTime()-messageTime.getTime()) / 1000 > 86400) && ((currentTime.getTime()-messageTime.getTime() ) / 1000 < 604800)) {
             Calendar calendar = Calendar.getInstance();
-            calendar.setTime(currentTime);
+            calendar.setTime(messageTime);
             String week = String.valueOf(calendar.get(Calendar.DAY_OF_WEEK) - 1);
             String hour = temp1[2].split(" ")[1].split(":")[0] +":"+ temp1[2].split(" ")[1].split(":")[1];
-            results = "星期"+date[calendar.get(Calendar.DAY_OF_WEEK)-1]+ " " + hour;
+            results = "星期"+date[calendar.get(Calendar.DAY_OF_WEEK)-1]+ " " + hourParse(hour);
             //时间超出了一小时 但小于二天
         }else if(((currentTime.getTime()-messageTime.getTime()) / 1000 > 3600)&&((currentTime.getTime()-messageTime.getTime()) / 1000 < 86400) ){
-
             String hour = temp1[2].split(" ")[1].split(":")[0] +":"+ temp1[2].split(" ")[1].split(":")[1];
-            results="昨天 "+hourParse(hour)+hour;
+            results="昨天 "+hourParse(hour);
         }
         else {
-
             //时间超出了一小时 但小于一天
             String hour = temp1[2].split(" ")[1].split(":")[0] +":"+ temp1[2].split(" ")[1].split(":")[1];
-            Log.v("time", hour);
-            return hourParse(hour)+hour;
+            results= hourParse(hour);
         }
         return results;
     }
 
 
-    public static String  hourParse(String hour){
+    /**
+     * 检查是否超过一天
+     * @param now 当前时间
+     * @param last_time 上一个时间
+     * @return
+     */
+    public boolean checkOutDay(Date now ,Date last_time){
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String temp = format.format(now);
+        String temp2=format.format(last_time);
+        String temp_[] = temp.split("-");
+        String temp_2[]=temp2.split("-");
+        Log.v("time",temp);
+        if(Integer.parseInt(temp_2[0])>Integer.parseInt(temp_[0])){
+            return  true;
+        }
+        if(Integer.parseInt(temp_2[1])>Integer.parseInt(temp_[1])){
+            return  true;
+        }
+        if(Integer.parseInt(temp_2[2])>Integer.parseInt(temp_[2])){
+            return  true;
+        }
+        return  false;
+    }
+
+
+    /**
+     *
+     * @param currentTime
+     * @param messageTime
+     * @return
+     */
+    public String compareTimeDynamicDisplay(Date currentTime, Date messageTime){
+        String result="";
+        long diff = currentTime.getTime() - messageTime.getTime();
+        long nd = 1000 * 24 * 60 * 60;
+        long nh = 1000 * 60 * 60;
+        long nm = 1000 * 60;
+        // 计算差多少天
+        long day = diff / nd;
+        // 计算差多少小时
+        long hour = diff % nd / nh;
+        // 计算差多少分钟
+        long min = diff % nd % nh / nm;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format_hourse=new SimpleDateFormat("HH:mm");
+        String now[] = format.format(currentTime).split("-");
+        String message[]=format.format(messageTime).split("-");
+        if(Integer.parseInt(now[0])>Integer.parseInt(message[0])){
+            result=message[0]+"年"+message[1]+"月"+message[2]+"日";
+        }else if(day>7 && day>3){{
+            result=message[1]+"月"+message[2]+"日";
+        }
+        }else if(day>1 && day<=3){
+            result=day+"天前";
+        }else if(hour>1){
+            result=hour+"小时前";
+        }else{
+            if(min==0){
+                result="刚刚";
+            }else{
+                result=min+"分钟前";
+            }
+        }
+        return result;
+    }
+
+    public String getDayAndMonth(Date date){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String temp = format.format(date);
+        String temp_[] = temp.split("-");
+        String str="";
+        str+=Integer.parseInt(temp_[1])+"月";
+        str+=Integer.parseInt(temp_[2])+"日";
+        return str;
+    }
+
+
+    public  String  hourParse(String hour){
         String hour_s=hour.split(":")[0];
-        String result = null;
+        String result = "";
+        int hourt;
         Integer hour_i=Integer.parseInt(hour_s);
-        Log.v("parseTime", String.valueOf(hour_i));
         if(hour_i<=12){
-            Log.v("parsetime","check_one");
             if(hour_i<3){
                 result="凌晨";
             }else if(hour_i>3){
                 result="上午";
             }
+            result=result+hour;
         }else{
+            hourt=hour_i-12;
             if(hour_i<23){
                 result="下午";
             }else{
                 result="午夜";
             }
+            result=result+hourt+":"+hour.split(":")[1];
         }
 
         return result;
+    }
+
+
+    public   String  getTime(Date currentTime){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String temp = format.format(currentTime);
+        String temp1[] = temp.split("-");
+        String hour = temp1[2].split(" ")[1].split(":")[0] +":"+ temp1[2].split(" ")[1].split(":")[1];
+        return  hourParse(hour);
     }
 }
 

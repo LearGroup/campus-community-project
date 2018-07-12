@@ -53,14 +53,14 @@ public class ChatUserDataUtil {
      * @param context
      * @param rootView
      */
-        public static void getFriendList(final RequestQueue requestQueue, final Context context, final View rootView){
+        public  void getFriendList(final RequestQueue requestQueue, final Context context, final View rootView){
             Log.v("getFriendlist","start");
             Map<String, String> map = new HashMap<String, String>();
             map.put("use", "phone");
             JSONObject params = new JSONObject(map);
             final JSONArray jsonArray;
              /*http://10.0.2.2:8081 47.95.0.73*/
-            SessionStoreJsonRequest sessionStoreJsonRequest =new SessionStoreJsonRequest("http://47.95.0.73:8081/getFrendList",
+            SessionStoreJsonRequest sessionStoreJsonRequest =new SessionStoreJsonRequest("http://"+CoreApplication.newInstance().IP_ADDR+":8081/getFrendList",
                     params, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -77,9 +77,28 @@ public class ChatUserDataUtil {
                                         if(bean==null){
                                             relationShipLevelBeanDao.insert(Array.get(i));
                                         }else{
+                                            if(bean.getActive()==true){
+                                                Array.get(i).setActive(true);
+                                            }
+                                            if(Array.get(i).getLast_active_time()==null){
+                                                if(bean.getLast_active_time()==null){
+                                                    Array.get(i).setLast_active_time(new Date());
+                                                }else{
+                                                    Array.get(i).setLast_active_time(bean.getLast_active_time());
+                                                }
+                                            }
+                                            if(bean.getUn_look()!=null && bean.getUn_look()!=0){
+                                                Array.get(i).setUn_look(bean.getUn_look());
+                                            }
+                                            if(Array.get(i).getLast_message()==null){
+                                                if(bean.getLast_message()==null){
+                                                    Array.get(i).setLast_message("");
+                                                }else{
+                                                    Array.get(i).setLast_message(bean.getLast_message());
+                                                }
+                                            }
                                             relationShipLevelBeanDao.update(Array.get(i));
                                         }
-
                                     }
                                 }
                             } catch (JSONException e) {
@@ -104,7 +123,7 @@ public class ChatUserDataUtil {
 
 
 
-    public static void searchUser(final RequestQueue requestQueue, final Context context, final View rootView, JSONObject params, final PopupWindow popupWindow, final NewRelationShipSearchResultsAdapter newRelationShipSearchResultsAdapter, final TextView resultsNone, final NewRelationshipSearchResultsFragment fragment) throws JSONException {
+    public  void searchUser(final RequestQueue requestQueue, final Context context, final View rootView, JSONObject params, final PopupWindow popupWindow, final NewRelationShipSearchResultsAdapter newRelationShipSearchResultsAdapter, final TextView resultsNone, final NewRelationshipSearchResultsFragment fragment) throws JSONException {
 
 
         ArrayList<NewRelationShipBean> array=new ArrayList<>();
@@ -126,7 +145,7 @@ public class ChatUserDataUtil {
         }
 
 
-        final SessionStoreJsonRequest sessionStoreJsonRequest=new SessionStoreJsonRequest("http://47.95.0.73:8081/searchUser", params,
+        final SessionStoreJsonRequest sessionStoreJsonRequest=new SessionStoreJsonRequest("http://"+CoreApplication.newInstance().IP_ADDR+":8081/searchUser", params,
                 new Response.Listener<JSONObject>() {
                     @Override
                             public void onResponse(JSONObject response) {
@@ -196,12 +215,12 @@ public class ChatUserDataUtil {
      * @param waitBar 等待barView
      * @param acceptOk 接受textView
      */
-    public static void registerPersonRelationShip(final RequestQueue requestQueue, Context context, String min_id, String req_id, final ProgressBar waitBar, final TextView acceptOk, final Button acceptButton){
+    public  void registerPersonRelationShip(final RequestQueue requestQueue, Context context, String min_id, String req_id, final ProgressBar waitBar, final TextView acceptOk, final Button acceptButton){
         HashMap<String ,String> map=new HashMap<>();
         map.put("min_id",min_id);
         map.put("req_id",req_id);
         JSONObject params = new JSONObject(map);
-        final SessionStoreJsonRequest sessionStoreJsonRequest=new SessionStoreJsonRequest("http://47.95.0.73:8081/registerPersonRelationShip", params,new Response.Listener<JSONObject>() {
+        final SessionStoreJsonRequest sessionStoreJsonRequest=new SessionStoreJsonRequest("http://"+CoreApplication.newInstance().IP_ADDR+":8081/registerPersonRelationShip", params,new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 RelationShipLevelBeanDao relationShipLevelBeanDao=BeanDaoManager.getInstance().getDaoSession().getRelationShipLevelBeanDao();
@@ -225,14 +244,14 @@ public class ChatUserDataUtil {
                                           JSONObject json=new JSONObject();
                                           json.put("ownId",Array.get(i).getMinor_user());
                                           json.put("targetId",CoreApplication.newInstance().getUser_id());
-                                          json.put("content", CoreApplication.newInstance().getNewRelationShipList().get(i).getShort_message());
+                                          json.put("content", CoreApplication.newInstance().getNewRelationShipList().get(i).getSelf_abstract());
                                           Long time=new Date().getTime();
                                           json.put("time", String.valueOf(time));
                                           jsonArray1.put(json);
                                           Message messages=new Message();
                                           messages.what=0;
                                           messages.obj=jsonArray1;
-                                          //Log.v("接受好友Message", String.valueOf(jsonArray1));
+                                          //Log.v("接受好友Message", String.valueOf(jsonArray1 ));
                                           CoreApplication.newInstance().getCoreAppGetChatDataHandler().sendMessage(messages);
                                           BeanDaoManager.getInstance().getDaoSession().getNewRelationShipBeanDao().update(CoreApplication.newInstance().getNewRelationShipList().get(i));
                                       }
@@ -265,7 +284,5 @@ public class ChatUserDataUtil {
         });
         sessionStoreJsonRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0, 1.0f));
         requestQueue.add(sessionStoreJsonRequest);
-
     }
-
 }

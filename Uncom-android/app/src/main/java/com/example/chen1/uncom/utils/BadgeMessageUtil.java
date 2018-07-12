@@ -3,6 +3,7 @@ package com.example.chen1.uncom.utils;
 import com.ashokvarma.bottomnavigation.ShapeBadgeItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
 import com.example.chen1.uncom.R;
+import com.example.chen1.uncom.application.CoreApplication;
 
 /**
  * Created by chen1 on 2017/11/3.
@@ -10,15 +11,16 @@ import com.example.chen1.uncom.R;
 
 public class BadgeMessageUtil {
 
-    public static Integer item_1=0;
-    public static Integer item_2=0;
-    public static Integer item_3=0;
-    public static Integer item_4=0;
+    public static boolean dynamics_state=false;
+    public static Integer relation_dynamics=-1;
+    public static Integer item_1=-1;
+    public static Integer item_2=-1;
+    public static Integer item_3=-1;
+    public static Integer item_4=-1;
     public static boolean setPageIsVisible=true;
     public static boolean relationPageIsVisible=false;
     public static boolean findPageIsVisible=false;
     public static boolean myPageIsVisible=false;
-
 
 
 
@@ -29,6 +31,8 @@ public class BadgeMessageUtil {
     public static TextBadgeItem item4;
 
     static {
+        dynamics_state=SharedPreferencesUtil.getDynamicsState(CoreApplication.newInstance().getApplicationContext());
+        relation_dynamics=getRelation_dynamics();
         item1=new TextBadgeItem().setBorderWidth(4)
                 .setAnimationDuration(200)
                 .setBackgroundColorResource(R.color.colorTranslate)
@@ -109,7 +113,6 @@ public class BadgeMessageUtil {
             default:
                 return item_1;
         }
-
     }
 
 
@@ -126,7 +129,6 @@ public class BadgeMessageUtil {
             default:
                 return  setPageIsVisible;
         }
-
     }
 
     /**
@@ -146,42 +148,91 @@ public class BadgeMessageUtil {
             badgeItem.setText(getBadgeCountByPosition(position).toString());
             badgeItem.setBackgroundColorResource(R.color.colorMain)
                     .setBorderColorResource(R.color.colorMain)
-                    .setTextColorResource(R.color.colorPrimary);
+                    .setTextColorResource(R.color.colorWhite);
         }
 
     }
 
     public static Integer getItem_1() {
+        if(item_1==-1){
+            item_1=SharedPreferencesUtil.getSetAction(CoreApplication.newInstance().getApplicationContext());
+        }
         return item_1;
     }
 
     public static void setItem_1(Integer item_1) {
         BadgeMessageUtil.item_1 = item_1;
-        switchBadgeColor(0);
+        SharedPreferencesUtil.setSetAction(CoreApplication.newInstance().getApplicationContext(),item_1);
+        if(BadgeMessageUtil.item_1>=1){
+            switchBadgeColor(0);
+        }
     }
 
     public static Integer getItem_2() {
+        if(item_2==-1){
+            item_2=SharedPreferencesUtil.getRelationAction(CoreApplication.newInstance().getApplicationContext());
+        }
         return item_2;
     }
 
     public static void setItem_2(Integer item_2) {
         BadgeMessageUtil.item_2 = item_2;
+        SharedPreferencesUtil.setRelationAction(CoreApplication.newInstance().getApplicationContext(),item_2);
+        if(BadgeMessageUtil.item_2>=1){
+            switchBadgeColor(1);
+        }
     }
 
     public static Integer getItem_3() {
+        if(item_3==-1){
+            item_3=SharedPreferencesUtil.getFindAction(CoreApplication.newInstance().getApplicationContext());
+        }
         return item_3;
+
     }
 
     public static void setItem_3(Integer item_3) {
         BadgeMessageUtil.item_3 = item_3;
+        SharedPreferencesUtil.setFindAction(CoreApplication.newInstance().getApplicationContext(),item_3);
+        if(BadgeMessageUtil.item_3>=1){
+            switchBadgeColor(2);
+        }
     }
 
     public static Integer getItem_4() {
+        if(item_4==-1){
+            item_4=SharedPreferencesUtil.getMeAction(CoreApplication.newInstance().getApplicationContext());
+        }
         return item_4;
     }
 
     public static void setItem_4(Integer item_4) {
         BadgeMessageUtil.item_4 = item_4;
+        SharedPreferencesUtil.setMeAction(CoreApplication.newInstance().getApplicationContext(),item_4);
+        if(BadgeMessageUtil.item_4>=1){
+            switchBadgeColor(3);
+        }
+    }
+
+    public static Integer getRelation_dynamics() {
+        if(relation_dynamics==-1){
+            relation_dynamics=SharedPreferencesUtil.getDynamicsAction(CoreApplication.newInstance().getApplicationContext());
+        }
+        return relation_dynamics;
+    }
+
+    public static void setRelation_dynamics(Integer relation_dynamics) {
+        SharedPreferencesUtil.setDynamicsAction(CoreApplication.newInstance().getApplicationContext(),relation_dynamics);
+        BadgeMessageUtil.relation_dynamics = relation_dynamics;
+    }
+
+    public static boolean isDynamics_state() {
+        return dynamics_state;
+    }
+
+    public static void setDynamics_state(boolean dynamics_state) {
+        SharedPreferencesUtil.setDynamicsState(CoreApplication.newInstance().getApplicationContext(),dynamics_state);
+        BadgeMessageUtil.dynamics_state = dynamics_state;
     }
 
     public static boolean isSetPageIsVisible() {

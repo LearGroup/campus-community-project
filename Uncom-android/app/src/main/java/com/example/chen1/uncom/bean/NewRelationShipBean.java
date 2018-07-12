@@ -21,31 +21,76 @@ public class NewRelationShipBean   implements Parcelable {
     private String header_pic;//用户头像
     private String results;//结果展示
     private Date get_time;
-    private String short_message;//自述信息，描述建立关系的原因
+    private String college;
+    private String university;
+    private String self_abstract;//自述信息，描述建立关系的原因
     private Integer result_type;  //添加的结果，(是否接受了 1已接受 2未接受)
     private String user_name;
     private Integer view_type;//视图需要展示的类型 0顶层搜索时弹出的搜索框 1进入新关系页面的默认布局(显示添加新关系的历史 2新关系搜索结果框)
     private String sprovince;//省/直辖市
     private String stown;//市
+    private String sarea;//区
     private Integer sex;//性别
     private String user_id;//用户id
 
 
-    @Generated(hash = 486409517)
-    public NewRelationShipBean(Long id, Integer type, String header_pic, String results,
-            Date get_time, String short_message, Integer result_type, String user_name,
-            Integer view_type, String sprovince, String stown, Integer sex, String user_id) {
+    protected NewRelationShipBean(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            type = null;
+        } else {
+            type = in.readInt();
+        }
+        header_pic = in.readString();
+        results = in.readString();
+        college = in.readString();
+        university = in.readString();
+        self_abstract = in.readString();
+        if (in.readByte() == 0) {
+            result_type = null;
+        } else {
+            result_type = in.readInt();
+        }
+        user_name = in.readString();
+        if (in.readByte() == 0) {
+            view_type = null;
+        } else {
+            view_type = in.readInt();
+        }
+        sprovince = in.readString();
+        stown = in.readString();
+        sarea = in.readString();
+        if (in.readByte() == 0) {
+            sex = null;
+        } else {
+            sex = in.readInt();
+        }
+        user_id = in.readString();
+    }
+
+    @Generated(hash = 106136241)
+    public NewRelationShipBean(Long id, Integer type, String header_pic, String results, Date get_time,
+            String college, String university, String self_abstract, Integer result_type,
+            String user_name, Integer view_type, String sprovince, String stown, String sarea,
+            Integer sex, String user_id) {
         this.id = id;
         this.type = type;
         this.header_pic = header_pic;
         this.results = results;
         this.get_time = get_time;
-        this.short_message = short_message;
+        this.college = college;
+        this.university = university;
+        this.self_abstract = self_abstract;
         this.result_type = result_type;
         this.user_name = user_name;
         this.view_type = view_type;
         this.sprovince = sprovince;
         this.stown = stown;
+        this.sarea = sarea;
         this.sex = sex;
         this.user_id = user_id;
     }
@@ -54,43 +99,53 @@ public class NewRelationShipBean   implements Parcelable {
     public NewRelationShipBean() {
     }
 
-
-    protected NewRelationShipBean(Parcel in) {
-        header_pic = in.readString();
-        results = in.readString();
-        short_message = in.readString();
-        user_name = in.readString();
-        sprovince = in.readString();
-        stown = in.readString();
-        user_id = in.readString();
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
+        }
+        if (type == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(type);
+        }
+        dest.writeString(header_pic);
+        dest.writeString(results);
+        dest.writeString(college);
+        dest.writeString(university);
+        dest.writeString(self_abstract);
+        if (result_type == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(result_type);
+        }
+        dest.writeString(user_name);
+        if (view_type == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(view_type);
+        }
+        dest.writeString(sprovince);
+        dest.writeString(stown);
+        dest.writeString(sarea);
+        if (sex == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(sex);
+        }
+        dest.writeString(user_id);
     }
-
-    public static final Creator<NewRelationShipBean> CREATOR = new Creator<NewRelationShipBean>() {
-        @Override
-        public NewRelationShipBean createFromParcel(Parcel in) {
-            return new NewRelationShipBean(in);
-        }
-
-        @Override
-        public NewRelationShipBean[] newArray(int size) {
-            return new NewRelationShipBean[size];
-        }
-    };
 
     @Override
     public int describeContents() {
         return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(header_pic);
-        dest.writeString(results);
-        dest.writeString(short_message);
-        dest.writeString(user_name);
-        dest.writeString(sprovince);
-        dest.writeString(stown);
-        dest.writeString(user_id);
     }
 
     public Long getId() {
@@ -133,12 +188,28 @@ public class NewRelationShipBean   implements Parcelable {
         this.get_time = get_time;
     }
 
-    public String getShort_message() {
-        return this.short_message;
+    public String getCollege() {
+        return this.college;
     }
 
-    public void setShort_message(String short_message) {
-        this.short_message = short_message;
+    public void setCollege(String college) {
+        this.college = college;
+    }
+
+    public String getUniversity() {
+        return this.university;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
+    }
+
+    public String getSelf_abstract() {
+        return this.self_abstract;
+    }
+
+    public void setSelf_abstract(String self_abstract) {
+        this.self_abstract = self_abstract;
     }
 
     public Integer getResult_type() {
@@ -181,6 +252,14 @@ public class NewRelationShipBean   implements Parcelable {
         this.stown = stown;
     }
 
+    public String getSarea() {
+        return this.sarea;
+    }
+
+    public void setSarea(String sarea) {
+        this.sarea = sarea;
+    }
+
     public Integer getSex() {
         return this.sex;
     }
@@ -196,4 +275,16 @@ public class NewRelationShipBean   implements Parcelable {
     public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
+
+    public static final Creator<NewRelationShipBean> CREATOR = new Creator<NewRelationShipBean>() {
+        @Override
+        public NewRelationShipBean createFromParcel(Parcel in) {
+            return new NewRelationShipBean(in);
+        }
+
+        @Override
+        public NewRelationShipBean[] newArray(int size) {
+            return new NewRelationShipBean[size];
+        }
+    };
 }

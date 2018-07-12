@@ -27,14 +27,17 @@ public class NewRelationShipBeanDao extends AbstractDao<NewRelationShipBean, Lon
         public final static Property Header_pic = new Property(2, String.class, "header_pic", false, "HEADER_PIC");
         public final static Property Results = new Property(3, String.class, "results", false, "RESULTS");
         public final static Property Get_time = new Property(4, java.util.Date.class, "get_time", false, "GET_TIME");
-        public final static Property Short_message = new Property(5, String.class, "short_message", false, "SHORT_MESSAGE");
-        public final static Property Result_type = new Property(6, Integer.class, "result_type", false, "RESULT_TYPE");
-        public final static Property User_name = new Property(7, String.class, "user_name", false, "USER_NAME");
-        public final static Property View_type = new Property(8, Integer.class, "view_type", false, "VIEW_TYPE");
-        public final static Property Sprovince = new Property(9, String.class, "sprovince", false, "SPROVINCE");
-        public final static Property Stown = new Property(10, String.class, "stown", false, "STOWN");
-        public final static Property Sex = new Property(11, Integer.class, "sex", false, "SEX");
-        public final static Property User_id = new Property(12, String.class, "user_id", false, "USER_ID");
+        public final static Property College = new Property(5, String.class, "college", false, "COLLEGE");
+        public final static Property University = new Property(6, String.class, "university", false, "UNIVERSITY");
+        public final static Property Self_abstract = new Property(7, String.class, "self_abstract", false, "SELF_ABSTRACT");
+        public final static Property Result_type = new Property(8, Integer.class, "result_type", false, "RESULT_TYPE");
+        public final static Property User_name = new Property(9, String.class, "user_name", false, "USER_NAME");
+        public final static Property View_type = new Property(10, Integer.class, "view_type", false, "VIEW_TYPE");
+        public final static Property Sprovince = new Property(11, String.class, "sprovince", false, "SPROVINCE");
+        public final static Property Stown = new Property(12, String.class, "stown", false, "STOWN");
+        public final static Property Sarea = new Property(13, String.class, "sarea", false, "SAREA");
+        public final static Property Sex = new Property(14, Integer.class, "sex", false, "SEX");
+        public final static Property User_id = new Property(15, String.class, "user_id", false, "USER_ID");
     }
 
 
@@ -55,14 +58,17 @@ public class NewRelationShipBeanDao extends AbstractDao<NewRelationShipBean, Lon
                 "\"HEADER_PIC\" TEXT," + // 2: header_pic
                 "\"RESULTS\" TEXT," + // 3: results
                 "\"GET_TIME\" INTEGER," + // 4: get_time
-                "\"SHORT_MESSAGE\" TEXT," + // 5: short_message
-                "\"RESULT_TYPE\" INTEGER," + // 6: result_type
-                "\"USER_NAME\" TEXT," + // 7: user_name
-                "\"VIEW_TYPE\" INTEGER," + // 8: view_type
-                "\"SPROVINCE\" TEXT," + // 9: sprovince
-                "\"STOWN\" TEXT," + // 10: stown
-                "\"SEX\" INTEGER," + // 11: sex
-                "\"USER_ID\" TEXT);"); // 12: user_id
+                "\"COLLEGE\" TEXT," + // 5: college
+                "\"UNIVERSITY\" TEXT," + // 6: university
+                "\"SELF_ABSTRACT\" TEXT," + // 7: self_abstract
+                "\"RESULT_TYPE\" INTEGER," + // 8: result_type
+                "\"USER_NAME\" TEXT," + // 9: user_name
+                "\"VIEW_TYPE\" INTEGER," + // 10: view_type
+                "\"SPROVINCE\" TEXT," + // 11: sprovince
+                "\"STOWN\" TEXT," + // 12: stown
+                "\"SAREA\" TEXT," + // 13: sarea
+                "\"SEX\" INTEGER," + // 14: sex
+                "\"USER_ID\" TEXT);"); // 15: user_id
     }
 
     /** Drops the underlying database table. */
@@ -100,44 +106,59 @@ public class NewRelationShipBeanDao extends AbstractDao<NewRelationShipBean, Lon
             stmt.bindLong(5, get_time.getTime());
         }
  
-        String short_message = entity.getShort_message();
-        if (short_message != null) {
-            stmt.bindString(6, short_message);
+        String college = entity.getCollege();
+        if (college != null) {
+            stmt.bindString(6, college);
+        }
+ 
+        String university = entity.getUniversity();
+        if (university != null) {
+            stmt.bindString(7, university);
+        }
+ 
+        String self_abstract = entity.getSelf_abstract();
+        if (self_abstract != null) {
+            stmt.bindString(8, self_abstract);
         }
  
         Integer result_type = entity.getResult_type();
         if (result_type != null) {
-            stmt.bindLong(7, result_type);
+            stmt.bindLong(9, result_type);
         }
  
         String user_name = entity.getUser_name();
         if (user_name != null) {
-            stmt.bindString(8, user_name);
+            stmt.bindString(10, user_name);
         }
  
         Integer view_type = entity.getView_type();
         if (view_type != null) {
-            stmt.bindLong(9, view_type);
+            stmt.bindLong(11, view_type);
         }
  
         String sprovince = entity.getSprovince();
         if (sprovince != null) {
-            stmt.bindString(10, sprovince);
+            stmt.bindString(12, sprovince);
         }
  
         String stown = entity.getStown();
         if (stown != null) {
-            stmt.bindString(11, stown);
+            stmt.bindString(13, stown);
+        }
+ 
+        String sarea = entity.getSarea();
+        if (sarea != null) {
+            stmt.bindString(14, sarea);
         }
  
         Integer sex = entity.getSex();
         if (sex != null) {
-            stmt.bindLong(12, sex);
+            stmt.bindLong(15, sex);
         }
  
         String user_id = entity.getUser_id();
         if (user_id != null) {
-            stmt.bindString(13, user_id);
+            stmt.bindString(16, user_id);
         }
     }
 
@@ -170,44 +191,59 @@ public class NewRelationShipBeanDao extends AbstractDao<NewRelationShipBean, Lon
             stmt.bindLong(5, get_time.getTime());
         }
  
-        String short_message = entity.getShort_message();
-        if (short_message != null) {
-            stmt.bindString(6, short_message);
+        String college = entity.getCollege();
+        if (college != null) {
+            stmt.bindString(6, college);
+        }
+ 
+        String university = entity.getUniversity();
+        if (university != null) {
+            stmt.bindString(7, university);
+        }
+ 
+        String self_abstract = entity.getSelf_abstract();
+        if (self_abstract != null) {
+            stmt.bindString(8, self_abstract);
         }
  
         Integer result_type = entity.getResult_type();
         if (result_type != null) {
-            stmt.bindLong(7, result_type);
+            stmt.bindLong(9, result_type);
         }
  
         String user_name = entity.getUser_name();
         if (user_name != null) {
-            stmt.bindString(8, user_name);
+            stmt.bindString(10, user_name);
         }
  
         Integer view_type = entity.getView_type();
         if (view_type != null) {
-            stmt.bindLong(9, view_type);
+            stmt.bindLong(11, view_type);
         }
  
         String sprovince = entity.getSprovince();
         if (sprovince != null) {
-            stmt.bindString(10, sprovince);
+            stmt.bindString(12, sprovince);
         }
  
         String stown = entity.getStown();
         if (stown != null) {
-            stmt.bindString(11, stown);
+            stmt.bindString(13, stown);
+        }
+ 
+        String sarea = entity.getSarea();
+        if (sarea != null) {
+            stmt.bindString(14, sarea);
         }
  
         Integer sex = entity.getSex();
         if (sex != null) {
-            stmt.bindLong(12, sex);
+            stmt.bindLong(15, sex);
         }
  
         String user_id = entity.getUser_id();
         if (user_id != null) {
-            stmt.bindString(13, user_id);
+            stmt.bindString(16, user_id);
         }
     }
 
@@ -224,14 +260,17 @@ public class NewRelationShipBeanDao extends AbstractDao<NewRelationShipBean, Lon
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // header_pic
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // results
             cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)), // get_time
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // short_message
-            cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // result_type
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // user_name
-            cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8), // view_type
-            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // sprovince
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // stown
-            cursor.isNull(offset + 11) ? null : cursor.getInt(offset + 11), // sex
-            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // user_id
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // college
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // university
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // self_abstract
+            cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8), // result_type
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // user_name
+            cursor.isNull(offset + 10) ? null : cursor.getInt(offset + 10), // view_type
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // sprovince
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // stown
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // sarea
+            cursor.isNull(offset + 14) ? null : cursor.getInt(offset + 14), // sex
+            cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15) // user_id
         );
         return entity;
     }
@@ -243,14 +282,17 @@ public class NewRelationShipBeanDao extends AbstractDao<NewRelationShipBean, Lon
         entity.setHeader_pic(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setResults(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setGet_time(cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)));
-        entity.setShort_message(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setResult_type(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
-        entity.setUser_name(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setView_type(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
-        entity.setSprovince(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setStown(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setSex(cursor.isNull(offset + 11) ? null : cursor.getInt(offset + 11));
-        entity.setUser_id(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setCollege(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setUniversity(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setSelf_abstract(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setResult_type(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
+        entity.setUser_name(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setView_type(cursor.isNull(offset + 10) ? null : cursor.getInt(offset + 10));
+        entity.setSprovince(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setStown(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setSarea(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setSex(cursor.isNull(offset + 14) ? null : cursor.getInt(offset + 14));
+        entity.setUser_id(cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15));
      }
     
     @Override

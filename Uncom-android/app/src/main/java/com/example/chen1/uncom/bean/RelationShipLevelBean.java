@@ -25,6 +25,8 @@ public class RelationShipLevelBean implements Parcelable{
     private Integer sex;
     private String email;
     private String self_abstract;//自述(心情短语)
+    private String college;
+    private String university;
     private String sprovince;
     private String sarea;
     private String stown;
@@ -39,24 +41,47 @@ public class RelationShipLevelBean implements Parcelable{
 
     protected RelationShipLevelBean(Parcel in) {
         id = in.readString();
+        if (in.readByte() == 0) {
+            level = null;
+        } else {
+            level = in.readInt();
+        }
         minor_user = in.readString();
         header_pic = in.readString();
         username = in.readString();
+        if (in.readByte() == 0) {
+            sex = null;
+        } else {
+            sex = in.readInt();
+        }
         email = in.readString();
         self_abstract = in.readString();
+        college = in.readString();
+        university = in.readString();
         sprovince = in.readString();
         sarea = in.readString();
         stown = in.readString();
         phone = in.readString();
+        if (in.readByte() == 0) {
+            age = null;
+        } else {
+            age = in.readInt();
+        }
         last_message = in.readString();
         active = in.readByte() != 0;
+        if (in.readByte() == 0) {
+            un_look = null;
+        } else {
+            un_look = in.readInt();
+        }
     }
 
-    @Generated(hash = 1069690631)
+    @Generated(hash = 326762254)
     public RelationShipLevelBean(String id, Integer level, String minor_user, String header_pic,
-            String username, Integer sex, String email, String self_abstract, String sprovince,
-            String sarea, String stown, String phone, Integer age, String last_message,
-            Date last_active_time, Date connect_time, boolean active, Integer un_look) {
+            String username, Integer sex, String email, String self_abstract, String college,
+            String university, String sprovince, String sarea, String stown, String phone, Integer age,
+            String last_message, Date last_active_time, Date connect_time, boolean active,
+            Integer un_look) {
         this.id = id;
         this.level = level;
         this.minor_user = minor_user;
@@ -65,6 +90,8 @@ public class RelationShipLevelBean implements Parcelable{
         this.sex = sex;
         this.email = email;
         this.self_abstract = self_abstract;
+        this.college = college;
+        this.university = university;
         this.sprovince = sprovince;
         this.sarea = sarea;
         this.stown = stown;
@@ -84,17 +111,43 @@ public class RelationShipLevelBean implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
+        if (level == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(level);
+        }
         dest.writeString(minor_user);
         dest.writeString(header_pic);
         dest.writeString(username);
+        if (sex == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(sex);
+        }
         dest.writeString(email);
         dest.writeString(self_abstract);
+        dest.writeString(college);
+        dest.writeString(university);
         dest.writeString(sprovince);
         dest.writeString(sarea);
         dest.writeString(stown);
         dest.writeString(phone);
+        if (age == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(age);
+        }
         dest.writeString(last_message);
         dest.writeByte((byte) (active ? 1 : 0));
+        if (un_look == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(un_look);
+        }
     }
 
     @Override
@@ -164,6 +217,22 @@ public class RelationShipLevelBean implements Parcelable{
 
     public void setSelf_abstract(String self_abstract) {
         this.self_abstract = self_abstract;
+    }
+
+    public String getCollege() {
+        return this.college;
+    }
+
+    public void setCollege(String college) {
+        this.college = college;
+    }
+
+    public String getUniversity() {
+        return this.university;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
     }
 
     public String getSprovince() {

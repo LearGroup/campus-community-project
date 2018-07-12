@@ -9,6 +9,8 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.widget.TextView;
 
+import com.example.chen1.uncom.application.CoreApplication;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -22,9 +24,9 @@ import java.util.regex.Pattern;
 
 public class SpanStringUtils {
 
-    public static SpannableString getEmotionContent(int emotion_map_type, final Context context, final TextView tv, String source) {
+    public  SpannableString getEmotionContent(int emotion_map_type, final Context context, final TextView tv, String source) {
         SpannableString spannableString = new SpannableString(source);
-        Resources res = context.getResources();
+        Resources res = CoreApplication.newInstance().getApplicationContext().getResources();
         String regexEmotion = "\\[([\u4e00-\u9fa5\\w])+\\]";
         Pattern patternEmotion = Pattern.compile(regexEmotion);
         Matcher matcherEmotion = patternEmotion.matcher(spannableString);
@@ -40,7 +42,7 @@ public class SpanStringUtils {
                 int size = (int) tv.getTextSize()*13/10;
                 Bitmap bitmap = BitmapFactory.decodeResource(res, imgRes);
                 Bitmap scaleBitmap = Bitmap.createScaledBitmap(bitmap, size, size, true);
-                ImageSpan span = new ImageSpan(context, scaleBitmap);
+                ImageSpan span = new ImageSpan(CoreApplication.newInstance().getApplicationContext(), scaleBitmap);
                 spannableString.setSpan(span, start, start + key.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
@@ -49,7 +51,7 @@ public class SpanStringUtils {
 
 
 
-    public static JSONObject checkSearchMode(String str){
+    public  JSONObject checkSearchMode(String str){
         String use = "null";
         if(str.split("@").length==2 &&str.indexOf(".com")==-1){
             //该str为邮箱号

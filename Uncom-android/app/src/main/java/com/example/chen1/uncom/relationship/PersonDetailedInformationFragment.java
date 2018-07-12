@@ -1,5 +1,6 @@
 package com.example.chen1.uncom.relationship;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,41 +24,45 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.example.chen1.uncom.FragmentBackHandler;
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.utils.Anim;
+import com.example.chen1.uncom.utils.GlideApp;
+import com.example.chen1.uncom.utils.GlideCircleTransform;
 import com.example.chen1.uncom.utils.LoadImageUtils;
 
 
 
-public class PersonDetailedInformationFragment extends Fragment {
+public class PersonDetailedInformationFragment extends Fragment implements FragmentBackHandler{
 
 
-    private static PersonDetailedInformationFragment fragment=null;
     private AppBarLayout appBarLayout;
     private TextView username;
     private RelationShipLevelBean frendData;
-
     private Menu menus=null;
     private AppCompatImageView person_back_icon;
     private TextView person_name;
     private ButtonBarLayout buttonBarLayout;
-    private String mParam1;
-    private String mParam2;
-    private ImageView imageView;
-    private ImageView imageView2;
-    private ConstraintLayout constraintLayout;
-    private OnFragmentInteractionListener mListener;
-    private ImageView  person_iamgeview;
+    private Toolbar toolbar;
+    private ImageView headImage;
+    private AppCompatImageView editBtn;
+    private ImageView backImage;
+    private AppCompatImageView backBtn;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private LoadImageUtils loadImageUtils;
     public PersonDetailedInformationFragment() {
-        // Required empty public constructor
     }
 
-    public static PersonDetailedInformationFragment getInstance(){
-        if(fragment==null){
-            fragment=new PersonDetailedInformationFragment();
-        }
+
+    public static PersonDetailedInformationFragment newInstance(RelationShipLevelBean param1){
+        PersonDetailedInformationFragment fragment=new PersonDetailedInformationFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("bean",param1);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -65,7 +70,8 @@ public class PersonDetailedInformationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        loadImageUtils=new LoadImageUtils();
+        frendData=getArguments().getParcelable("bean");
     }
 
     @Override
@@ -73,48 +79,28 @@ public class PersonDetailedInformationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        final View view=inflater.inflate(R.layout.fragment_person_detailed_information_fragment, container, false);
-        final Toolbar toolbar=(Toolbar)view.findViewById(R.id.person_detailed_information_toolbar);
+        View view=inflater.inflate(R.layout.fragment_person_detailed_information_fragment, container, false);
         setHasOptionsMenu(true);
-        toolbar.inflateMenu(R.menu.person_detail_menu_layout);
-        AppCompatImageView appCompatImageView=(AppCompatImageView) view.findViewById(R.id.person_detaild_information_back_icon);
+        //toolbar.inflateMenu(R.menu.person_detail_menu_layout);
+        toolbar = (Toolbar)view. findViewById(R.id.toolbar);
+        toolbar.setTitleMarginTop(85);
+        toolbar.setTitleMarginStart(25);
+        backBtn= (AppCompatImageView) view.findViewById(R.id.back_btn);
+        appBarLayout=(AppBarLayout) view.findViewById(R.id.appbar_layout);
+        editBtn= (AppCompatImageView) view.findViewById(R.id.edit_btn);
+        collapsingToolbarLayout= (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout);
+        headImage= (ImageView) view.findViewById(R.id.head_img);
+        GlideApp.with(this)
+                .load(frendData.getHeader_pic()).transition(new DrawableTransitionOptions().crossFade())
+                .into(headImage);
+        AppCompatImageView appCompatImageView=(AppCompatImageView) view.findViewById(R.id.back_btn);
+        collapsingToolbarLayout.setTitle(frendData.getUsername());
         appCompatImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction();
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-                fragmentManager.popBackStack();
-            }
-        });
-        username=(TextView)view.findViewById(R.id.person_username);
-        username.setText(frendData.getUsername());
-        person_iamgeview=(ImageView)view.findViewById(R.id.person_detaild_information_circleImageView);
-        LoadImageUtils.getFirendHeaderImage(frendData.getHeader_pic(),getContext(),person_iamgeview);
-        constraintLayout=(ConstraintLayout)view.findViewById(R.id.person_detaild_information_constraintlayout);
-        person_name=(TextView)view.findViewById(R.id.person_detaild_information_name);
-        person_name.setText(frendData.getUsername());
-        person_back_icon=(AppCompatImageView)view.findViewById(R.id.person_detaild_information_back_icon);
-        imageView=(ImageView)view.findViewById(R.id.person_detailed_information_background_img);
-        imageView2=(ImageView)view.findViewById(R.id.person_detailed_information_background_img_two);
-        buttonBarLayout=(ButtonBarLayout)view.findViewById(R.id.btn_Play);
-        appBarLayout=(AppBarLayout) view.findViewById(R.id.peron_dtailed_information_appbar_layout);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                final CollapsingToolbarLayout collapsing_toolbar_layout = (CollapsingToolbarLayout)view.findViewById(R.id.collapsing_toolbar_layout);
-                collapsing_toolbar_layout.setTitle("");
-                collapsing_toolbar_layout.setCollapsedTitleTextColor(getResources().getColor(R.color.colorPrimary));
-                collapsing_toolbar_layout.setExpandedTitleColor(getResources().getColor(R.color.colorPrimary));
-                collapsing_toolbar_layout.setExpandedTitleColor(Color.TRANSPARENT);
-                Log.v("Tag", "appBarLayoutHeight:" + appBarLayout.getHeight() + " getTotalScrollRange:" + appBarLayout.getTotalScrollRange() + " offSet:" + verticalOffset);
-                if(Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()){
-                    toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimary));
-                    person_name.setVisibility(View.VISIBLE);
-                }else{
-                    person_name.setVisibility(View.GONE);
-                    collapsing_toolbar_layout.setTitle("");
-                }
+                getFragmentManager().popBackStack();
             }
         });
         return view;
@@ -130,34 +116,47 @@ public class PersonDetailedInformationFragment extends Fragment {
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    @Override
+    public void onStart() {
+        super.onStart();
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if(Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()){
+                    if(isAdded()){
+                        backBtn.setImageResource(R.drawable.ic_vector_back_icon);
+                        editBtn.setImageResource(R.drawable.ic_vector_person_detaild_information_option_icon);
+                    }
+                }else{
+                    if(isAdded()){
+                        backBtn.setImageResource(R.drawable.ic_vector_back_transparent);
+                        editBtn.setImageResource(R.drawable.ic_vector_person_detail_information_option_white_icon);
+                    }
+                }
+            }
+        });
     }
 
-    public RelationShipLevelBean getFrendData() {
-        return frendData;
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        frendData=null;
     }
 
-    public void setFrendData(RelationShipLevelBean frendData) {
-        this.frendData = frendData;
-    }
 
     @Override
     public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
         if(!enter){
             CoreApplication.newInstance().getRoot().setAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.default_open_right));
         }
-        return Anim.defaultFragmentAnim(getActivity(),transit,enter,nextAnim);
+        return new Anim().defaultFragmentAnim(getActivity(),transit,enter,nextAnim);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        getFragmentManager().popBackStack();
+        return  true;
     }
 }

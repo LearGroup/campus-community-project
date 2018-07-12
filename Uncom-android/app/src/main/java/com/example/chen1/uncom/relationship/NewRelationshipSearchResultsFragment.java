@@ -33,6 +33,7 @@ import org.json.JSONObject;
 
 public class NewRelationshipSearchResultsFragment extends Fragment implements FragmentBackHandler,View.OnTouchListener{
 
+    private SpanStringUtils spanStringUtils;
     private NewRelationShipBean search_layout_view;
     private String searchResult;
     private String use;
@@ -49,6 +50,7 @@ public class NewRelationshipSearchResultsFragment extends Fragment implements Fr
 
     public NewRelationshipSearchResultsFragment() {
         // Required empty public constructor
+        spanStringUtils=new SpanStringUtils();
     }
 
 
@@ -81,7 +83,7 @@ public class NewRelationshipSearchResultsFragment extends Fragment implements Fr
         searchView.clearFocus();
         recyclerView= (RecyclerView) view.findViewById(R.id.search_page_recyclerview);
         resultsNone= (TextView) view.findViewById(R.id.results_none);
-        newRelationShipSearchResultsAdapter=new NewRelationShipSearchResultsAdapter(getContext()) ;
+        newRelationShipSearchResultsAdapter=new NewRelationShipSearchResultsAdapter(getContext(),this) ;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -144,15 +146,16 @@ public class NewRelationshipSearchResultsFragment extends Fragment implements Fr
 
 
     public void RequestData(){
-        params=SpanStringUtils.checkSearchMode(searchResult);
-        Log.v("NewRelationshipSearchResultsFragment", String.valueOf(params));
+        Log.v("NewRelationshipSearchResultsFragment", ",,,"+String.valueOf(searchResult));
+        params=spanStringUtils.checkSearchMode(searchResult);
+
         try {
             if(params.getString("use").equals("null")){
                 //为空 不执行
             }else{
                 popupWindow= PopupWindowUtils.popupWindowNormal(null,R.layout.access_popupwindow_loginwaiting_layout, LinearLayout.LayoutParams.MATCH_PARENT,1000,-1,getContext(),rootView);
                 Log.v("开始访问网络", String.valueOf(params));
-                ChatUserDataUtil.searchUser(CoreApplication.newInstance().getRequestQueue(),getContext(),rootView,params,popupWindow,newRelationShipSearchResultsAdapter,resultsNone,this);
+                new ChatUserDataUtil().searchUser(CoreApplication.newInstance().getRequestQueue(),getContext(),rootView,params,popupWindow,newRelationShipSearchResultsAdapter,resultsNone,this);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -166,7 +169,9 @@ public class NewRelationshipSearchResultsFragment extends Fragment implements Fr
             popupWindow.dismiss();
             return true;
         }
-        return BackHandlerHelper.handleBackPress(this);
+        getFragmentManager().popBackStack();
+
+        return true;
     }
 
     @Override

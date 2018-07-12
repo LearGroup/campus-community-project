@@ -16,9 +16,9 @@ import com.example.chen1.uncom.utils.BadgeMessageUtil;
 
 public class ToNewRelationShipButtonOnclickListener implements View.OnClickListener {
 
-    private Fragment fragment;
-    public ToNewRelationShipButtonOnclickListener(Fragment fragment){
-    this.fragment=fragment;
+    private FragmentManager fragmentManager;
+    public ToNewRelationShipButtonOnclickListener(FragmentManager fragmentManager){
+    this.fragmentManager=fragmentManager;
     }
 
     @Override
@@ -26,12 +26,11 @@ public class ToNewRelationShipButtonOnclickListener implements View.OnClickListe
         BadgeMessageUtil.setSetPageIsVisible(false);
         NewRelationShipFragment newRelationShipFragment =NewRelationShipFragment.getInstance();
         CoreApplication.newInstance().setDisPlayType(false);
-        FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.addToBackStack(null).setCustomAnimations(
                 R.anim.default_fragment_switch_translate_open, R.anim.default_fragment_switch_translate_open,
                 R.anim.default_fragment_switch_leave_translate, R.anim.default_fragment_switch_leave_translate  )
-                .replace(R.id.drawer_layout,newRelationShipFragment,"newRelationShipFragment").commit();
-        CoreApplication.newInstance().getRoot().startAnimation(AnimationUtils.loadAnimation(v.getContext(),R.anim.default_leave_left));
+                .add(R.id.drawer_layout,newRelationShipFragment,"newRelationShipFragment").commit();
+        CoreApplication.newInstance().getRoot().startAnimation(AnimationUtils.loadAnimation(CoreApplication.newInstance().getBaseContext(),R.anim.default_leave_left));
     }
 }

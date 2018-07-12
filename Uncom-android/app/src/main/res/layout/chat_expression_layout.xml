@@ -3,7 +3,7 @@
     android:elevation="0dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorWhite"
     android:layout_gravity="bottom"
     android:gravity="bottom"
     android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
         <com.example.chen1.uncom.utils.NoScrollViewPager
             android:elevation="0dp"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorWhite"
             android:id="@+id/chat_expression_viewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +44,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="43dp">
                     </android.support.v7.widget.RecyclerView>
-
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

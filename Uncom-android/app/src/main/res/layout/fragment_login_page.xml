@@ -3,16 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorWhite"
     tools:context="com.example.chen1.uncom.access.LoginPageFragment">
+
     <!-- Login progress -->
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Im-Server"
-        android:textColor="@color/colorToolBar"
+        android:textColor="@color/colorMain"
         android:textAlignment="center"
-        android:textSize="38dp"
+        android:textSize="44dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
@@ -22,13 +23,13 @@
         app:layout_constraintHorizontal_bias="0.0"
         android:id="@+id/textView4"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="80dp" />
+        android:layout_marginTop="70dp" />
 
 
     <android.support.design.widget.TextInputLayout
-
+        android:textColorHint="@color/colorMain"
         android:id="@+id/textInputLayout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
@@ -46,6 +47,11 @@
             android:imeOptions="actionNext"
             android:paddingTop="10dp"
             android:background="@null"
+            android:shadowColor="@color/colorFontColor"
+            android:textColorHint="@color/colorFontColor"
+            android:textColor="@color/colorFontColor"
+            android:textColorLink="@color/colorFontColor"
+            android:textColorHighlight="@color/colorFontColor"
             android:id="@+id/user"
             android:textCursorDrawable="@drawable/access_cursor_active"
             android:drawableBottom="@drawable/access_edittext_selector"
@@ -53,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:layout_marginBottom="10dp"
             android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
             android:maxLines="1"
@@ -67,7 +74,7 @@
         android:textSize="18dp"
         android:id="@+id/email_sign_in_button"
         style="?android:textAppearanceSmall"
-        android:textColor="@color/colorToolBar"
+        android:textColor="@color/colorWhite"
         android:background="@drawable/send_button_ripple"
         android:elevation="0dp"
         android:layout_width="0dp"
@@ -88,7 +95,7 @@
         android:layout_height="wrap_content"
         android:text="@string/action_sign_up"
         android:textSize="16dp"
-        android:textColor="@color/colorIcon"
+        android:textColor="@color/colorMain"
         android:layout_marginRight="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="12dp"
@@ -97,7 +104,7 @@
 
     <TextView
         android:textSize="16dp"
-        android:textColor="@color/colorIcon"
+        android:textColor="@color/colorMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="忘记密码?"
@@ -114,6 +121,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
+        android:textColorHint="@color/colorMain"
         android:layout_marginRight="8dp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -124,6 +132,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
         <AutoCompleteTextView
+            android:shadowColor="@color/colorFontColor"
+            android:textColor="@color/colorFontColor"
+            android:textColorLink="@color/colorFontColor"
+            android:textColorHighlight="@color/colorFontColor"
+            android:textColorHint="@color/colorFontColor"
             android:imeOptions="actionDone"
             android:textCursorDrawable="@drawable/access_cursor_active"
             android:paddingTop="10dp"
@@ -144,6 +157,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            tools:layout_editor_absoluteY="223dp" />
+            tools:layout_editor_absoluteY="223dp"
+            tools:ignore="InvalidImeActionId" />
     </android.support.design.widget.TextInputLayout>
 </android.support.constraint.ConstraintLayout>

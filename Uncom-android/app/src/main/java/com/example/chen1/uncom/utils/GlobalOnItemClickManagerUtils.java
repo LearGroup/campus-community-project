@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 
+import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.expression.ExpessionStandardAdapter;
 
 /**
@@ -14,19 +15,17 @@ import com.example.chen1.uncom.expression.ExpessionStandardAdapter;
  */
 
 public class GlobalOnItemClickManagerUtils {
-    private static GlobalOnItemClickManagerUtils instance=null;
+
     private EditText mEditText;//输入框
-    private static Context mContext;
-    public static GlobalOnItemClickManagerUtils getInstance(Context context) {
-        mContext=context;
-        if (instance == null) {
-            synchronized (GlobalOnItemClickManagerUtils.class) {
-                if(instance == null) {
-                    instance = new GlobalOnItemClickManagerUtils();
-                }
-            }
-        }
-        return instance;
+    private  SpanStringUtils spanStringUtils;
+
+
+    public GlobalOnItemClickManagerUtils(){
+        spanStringUtils=new SpanStringUtils();
+    }
+
+    public void removeEditText(){
+        this.mEditText=null;
     }
     public void attachToEditText(EditText editText) {
         mEditText = editText;
@@ -53,8 +52,8 @@ public class GlobalOnItemClickManagerUtils {
                         StringBuilder sb = new StringBuilder(mEditText.getText().toString());
                         sb.insert(curPosition, emotionName);
                         // 特殊文字处理,将表情等转换一下
-                        mEditText.setText(SpanStringUtils.getEmotionContent(emotion_map_type,
-                                mContext, mEditText, sb.toString()));
+                        mEditText.setText(spanStringUtils.getEmotionContent(emotion_map_type,
+                                CoreApplication.newInstance().getApplicationContext(), mEditText, sb.toString()));
                         // 将光标设置到新增完表情的右侧
                         mEditText.setSelection(curPosition + emotionName.length());
                     }

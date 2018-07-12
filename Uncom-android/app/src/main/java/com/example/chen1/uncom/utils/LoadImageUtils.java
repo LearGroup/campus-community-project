@@ -7,20 +7,32 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Environment;
+import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Log;
 import android.widget.ImageView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.Key;
+import com.bumptech.glide.signature.*;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.signature.MediaStoreSignature;
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
 import com.jakewharton.disklrucache.DiskLruCache;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.InvalidMarkException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
+ *
  * Created by chen1 on 2017/10/4.
  */
 
@@ -88,20 +100,17 @@ public class LoadImageUtils {
     }
 
 
-    public static void getFirendHeaderImage(String url, Context context, ImageView imageView){
+    public  void getFirendHeaderImage(String url, ImageView imageView, final Fragment fragment){
+
         if(url==null){
             url="http://uncomapp.oss-cn-beijing.aliyuncs.com/user_head/default-cion.png";
         }
-        ImageLoader imageLoader=new ImageLoader(CoreApplication.newInstance().getRequestQueue(), new BitMapCache());
-        if(CoreApplication.newInstance().getRequestQueue().getCache().get(url)!=null){
-            byte[] data=CoreApplication.newInstance().getRequestQueue().getCache().get(url).data;
-            Log.v("imageCache", String.valueOf(data));
-            imageView.setImageBitmap(BitmapFactory.decodeByteArray(data,0, data.length));
-        }else{
-
-            ImageLoader.ImageListener listener= ImageLoader.getImageListener(imageView,R.mipmap.zhiwu,R.mipmap.ic_launcher);
-            imageLoader.get(url,listener);
-        }
+        Log.v("load url",url);
+        Log.v("load url","no cache");
+            GlideApp.with(fragment)
+                    .load(url).transition(new DrawableTransitionOptions().crossFade())
+                    .transform(new GlideCircleTransform())
+                    .into(imageView);
     }
 
 }

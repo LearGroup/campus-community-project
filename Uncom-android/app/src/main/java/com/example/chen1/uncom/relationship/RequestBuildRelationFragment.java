@@ -8,10 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.chen1.uncom.FragmentBackHandler;
 import com.example.chen1.uncom.R;
 
 
-public class RequestBuildRelationFragment extends Fragment {
+public class RequestBuildRelationFragment extends Fragment implements FragmentBackHandler {
 
 
 
@@ -35,4 +36,9 @@ public class RequestBuildRelationFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public boolean onBackPressed() {
+        getFragmentManager().popBackStack();
+        return  true;
+    }
 }

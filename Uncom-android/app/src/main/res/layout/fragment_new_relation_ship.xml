@@ -4,25 +4,26 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorWhite"
     tools:context="com.example.chen1.uncom.relationship.NewRelationShipFragment">
     <android.support.design.widget.AppBarLayout
-        android:background="@drawable/default_toolbar"
+        app:elevation="0dp"
+        android:fitsSystemWindows="true"
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="110dp"
         android:id="@+id/peron_dtailed_information_appbar_layout">
             <android.support.v7.widget.Toolbar
-                android:paddingTop="5dp"
+                android:paddingTop="25dp"
                 android:id="@+id/new_relationship_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 >
                 <android.support.v7.widget.AppCompatImageView
-                    android:layout_width="25dp"
+                    android:layout_width="30dp"
                     android:id="@+id/new_relationship_back_icon"
-                    android:layout_height="25dp"
+                    android:layout_height="30dp"
                     android:clickable="true"
-                    android:onClick="onClick"
                     tools:ignore="DuplicateIds"
                     app:srcCompat="@drawable/ic_vector_back_icon" />
                 <TextView
@@ -31,23 +32,24 @@
                     android:layout_height="match_parent"
                     android:text="新关系"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="18dp"
+                    android:textSize="20dp"
                     android:layout_marginLeft="35dp"
                     />
 
             </android.support.v7.widget.Toolbar>
+        <android.support.v7.widget.SearchView
+            android:layout_marginTop="10dp"
+            android:background="@color/colorWhite"
+            android:id="@+id/search_column"
+            app:defaultQueryHint="手机号/邮箱号/用户名"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+        </android.support.v7.widget.SearchView>
     </android.support.design.widget.AppBarLayout>
-    <android.support.v7.widget.SearchView
-        android:background="@color/colorPrimary"
-        android:id="@+id/search_column"
-        app:defaultQueryHint="手机号/邮箱号/用户名"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-    </android.support.v7.widget.SearchView>
     <android.support.v7.widget.RecyclerView
-        android:background="@color/colorPrimary"
+        android:background="@color/colorWhite"
         android:id="@+id/search_page_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

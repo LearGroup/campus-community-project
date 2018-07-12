@@ -23,18 +23,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.chen1.uncom.FragmentBackHandler;
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.NewRelationShipBean;
 import com.example.chen1.uncom.utils.LoadImageUtils;
 
 
-public class SearchResultPersonDetailFragment extends Fragment  implements View.OnTouchListener{
+public class SearchResultPersonDetailFragment extends Fragment  implements FragmentBackHandler,View.OnTouchListener{
 
     private NewRelationShipBean frendData;
     private AppBarLayout appBarLayout;
     private TextView username;
     private Menu menus=null;
+    private LoadImageUtils loadImageUtils;
     private AppCompatImageView person_back_icon;
     private TextView person_name;
     private TextView customText;
@@ -47,8 +49,6 @@ public class SearchResultPersonDetailFragment extends Fragment  implements View.
     private ImageView  person_iamgeview;
     private static SearchResultPersonDetailFragment searchResultPersonDetailFragment =null;
 
-
-
     public static SearchResultPersonDetailFragment getInstance(){
         if(searchResultPersonDetailFragment ==null){
             searchResultPersonDetailFragment =new SearchResultPersonDetailFragment();
@@ -57,6 +57,7 @@ public class SearchResultPersonDetailFragment extends Fragment  implements View.
     }
 
     public SearchResultPersonDetailFragment() {
+        loadImageUtils=new LoadImageUtils();
         // Required empty public constructor
     }
 
@@ -81,8 +82,8 @@ public class SearchResultPersonDetailFragment extends Fragment  implements View.
         customText=(TextView)view.findViewById(R.id.custom_short_text);
         username=(TextView)view.findViewById(R.id.person_username);
         username.setText(frendData.getUser_name());
-        if(frendData.getShort_message()!=null){
-            customText.setText(frendData.getShort_message());
+        if(frendData.getSelf_abstract()!=null){
+            customText.setText(frendData.getSelf_abstract());
         }
         back_icon= (AppCompatImageView) view.findViewById(R.id.person_detaild_information_back_icon);
         back_icon.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +98,7 @@ public class SearchResultPersonDetailFragment extends Fragment  implements View.
         buildRelationship=(Button)view.findViewById(R.id.build_relationship);
         person_iamgeview=(ImageView)view.findViewById(R.id.person_detaild_information_circleImageView);
         constraintLayout=(ConstraintLayout)view.findViewById(R.id.person_detaild_information_constraintlayout);
-        LoadImageUtils.getFirendHeaderImage(frendData.getHeader_pic(),getContext(),person_iamgeview);
+        loadImageUtils.getFirendHeaderImage(frendData.getHeader_pic(),person_iamgeview,this);
         person_name=(TextView)view.findViewById(R.id.person_detaild_information_name);
         person_back_icon=(AppCompatImageView)view.findViewById(R.id.person_detaild_information_back_icon);
         imageView=(ImageView)view.findViewById(R.id.person_detailed_information_background_img);
@@ -155,5 +156,11 @@ public class SearchResultPersonDetailFragment extends Fragment  implements View.
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         return true;
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        getFragmentManager().popBackStack();
+        return  true;
     }
 }

@@ -1,0 +1,150 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:elevation="4dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.chen1.uncom.relationDynamics.PersonDynamicComment">
+    <!-- TODO: Update blank fragment layout -->
+
+    <android.support.design.widget.AppBarLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        >
+        <android.support.v7.widget.Toolbar
+            android:paddingTop="23dp"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_marginRight="15dp"
+                android:layout_width="30dp"
+                android:id="@+id/back_btn"
+                android:layout_height="30dp"
+                android:clickable="true"
+                tools:ignore="DuplicateIds"
+                app:srcCompat="@drawable/ic_vector_back_icon" />
+            <TextView
+                android:layout_gravity="left"
+                android:textColor="@color/colorFontColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="评论"
+                android:textSize="22dp"/>
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <FrameLayout
+                android:id="@+id/dynamic"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/zhiwu"
+                    android:id="@+id/head_img"
+                    android:layout_width="33dp"
+                    android:layout_height="33dp"
+                    />
+                <TextView
+                    android:text="拉纤"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/username_0"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="38dp"
+                    android:textColor="@color/colorFontColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp" />
+
+            </FrameLayout>
+            <TextView
+                android:layout_marginBottom="13dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="3dp"
+                android:id="@+id/text"
+                android:textSize="16dp"
+                android:textColor="@color/colorFontColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#ffeeeeee"
+
+                />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/commentRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/edit_layout"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom"
+                android:background="@color/colorWhite"
+                android:elevation="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/user_img"
+                    android:layout_marginLeft="8dp"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp" />
+
+                <EditText
+                    android:id="@+id/edit"
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    android:textSize="13dp"
+                    android:layout_gravity="center_vertical"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="4dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@null"
+                    android:hint="添加评论"
+                    android:textColorHint="#999999"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:background="#317EF3"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent">
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/send_icon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        app:srcCompat="@drawable/ic_vector_selected_icon"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

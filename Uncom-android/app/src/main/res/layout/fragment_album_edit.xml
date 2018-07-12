@@ -1,0 +1,83 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:elevation="4dp"
+    android:background="@color/colorWhite"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.chen1.uncom.previewAlbum.AlbumEdit">
+
+
+    <android.support.v4.view.ViewPager
+        android:clickable="true"
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
+    <FrameLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/colorWhite">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/request_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="30dp">
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/request_back_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:clickable="true"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_vector_back_icon" />
+                <TextView
+                    android:id="@+id/count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:text="1/2"
+                    android:textColor="@color/colorFontColor"
+                    android:textSize="18dp" />
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/complete"
+                    android:layout_width="50dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/reqeust_relationship_complete_button"
+                    android:text="完成"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp"
+                    android:visibility="visible" />
+
+
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.AppBarLayout>
+        <android.support.v7.widget.RecyclerView
+            android:background="@color/colorWhite"
+            android:paddingTop="8dp"
+            android:layout_marginTop="15dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:id="@+id/recycler"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="110dp">
+
+        </android.support.v7.widget.RecyclerView>
+    </FrameLayout>
+
+
+
+</FrameLayout>

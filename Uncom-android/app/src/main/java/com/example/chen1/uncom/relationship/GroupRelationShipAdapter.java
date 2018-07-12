@@ -1,5 +1,6 @@
 package com.example.chen1.uncom.relationship;
 
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ public class GroupRelationShipAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 1;
     }
 
     @Override
@@ -38,7 +39,7 @@ public class GroupRelationShipAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater= LayoutInflater.from(parent.getContext());
-        LinearLayout linearLayout= (LinearLayout) layoutInflater.inflate(R.layout.group_relation_ship_item_layout,null);
-        return linearLayout;
+        ConstraintLayout constraintLayout= (ConstraintLayout) layoutInflater.inflate(R.layout.group_relation_ship_item_layout,null);
+        return constraintLayout;
     }
 }

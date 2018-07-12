@@ -1,6 +1,7 @@
 package com.example.chen1.uncom.relationship;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -31,12 +32,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NewRelationshipAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> implements  View.OnClickListener {
 
-    private ArrayList<NewRelationShipBean> datalist=new ArrayList<>();
+        private ArrayList<NewRelationShipBean> datalist=new ArrayList<>();
     private Context context;
     private Button acceptButton;
     private LayoutInflater layoutInflater;
     private TextView acceptOk;
+    private LoadImageUtils loadImageUtils;
     private ProgressBar waitBar;
+    private Fragment fragment;
     private OnItemClickListener onItemClickListener;
     public void setOnItemClickListener(OnItemClickListener onItemClickListener){
         this.onItemClickListener=onItemClickListener;
@@ -46,9 +49,11 @@ public class NewRelationshipAdapter extends  RecyclerView.Adapter<RecyclerView.V
           void onClick(View view,int positon,NewRelationShipBean newRelationShipBean);
     }
 
-    public NewRelationshipAdapter(Context context,ArrayList<NewRelationShipBean> list){
+    public NewRelationshipAdapter(Context context,ArrayList<NewRelationShipBean> list,Fragment fragment){
+        this.fragment=fragment;
         this.context=context;
         this.datalist=list;
+        loadImageUtils=new LoadImageUtils();
     }
 
 
@@ -73,7 +78,7 @@ public class NewRelationshipAdapter extends  RecyclerView.Adapter<RecyclerView.V
                     waitBar.setVisibility(View.VISIBLE);
                     acceptButton.setVisibility(View.GONE);
                    // Log.v("当前对象名称；",datalist.get((Integer) suc.getTag()).getUser_name());
-                    ChatUserDataUtil.registerPersonRelationShip(CoreApplication.newInstance().getRequestQueue(),context,  CoreApplication.newInstance().getUser_id(), datalist.get((Integer) suc.getTag()).getUser_id(),waitBar,acceptOk,acceptButton);
+                    new ChatUserDataUtil().registerPersonRelationShip(CoreApplication.newInstance().getRequestQueue(),context,  CoreApplication.newInstance().getUser_id(), datalist.get((Integer) suc.getTag()).getUser_id(),waitBar,acceptOk,acceptButton);
                 }
             });
             return new NewRelationshipAdapter.HistoryViewHolder(view);
@@ -90,8 +95,8 @@ public class NewRelationshipAdapter extends  RecyclerView.Adapter<RecyclerView.V
         if(holder instanceof SearchViewHoler){
             ((SearchViewHoler) holder).input_results.setText(datalist.get(0).getResults());
         }else if(holder instanceof  HistoryViewHolder){
-            if(datalist.get(position).getShort_message()!=null){
-                ((HistoryViewHolder) holder).short_message.setText(datalist.get(position).getShort_message());
+            if(datalist.get(position).getSelf_abstract()!=null){
+                ((HistoryViewHolder) holder).short_message.setText(datalist.get(position).getSelf_abstract());
                 if(datalist.get(position).getResult_type()==1){
                     ((HistoryViewHolder) holder).acceptOk.setVisibility(View.VISIBLE);
                     ((HistoryViewHolder) holder).acceptButton.setVisibility(View.GONE);
@@ -103,7 +108,7 @@ public class NewRelationshipAdapter extends  RecyclerView.Adapter<RecyclerView.V
                 ((HistoryViewHolder) holder).short_message.setText("");
             }
             ((HistoryViewHolder) holder).username.setText(datalist.get(position).getUser_name());
-            LoadImageUtils.getFirendHeaderImage(datalist.get(position).getHeader_pic(),context, ((HistoryViewHolder) holder).header_pic);
+            loadImageUtils.getFirendHeaderImage(datalist.get(position).getHeader_pic(), ((HistoryViewHolder) holder).header_pic,fragment);
 
         }
     }

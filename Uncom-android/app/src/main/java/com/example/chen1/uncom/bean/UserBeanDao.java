@@ -34,16 +34,22 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
         public final static Property Sarea = new Property(9, String.class, "sarea", false, "SAREA");
         public final static Property Email = new Property(10, String.class, "email", false, "EMAIL");
         public final static Property Phone = new Property(11, String.class, "phone", false, "PHONE");
-        public final static Property Sex = new Property(12, Integer.class, "sex", false, "SEX");
-        public final static Property Create_time = new Property(13, String.class, "create_time", false, "CREATE_TIME");
-        public final static Property Update_time = new Property(14, String.class, "update_time", false, "UPDATE_TIME");
-        public final static Property Is_delete = new Property(15, Integer.class, "is_delete", false, "IS_DELETE");
-        public final static Property Qq_number = new Property(16, String.class, "qq_number", false, "QQ_NUMBER");
-        public final static Property Wexin_number = new Property(17, String.class, "wexin_number", false, "WEXIN_NUMBER");
-        public final static Property Weibo = new Property(18, String.class, "weibo", false, "WEIBO");
-        public final static Property Student_id = new Property(19, String.class, "student_id", false, "STUDENT_ID");
-        public final static Property Student_id_password = new Property(20, String.class, "student_id_password", false, "STUDENT_ID_PASSWORD");
-        public final static Property Age = new Property(21, Integer.class, "age", false, "AGE");
+        public final static Property Self_abstract = new Property(12, String.class, "self_abstract", false, "SELF_ABSTRACT");
+        public final static Property Sex = new Property(13, Integer.class, "sex", false, "SEX");
+        public final static Property Create_time = new Property(14, String.class, "create_time", false, "CREATE_TIME");
+        public final static Property Update_time = new Property(15, String.class, "update_time", false, "UPDATE_TIME");
+        public final static Property Is_delete = new Property(16, Integer.class, "is_delete", false, "IS_DELETE");
+        public final static Property Qq_number = new Property(17, String.class, "qq_number", false, "QQ_NUMBER");
+        public final static Property Wexin_number = new Property(18, String.class, "wexin_number", false, "WEXIN_NUMBER");
+        public final static Property Weibo = new Property(19, String.class, "weibo", false, "WEIBO");
+        public final static Property Student_id = new Property(20, String.class, "student_id", false, "STUDENT_ID");
+        public final static Property Student_id_password = new Property(21, String.class, "student_id_password", false, "STUDENT_ID_PASSWORD");
+        public final static Property Age = new Property(22, Integer.class, "age", false, "AGE");
+        public final static Property University = new Property(23, String.class, "university", false, "UNIVERSITY");
+        public final static Property College = new Property(24, String.class, "college", false, "COLLEGE");
+        public final static Property Class_session = new Property(25, String.class, "class_session", false, "CLASS_SESSION");
+        public final static Property Education = new Property(26, String.class, "education", false, "EDUCATION");
+        public final static Property Major = new Property(27, String.class, "major", false, "MAJOR");
     }
 
 
@@ -71,16 +77,22 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
                 "\"SAREA\" TEXT," + // 9: sarea
                 "\"EMAIL\" TEXT," + // 10: email
                 "\"PHONE\" TEXT," + // 11: phone
-                "\"SEX\" INTEGER," + // 12: sex
-                "\"CREATE_TIME\" TEXT," + // 13: create_time
-                "\"UPDATE_TIME\" TEXT," + // 14: update_time
-                "\"IS_DELETE\" INTEGER," + // 15: is_delete
-                "\"QQ_NUMBER\" TEXT," + // 16: qq_number
-                "\"WEXIN_NUMBER\" TEXT," + // 17: wexin_number
-                "\"WEIBO\" TEXT," + // 18: weibo
-                "\"STUDENT_ID\" TEXT," + // 19: student_id
-                "\"STUDENT_ID_PASSWORD\" TEXT," + // 20: student_id_password
-                "\"AGE\" INTEGER);"); // 21: age
+                "\"SELF_ABSTRACT\" TEXT," + // 12: self_abstract
+                "\"SEX\" INTEGER," + // 13: sex
+                "\"CREATE_TIME\" TEXT," + // 14: create_time
+                "\"UPDATE_TIME\" TEXT," + // 15: update_time
+                "\"IS_DELETE\" INTEGER," + // 16: is_delete
+                "\"QQ_NUMBER\" TEXT," + // 17: qq_number
+                "\"WEXIN_NUMBER\" TEXT," + // 18: wexin_number
+                "\"WEIBO\" TEXT," + // 19: weibo
+                "\"STUDENT_ID\" TEXT," + // 20: student_id
+                "\"STUDENT_ID_PASSWORD\" TEXT," + // 21: student_id_password
+                "\"AGE\" INTEGER," + // 22: age
+                "\"UNIVERSITY\" TEXT," + // 23: university
+                "\"COLLEGE\" TEXT," + // 24: college
+                "\"CLASS_SESSION\" TEXT," + // 25: class_session
+                "\"EDUCATION\" TEXT," + // 26: education
+                "\"MAJOR\" TEXT);"); // 27: major
     }
 
     /** Drops the underlying database table. */
@@ -153,54 +165,84 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
             stmt.bindString(12, phone);
         }
  
+        String self_abstract = entity.getSelf_abstract();
+        if (self_abstract != null) {
+            stmt.bindString(13, self_abstract);
+        }
+ 
         Integer sex = entity.getSex();
         if (sex != null) {
-            stmt.bindLong(13, sex);
+            stmt.bindLong(14, sex);
         }
  
         String create_time = entity.getCreate_time();
         if (create_time != null) {
-            stmt.bindString(14, create_time);
+            stmt.bindString(15, create_time);
         }
  
         String update_time = entity.getUpdate_time();
         if (update_time != null) {
-            stmt.bindString(15, update_time);
+            stmt.bindString(16, update_time);
         }
  
         Integer is_delete = entity.getIs_delete();
         if (is_delete != null) {
-            stmt.bindLong(16, is_delete);
+            stmt.bindLong(17, is_delete);
         }
  
         String qq_number = entity.getQq_number();
         if (qq_number != null) {
-            stmt.bindString(17, qq_number);
+            stmt.bindString(18, qq_number);
         }
  
         String wexin_number = entity.getWexin_number();
         if (wexin_number != null) {
-            stmt.bindString(18, wexin_number);
+            stmt.bindString(19, wexin_number);
         }
  
         String weibo = entity.getWeibo();
         if (weibo != null) {
-            stmt.bindString(19, weibo);
+            stmt.bindString(20, weibo);
         }
  
         String student_id = entity.getStudent_id();
         if (student_id != null) {
-            stmt.bindString(20, student_id);
+            stmt.bindString(21, student_id);
         }
  
         String student_id_password = entity.getStudent_id_password();
         if (student_id_password != null) {
-            stmt.bindString(21, student_id_password);
+            stmt.bindString(22, student_id_password);
         }
  
         Integer age = entity.getAge();
         if (age != null) {
-            stmt.bindLong(22, age);
+            stmt.bindLong(23, age);
+        }
+ 
+        String university = entity.getUniversity();
+        if (university != null) {
+            stmt.bindString(24, university);
+        }
+ 
+        String college = entity.getCollege();
+        if (college != null) {
+            stmt.bindString(25, college);
+        }
+ 
+        String class_session = entity.getClass_session();
+        if (class_session != null) {
+            stmt.bindString(26, class_session);
+        }
+ 
+        String education = entity.getEducation();
+        if (education != null) {
+            stmt.bindString(27, education);
+        }
+ 
+        String major = entity.getMajor();
+        if (major != null) {
+            stmt.bindString(28, major);
         }
     }
 
@@ -268,54 +310,84 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
             stmt.bindString(12, phone);
         }
  
+        String self_abstract = entity.getSelf_abstract();
+        if (self_abstract != null) {
+            stmt.bindString(13, self_abstract);
+        }
+ 
         Integer sex = entity.getSex();
         if (sex != null) {
-            stmt.bindLong(13, sex);
+            stmt.bindLong(14, sex);
         }
  
         String create_time = entity.getCreate_time();
         if (create_time != null) {
-            stmt.bindString(14, create_time);
+            stmt.bindString(15, create_time);
         }
  
         String update_time = entity.getUpdate_time();
         if (update_time != null) {
-            stmt.bindString(15, update_time);
+            stmt.bindString(16, update_time);
         }
  
         Integer is_delete = entity.getIs_delete();
         if (is_delete != null) {
-            stmt.bindLong(16, is_delete);
+            stmt.bindLong(17, is_delete);
         }
  
         String qq_number = entity.getQq_number();
         if (qq_number != null) {
-            stmt.bindString(17, qq_number);
+            stmt.bindString(18, qq_number);
         }
  
         String wexin_number = entity.getWexin_number();
         if (wexin_number != null) {
-            stmt.bindString(18, wexin_number);
+            stmt.bindString(19, wexin_number);
         }
  
         String weibo = entity.getWeibo();
         if (weibo != null) {
-            stmt.bindString(19, weibo);
+            stmt.bindString(20, weibo);
         }
  
         String student_id = entity.getStudent_id();
         if (student_id != null) {
-            stmt.bindString(20, student_id);
+            stmt.bindString(21, student_id);
         }
  
         String student_id_password = entity.getStudent_id_password();
         if (student_id_password != null) {
-            stmt.bindString(21, student_id_password);
+            stmt.bindString(22, student_id_password);
         }
  
         Integer age = entity.getAge();
         if (age != null) {
-            stmt.bindLong(22, age);
+            stmt.bindLong(23, age);
+        }
+ 
+        String university = entity.getUniversity();
+        if (university != null) {
+            stmt.bindString(24, university);
+        }
+ 
+        String college = entity.getCollege();
+        if (college != null) {
+            stmt.bindString(25, college);
+        }
+ 
+        String class_session = entity.getClass_session();
+        if (class_session != null) {
+            stmt.bindString(26, class_session);
+        }
+ 
+        String education = entity.getEducation();
+        if (education != null) {
+            stmt.bindString(27, education);
+        }
+ 
+        String major = entity.getMajor();
+        if (major != null) {
+            stmt.bindString(28, major);
         }
     }
 
@@ -339,16 +411,22 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // sarea
             cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // email
             cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // phone
-            cursor.isNull(offset + 12) ? null : cursor.getInt(offset + 12), // sex
-            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // create_time
-            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // update_time
-            cursor.isNull(offset + 15) ? null : cursor.getInt(offset + 15), // is_delete
-            cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16), // qq_number
-            cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17), // wexin_number
-            cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18), // weibo
-            cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19), // student_id
-            cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20), // student_id_password
-            cursor.isNull(offset + 21) ? null : cursor.getInt(offset + 21) // age
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // self_abstract
+            cursor.isNull(offset + 13) ? null : cursor.getInt(offset + 13), // sex
+            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // create_time
+            cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15), // update_time
+            cursor.isNull(offset + 16) ? null : cursor.getInt(offset + 16), // is_delete
+            cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17), // qq_number
+            cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18), // wexin_number
+            cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19), // weibo
+            cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20), // student_id
+            cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21), // student_id_password
+            cursor.isNull(offset + 22) ? null : cursor.getInt(offset + 22), // age
+            cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23), // university
+            cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24), // college
+            cursor.isNull(offset + 25) ? null : cursor.getString(offset + 25), // class_session
+            cursor.isNull(offset + 26) ? null : cursor.getString(offset + 26), // education
+            cursor.isNull(offset + 27) ? null : cursor.getString(offset + 27) // major
         );
         return entity;
     }
@@ -367,16 +445,22 @@ public class UserBeanDao extends AbstractDao<UserBean, String> {
         entity.setSarea(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
         entity.setEmail(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
         entity.setPhone(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
-        entity.setSex(cursor.isNull(offset + 12) ? null : cursor.getInt(offset + 12));
-        entity.setCreate_time(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
-        entity.setUpdate_time(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
-        entity.setIs_delete(cursor.isNull(offset + 15) ? null : cursor.getInt(offset + 15));
-        entity.setQq_number(cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16));
-        entity.setWexin_number(cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17));
-        entity.setWeibo(cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18));
-        entity.setStudent_id(cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19));
-        entity.setStudent_id_password(cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20));
-        entity.setAge(cursor.isNull(offset + 21) ? null : cursor.getInt(offset + 21));
+        entity.setSelf_abstract(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setSex(cursor.isNull(offset + 13) ? null : cursor.getInt(offset + 13));
+        entity.setCreate_time(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
+        entity.setUpdate_time(cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15));
+        entity.setIs_delete(cursor.isNull(offset + 16) ? null : cursor.getInt(offset + 16));
+        entity.setQq_number(cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17));
+        entity.setWexin_number(cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18));
+        entity.setWeibo(cursor.isNull(offset + 19) ? null : cursor.getString(offset + 19));
+        entity.setStudent_id(cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20));
+        entity.setStudent_id_password(cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21));
+        entity.setAge(cursor.isNull(offset + 22) ? null : cursor.getInt(offset + 22));
+        entity.setUniversity(cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23));
+        entity.setCollege(cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24));
+        entity.setClass_session(cursor.isNull(offset + 25) ? null : cursor.getString(offset + 25));
+        entity.setEducation(cursor.isNull(offset + 26) ? null : cursor.getString(offset + 26));
+        entity.setMajor(cursor.isNull(offset + 27) ? null : cursor.getString(offset + 27));
      }
     
     @Override

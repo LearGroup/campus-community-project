@@ -16,15 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ *
  * Created by chen1 on 2017/6/28.
  */
 
 public class GrallyAdapter extends RecyclerView.Adapter<GrallyAdapter.ViewHolder> implements View.OnClickListener{
 
-    private List<Integer> list=new ArrayList<>();
     private OnItemClickListener onItemClickListener;
     private List<Integer> datalist=new ArrayList<>();
-    private Context conext;
     private LayoutInflater layoutInflater;
     private ArrayList<Boolean> isFocus =new ArrayList<Boolean>();
     private View lastView=null;
@@ -67,7 +66,7 @@ public class GrallyAdapter extends RecyclerView.Adapter<GrallyAdapter.ViewHolder
     }
 
 
-
+    @FunctionalInterface
     public interface OnItemClickListener{
         void onItemClick(View view,int position);
     }
@@ -76,8 +75,7 @@ public class GrallyAdapter extends RecyclerView.Adapter<GrallyAdapter.ViewHolder
         this.onItemClickListener=onItemClickListener;
     }
 
-    public GrallyAdapter(Context context){
-        this.conext=context;
+    public GrallyAdapter( ){
         datalist.clear();
         datalist.add(R.drawable.ic_expression_2_icon);
         datalist.add(R.drawable.ic_vector_expression_heart_icon);
@@ -85,19 +83,17 @@ public class GrallyAdapter extends RecyclerView.Adapter<GrallyAdapter.ViewHolder
         isFocus.add(false);
         isFocus.add(false);
         isFocus.add(false);
-
-
     }
 
     @Override
     public GrallyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        layoutInflater= LayoutInflater.from(conext);
+        layoutInflater= LayoutInflater.from(parent.getContext());
         View view=  layoutInflater.inflate(R.layout.chat_type_menu_layout,parent,false);
         if(viewType==1){
-            LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(dip2px(conext,23),dip2px(conext,23));
-            lp.topMargin=dip2px(conext,8);
-            lp.rightMargin=dip2px(conext,15);
-            lp.leftMargin=dip2px(conext,25);
+            LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(dip2px(parent.getContext(),23),dip2px(parent.getContext(),23));
+            lp.topMargin=dip2px(parent.getContext(),8);
+            lp.rightMargin=dip2px(parent.getContext(),15);
+            lp.leftMargin=dip2px(parent.getContext(),25);
             AppCompatImageView imageView =(AppCompatImageView) view.findViewById(R.id.chat_expression_type_icon);
             imageView.setLayoutParams(lp);
             animation.setDuration(150);

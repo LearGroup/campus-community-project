@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import com.example.chen1.uncom.FragmentBackHandler;
 import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.NewRelationShipBean;
@@ -35,7 +36,7 @@ import java.util.ArrayList;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public class NewRelationShipFragment extends Fragment  implements View.OnTouchListener{
+public class NewRelationShipFragment extends Fragment  implements FragmentBackHandler,View.OnTouchListener{
 
     private static NewRelationShipFragment newRelationShipFragment=null;
     private AppCompatImageView back_icon;
@@ -82,13 +83,13 @@ public class NewRelationShipFragment extends Fragment  implements View.OnTouchLi
         search_layout_view.setView_type(0);
         search_result_recycler_view= (RecyclerView) view.findViewById(R.id.search_page_recyclerview);
         ArrayList<NewRelationShipBean> data=new ArrayList<>();
-        newRelationshipAdapter=new NewRelationshipAdapter(getContext(),data) ;
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
+        newRelationshipAdapter=new NewRelationshipAdapter(CoreApplication.newInstance().getBaseContext(),data,this) ;
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(CoreApplication.newInstance().getBaseContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         search_result_recycler_view.setLayoutManager(linearLayoutManager);
         search_result_recycler_view.setHasFixedSize(true);
         search_result_recycler_view.setItemAnimator(new DefaultItemAnimator());
-        newRelationshipAdapter.setOnItemClickListener(new GetNewRelationShipResultsButtonOnClickentener(getContext(),this));
+        newRelationshipAdapter.setOnItemClickListener(new GetNewRelationShipResultsButtonOnClickentener(CoreApplication.newInstance().getBaseContext(),this));
         if(newRelationShipList==null){
             newRelationShipList=CoreApplication.newInstance().getNewRelationShipList();
         }
@@ -132,7 +133,7 @@ public class NewRelationShipFragment extends Fragment  implements View.OnTouchLi
         back_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getActivity().getSupportFragmentManager();
+                FragmentManager fragmentManager= getFragmentManager();
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
                 fragmentTransaction.setCustomAnimations(R.anim.default_fragment_switch_translate_open,R.anim.default_leave_left);
                 fragmentManager.popBackStack();
@@ -146,7 +147,7 @@ public class NewRelationShipFragment extends Fragment  implements View.OnTouchLi
         super.onDestroyView();
         if(CoreApplication.newInstance().isDisPlayType()==false){
             CoreApplication.newInstance().setDisPlayType(true);
-            CoreApplication.newInstance().getRoot().startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.default_open_right));
+            CoreApplication.newInstance().getRoot().startAnimation(AnimationUtils.loadAnimation(CoreApplication.newInstance().getBaseContext(),R.anim.default_open_right));
         }
     }
 
@@ -178,5 +179,11 @@ public class NewRelationShipFragment extends Fragment  implements View.OnTouchLi
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         return true;
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        getFragmentManager().popBackStack();
+        return  true;
     }
 }

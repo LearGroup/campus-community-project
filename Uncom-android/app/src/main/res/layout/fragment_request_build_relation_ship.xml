@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorWhite"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.chen1.uncom.relationship.RequestBuildRelationShipFragment">
@@ -10,26 +10,21 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/request_pappbarlayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/default_toolbar">
+        android:layout_height="70dp"
+        android:background="@color/colorWhite">
 
         <android.support.v7.widget.Toolbar
-
             android:id="@+id/request_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp">
-
-
+            android:paddingTop="30dp">
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/request_back_icon"
-                android:layout_width="25dp"
+                android:layout_width="30dp"
                 android:layout_height="25dp"
                 android:clickable="true"
-                android:onClick="onClick"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_vector_back_icon" />
-
             <TextView
                 android:id="@+id/person_username"
                 android:layout_width="wrap_content"
@@ -43,7 +38,6 @@
                 android:id="@+id/request_send_button"
                 android:layout_width="50dp"
                 android:layout_height="25dp"
-                android:layout_alignParentBottom="true"
                 android:layout_gravity="right"
                 android:layout_marginRight="15dp"
                 android:background="@drawable/reqeust_relationship_complete_button"
@@ -58,7 +52,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
-    android:layout_marginTop="-5dp"
+
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"

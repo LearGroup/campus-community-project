@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
+import android.widget.EditText;
 
 import java.util.List;
 
@@ -15,9 +16,11 @@ public class ChatExpressionTypePageSwitchAdapter extends FragmentPagerAdapter {
 
 
     private int  ExpressionTypeCount=2;
-    public ChatExpressionTypePageSwitchAdapter(FragmentManager fm, List<Integer>viewlist) {
+    private EditText editText;
+    public ChatExpressionTypePageSwitchAdapter(FragmentManager fm, List<Integer>viewlist,EditText editText) {
         super(fm);
         ExpressionTypeCount=viewlist.size();
+        this.editText=editText;
         Log.v("information: ", String.valueOf(ExpressionTypeCount));
     }
 
@@ -29,7 +32,7 @@ public class ChatExpressionTypePageSwitchAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position){
-            case 0: return new ChatExpressionStandardFragment();
+            case 0: return  ChatExpressionStandardFragment.newInstance(editText);
             case 1: return new ChatExpressionCustomFragment(position);
         }
         return new ChatExpressionCustomFragment(position);

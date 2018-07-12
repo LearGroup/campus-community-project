@@ -69,7 +69,6 @@ public class ExpessionStandardAdapter extends BaseAdapter {
 
         LayoutInflater layoutInflater=LayoutInflater.from(parent.getContext());
             LinearLayout view=(LinearLayout)layoutInflater.inflate(R.layout.chat_expression_standard_icon,null);
-
             AppCompatImageView imageView=(AppCompatImageView) view.findViewById(R.id.expression_icon_standard);
         if(position==20||(PageCount.equals(CurrentPage+1)&&position==(EmotionList.size()-(CurrentPage)*20))){
                 imageView.setImageResource(R.drawable.ic_expression_delete_icon);

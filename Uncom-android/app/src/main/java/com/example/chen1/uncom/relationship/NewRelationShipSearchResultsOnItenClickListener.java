@@ -37,7 +37,7 @@ public class NewRelationShipSearchResultsOnItenClickListener implements  NewRela
                 SearchResultPersonDetailFragment searchResultPersonDetailFragment =SearchResultPersonDetailFragment.getInstance();
                 CoreApplication.newInstance().setDisPlayType(false);
                 searchResultPersonDetailFragment.setFrendData(newRelationShipBean);
-                FragmentManager fragmentManager= RalationShipPageMainFragment.getInstance().getActivity().getSupportFragmentManager();
+                FragmentManager fragmentManager=fragment.getFragmentManager() ;
                 FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
                 fragmentTransaction.addToBackStack(null).setCustomAnimations(
                         R.anim.default_fragment_switch_translate_open, R.anim.default_fragment_switch_translate_open,

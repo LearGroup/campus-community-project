@@ -49,6 +49,15 @@ public class BackHandlerHelper {
         return handleBackPress(fragmentActivity.getSupportFragmentManager());
     }
 
+    public static boolean handleBackAllImmediate(Fragment fragment){
+
+        for (int i = 0; i < fragment.getFragmentManager().getFragments().size(); i++) {
+            fragment.getFragmentManager().popBackStackImmediate();
+        }
+       return BackHandlerHelper.handleBackPress(fragment);
+
+    }
+
     /**
      * 判断Fragment是否处理了Back键
      *

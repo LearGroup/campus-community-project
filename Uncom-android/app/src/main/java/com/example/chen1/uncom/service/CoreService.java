@@ -1,6 +1,6 @@
 package com.example.chen1.uncom.service;
 
-import android.app.Notification;
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -8,15 +8,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
-import android.preference.Preference;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
-import com.example.chen1.uncom.R;
 import com.example.chen1.uncom.application.CoreApplication;
 import com.example.chen1.uncom.bean.BeanDaoManager;
 import com.example.chen1.uncom.bean.DaoSession;
@@ -28,12 +23,10 @@ import com.example.chen1.uncom.bean.RelationShipLevelBean;
 import com.example.chen1.uncom.bean.RelationShipLevelBeanDao;
 import com.example.chen1.uncom.bean.UserBean;
 import com.example.chen1.uncom.bean.UserBeanDao;
-import com.example.chen1.uncom.utils.CoreServiceCallBack;
-import com.example.chen1.uncom.utils.PopupWindowUtils;
+import com.example.chen1.uncom.message.MessageAccess;
 import com.example.chen1.uncom.utils.SharedPreferencesUtil;
+import com.example.chen1.uncom.utils.StateCode;
 import com.example.chen1.uncom.utils.UserBeanAndJsonUtils;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +34,6 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -58,6 +50,7 @@ public class CoreService extends Service  {
     private Handler handler;
     private Handler getChatDataHandler;
     private Handler coreAppGetChatDataHandler;
+    private MessageAccess messageAccess;
     private ChatCoreBinder binder=new ChatCoreBinder(this);
     private Socket socket;
     private NewRelationShipBeanDao newRelationShipBeanDao;
@@ -80,13 +73,14 @@ public class CoreService extends Service  {
 
     @Override
     public void onCreate() {
+        context=CoreApplication.newInstance().getApplicationContext();
         super.onCreate();
+        messageAccess=new MessageAccess();
         coreAppGetChatDataHandler=CoreApplication.newInstance().getCoreAppGetChatDataHandler();
         user_id=SharedPreferencesUtil.getUserId(CoreApplication.newInstance().getApplicationContext());
         DaoSession session= BeanDaoManager.getInstance().getDaoSession();
         UserBeanDao userBeanDao = session.getUserBeanDao();
         userBean=userBeanDao.queryBuilder().where(UserBeanDao.Properties.Id.eq(user_id)).build().unique();
-        Log.v("CoreServiceUser_id",user_id);
         HashMap<String ,String > login=new HashMap<>();
         if(userBean!=null){
             login.put("userName",userBean.getUsername());
@@ -94,17 +88,16 @@ public class CoreService extends Service  {
             loginData=new JSONObject(login);
         }
 
-        Log.v("createCoreService","ok");
-        Log.v("CoreService_user_id", "ss"+user_id);
         if(thread==null){
          thread= new Thread(new Runnable() {
+                @SuppressLint("HandlerLeak")
                 @Override
                 public void run() {
+
                     try {
-                        Log.v("createNewThread","ok");
                         /*http://47.95.0.73:8081*/
                         /*http://10.0.2.2:8081*/
-                        socket= IO.socket("http://47.95.0.73:8081");
+                        socket= IO.socket("http://"+CoreApplication.newInstance().IP_ADDR+":8081");
                         socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
                             @Override
                             public void call(Object... args) {
@@ -135,6 +128,7 @@ public class CoreService extends Service  {
                                 socket.emit("synchronization","synchronization");
                             }
                         }).on(Socket.EVENT_CONNECT_ERROR, new Emitter.Listener() {
+
                             @Override
                             public void call(Object... args) {
                                 Log.v("EVENT_RECONNECT_ERROR","ok");
@@ -163,27 +157,17 @@ public class CoreService extends Service  {
                                 Log.v("chatresponse", String.valueOf(args[0]));
                                 JSONObject object=(JSONObject) args[0];
                                 try {
-
+                                    Log.v("CoreService","getEvent");
+                                    Log.v("response", String.valueOf(object));
+                                    Log.v("status",object.getString("status"));
                                     //当用户在对应的聊天界面，将数据发送到聊天界面
-                                //    Log.v("chatresponse", String.valueOf(jsonArray));
-                                    if(getChatDataHandler!=null && object.getString("status").equals("1")){
-                                        JSONArray jsonArray=object.getJSONArray("results");
-                                        Log.v("chatresponse", "1");
-                                        Message message=new Message();
-                                        message.what=0;
-                                        message.obj=jsonArray;
-                                        getChatDataHandler.sendMessage(message);
-                                    }else if(object.getString("status").equals("1")){
-                                        JSONArray jsonArray=object.getJSONArray("results");
-                                    /*若getChatDataHandler=null说明chat界面尚未初始化*/
-                                        Log.v("chatresponse", "2");
-                                        Message message=new Message();
-                                        message.what=0;
-                                        message.obj=jsonArray;
-                                        coreAppGetChatDataHandler.sendMessage(message);
-                                        //CoreApplication.newInstance().updateActivePersonMessageList(relationShipLevelBean);
+                                    if(object.getString("status").equals(StateCode.MESSAGE_SUCCESS)){
+                                            JSONArray jsonArray=object.getJSONArray("results");
+                                            messageAccess.parseMessage(coreAppGetChatDataHandler,jsonArray);
                                     }
                                 } catch (JSONException e) {
+                                    e.printStackTrace();
+                                } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
 
@@ -219,8 +203,9 @@ public class CoreService extends Service  {
                                     if(object.getString("status").equals("1")){
                                         JSONArray jsonArray=object.getJSONArray("results");
                                         for (int i=0;i<jsonArray.length();i++){
-                                            Log.v("relationshipRresponse", String.valueOf(jsonArray));
-                                            NewRelationShipBean bean=new Gson().fromJson(String.valueOf(jsonArray.getJSONObject(i)), NewRelationShipBean.class);
+                                            Log.v("relationshipRresponse", String.valueOf(jsonArray.getJSONObject(i))+"awd");
+                                            NewRelationShipBean bean=new NewRelationShipBean();
+                                            bean= JSON.parseObject(String.valueOf(jsonArray.getJSONObject(i)),bean.getClass());
                                             bean.setView_type(1);
                                             bean.setResult_type(2);
                                             Message message =new Message();
@@ -285,11 +270,6 @@ public class CoreService extends Service  {
                                             messages.obj=jsonArray1;
                                   //          Log.v("接受好友Message", String.valueOf(jsonArray1));
                                             coreAppGetChatDataHandler.sendMessage(messages);
-
-
-
-
-
                                         }
                                     }
                                 } catch (JSONException e) {
@@ -312,41 +292,55 @@ public class CoreService extends Service  {
                             switch (msg.what){
                                 case 0:{
                                     MessageHistoryBean messageHistoryBean= (MessageHistoryBean) msg.obj;
-                                    Log.v("getSendWork",messageHistoryBean.getContent());
-                                    Log.v("getSendWork",messageHistoryBean.getOwnId());
-                                    Log.v("getSendWork", user_id);
                                     HashMap<String,String> data=new HashMap<String, String>();
                                     Long time=messageHistoryBean.getTime().getTime();
                                     data.put("time", String.valueOf(time));
                                     data.put("targetId", messageHistoryBean.getTargetId());
                                     data.put("content",messageHistoryBean.getContent());
                                     data.put("ownId",messageHistoryBean.getOwnId());
+                                    data.put("type", StateCode.PERSON_CHAT_MESSAGE);
                                     JSONObject params = new JSONObject(data);
                                     socket.emit("message",params);
                                     break;
                                 }
                                 //账户退出动作：删除本地存储的sessionid,关闭socket连接，退出界面
                                 case 1:{
-                                    Log.v("ofline","ok");
                                     String sessionId =SharedPreferencesUtil.getSessionId(context);
-                                    Log.v("ofline",sessionId);
                                     String id ="sess:"+sessionId.split("\\.")[0].substring(4);
                                     HashMap<String,String> data=new HashMap<String, String>();
                                     data.put("sessionId",id);
-                                    Log.v("ofline",id);
                                     JSONObject params = new JSONObject(data);
                                     socket.emit("ofline",params);
-                                    Log.v("ofline", String.valueOf(params));
-                                    Log.v("oflined","ok");
                                     break;
                                 }
                                 //发送还有添加请求
                                 case 2:{
                                     //发送新关系请求
                                     Log.v("CoreService","requestBuildRelationShip");
-                                    JsonObject jsonObject= (JsonObject) msg.obj;
-                                    socket.emit("requestBuildRelationShip",jsonObject);
+                                    NewRelationShipBean bean= (NewRelationShipBean) msg.obj;
+                                    HashMap<String,String> data=new HashMap<String, String>();
+                                    Long time=bean.getGet_time().getTime();
+                                    data.put("time", String.valueOf(time));
+                                    data.put("header_pic", bean.getHeader_pic());
+                                    data.put("sex", String.valueOf(bean.getSex()));
+                                    data.put("self_abstract",bean.getSelf_abstract());
+                                    data.put("sprovince",bean.getSprovince());
+                                    data.put("stown",bean.getStown());
+                                    data.put("user_id",userBean.getId());
+                                    data.put("user_name",bean.getUser_name());
+                                    data.put("view_type", String.valueOf(bean.getView_type()));
+                                    data.put("sarea",bean.getSarea());
+                                    data.put("target_id",bean.getUser_id());
+                                    JSONObject params = new JSONObject(data);
+                                    Log.v("发送好友请求", String.valueOf(params));
+                                    socket.emit("requestBuildRelationShip",params);
+                                    break;
                                 }
+                                case 3:{
+                                    //存储 SharedPreferences数据
+
+                                }
+
                             }
 
                         }
@@ -370,29 +364,16 @@ public class CoreService extends Service  {
         return getChatDataHandler;
     }
 
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
 
     public void setGetChatDataHandler(Handler getChatDataHandler) {
         this.getChatDataHandler = getChatDataHandler;
     }
-
-    public Handler getHandler() {
-        return handler;
-    }
-
-    public void setHandler(Handler handler) {
-        this.handler = handler;
-    }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return super.onStartCommand(intent, flags, startId);
+
+
+
+          return START_STICKY;
     }
 
     public Handler getCoreAppGetChatDataHandler() {
@@ -406,8 +387,14 @@ public class CoreService extends Service  {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        context=null;
+        CoreApplication.newInstance().setCoreService(null);
+      if(getChatDataHandler!=null){
+          getChatDataHandler.removeCallbacksAndMessages(null);
+      }
+        coreAppGetChatDataHandler.removeCallbacksAndMessages(null);
+        sendChatHandler.removeCallbacksAndMessages(null);
     }
-
 
 
 

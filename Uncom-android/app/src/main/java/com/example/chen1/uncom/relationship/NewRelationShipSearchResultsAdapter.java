@@ -1,6 +1,8 @@
 package com.example.chen1.uncom.relationship;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +23,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class NewRelationShipSearchResultsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements  View.OnClickListener {
-
+    private LoadImageUtils loadImageUtils;
     private ArrayList<NewRelationShipBean>data;
     private Context context;
     private LayoutInflater layoutInflater;
+    private Fragment fragment;
     private OnItemOnClickListener onItemOnClickListener;
 
     public   interface OnItemOnClickListener{
@@ -36,9 +39,11 @@ public class NewRelationShipSearchResultsAdapter extends RecyclerView.Adapter<Re
         this.onItemOnClickListener=onItenClickListener;
     }
 
-    public NewRelationShipSearchResultsAdapter(Context context){
+    public NewRelationShipSearchResultsAdapter(Context context, Fragment fragment){
+        this.fragment=fragment;
         this.context=context;
         data=new ArrayList<>();
+        loadImageUtils=new LoadImageUtils();
     }
 
 
@@ -69,7 +74,7 @@ public class NewRelationShipSearchResultsAdapter extends RecyclerView.Adapter<Re
         if(holder instanceof NewRelationshipAdapter.SearchViewHoler){
             ((NewRelationshipAdapter.SearchViewHoler) holder).input_results.setText(data.get(0).getResults());
         }else if(holder instanceof ViewHolder){
-            LoadImageUtils.getFirendHeaderImage(data.get(position).getHeader_pic(),context, (ImageView)((ViewHolder) holder).header_pic);
+            loadImageUtils.getFirendHeaderImage(data.get(position).getHeader_pic(), (ImageView)((ViewHolder) holder).header_pic,fragment);
             ((ViewHolder) holder).username.setText(data.get(position).getUser_name());
         }
     }

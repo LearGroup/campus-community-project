@@ -34,6 +34,7 @@ public class UserBean {
 
     private String phone;
 
+    private String self_abstract;
 
     private Integer sex;
 
@@ -55,13 +56,22 @@ public class UserBean {
 
     private Integer age ;
 
-    @Generated(hash = 1513834423)
+    private String university;//大学
+    private String college;//学院
+    private String class_session;//届别
+
+    private String education;//教育程度
+    private String major;//专业
+
+    @Generated(hash = 930470029)
     public UserBean(String id, String username, String password, String header_pic,
             String province, String town, String area, String sprovince,
-            String stown, String sarea, String email, String phone, Integer sex,
-            String create_time, String update_time, Integer is_delete,
-            String qq_number, String wexin_number, String weibo, String student_id,
-            String student_id_password, Integer age) {
+            String stown, String sarea, String email, String phone,
+            String self_abstract, Integer sex, String create_time,
+            String update_time, Integer is_delete, String qq_number,
+            String wexin_number, String weibo, String student_id,
+            String student_id_password, Integer age, String university,
+            String college, String class_session, String education, String major) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -74,6 +84,7 @@ public class UserBean {
         this.sarea = sarea;
         this.email = email;
         this.phone = phone;
+        this.self_abstract = self_abstract;
         this.sex = sex;
         this.create_time = create_time;
         this.update_time = update_time;
@@ -84,6 +95,11 @@ public class UserBean {
         this.student_id = student_id;
         this.student_id_password = student_id_password;
         this.age = age;
+        this.university = university;
+        this.college = college;
+        this.class_session = class_session;
+        this.education = education;
+        this.major = major;
     }
 
     @Generated(hash = 1203313951)
@@ -264,6 +280,54 @@ public class UserBean {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public String getSelf_abstract() {
+        return this.self_abstract;
+    }
+
+    public void setSelf_abstract(String self_abstract) {
+        this.self_abstract = self_abstract;
+    }
+
+    public String getUniversity() {
+        return this.university;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
+    }
+
+    public String getCollege() {
+        return this.college;
+    }
+
+    public void setCollege(String college) {
+        this.college = college;
+    }
+
+    public String getClass_session() {
+        return this.class_session;
+    }
+
+    public void setClass_session(String class_session) {
+        this.class_session = class_session;
+    }
+
+    public String getEducation() {
+        return this.education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getMajor() {
+        return this.major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
     }
 
 

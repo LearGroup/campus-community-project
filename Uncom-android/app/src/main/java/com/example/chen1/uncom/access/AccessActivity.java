@@ -34,13 +34,16 @@ public class AccessActivity extends AppCompatActivity  {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
-        setContentView(R.layout.activity_access);
-        this.getWindow()
-                .getDecorView()
-                .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
 
-        MIUISetStatusBarLightMode(this.getWindow(), true);
-        FlymeSetStatusBarLightMode(this.getWindow(), true);
+
+
+
+        setContentView(R.layout.activity_access);
+        MIUISetStatusBarLightMode(getWindow(),true);
+        FlymeSetStatusBarLightMode(getWindow(),true);
         FragmentManager fragmentManager=  getSupportFragmentManager();
         FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
         LoginPageFragment loginPageFragment =new LoginPageFragment();

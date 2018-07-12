@@ -20,7 +20,7 @@ public class KeybordUtil {
      * @param mEditText
      * @param mContext
      */
-    public static void openKeybord(EditText mEditText, Context mContext) {
+    public  void openKeybord(EditText mEditText, Context mContext) {
         InputMethodManager imm = (InputMethodManager) mContext
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(mEditText, InputMethodManager.RESULT_SHOWN);
@@ -33,13 +33,13 @@ public class KeybordUtil {
      *
 
      */
-    public static void closeKeybord(EditText mEditText, Context mContext) {
+    public  void closeKeybord(EditText mEditText, Context mContext) {
         InputMethodManager imm = (InputMethodManager) mContext
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
     }
 
-    public static void closeKeybordSearch(SearchView mEditText, Context mContext) {
+    public  void closeKeybordSearch(SearchView mEditText, Context mContext) {
         InputMethodManager imm = (InputMethodManager) mContext
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
@@ -51,7 +51,7 @@ public class KeybordUtil {
      * @param activity
      * @return
      */
-    public static boolean isSoftInputShow(Activity activity) {
+    public  boolean isSoftInputShow(Activity activity) {
 
         // 虚拟键盘隐藏 判断view是否为空
         View view = activity.getWindow().peekDecorView();

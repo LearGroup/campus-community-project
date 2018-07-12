@@ -14,7 +14,7 @@ import java.security.AccessControlContext;
  * Created by chen1 on 2017/10/2.
  */
 
-public class BeanDaoManager {
+public class  BeanDaoManager {
 
     private static BeanDaoManager mGreenDaoManager=null;
     private DaoMaster mMaster;
@@ -23,7 +23,7 @@ public class BeanDaoManager {
     public BeanDaoManager() {
         String id = SharedPreferencesUtil.getUserId(CoreApplication.newInstance().getApplicationContext());
         Log.v("BeanManagerId:",id);
-        DaoMaster.DevOpenHelper devOpenHelper=new DaoMaster.DevOpenHelper(CoreApplication.newInstance().getApplicationContext(),"user"+id,null);
+        OpenHelper  devOpenHelper=new OpenHelper(CoreApplication.newInstance().getApplicationContext(),"user"+id,null);
         mMaster=new DaoMaster(devOpenHelper.getWritableDatabase());
         mDaosession=mMaster.newSession();
     }
